@@ -1,4 +1,4 @@
-package logic.view;
+package logic;
 
 import logic.model.User;
 
