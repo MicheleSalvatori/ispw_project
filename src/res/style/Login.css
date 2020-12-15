@@ -1,0 +1,68 @@
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Regular.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ }
+ 
+ .text-field {
+ 	-fx-font-family: "Roboto";
+ 	-fx-font-size: 18px;
+ 	-fx-font-weight: bold;
+    -fx-border-radius: 31.5px;
+    -fx-background-radius: 31.5px;
+    -fx-border-color: #0C0B0B;
+}
+
+.button {
+	-fx-background-color: #0C0B0B;
+	-fx-background-radius: 31.5px;
+	-fx-pref-height: 63;
+	-fx-alignment: CENTER;
+	
+	-fx-font-family: "Roboto";
+	-fx-font-size: 18px;
+	-fx-font-weight: bold;
+	-fx-text-fill: #F0F0F2;
+}
+
+.button:hover {
+	-fx-background-color: black;
+}
+
+.button:pressed {
+	-fx-background-color: #FF00FF;
+}
+
+.google-button {
+	-icon-paint: #3B5998;
+	-fx-background-color: -icon-paint;
+	-size: 52;
+	-fx-min-height: -size;
+    -fx-min-width: -size;
+    -fx-max-height: -size;
+    -fx-max-width: -size;
+
+    -fx-shape: "M50.1919 22.6232H48.4467V22.5333H28.9467V31.2H41.1916C39.4052 36.2451 34.6049 39.8667 28.9467 39.8667C21.7674 39.8667 15.9467 34.0459 15.9467 26.8667C15.9467 19.6874 21.7674 13.8667 28.9467 13.8667C32.2606 13.8667 35.2755 15.1168 37.5711 17.1589L43.6995 11.0305C39.8299 7.42408 34.6537 5.2 28.9467 5.2C16.9813 5.2 7.28003 14.9012 7.28003 26.8667C7.28003 38.8321 16.9813 48.5333 28.9467 48.5333C40.9121 48.5333 50.6134 38.8321 50.6134 26.8667C50.6134 25.4139 50.4639 23.9958 50.1919 22.6232Z";
+}
+
+.google-button:pressed {
+	-fx-background-color: #3B5FFF;
+}
+
+.facebook-button {
+	-icon-paint: #3B5998;
+	-fx-background-color: -icon-paint;
+	-size: 52;
+	-fx-min-height: -size;
+    -fx-min-width: -size;
+    -fx-max-height: -size;
+    -fx-max-width: -size;
+
+    -fx-shape: "M26 0C11.6415 0 0 11.7015 0 26.1339C0 39.2358 9.60267 50.0552 22.113 51.9456V33.0594H15.6802V26.1906H22.113V21.6193C22.113 14.0513 25.7812 10.7302 32.0385 10.7302C35.035 10.7302 36.621 10.9545 37.3707 11.0547V17.0502H33.1023C30.446 17.0502 29.5187 19.583 29.5187 22.436V26.1906H37.3035L36.2483 33.0594H29.5187V52C42.2088 50.2708 52 39.3642 52 26.1339C52 11.7015 40.3585 0 26 0Z";
+}
+
+.facebook-button:hover {
+	-fx-background-color: #3B5FFF;
+}

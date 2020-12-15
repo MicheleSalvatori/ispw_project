@@ -1,5 +1,9 @@
+@font-face {
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
 .label {
-    -fx-font-style: Baloo Bhai;
+    -fx-font-family: "Baloo Bhai";
     -fx-font-weight: 400;
     -fx-font-size: 24px;
     -fx-text-fill: #0C0B0B;
