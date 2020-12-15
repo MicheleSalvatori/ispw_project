@@ -21,7 +21,8 @@ public class MainStandalone extends Application{
 		Parent root = FXMLLoader.load(url);
 		Scene scene = new Scene(root, 1366,768);
 		primaryStage.setScene(scene);
-		primaryStage.setMaximized(true);
+		primaryStage.setMaximized(false);
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 }

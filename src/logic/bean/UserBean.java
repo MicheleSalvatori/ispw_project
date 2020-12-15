@@ -11,7 +11,7 @@ public class UserBean {
 	private String usbPassword;
 	
 	
-	public static UserBean getUserInstance(String username) {
+	public static UserBean getUserBeanInstance(String username) {
 		if (UserBean.usbInstance == null) {
 			UserBean.usbInstance = new UserBean();
 			UserBean.usbInstance.usbUsername = username;
