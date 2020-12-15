@@ -2,10 +2,25 @@ package logic.utilities;
 
 public enum Page {
 	
+	HOMEPAGE("src/res/fxml/Homepage.fxml", "App - Homepage"), 
+	LOGIN("src/res/fxml/Login.fxml", "App - Login"); 
 	
-	LOGIN("src/res/fxml/LoginUser.fxml", "App - Login");
-	private String stageTitle;
+	
 	private String res;
+	private String stageTitle;
+	
+	Page(String res, String title) {
+		this.res = res;
+		this.stageTitle = title;
+	}
+	
+	public String getRes() {
+		return res;
+	}
+
+	public void setRes(String res) {
+		this.res = res;
+	}
 
 	public String getStageTitle() {
 		return stageTitle;
@@ -15,17 +30,5 @@ public enum Page {
 		this.stageTitle = stageTitle;
 	}
 
-	public String getRes() {
-		return res;
-	}
-
-	public void setRes(String res) {
-		this.res = res;
-	}
-
-	Page(String res, String stageTitle) {
-		this.res = res;
-		this.stageTitle = stageTitle;
-		
-	}
+	
 }

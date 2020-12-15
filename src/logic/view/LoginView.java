@@ -1,5 +1,6 @@
 package logic.view;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -11,6 +12,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
+import logic.utilities.Page;
+import logic.utilities.PageLoader;
 
 public class LoginView implements Initializable{
 
@@ -26,7 +29,7 @@ public class LoginView implements Initializable{
     
 
     @FXML
-    void loginUser(ActionEvent event) {
+    void loginUser(ActionEvent event) throws IOException {
     	boolean logged;
     	String user = textUsername.getText();
     	String password = textPassword.getText();
@@ -36,13 +39,14 @@ public class LoginView implements Initializable{
     	
     	loginController = new LoginController();
     	logged = loginController.login(userBean);
-    	
+    	System.out.println(logged);
     	if (!logged) {
     		UserBean.setInstance(null);
     		// show Alert o gestione exception?
     	}
     	
     	// load Homepage
+    	PageLoader pageLoader = new PageLoader(Page.HOMEPAGE, event);
     }
 
 	@Override
