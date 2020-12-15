@@ -12,23 +12,9 @@ import logic.utilities.PageLoader;
 
 public class HomepageView implements Initializable {
 
-    @FXML
-    private Button btnHome;
-
-    @FXML
-    private Button btnExams;
-    
-    
-    @FXML
-    public void homeButton(ActionEvent event) throws IOException {
-    	PageLoader pageLoader = new PageLoader(Page.HOMEPAGE, event);
-    	System.out.println("Homepage");
-    }
-    
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
 	}
 
 }
