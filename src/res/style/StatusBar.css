@@ -9,6 +9,8 @@
     -fx-text-fill: #0C0B0B;
 }
 
+
+/* General buttons */
 .button {
     -icon-paint: #0C0B0B;
 	-fx-background-color: -icon-paint;
