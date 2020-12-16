@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" stylesheets="@../style/Signup.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.SignupView">
+   <children>
+   
+      <TextField fx:id="textName" layoutX="384.0" layoutY="369.0" promptText="Name" stylesheets="@../style/Signup.css" AnchorPane.leftAnchor="384.0" AnchorPane.topAnchor="369.0" />
+      
+      <TextField fx:id="textSurname" layoutX="737.0" layoutY="369.0" promptText="Surname" stylesheets="@../style/Signup.css" />
+      
+      <TextField fx:id="textEmail" layoutX="384.0" layoutY="450.0" promptText="Email" stylesheets="@../style/Signup.css" />
+      
+      <PasswordField fx:id="textPassword" layoutX="737.0" layoutY="450.0" promptText="Password" stylesheets="@../style/Signup.css" />
+      
+      <Label layoutX="384.0" layoutY="531.0" stylesheets="@../style/Signup.css" text="Who are you?" />
+      
+      <RadioButton fx:id="rdMode" layoutX="760.0" layoutY="552.0" mnemonicParsing="false" stylesheets="@../style/Signup.css" text="Professor">
+      	<toggleGroup>
+       		<ToggleGroup fx:id="group" />
+   		</toggleGroup>
+      </RadioButton>
+      
+      <RadioButton fx:id="rdMode" layoutX="927.0" layoutY="552.0" mnemonicParsing="false" stylesheets="@../style/Signup.css" text="Student">
+      	<toggleGroup>
+       		<fx:reference source="group" />
+   		</toggleGroup>
+      </RadioButton>
+      
+      <Button fx:id="btnSignup" disable="true" layoutX="532.0" layoutY="612.0" mnemonicParsing="false" styleClass="signup-button" stylesheets="@../style/Signup.css" text="Sign Up" />
+      
+      <Button fx:id="btnLogin" layoutX="590.0" layoutY="770.0" mnemonicParsing="false" onAction="#gotoLogin" styleClass="login-button" stylesheets="@../style/Signup.css" text="Already have an account? Log In" />
+      
+   </children>
+</AnchorPane>

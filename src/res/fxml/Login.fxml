@@ -8,15 +8,19 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.LoginView">
    <children>
    	
-      <TextField fx:id="textUsername" layoutX="561.0" layoutY="369.0" prefHeight="63.0" prefWidth="319.0" promptText="Username" stylesheets="@../style/Login.css" />
+      <TextField fx:id="textUsername" layoutX="561.0" layoutY="369.0" promptText="Username" stylesheets="@../style/Login.css" />
 
-      <PasswordField fx:id="textPassword" layoutX="561.0" layoutY="454.0" prefHeight="63.0" prefWidth="319.0" promptText="Password" stylesheets="@../style/Login.css" />
+      <PasswordField fx:id="textPassword" layoutX="561.0" layoutY="454.0" promptText="Password" stylesheets="@../style/Login.css" />
 
-      <Button fx:id="btnLogin" layoutX="561.0" layoutY="539.0" mnemonicParsing="false" onAction="#loginUser" prefWidth="182.0" stylesheets="@../style/Login.css" text="LOG IN" textFill="WHITE"/>
+      <Button fx:id="btnLogin" layoutX="561.0" layoutY="539.0" mnemonicParsing="false" onAction="#loginUser" prefWidth="182.0" styleClass="login-button" stylesheets="@../style/Login.css" text="LOG IN" />
 
-      <Button layoutX="759.0" layoutY="545.0" mnemonicParsing="false" styleClass="facebook-button" stylesheets="@../style/Login.css" />
+      <Button fx:id="btnFacebook" layoutX="759.0" layoutY="545.0" mnemonicParsing="false" styleClass="facebook-button" stylesheets="@../style/Login.css" />
 
-      <Button layoutX="828.0" layoutY="545.0" mnemonicParsing="false" styleClass="google-button" stylesheets="@../style/Login.css" />
+      <Button fx:id="btnGoogle" layoutX="828.0" layoutY="545.0" mnemonicParsing="false" styleClass="google-button" stylesheets="@../style/Login.css" />
+      
+      <Button fx:id="btnSignup" layoutX="561.0" layoutY="624.0" mnemonicParsing="false" onAction="#gotoSignup" styleClass="signup-button" stylesheets="@../style/Login.css" text="Sign Up" AnchorPane.leftAnchor="561.0" AnchorPane.topAnchor="624.0" />
+      
+      <Button fx:id="btnForgot" layoutX="635.0" layoutY="710.0" mnemonicParsing="false" styleClass="forgot-button" stylesheets="@../style/Login.css" text="Forgot Your Password?" AnchorPane.leftAnchor="635.0" AnchorPane.topAnchor="710.0" />
 
    </children>
 </AnchorPane>
