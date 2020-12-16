@@ -6,9 +6,7 @@ public class Session {
 	private static Session instance = null;
 	private User userLogged;
 
-	private Session() {
-
-	}
+	private Session() {}
 
 	public static Session getSession() {
 		if (Session.instance == null) {
