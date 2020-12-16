@@ -14,6 +14,5 @@ public class LoginController {
 		
 		Session.getSession().setUserLogged(user);
 		return true;
-		
 	}
 }
