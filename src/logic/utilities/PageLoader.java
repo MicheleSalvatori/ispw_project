@@ -18,7 +18,12 @@ public class PageLoader {
 
 	public PageLoader(Page page, ActionEvent event) throws IOException {
 		this.page = page;
-		loadPage(event);
+		if (page.getStageTitle() == "App - Signup" || page.getStageTitle() == "App - Login") {
+			loadPageNoNavBar(event);
+		}
+		else {
+			loadPage(event);
+		}
 	}
 
 	private void loadPage(ActionEvent ae) throws IOException {
@@ -31,6 +36,19 @@ public class PageLoader {
 		HBox hBox = new HBox(navBar, parent);			//TODO aggiungere status bar
 
 		Scene scene = new Scene(hBox);
+		stage.setScene(scene);
+		stage.setTitle(page.getStageTitle());
+		stage.show();
+	}
+	
+	private void loadPageNoNavBar(ActionEvent ae) throws IOException {
+		Node source = (Node) ae.getSource();
+		Stage stage = (Stage) source.getScene().getWindow();
+		URL url = new File(page.getRes()).toURI().toURL();
+		FXMLLoader loader = new FXMLLoader(url);
+		Parent parent = loader.load();
+
+		Scene scene = new Scene(parent);
 		stage.setScene(scene);
 		stage.setTitle(page.getStageTitle());
 		stage.show();
