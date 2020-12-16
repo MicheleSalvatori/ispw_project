@@ -23,7 +23,7 @@ public class SignupView implements Initializable{
 	@FXML
 	private RadioButton rbProfessor, rbStudent;
 	@FXML
-	private Button btnSignup, btnLogin;
+	private Button btnSignup, btnLogin, btnFacebook, btnGoogle;
 	
 	@FXML
     void gotoLogin(ActionEvent event) throws IOException {
