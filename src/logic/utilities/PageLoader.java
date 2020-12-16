@@ -40,7 +40,6 @@ public class PageLoader {
 		FXMLLoader loader = new FXMLLoader(url);
 		
 		configPage(loader.load());
-
 	}
 	
 	private NavBar configNavBar() throws IOException {
@@ -50,7 +49,7 @@ public class PageLoader {
 	private HBox configStatusBar() throws IOException {
 		HBox statusBarHBox = new HBox(StatusBar.getInstance());
 		statusBarHBox.setAlignment(Pos.TOP_RIGHT);
-		HBox.setMargin(StatusBar.getInstance(), new Insets(10, 10, 10, 0));
+		HBox.setMargin(StatusBar.getInstance(), new Insets(54.0, 80.0, 0, 0));
 		return statusBarHBox;
 	}
 	
@@ -59,7 +58,7 @@ public class PageLoader {
 		VBox vBox = new VBox();
 		vBox.getChildren().addAll(configStatusBar(), pageView);
 		mainLayoutHBox = new HBox(configNavBar(), vBox);						
-		HBox.setMargin(NavBar.getInstance(), new Insets(30.0, 0,10.0,10.0));
+		HBox.setMargin(NavBar.getInstance(), new Insets(24.0, 72.0, 24.0, 32.0));
 		
 		scene = new Scene(mainLayoutHBox);
 		primaryStage.setScene(scene);

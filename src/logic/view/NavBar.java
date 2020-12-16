@@ -10,7 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
-public class NavBar extends VBox{
+public class NavBar extends VBox {
 	private static NavBar instance = null;
 	
 	private NavBar() {

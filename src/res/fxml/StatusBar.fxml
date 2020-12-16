@@ -5,34 +5,34 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.HBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="43.0" prefWidth="546.0" style="ba: 14;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-  <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="387.0" minWidth="10.0" prefWidth="387.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="181.0" minWidth="10.0" prefWidth="25.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.0" minWidth="10.0" prefWidth="30.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="30.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+<HBox alignment="CENTER_RIGHT" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="43.0" prefWidth="440.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="labelName" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="382.0" stylesheets="@../style/StatusBar.css" text="nomeUtente" />
-      <Button fx:id="btnLogout" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#logout" styleClass="logout-button" stylesheets="@../style/StatusBar.css" text="Button" GridPane.columnIndex="3">
-         <GridPane.margin>
-            <Insets left="10.0" />
-         </GridPane.margin></Button>
-      <Button fx:id="btnNotifications" mnemonicParsing="false" onAction="#notification" styleClass="notification-button" stylesheets="@../style/StatusBar.css" text="Button" GridPane.columnIndex="2">
-         <GridPane.margin>
-            <Insets left="10.0" />
-         </GridPane.margin></Button>
-      <ImageView fx:id="ivProfile" fitHeight="40.0" fitWidth="47.0" onMouseClicked="#profile" GridPane.columnIndex="1">
-         <image>
-            <Image url="@../jpeg/avatar.png" />
-         </image>
-      </ImageView>
+   
+      <Label fx:id="labelName" alignment="CENTER_RIGHT" prefHeight="43.0" prefWidth="308.0" stylesheets="@../style/StatusBar.css" text="nomeUtente" />
+      
+      <Button fx:id="btnNotifications" alignment="CENTER" mnemonicParsing="false" onAction="#notification" styleClass="notification-button" stylesheets="@../style/StatusBar.css">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </Button>
+      <Button mnemonicParsing="false" styleClass="profile-button" stylesheets="@../style/StatusBar.css">
+         <graphic>
+            
+            <ImageView fx:id="ivProfile" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#profile">
+               <image>
+                  <Image url="@../jpeg/avatar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      
+      <Button fx:id="btnLogout" alignment="CENTER" mnemonicParsing="false" onAction="#logout" styleClass="logout-button" stylesheets="@../style/StatusBar.css">
+         <HBox.margin>
+            <Insets right="10.0" />
+         </HBox.margin>
+      </Button>
+      
    </children>
-</GridPane>
+</HBox>

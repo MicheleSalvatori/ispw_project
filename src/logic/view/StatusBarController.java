@@ -29,6 +29,7 @@ public class StatusBarController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		User userLogged = Session.getSession().getUserLogged();
+		userLogged.setUsername("Gulyx");
 		labelName.setText(userLogged.getUsername());
 	}
 	

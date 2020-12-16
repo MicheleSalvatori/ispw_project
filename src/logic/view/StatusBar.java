@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.net.URL;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
-public class StatusBar extends GridPane{
+public class StatusBar extends HBox {
 	private static StatusBar instance = null;
 	
 	private StatusBar() {}
