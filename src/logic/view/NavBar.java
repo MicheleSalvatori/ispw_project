@@ -16,15 +16,19 @@ public class NavBar extends VBox{
 	private NavBar() {
 	}
 	
-	public static NavBar getInstance() throws IOException {
+	public static NavBar getInstance() throws IOException  {
 		if (instance == null) {
 			instance = new NavBar();
-			URL url = new File("src/res/fxml/NavMenu.fxml").toURI().toURL();
-			FXMLLoader loader = new FXMLLoader(url);
-			loader.setController(new NavBarController());
-			instance.getChildren().add(loader.load());
+			loadView();
 		}
 		
 		return instance;
+	}
+	
+	private static void loadView() throws IOException {
+		URL url = new File("src/res/fxml/NavMenu.fxml").toURI().toURL();
+		FXMLLoader loader = new FXMLLoader(url);
+		loader.setController(new NavBarController());
+		instance.getChildren().add(loader.load());
 	}
 }

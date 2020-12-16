@@ -10,6 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import logic.Session;
+import logic.model.User;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
@@ -26,6 +28,8 @@ public class StatusBarController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		User userLogged = Session.getSession().getUserLogged();
+		labelName.setText(userLogged.getUsername());
 	}
 	
 	@FXML
@@ -39,7 +43,7 @@ public class StatusBarController implements Initializable {
 	}
 	
 	@FXML
-	public void profile(ActionEvent e) throws IOException {
+	public void profile(javafx.scene.input.MouseEvent e) throws IOException {
 		System.out.println("Profile");
 	}
 }
