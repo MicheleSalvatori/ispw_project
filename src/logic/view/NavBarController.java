@@ -25,6 +25,8 @@ public class NavBarController implements Initializable {
 	private Button btnNews;
 	@FXML
 	private Button btnBack;
+	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
@@ -37,7 +39,7 @@ public class NavBarController implements Initializable {
 	}
 	
 	@FXML
-	public void examsButton(ActionEvent e) throws IOException {
+	public void backButton(ActionEvent e) throws IOException {
 		System.out.println("Examspage");
 		PageLoader pageLoader = new PageLoader(Page.LOGIN, e);
 	}

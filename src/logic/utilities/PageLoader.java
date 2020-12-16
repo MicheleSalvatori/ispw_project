@@ -67,7 +67,7 @@ public class PageLoader {
 		primaryStage.show();
 	}
 
-private void loadPageNoNavBar(ActionEvent ae) throws IOException {
+	private void loadPageNoNavBar(ActionEvent ae) throws IOException {
 		Node source = (Node) ae.getSource();
 		Stage stage = (Stage) source.getScene().getWindow();
 		URL url = new File(page.getRes()).toURI().toURL();
