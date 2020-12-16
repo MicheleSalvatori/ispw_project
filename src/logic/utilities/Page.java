@@ -3,7 +3,8 @@ package logic.utilities;
 public enum Page {
 	
 	HOMEPAGE("src/res/fxml/Homepage.fxml", "App - Homepage"), 
-	LOGIN("src/res/fxml/Login.fxml", "App - Login"); 
+	LOGIN("src/res/fxml/Login.fxml", "App - Login"),
+	SIGNUP("src/res/fxml/Signup.fxml", "App - Signup");
 	
 	
 	private String res;

@@ -48,7 +48,12 @@ public class LoginView implements Initializable{
     	// load Homepage
     	PageLoader pageLoader = new PageLoader(Page.HOMEPAGE, event);
     }
-
+    
+    @FXML
+    public void gotoSignup(ActionEvent ae) throws IOException {
+    	PageLoader pageLoader = new PageLoader(Page.SIGNUP, ae);
+    }
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		textUsername.requestFocus();
