@@ -17,6 +17,7 @@
             <Insets />
          </HBox.margin>
       </Button>
+      
       <Button mnemonicParsing="false" styleClass="profile-button" stylesheets="@../style/StatusBar.css">
          <graphic>
             
