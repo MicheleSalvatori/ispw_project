@@ -2,6 +2,7 @@ package logic.view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -24,35 +25,34 @@ public class LoginView implements Initializable{
     @FXML
     private PasswordField textPassword;
     
-    private UserBean userBean;
     private LoginController loginController;
     
 
     @FXML
-    void loginUser(ActionEvent event) throws IOException {
+    void loginUser(ActionEvent event) throws IOException, ClassNotFoundException {
     	boolean logged;
-    	String user = textUsername.getText();
+    	String username = textUsername.getText();			//fare controlli sintattici qui?
     	String password = textPassword.getText();
+    	// gestire input vuoti
     	
-    	userBean = UserBean.getUserBeanInstance(user);
-    	userBean.setUsbPassword(password);
-    	
+    	UserBean userBean = new UserBean();
+    	userBean.setUsername(username);
+    	userBean.setPassword(password);
+    	System.out.println("LOGIN DATA:\n\tuser: "+userBean.getUsername() + "\n\tpass: "+userBean.getPassword());
     	loginController = new LoginController();
-    	logged = loginController.login(userBean);
-    	System.out.println(logged);
-    	if (!logged) {
-    		UserBean.setInstance(null);
-    		// show Alert o gestione exception?
-    	}
-    	
-    	// load Homepage
-    	PageLoader pageLoader = new PageLoader(Page.HOMEPAGE, event);
+    	try {
+			loginController.login(userBean);
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//Alert user not found o qualcosa del genere
+		}
     }
     
     @FXML
-    void gotoSignup(ActionEvent ae) throws IOException {
+    void gotoSignup(ActionEvent event) throws IOException {
     	// load Signup Page
-    	PageLoader pageLoader = new PageLoader(Page.SIGNUP, ae);
+    	PageLoader.getInstance().buildPage(Page.SIGNUP, event);
     }
 
 	@Override

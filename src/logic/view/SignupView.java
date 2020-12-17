@@ -28,7 +28,7 @@ public class SignupView implements Initializable{
 	@FXML
     void gotoLogin(ActionEvent event) throws IOException {
     	// load Login page
-    	PageLoader pageLoader = new PageLoader(Page.LOGIN, event);
+		PageLoader.getInstance().buildPage(Page.LOGIN, event);
     }
 
 	@Override

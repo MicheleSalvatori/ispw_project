@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
-public class NavBarController implements Initializable {
+public class NavBarView implements Initializable {
 	
 	@FXML
 	private Button btnHome;
@@ -33,15 +33,14 @@ public class NavBarController implements Initializable {
 	}
 	
 	@FXML
-	public void homeButton(ActionEvent e) throws IOException {
+	public void homeButton(ActionEvent event) throws IOException {
 		System.out.println("HomeButton");
-		PageLoader pageLoader = new PageLoader(Page.HOMEPAGE, e);
+		PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
 	}
 	
 	@FXML
-	public void backButton(ActionEvent e) throws IOException {
-		System.out.println("Examspage");
-		PageLoader pageLoader = new PageLoader(Page.LOGIN, e);
+	public void backButton(ActionEvent event) throws IOException {
+		System.out.println("Back");
 	}
 	
 	

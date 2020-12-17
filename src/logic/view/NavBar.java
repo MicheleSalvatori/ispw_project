@@ -28,7 +28,7 @@ public class NavBar extends VBox {
 	private static void loadView() throws IOException {
 		URL url = new File("src/res/fxml/NavMenu.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
-		loader.setController(new NavBarController());
+		loader.setController(new NavBarView());
 		instance.getChildren().add(loader.load());
 	}
 }
