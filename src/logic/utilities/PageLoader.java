@@ -18,12 +18,22 @@ import logic.view.NavBar;
 import logic.view.StatusBar;
 
 public class PageLoader {
+	private static PageLoader instance = null;
 	private Page page;
 	private Stage primaryStage;
 	private HBox mainLayoutHBox;
 	private Scene scene;
 	
-	public PageLoader(Page page, ActionEvent event) throws IOException {
+	private PageLoader() {}
+	
+	public static PageLoader getInstance() {
+		if (instance == null) {
+			instance = new PageLoader();
+		}
+		return instance;
+	}
+	
+	public void buildPage(Page page, ActionEvent event) throws IOException {
 		this.page = page;
 		if (page.getStageTitle() == "App - Signup" || page.getStageTitle() == "App - Login") {
 			loadPageNoNavBar(event);
