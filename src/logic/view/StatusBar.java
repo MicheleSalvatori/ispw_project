@@ -23,7 +23,7 @@ public class StatusBar extends HBox {
 	private static void loadView() throws IOException {
 		URL url = new File("src/res/fxml/StatusBar.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
-		loader.setController(new StatusBarController());
+		loader.setController(new StatusBarView());
 		instance.getChildren().add(loader.load());
 	}
 }

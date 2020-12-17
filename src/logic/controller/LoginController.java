@@ -19,4 +19,10 @@ public class LoginController {
 		//Gestione Sessione
 		Session.getSession().setUserLogged(user);
 	}
+	
+	public void logout() throws SQLException, ClassNotFoundException {
+		
+		// Delete Session
+		Session.getSession().setUserLogged(null);
+	}
 }

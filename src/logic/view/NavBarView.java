@@ -42,6 +42,4 @@ public class NavBarView implements Initializable {
 	public void backButton(ActionEvent event) throws IOException {
 		System.out.println("Back");
 	}
-	
-	
 }
