@@ -1,47 +1,26 @@
 package logic.bean;
 
-
-/*
- * Singleton UserBean
- */
-
 public class UserBean {
-	private static UserBean usbInstance = null;
-	private String usbUsername;
-	private String usbPassword;
+	private String username;
+	private String password;
 	
-	
-	public static UserBean getUserBeanInstance(String username) {
-		if (UserBean.usbInstance == null) {
-			UserBean.usbInstance = new UserBean();
-			UserBean.usbInstance.usbUsername = username;
-		}
-		return usbInstance;
+	public UserBean() {
 	}
 	
-	public static UserBean getUsbInstance() {
-		return usbInstance;
-	}
-	
-	public static void setInstance(UserBean userBean) {
-		UserBean.usbInstance = userBean;
+	public String getUsername() {
+		return username;
 	}
 
-	public String getUsbUsername() {
-		return usbUsername;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public void setUsbUsername(String usbUsername) {
-		this.usbUsername = usbUsername;
+	public String getPassword() {
+		return password;
 	}
 
-	public String getUsbPassword() {
-		return usbPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-
-	public void setUsbPassword(String usbPassword) {
-		this.usbPassword = usbPassword;
-	}
-	
 	
 }

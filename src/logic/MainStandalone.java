@@ -2,15 +2,17 @@ package logic;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.SQLException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import logic.utilities.SingletonDB;
 
 public class MainStandalone extends Application{
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException, ClassNotFoundException {
 		launch(args);
 	}
 
