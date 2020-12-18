@@ -57,6 +57,8 @@ public class PageLoader {
 	}
 	
 	private HBox configStatusBar() throws IOException {
+		// Reset StatusBar instance every time in order to set label and user avatar properly
+		StatusBar.reset(); 										
 		HBox statusBarHBox = new HBox(StatusBar.getInstance());
 		statusBarHBox.setAlignment(Pos.TOP_RIGHT);
 		HBox.setMargin(StatusBar.getInstance(), new Insets(54.0, 80.0, 0, 0));

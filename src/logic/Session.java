@@ -3,6 +3,7 @@ package logic;
 import logic.model.User;
 
 public class Session {
+	
 	private static Session instance = null;
 	private User userLogged;
 
@@ -22,5 +23,4 @@ public class Session {
 	public void setUserLogged(User userLogged) {
 		this.userLogged = userLogged;
 	}
-
 }

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
@@ -29,23 +31,36 @@ public class LoginView implements Initializable{
     
 
     @FXML
-    void loginUser(ActionEvent event) throws IOException, ClassNotFoundException {
-    	boolean logged;
-    	String username = textUsername.getText();			//fare controlli sintattici qui?
+    void loginUser(ActionEvent event) throws IOException {
+    	
+    	String username = textUsername.getText();
     	String password = textPassword.getText();
-    	// gestire input vuoti
+    	
+    	if (username.isEmpty() || password.isEmpty()) {
+    		System.out.println("One or more fields are empty");
+    		return;
+    	}
     	
     	UserBean userBean = new UserBean();
     	userBean.setUsername(username);
     	userBean.setPassword(password);
     	System.out.println("LOGIN DATA:\n\tuser: "+userBean.getUsername() + "\n\tpass: "+userBean.getPassword());
+    	
     	loginController = new LoginController();
     	try {
 			loginController.login(userBean);
 			PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			//Alert user not found o qualcosa del genere
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (RecordNotFoundException e) {
+			// Alert user not found o qualcosa del genere
+			System.out.println("User '" + username + "' whit password '" + password + "' not found.\nShowing alert.\n");
 		}
     }
     
@@ -59,6 +74,23 @@ public class LoginView implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		textUsername.requestFocus();
 		btnLogin.setDisable(false);
+		
+		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					loginUser(event);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+		
+		// Se premi invio quando sei sul campo username o password fa il login 
+		textUsername.setOnAction(eventHandler);
+		textPassword.setOnAction(eventHandler);
 	}
 
 }

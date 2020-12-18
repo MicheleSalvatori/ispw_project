@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
 
 public class StatusBar extends HBox {
+	
 	private static StatusBar instance = null;
 	
 	private StatusBar() {}
@@ -25,5 +26,9 @@ public class StatusBar extends HBox {
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(new StatusBarView());
 		instance.getChildren().add(loader.load());
+	}
+	
+	public static void reset() {
+		instance = null;
 	}
 }

@@ -1,8 +1,19 @@
 package logic.model;
 
 public class User {
+	
 	private String username;
 	private String password;
+	private String name;
+	private String surname;
+	private String email;
+	
+	public User() {}
+	
+	public User(String usr, String pass) {
+		this.username = usr;
+		this.password = pass;
+	}
 	
 	public String getUsername() {
 		return username;
@@ -20,10 +31,27 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String pass, String usr) {
-		this.password = pass;
-		this.username = usr;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
-	public User() {}
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }
