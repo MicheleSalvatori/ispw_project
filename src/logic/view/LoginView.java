@@ -5,6 +5,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -72,8 +74,9 @@ public class LoginView implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		textUsername.requestFocus();
-		btnLogin.setDisable(false);
+		
+		btnLogin.disableProperty().bind(Bindings.isEmpty(textUsername.textProperty())
+								  .or(Bindings.isEmpty(textPassword.textProperty())));
 		
 		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
 			

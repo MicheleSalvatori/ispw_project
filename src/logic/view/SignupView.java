@@ -5,7 +5,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -86,8 +88,28 @@ public class SignupView implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		btnSignup.setDisable(false); // TODO implementare false disable se tutti i campi sono compilati
+		
+		btnSignup.disableProperty().bind(Bindings.isEmpty(textName.textProperty())
+				  				   .or(Bindings.isEmpty(textSurname.textProperty())
+				  				   .or(Bindings.isEmpty(textEmail.textProperty())
+				  				   .or(Bindings.isEmpty(textPassword.textProperty())))));
+		
+		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					signup(event);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+		
+		textName.setOnAction(eventHandler);
+		textSurname.setOnAction(eventHandler);
+		textEmail.setOnAction(eventHandler);
+		textPassword.setOnAction(eventHandler);		
 	}
 
 }
