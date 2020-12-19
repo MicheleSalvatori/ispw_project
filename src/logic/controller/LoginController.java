@@ -3,41 +3,40 @@ package logic.controller;
 import java.sql.SQLException;
 
 import logic.Session;
-import logic.bean.ProfessorBean;
-import logic.bean.StudentBean;
+import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Professor;
-import logic.model.User;
-import logic.model.dao.ProfessorDao;
+import logic.model.Student;
+import logic.model.dao.ProfessorDAO;
+import logic.model.dao.StudentDAO;
 
 public class LoginController {
 
-	public void login(ProfessorBean professorBean) throws SQLException, ClassNotFoundException, RecordNotFoundException {
+	public void loginAsProfessor(UserBean userBean) throws SQLException, ClassNotFoundException, RecordNotFoundException {
 		
-		String username = professorBean.getUsername();
-		String password = professorBean.getPassword();
+		String username = userBean.getUsername();
+		String password = userBean.getPassword();
 		
-		Professor professor = ProfessorDao.findProfessor(username, password);
+		Professor professor = ProfessorDAO.findProfessor(username, password);
 		System.out.println("FINE: "+ professor.getUsername());
 		
 		//Gestione Sessione
-//		Session.getSession().setProfessorLogged(professor);
+		Session.getSession().setUserLogged(professor);
 	}
 	
-	public void login(StudentBean student) throws SQLException, ClassNotFoundException, RecordNotFoundException {
+	public void loginAsStudent(UserBean userBean) throws SQLException, ClassNotFoundException, RecordNotFoundException {
 			
-			String username = student.getUsername();
-			String password = student.getPassword();
+			String username = userBean.getUsername();
+			String password = userBean.getPassword();
 			
-//			Student user = ProfessorDao.findProfessor(username, password);
-//			System.out.println("FINE: "+ user.getUsername());
+			Student student = StudentDAO.findStudent(username, password);
 			
 			//Gestione Sessione
-//			Session.getSession().setUserLogged(user);
+			Session.getSession().setUserLogged(student);
 		}
 	public void logout() throws SQLException, ClassNotFoundException {
 		
 		// Delete Session
-//		Session.getSession().setUserLogged(null);
+		Session.getSession().setUserLogged(null);
 	}
 }

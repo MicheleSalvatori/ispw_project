@@ -5,8 +5,7 @@ import java.sql.SQLException;
 import logic.bean.UserBean;
 import logic.exceptions.DuplicatedRecordException;
 import logic.exceptions.RecordNotFoundException;
-import logic.model.User;
-import logic.model.dao.UserDAO;
+import logic.model.dao.StudentDAO;
 
 public class SignupController {
 	
@@ -18,11 +17,11 @@ public class SignupController {
 		String email = usrBean.getEmail();
 		String password = usrBean.getPassword();
 		
-		User user = UserDAO.addUser(username, name, surname, email, password);
+		StudentDAO.addStudent(username, password, name, surname, email);
 		
 		// Automatic redirect
 		System.out.println("Automatic redirect to login");
 		LoginController loginController = new LoginController();
-		loginController.login(usrBean);
+		loginController.loginAsStudent(usrBean);
 	}
 }

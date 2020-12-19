@@ -30,7 +30,7 @@ public class StatusBarView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//		labelName.setText(Session.getSession().getUserLogged().);
+		labelName.setText(Session.getSession().getUserLogged().getName());
 	}
 	
 	@FXML

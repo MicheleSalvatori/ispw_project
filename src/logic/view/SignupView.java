@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import logic.bean.UserBean;
 import logic.controller.SignupController;
@@ -27,8 +26,6 @@ public class SignupView implements Initializable{
 	private TextField textName, textSurname, textEmail;
 	@FXML
 	private PasswordField textPassword;
-	@FXML
-	private RadioButton rbProfessor, rbStudent;
 	@FXML
 	private Button btnSignup, btnLogin, btnFacebook, btnGoogle;
 	
@@ -45,46 +42,43 @@ public class SignupView implements Initializable{
 		
 		String name = textName.getText();
 		String surname = textSurname.getText();
-		String username = name + "." + surname;			// Dobbiamo mettere la casella username sulla schermate di signup
+		String username = (name.replaceAll("\\s", "")).toLowerCase() + "." +
+							(surname.replaceAll("\\s", "")).toLowerCase();
 		String email = textEmail.getText();
     	String password = textPassword.getText();
     	
     	if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
-    		System.out.println("One or more fields are empty");
+    		System.out.println("One or more fields are empty -> Alert");
     		return;
     	}
-    	
-    	UserBean userBean = new UserBean();
-    	userBean.setUsername(username);
+	
+		UserBean userBean = new UserBean();
+		userBean.setUsername(username);
     	userBean.setName(name);
     	userBean.setSurname(surname);
     	userBean.setEmail(email);
     	userBean.setPassword(password);
-    	
-    	System.out.println("LOGIN DATA:\n\tuser: "+userBean.getUsername() + "\n\tpass: "+userBean.getPassword());
-    	
+    	System.out.println("SIGNUP DATA:\n\tuser: "+userBean.getUsername() + "\n\tpass: "+userBean.getPassword());
     	signupController = new SignupController();
-    	try {
+	    try {
 			signupController.signup(userBean);
 			PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
-			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
 		} catch (RecordNotFoundException e) {
+			e.printStackTrace();
 			// Alert user not found o qualcosa del genere
 			System.out.println("User '" + username + "' whit password '" + password + "' not found.\nShowing alert.\n");
-			
 		} catch (DuplicatedRecordException e) {
+			e.printStackTrace();
 			System.out.println("Username already present.\n Showing error message.\n");
 			// TODO implementare alert di errore
 		}
 	}
+
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

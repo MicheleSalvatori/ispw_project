@@ -12,8 +12,14 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
-	public static int insertUser(Statement stmt, String username, String name, String surname, String email, String password) throws SQLException {
-		String query = "INSERT INTO user (username, password, name, surname, email) VALUES ('" + username + "', '" + password + "', '" + name + "', '" + surname + "', '" + email + "');";
+	public static ResultSet selectStudent(Statement stmt, String username, String password) throws SQLException {
+		String query = "SELECT * FROM student WHERE username = '" +  username + "' AND password = '" + password + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
+	public static int insertStudent(Statement stmt, String username, String password, String name, String surname, String email) throws SQLException {
+		String query = "INSERT INTO student (username, password, name, surname, email) VALUES ('" + username + "', '" + password + "', '" + name + "', '" + surname + "', '" + email + "');";
 		System.out.println(query);
 		return stmt.executeUpdate(query);
 	}
