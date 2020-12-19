@@ -42,10 +42,9 @@
    		</toggleGroup>
       </RadioButton>
       
-      <Button fx:id="btnSignup" disable="true" layoutX="532.0" layoutY="612.0" mnemonicParsing="false" styleClass="signup-button" stylesheets="@../style/Signup.css" text="Sign Up" />
+      <Button fx:id="btnSignup" disable="true" layoutX="532.0" layoutY="612.0" onAction="#signup" mnemonicParsing="false" styleClass="signup-button" stylesheets="@../style/Signup.css" text="Sign Up" />
       
       <Button fx:id="btnLogin" layoutX="590.0" layoutY="770.0" mnemonicParsing="false" onAction="#gotoLogin" styleClass="login-button" stylesheets="@../style/Signup.css" text="Already have an account? Log In" />
-    
     
       <Button fx:id="btnGoogle" layoutX="726.0" layoutY="693.0" mnemonicParsing="false" styleClass="image-button" stylesheets="@../style/Signup.css">
       	<graphic>

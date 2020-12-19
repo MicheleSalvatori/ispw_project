@@ -7,8 +7,14 @@ import java.sql.Statement;
 public class Queries {
 
 	public static ResultSet selectUser(Statement stmt, String username, String password) throws SQLException {
-		String query = "Select * from user where username = " +  username + " and password = " + password;
+		String query = "SELECT * FROM user WHERE username = '" +  username + "' AND password = '" + password + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query);
+	}
+	
+	public static int insertUser(Statement stmt, String username, String name, String surname, String email, String password) throws SQLException {
+		String query = "INSERT INTO user (username, password, name, surname, email) VALUES ('" + username + "', '" + password + "', '" + name + "', '" + surname + "', '" + email + "');";
+		System.out.println(query);
+		return stmt.executeUpdate(query);
 	}
 }
