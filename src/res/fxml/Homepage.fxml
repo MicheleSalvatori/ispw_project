@@ -4,10 +4,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="1204.0" stylesheets="@../style/Homepage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.HomepageView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../style/Homepage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.HomepageView">
    <children>
       
       <Text layoutX="775.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOMEPAGE" textAlignment="CENTER" wrappingWidth="67.9697265625" />
@@ -30,11 +31,18 @@
          </children>
       </AnchorPane>
       
-      <ScrollPane layoutY="237.0" prefHeight="566.0" prefWidth="637.0" stylesheets="@../style/ScrollPane.css">
+      <ScrollPane fx:id="scroll" layoutY="266.0" prefHeight="507.0" prefWidth="642.0" stylesheets="@../style/ScrollPane.css">
          <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="620.0" style="-fx-background-color: white;" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="620.0" />
          </content>
       </ScrollPane>
+      <Label layoutY="223.0" stylesheets="@../style/Homepage.css" text="Today Lessons" />
+      <Pane prefHeight="96.0" prefWidth="620.0" styleClass="pane">
+         <children>
+            <Label layoutX="32.0" styleClass="pane-mainlabel" text="Hello Gulyx!" />
+            <Label layoutX="32.0" layoutY="52.0" styleClass="pane-otherlabel" text="It’s good to see you again." />
+         </children>
+      </Pane>
       
    </children>
 </AnchorPane>
