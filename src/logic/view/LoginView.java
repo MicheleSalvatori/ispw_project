@@ -43,7 +43,7 @@ public class LoginView implements Initializable {
 		String username = textUsername.getText();
 		String password = textPassword.getText();
 
-		if (username.isEmpty() || password.isEmpty()) {
+		if (username.isEmpty() || password.isEmpty() || (!rdProfessor.isSelected() && !rdStudent.isSelected())) {
 			System.out.println("One or more fields are empty");
 			return;
 		}
@@ -109,6 +109,8 @@ public class LoginView implements Initializable {
 				.or(Bindings.isEmpty(textPassword.textProperty()))
 				.or((rdProfessor.selectedProperty().not()).and(rdStudent.selectedProperty().not())));
 
+		
+		
 		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -120,6 +122,7 @@ public class LoginView implements Initializable {
 				}
 			}
 		};
+		
 		// Se premi invio quando sei sul campo username o password fa il login
 		textUsername.setOnAction(eventHandler);
 		textPassword.setOnAction(eventHandler);

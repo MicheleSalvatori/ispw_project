@@ -1,0 +1,20 @@
+@font-face {
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
+ /*Roboto font */
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Regular.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ }
+
+.root {
+	-fx-background-color: white;
+}
