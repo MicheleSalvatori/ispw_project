@@ -29,9 +29,12 @@ public class LoginView implements Initializable {
 	private TextField textUsername;
 	@FXML
 	private PasswordField textPassword;
-	private RadioButton radioSelected;
+	@FXML
+	private RadioButton rdProfessor, rdStudent;
 	@FXML
 	private ToggleGroup radioGroup;
+	
+	private RadioButton radioSelected;
 	private LoginController loginController;
 
 	@FXML
@@ -102,7 +105,9 @@ public class LoginView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		btnLogin.disableProperty()
-				.bind(Bindings.isEmpty(textUsername.textProperty()).or(Bindings.isEmpty(textPassword.textProperty())));
+				.bind(Bindings.isEmpty(textUsername.textProperty())
+				.or(Bindings.isEmpty(textPassword.textProperty()))
+				.or((rdProfessor.selectedProperty().not()).and(rdStudent.selectedProperty().not())));
 
 		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
 			@Override
