@@ -7,14 +7,18 @@ import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import logic.bean.UserBean;
+import javafx.scene.control.ToggleGroup;
+import logic.bean.ProfessorBean;
+import logic.bean.StudentBean;
 import logic.controller.LoginController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Page;
@@ -28,7 +32,9 @@ public class LoginView implements Initializable{
     private TextField textUsername;
     @FXML
     private PasswordField textPassword;
-    
+    private RadioButton radioSelected;
+    @FXML
+    private ToggleGroup radioGroup;
     private LoginController loginController;
     
 
@@ -43,27 +49,61 @@ public class LoginView implements Initializable{
     		return;
     	}
     	
-    	UserBean userBean = new UserBean();
-    	userBean.setUsername(username);
-    	userBean.setPassword(password);
-    	System.out.println("LOGIN DATA:\n\tuser: "+userBean.getUsername() + "\n\tpass: "+userBean.getPassword());
+    	radioSelected = (RadioButton) radioGroup.getSelectedToggle();
     	
-    	loginController = new LoginController();
-    	try {
-			loginController.login(userBean);
-			PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+    	switch (radioSelected.getId()) {
+		case "rdProfessor":
+//			login professor
+			ProfessorBean professorBean = new ProfessorBean();
+			professorBean.setPassword(password);
+			professorBean.setUsername(username);
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
+			loginController = new LoginController();
+			try {
+				loginController.login(professorBean);
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (RecordNotFoundException e) {
+				e.printStackTrace();
+				System.out.println("User '" + username + "' whit password '" + password + "' not found.\nShowing alert.\n");
+			}
+			break;
+		case "rdStudent":
+//			login student
+			StudentBean studentBean = new StudentBean();
+			studentBean.setPassword(password);
+			studentBean.setSurname(username);
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} catch (RecordNotFoundException e) {
-			// Alert user not found o qualcosa del genere
-			System.out.println("User '" + username + "' whit password '" + password + "' not found.\nShowing alert.\n");
+			loginController = new LoginController();
+//			loginController.login(studentBean);
+			break;
+		default:
+			break;
 		}
+//    	UserBean userBean = new UserBean();
+//    	userBean.setUsername(username);
+//    	userBean.setPassword(password);
+//    	System.out.println("LOGIN DATA:\n\tuser: "+userBean.getUsername() + "\n\tpass: "+userBean.getPassword());
+    	
+//    	loginController = new LoginController();
+//    	try {
+////			loginController.login(userBean);
+//			PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			
+////		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			
+////		} catch (RecordNotFoundException e) {
+//			// Alert user not found o qualcosa del genere
+//			System.out.println("User '" + username + "' whit password '" + password + "' not found.\nShowing alert.\n");
+//		}
     }
     
     @FXML

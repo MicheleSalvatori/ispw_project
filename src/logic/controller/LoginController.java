@@ -3,27 +3,41 @@ package logic.controller;
 import java.sql.SQLException;
 
 import logic.Session;
-import logic.bean.UserBean;
+import logic.bean.ProfessorBean;
+import logic.bean.StudentBean;
 import logic.exceptions.RecordNotFoundException;
+import logic.model.Professor;
 import logic.model.User;
-import logic.model.dao.UserDAO;
+import logic.model.dao.ProfessorDao;
 
 public class LoginController {
 
-	public void login(UserBean usrBean) throws SQLException, ClassNotFoundException, RecordNotFoundException {
+	public void login(ProfessorBean professorBean) throws SQLException, ClassNotFoundException, RecordNotFoundException {
 		
-		String username = usrBean.getUsername();
-		String password = usrBean.getPassword();
+		String username = professorBean.getUsername();
+		String password = professorBean.getPassword();
 		
-		User user = UserDAO.findUser(username, password);
-		System.out.println("FINE: "+ user.getUsername());
+		Professor professor = ProfessorDao.findProfessor(username, password);
+		System.out.println("FINE: "+ professor.getUsername());
 		
 		//Gestione Sessione
-		Session.getSession().setUserLogged(user);
+//		Session.getSession().setProfessorLogged(professor);
 	}
+	
+	public void login(StudentBean student) throws SQLException, ClassNotFoundException, RecordNotFoundException {
+			
+			String username = student.getUsername();
+			String password = student.getPassword();
+			
+//			Student user = ProfessorDao.findProfessor(username, password);
+//			System.out.println("FINE: "+ user.getUsername());
+			
+			//Gestione Sessione
+//			Session.getSession().setUserLogged(user);
+		}
 	public void logout() throws SQLException, ClassNotFoundException {
 		
 		// Delete Session
-		Session.getSession().setUserLogged(null);
+//		Session.getSession().setUserLogged(null);
 	}
 }

@@ -25,15 +25,15 @@
       
       <Label layoutX="384.0" layoutY="454.0" stylesheets="@../style/Login.css" text="Who are you?" />
       
-      <RadioButton fx:id="rdMode" layoutX="760.0" layoutY="473.0" mnemonicParsing="false" stylesheets="@../style/Login.css" text="Professor">
+      <RadioButton fx:id="rdProfessor" layoutX="760.0" layoutY="473.0" mnemonicParsing="false" stylesheets="@../style/Login.css" text="Professor">
       	<toggleGroup>
-       		<ToggleGroup fx:id="group" />
+       		<ToggleGroup fx:id="radioGroup" />
    		</toggleGroup>
       </RadioButton>
       
-      <RadioButton fx:id="rdMode" layoutX="927.0" layoutY="475.0" mnemonicParsing="false" stylesheets="@../style/Login.css" text="Student">
+      <RadioButton fx:id="rdStudent" layoutX="927.0" layoutY="475.0" mnemonicParsing="false" stylesheets="@../style/Login.css" text="Student">
       	<toggleGroup>
-       		<fx:reference source="group" />
+       		<fx:reference source="radioGroup" />
    		</toggleGroup>
       </RadioButton>
 

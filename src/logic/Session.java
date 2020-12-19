@@ -1,11 +1,13 @@
 package logic;
 
-import logic.model.User;
+import logic.model.Professor;
+import logic.model.Student;
 
 public class Session {
 	
 	private static Session instance = null;
-	private User userLogged;
+	private Professor professorLogged;
+	private Student studentLogged;
 
 	private Session() {}
 
@@ -15,12 +17,21 @@ public class Session {
 		}
 		return instance;
 	}
-
-	public User getUserLogged() {
-		return userLogged;
+	
+	public Professor getProfessorLogged() {
+		return professorLogged;
+	}
+	
+	public void setProfessorLogged(Professor professorLogged) {
+		this.professorLogged = professorLogged;
 	}
 
-	public void setUserLogged(User userLogged) {
-		this.userLogged = userLogged;
+	public Student getStudentLogged() {
+		return studentLogged;
 	}
+
+	public void setStudentLogged(Student studentLogged) {
+		this.studentLogged = studentLogged;
+	}
+
 }

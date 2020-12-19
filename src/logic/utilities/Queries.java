@@ -6,8 +6,8 @@ import java.sql.Statement;
 
 public class Queries {
 
-	public static ResultSet selectUser(Statement stmt, String username, String password) throws SQLException {
-		String query = "SELECT * FROM user WHERE username = '" +  username + "' AND password = '" + password + "';";
+	public static ResultSet selectProfessor(Statement stmt, String username, String password) throws SQLException {
+		String query = "SELECT * FROM professor WHERE username = '" +  username + "' AND password = '" + password + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}

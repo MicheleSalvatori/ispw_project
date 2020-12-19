@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import logic.Session;
 import logic.controller.LoginController;
-import logic.model.User;
+import logic.model.Professor;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
@@ -30,8 +30,7 @@ public class StatusBarView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		User userLogged = Session.getSession().getUserLogged();
-		labelName.setText(userLogged.getUsername());
+//		labelName.setText(Session.getSession().getUserLogged().);
 	}
 	
 	@FXML
@@ -43,7 +42,6 @@ public class StatusBarView implements Initializable {
 		LoginController loginController = new LoginController();
 		loginController.logout();
 		
-		System.out.println("Session: " + Session.getSession().getUserLogged());
 	}
 	
 	@FXML

@@ -1,6 +1,6 @@
-package logic.bean;
+package logic.model;
 
-public class UserBean {
+public class Student {
 	
 	private String username;
 	private String password;
@@ -8,8 +8,8 @@ public class UserBean {
 	private String surname;
 	private String email;
 	
-	public UserBean() {}
-	
+	public Student() {}
+
 	public String getUsername() {
 		return username;
 	}
@@ -33,7 +33,7 @@ public class UserBean {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getSurname() {
 		return surname;
 	}
@@ -48,5 +48,7 @@ public class UserBean {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
+	};
+	
+	
 }
