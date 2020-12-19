@@ -3,9 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -28,25 +26,11 @@
       
       <PasswordField fx:id="textPassword" layoutX="737.0" layoutY="450.0" promptText="Password" stylesheets="@../style/Signup.css" />
       
-      <Label layoutX="384.0" layoutY="531.0" stylesheets="@../style/Signup.css" text="Who are you?" />
+      <Button fx:id="btnSignup" disable="true" layoutX="532.0" layoutY="552.0" mnemonicParsing="false" onAction="#signup" styleClass="signup-button" stylesheets="@../style/Signup.css" text="Sign Up" />
       
-      <RadioButton fx:id="rdMode" layoutX="760.0" layoutY="552.0" mnemonicParsing="false" stylesheets="@../style/Signup.css" text="Professor">
-      	<toggleGroup>
-       		<ToggleGroup fx:id="group" />
-   		</toggleGroup>
-      </RadioButton>
-      
-      <RadioButton fx:id="rdMode" layoutX="927.0" layoutY="552.0" mnemonicParsing="false" stylesheets="@../style/Signup.css" text="Student">
-      	<toggleGroup>
-       		<fx:reference source="group" />
-   		</toggleGroup>
-      </RadioButton>
-      
-      <Button fx:id="btnSignup" disable="true" layoutX="532.0" layoutY="612.0" onAction="#signup" mnemonicParsing="false" styleClass="signup-button" stylesheets="@../style/Signup.css" text="Sign Up" />
-      
-      <Button fx:id="btnLogin" layoutX="590.0" layoutY="770.0" mnemonicParsing="false" onAction="#gotoLogin" styleClass="login-button" stylesheets="@../style/Signup.css" text="Already have an account? Log In" />
+      <Button fx:id="btnLogin" layoutX="590.0" layoutY="710.0" mnemonicParsing="false" onAction="#gotoLogin" styleClass="login-button" stylesheets="@../style/Signup.css" text="Already have an account? Log In" />
     
-      <Button fx:id="btnGoogle" layoutX="726.0" layoutY="693.0" mnemonicParsing="false" styleClass="image-button" stylesheets="@../style/Signup.css">
+      <Button fx:id="btnGoogle" layoutX="726.0" layoutY="633.0" mnemonicParsing="false" styleClass="image-button" stylesheets="@../style/Signup.css">
       	<graphic>
       		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true">
       			<children>
@@ -64,12 +48,12 @@
       	</graphic>
       </Button>
       
-      <Button fx:id="btnFacebook" layoutX="532.0" layoutY="693.0" mnemonicParsing="false" styleClass="image-button" stylesheets="@../style/Signup.css">
+      <Button fx:id="btnFacebook" layoutX="532.0" layoutY="633.0" mnemonicParsing="false" styleClass="image-button" stylesheets="@../style/Signup.css">
       	<graphic>
       		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true">
       			<children>
-      			
-      				<Label styleClass="button-label" stylesheets="@../style/Signup.css" text="Sign up with" />
+            			
+            				<Label styleClass="button-label" stylesheets="@../style/Signup.css" text="Sign up with" />
       				
       				<ImageView fitHeight="52.0" fitWidth="52.0">
             			<image>
