@@ -15,8 +15,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import logic.Session;
 import logic.model.User;
-import logic.view.card.element.ProfessorCard;
-import logic.view.card.element.StudentCard;
+import logic.view.card.element.ProfessorStatCard;
+import logic.view.card.element.StudentStatCard;
 
 public class HomepageView implements Initializable {
 	
@@ -43,9 +43,9 @@ public class HomepageView implements Initializable {
 		}*/
 		
 		for (int i=0; i<2; i++) {
-			StudentCard studentCard;
+			StudentStatCard studentCard;
 			try {
-				studentCard = new StudentCard(22, "Verbalized", "Grades");
+				studentCard = new StudentStatCard(22, "Verbalized", "Grades");
 				hboxStats.getChildren().add(studentCard);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

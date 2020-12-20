@@ -6,13 +6,13 @@ import java.net.URL;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import logic.view.card.controller.StudentCardView;
+import logic.view.card.controller.StudentStatCardView;
 
-public class StudentCard extends AnchorPane {
+public class StudentStatCard extends AnchorPane {
 	
-	private StudentCardView studentCardView = new StudentCardView();
+	private StudentStatCardView studentCardView = new StudentStatCardView();
 	
-	public StudentCard(int num, String first, String second) throws IOException {
+	public StudentStatCard(int num, String first, String second) throws IOException {
 		URL url = new File("src/res/fxml/StudentCard.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(studentCardView);
