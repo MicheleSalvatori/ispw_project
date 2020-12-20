@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
-public class ProfessorCardView implements Initializable {
+public class ProfessorStatCardView implements Initializable {
 	
 	@FXML
 	private Label labelNumber;

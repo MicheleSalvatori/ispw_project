@@ -1,4 +1,4 @@
-package logic.view;
+package logic.view.card.controller;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

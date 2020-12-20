@@ -15,8 +15,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import logic.Session;
 import logic.model.User;
+import logic.view.card.element.LessonCard;
 import logic.view.card.element.ProfessorStatCard;
 import logic.view.card.element.StudentStatCard;
+import logic.view.card.element.WeatherCard;
 
 public class HomepageView implements Initializable {
 	
