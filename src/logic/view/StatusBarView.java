@@ -37,10 +37,10 @@ public class StatusBarView implements Initializable {
 	public void logout(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
 		System.out.println("Logout");
 		
-		PageLoader.getInstance().buildPage(Page.LOGIN, event);
-		
 		LoginController loginController = new LoginController();
 		loginController.logout();
+		PageLoader.getInstance().buildPage(Page.LOGIN, event);
+		
 		
 	}
 	

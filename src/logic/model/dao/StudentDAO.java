@@ -15,7 +15,7 @@ public class StudentDAO {
 	
 	private StudentDAO() {}
 	
-	public static Student findStudent(String username, String password) throws SQLException, ClassNotFoundException, RecordNotFoundException {
+	public static Student findStudent(String username, String password) throws SQLException, RecordNotFoundException {
 		Connection conn = null;
 		Statement stmt = null;
 		Student studentLogged = null;
@@ -23,7 +23,9 @@ public class StudentDAO {
 		
 		try {
 			conn = (SingletonDB.getDbInstance()).getConnection();
-			// se conn null throw exception
+			if (conn == null) {
+				throw new SQLException();
+			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			resultSet = Queries.selectStudent(stmt, username, password);
 			
@@ -53,7 +55,7 @@ public class StudentDAO {
 		return studentLogged;
 	}
 
-	public static void addStudent(String username, String password, String name, String surname, String email) throws SQLException, ClassNotFoundException, DuplicatedRecordException {
+	public static void addStudent(String username, String password, String name, String surname, String email) throws SQLException, DuplicatedRecordException {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -63,7 +65,9 @@ public class StudentDAO {
 		
 		try {
 			conn = (SingletonDB.getDbInstance()).getConnection();
-			// se conn null throw exception
+			if (conn == null) {
+				throw new SQLException();
+			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
 			resultSet = Queries.selectStudent(stmt, username, password);

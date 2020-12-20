@@ -14,8 +14,12 @@ public class SingletonDB {
     private static SingletonDB dbInstance = null;
     private static Connection conn;
     
-    private SingletonDB() throws SQLException, ClassNotFoundException {
-    	Class.forName(driverClassName);
+    private SingletonDB() throws SQLException {
+    	try {
+			Class.forName(driverClassName);
+		} catch (ClassNotFoundException e) {
+			throw new SQLException();
+		}
     	conn = DriverManager.getConnection(DB_URL, USER, PASS);
     }
     
@@ -23,7 +27,7 @@ public class SingletonDB {
     	return conn;
     	
     }
-    public static SingletonDB getDbInstance() throws SQLException, ClassNotFoundException {
+    public static SingletonDB getDbInstance() throws SQLException{
     	if (dbInstance == null) {
     		dbInstance = new SingletonDB();
     	}

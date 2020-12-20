@@ -15,7 +15,7 @@ public class ProfessorDAO {
 	
 	private ProfessorDAO() {}
 	
-	public static Professor findProfessor(String username, String password) throws SQLException, ClassNotFoundException, RecordNotFoundException {
+	public static Professor findProfessor(String username, String password) throws SQLException, RecordNotFoundException {
 		Connection conn = null;
 		Statement stmt = null;
 		Professor professorLogged = null;
@@ -23,7 +23,9 @@ public class ProfessorDAO {
 		
 		try {
 			conn = (SingletonDB.getDbInstance()).getConnection();
-			// se conn null throw exception
+			if (conn == null) {
+				throw new SQLException();
+			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			resultSet = Queries.selectProfessor(stmt, username, password);
 			

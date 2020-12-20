@@ -16,7 +16,6 @@ import javafx.scene.control.TextField;
 import logic.bean.UserBean;
 import logic.controller.SignupController;
 import logic.exceptions.DuplicatedRecordException;
-import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
@@ -52,33 +51,38 @@ public class SignupView implements Initializable{
     		return;
     	}
 	
-		UserBean userBean = new UserBean();
-		userBean.setUsername(username);
-    	userBean.setName(name);
-    	userBean.setSurname(surname);
-    	userBean.setEmail(email);
-    	userBean.setPassword(password);
-    	System.out.println("SIGNUP DATA:\n\tuser: "+userBean.getUsername() + "\n\tpass: "+userBean.getPassword());
-    	signupController = new SignupController();
-	    try {
-			signupController.signup(userBean);
-			PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (RecordNotFoundException e) {
-			e.printStackTrace();
-			// Alert user not found o qualcosa del genere
-			System.out.println("User '" + username + "' whit password '" + password + "' not found.\nShowing alert.\n");
-		} catch (DuplicatedRecordException e) {
-			e.printStackTrace();
-			System.out.println("Username already present.\n Showing error message.\n");
-			// TODO implementare alert di errore
-		}
+    	if (chekdInput() && AlertController.confirmation("Are your data correct?\nYour username will be:\n"+username)){
+			UserBean userBean = new UserBean();
+			userBean.setUsername(username);
+	    	userBean.setName(name);
+	    	userBean.setSurname(surname);
+	    	userBean.setEmail(email);
+	    	userBean.setPassword(password);
+	    	System.out.println("SIGNUP DATA:\n\tuser: "+userBean.getUsername() + "\n\tpass: "+userBean.getPassword());
+	    	signupController = new SignupController();
+		    try {
+				signupController.signup(userBean);
+				AlertController.buildInfoAlert("Registration completed!\nYou will'be redirect to the login page.", "Welcome" );
+				PageLoader.getInstance().buildPage(Page.LOGIN, event);
+			} catch (SQLException e) {
+				AlertController.buildInfoAlert("Connection failed!", "Warning" );
+			} catch (DuplicatedRecordException e) {
+				AlertController.buildInfoAlert("A user already exists with this email!\nTry to login.", "Registration Failed" );
+			}
+    	}
 	}
 
 	
+
+	private boolean chekdInput() {
+		String email = textEmail.getText(); 
+		if (email.contains("@") && (email.contains(".com")|| email.contains(".it")))
+				return true;
+		else {
+			AlertController.buildInfoAlert("Invalid email", "Error");
+			return false;
+		}
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

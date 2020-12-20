@@ -60,14 +60,10 @@ public class LoginView implements Initializable {
 			try {
 				loginController.loginAsProfessor(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				AlertController.buildInfoAlert("Connection failed!", "Warning" );
 			} catch (RecordNotFoundException e) {
-				e.printStackTrace();
-				System.out.println(
-						"User '" + username + "' whit password '" + password + "' not found.\nShowing alert.\n");
+				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed" );
 			}
 			break;
 
@@ -80,17 +76,11 @@ public class LoginView implements Initializable {
 			try {
 				loginController.loginAsStudent(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				AlertController.buildInfoAlert("Connection failed!", "Warning" );
 			} catch (RecordNotFoundException e) {
-				e.printStackTrace();
-				System.out.println(
-						"User '" + username + "' whit password '" + password + "' not found.\nShowing alert.\n");
+				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed" );
 			}
-			break;
-		default:
 			break;
 		}
 	}

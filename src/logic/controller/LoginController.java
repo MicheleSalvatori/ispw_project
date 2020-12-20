@@ -12,7 +12,7 @@ import logic.model.dao.StudentDAO;
 
 public class LoginController {
 
-	public void loginAsProfessor(UserBean userBean) throws SQLException, ClassNotFoundException, RecordNotFoundException {
+	public void loginAsProfessor(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
 		String username = userBean.getUsername();
 		String password = userBean.getPassword();
@@ -24,7 +24,7 @@ public class LoginController {
 		Session.getSession().setUserLogged(professor);
 	}
 	
-	public void loginAsStudent(UserBean userBean) throws SQLException, ClassNotFoundException, RecordNotFoundException {
+	public void loginAsStudent(UserBean userBean) throws SQLException, RecordNotFoundException {
 			
 			String username = userBean.getUsername();
 			String password = userBean.getPassword();
