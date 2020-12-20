@@ -36,10 +36,12 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="620.0" />
          </content>
       </ScrollPane>
+      
       <Label layoutY="223.0" stylesheets="@../style/Homepage.css" text="Today Lessons" />
+      
       <Pane prefHeight="96.0" prefWidth="620.0" styleClass="pane">
          <children>
-            <Label layoutX="32.0" styleClass="pane-mainlabel" text="Hello Gulyx!" />
+            <Label fx:id="labelUsername" layoutX="32.0" styleClass="pane-mainlabel" text="Hello Gulyx!" />
             <Label layoutX="32.0" layoutY="52.0" styleClass="pane-otherlabel" text="It’s good to see you again." />
          </children>
       </Pane>

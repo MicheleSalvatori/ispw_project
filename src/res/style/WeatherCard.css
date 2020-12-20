@@ -1,0 +1,38 @@
+/* BalooBhai font */
+@font-face {
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
+ /* Roboto font */
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Regular.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ }
+ 
+ /* Overpass font */
+ @font-face {
+ 	src: url("../font/Overpass/Overpass-Regular.ttf");
+ }
+
+.root {
+	-fx-pref-width: 65;
+	-fx-pref-height: 143;
+	
+	-fx-background-color: #0C0B0B;
+	-fx-background-radius: 18px;
+}
+
+.label {
+	-fx-font-family: "Overpass";
+	-fx-font-weight: normal;
+	-fx-font-size: 17px;
+	-fx-text-fill: white;
+	-fx-alignment: CENTER;
+}

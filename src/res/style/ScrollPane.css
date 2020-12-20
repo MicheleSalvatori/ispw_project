@@ -19,6 +19,14 @@
     -fx-background-radius: 10px;
 }
 
+.scroll-bar:vertical:hover .thumb {
+	-fx-background-color: red;
+}
+
+.scroll-bar:vertical:pressed .thumb {
+	-fx-background-color: purple;
+}
+
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
     -fx-background-color: #0C0B0B;
