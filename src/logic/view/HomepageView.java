@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import logic.Session;
 import logic.model.User;
 import logic.view.ProfessorCard.ProfessorCard;
+import logic.view.StudentCard.StudentCard;
 
 public class HomepageView implements Initializable {
 	
@@ -33,12 +34,23 @@ public class HomepageView implements Initializable {
 		
 		User user = Session.getSession().getUserLogged();
 		
-		try {
+		/*try {
 			ProfessorCard professorCard = new ProfessorCard(10);
 			hboxStats.getChildren().add(professorCard);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
+		}*/
+		
+		for (int i=0; i<2; i++) {
+			StudentCard studentCard;
+			try {
+				studentCard = new StudentCard(22, "Verbalized", "Grades");
+				hboxStats.getChildren().add(studentCard);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		

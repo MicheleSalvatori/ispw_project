@@ -43,13 +43,13 @@
             <Label layoutX="32.0" layoutY="52.0" styleClass="pane-otherlabel" text="It’s good to see you again." />
          </children>
       </Pane>
-      <Label layoutX="684.0" layoutY="145.0" stylesheets="@../style/Homepage.css" text="Weather" />
+      <Label layoutX="684.0" layoutY="165.0" stylesheets="@../style/Homepage.css" text="Weather" />
       
-      <HBox fx:id="hboxWeather" layoutX="684.0" layoutY="187.0" prefHeight="143.0" spacing="27.0" />
+      <HBox fx:id="hboxWeather" layoutX="684.0" layoutY="210.0" prefHeight="143.0" spacing="28.0" />
       
       <Label layoutX="684.0" layoutY="382.0" stylesheets="@../style/Homepage.css" text="Maps" />
       
-      <HBox fx:id="hboxStats" layoutX="684.0" layoutY="22.0" prefHeight="96.0" />
+      <HBox fx:id="hboxStats" layoutX="684.0" layoutY="22.0" prefHeight="96.0" spacing="24.0" />
       
    </children>
 </AnchorPane>
