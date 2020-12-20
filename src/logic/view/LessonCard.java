@@ -9,7 +9,6 @@ import javafx.scene.layout.AnchorPane;
 
 public class LessonCard extends AnchorPane {
 	
-	
 	private LessonCardView lessonCardView = new LessonCardView();
 	
 	public LessonCard(String lesson, String classroom, String time) throws IOException {

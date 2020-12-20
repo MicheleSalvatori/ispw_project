@@ -11,9 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import logic.Session;
 import logic.model.User;
+import logic.view.ProfessorCard.ProfessorCard;
 
 public class HomepageView implements Initializable {
 	
@@ -21,6 +23,8 @@ public class HomepageView implements Initializable {
 	private ScrollPane scroll;
 	@FXML
 	private Label labelUsername;
+	@FXML
+	private HBox hboxWeather, hboxStats;
 
 	private VBox box;
 	
@@ -28,6 +32,25 @@ public class HomepageView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		User user = Session.getSession().getUserLogged();
+		
+		try {
+			ProfessorCard professorCard = new ProfessorCard(10);
+			hboxStats.getChildren().add(professorCard);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		
+		for (int i = 0; i<5; i++) {
+			try {
+				WeatherCard weatherCard = new WeatherCard("1°C", "10:00");
+				hboxWeather.getChildren().add(weatherCard);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 		
 		labelUsername.setText("Hello " + user.getName() + "!");
 		
