@@ -12,7 +12,9 @@ public class AlertController {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle(titleAlert);
 		alert.setHeaderText(null);
+		alert.setGraphic(null);
 		alert.setContentText(message);
+		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
 		alert.showAndWait();
 	}
 
