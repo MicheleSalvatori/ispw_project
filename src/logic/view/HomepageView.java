@@ -15,8 +15,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import logic.Session;
 import logic.model.User;
-import logic.view.ProfessorCard.ProfessorCard;
-import logic.view.StudentCard.StudentCard;
+import logic.view.card.element.ProfessorCard;
+import logic.view.card.element.StudentCard;
 
 public class HomepageView implements Initializable {
 	

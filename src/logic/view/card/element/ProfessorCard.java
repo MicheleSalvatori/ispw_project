@@ -1,4 +1,4 @@
-package logic.view.ProfessorCard;
+package logic.view.card.element;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.net.URL;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import logic.view.card.controller.ProfessorCardView;
 
 public class ProfessorCard extends AnchorPane {
 

@@ -1,4 +1,4 @@
-package logic.view.StudentCard;
+package logic.view.card.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -7,15 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
-public class StudentCardView implements Initializable {
+public class ProfessorCardView implements Initializable {
 	
 	@FXML
-	private Label labelNumber, label1, label2;
+	private Label labelNumber;
 	
-	public void setCard(int num, String first, String second) {
+	public void setCard(int num) {
 		labelNumber.setText(Integer.toString(num));
-		label1.setText(first);
-		label2.setText(second);
 	}
 
 	@Override
