@@ -35,7 +35,7 @@ public class NavBarView implements Initializable {
 	@FXML
 	public void homeButton(ActionEvent event) throws IOException {
 		System.out.println("HomeButton");
-		PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+		PageLoader.getInstance().buildPage(Page.FORUM, event);
 	}
 	
 	@FXML
