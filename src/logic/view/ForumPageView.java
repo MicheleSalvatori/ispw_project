@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import logic.utilities.Page;
+import logic.utilities.PageLoader;
 
 public class ForumPageView implements Initializable {
 
@@ -19,13 +22,13 @@ public class ForumPageView implements Initializable {
 	private VBox questionBox, assignmentsBox;
 
 	@FXML
-	private void myQuestion() {
+	private void myQuestion(ActionEvent ae) {
 		System.out.println("MyQuestionButton");
 	}
 
 	@FXML
-	private void newQuestion() {
-		System.out.println("NewQuestionButton");
+	private void newQuestion(ActionEvent ae) throws IOException {
+		PageLoader.getInstance().buildPage(Page.NEWQUESTION, ae);
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class ForumPageView implements Initializable {
 				e.printStackTrace();
 			}
 		}
-		
+
 		assignmentsBox = new VBox();
 		for (int i = 1; i < 10; i++) {
 			AssignmentCard assignmentCard;
@@ -52,7 +55,6 @@ public class ForumPageView implements Initializable {
 				e.printStackTrace();
 			}
 		}
-		
 
 		questionBox.setSpacing(20);
 		assignmentsBox.setSpacing(20);
