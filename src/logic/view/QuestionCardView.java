@@ -20,4 +20,9 @@ public class QuestionCardView {
 		labelQuestionDate.setText(date);
 		labelQuestionObject.setText(questionObject);
 	}
+	
+	@FXML
+	private void viewQuestion() {
+		System.out.println("View Question");
+	}
 }

@@ -18,9 +18,18 @@
  .root {
 	-fx-background-color: #E5E5EB;
 	-fx-background-radius: 14px;
+	
+	-width: 401;
+	-height: 80;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;	
 }
  
- .label_object {
+ .label_title {
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 20px;
@@ -32,13 +41,14 @@
 	-fx-font-size: 24px;
 }
 
-.label_date {
+.label_expires {
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Roboto";
+	-fx-font-weight: bold;
 	-fx-font-size: 13px;
 }
 
-.label_author{
+.label_date {
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Roboto";
 	-fx-font-size: 13px;
@@ -60,7 +70,7 @@
 	-fx-font-weight: bold;
 	-fx-font-size: 13;
 	
-	-width: 60;
+	-width: 61.28;
 	-height: 32;
 	-fx-min-width: -width;
 	-fx-min-height: -height;

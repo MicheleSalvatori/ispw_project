@@ -13,10 +13,10 @@ import javafx.scene.layout.VBox;
 public class ForumPageView implements Initializable {
 
 	@FXML
-	private ScrollPane scrollQuestion;
+	private ScrollPane scrollQuestion, scrollAssignments;
 	@FXML
 	private Button btnMyQuestion, btnNewQuestion;
-	private VBox questionBox;
+	private VBox questionBox, assignmentsBox;
 
 	@FXML
 	private void myQuestion() {
@@ -31,20 +31,33 @@ public class ForumPageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		questionBox = new VBox();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 1; i < 10; i++) {
 			QuestionCard questionCard;
 			try {
 				questionCard = new QuestionCard(String.valueOf(i), "Domanda di merda", "21/12/2020", "Emanuele",
 						"Alfano", "ISPW");
 				questionBox.getChildren().add(questionCard);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		
+		assignmentsBox = new VBox();
+		for (int i = 1; i < 10; i++) {
+			AssignmentCard assignmentCard;
+			try {
+				assignmentCard = new AssignmentCard(String.valueOf(i), "Use-Cases", "02/02/2021", "ISPW");
+				assignmentsBox.getChildren().add(assignmentCard);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 
 		questionBox.setSpacing(20);
+		assignmentsBox.setSpacing(20);
 		scrollQuestion.setContent(questionBox);
+		scrollAssignments.setContent(assignmentsBox);
 	}
 
 }
