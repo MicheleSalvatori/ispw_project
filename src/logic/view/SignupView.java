@@ -22,7 +22,7 @@ import logic.utilities.PageLoader;
 public class SignupView implements Initializable{
 	
 	@FXML
-	private TextField textName, textSurname, textEmail;
+	private TextField textName, textSurname, textEmail, textUsername;
 	@FXML
 	private PasswordField textPassword;
 	@FXML
@@ -41,8 +41,7 @@ public class SignupView implements Initializable{
 		
 		String name = textName.getText();
 		String surname = textSurname.getText();
-		String username = (name.replaceAll("\\s", "")).toLowerCase() + "." +
-							(surname.replaceAll("\\s", "")).toLowerCase();
+		String username = (textUsername.getText().replaceAll("\\s", "")).toLowerCase();
 		String email = textEmail.getText();
     	String password = textPassword.getText();
     	
@@ -51,33 +50,34 @@ public class SignupView implements Initializable{
     		return;
     	}
 	
-    	if (chekdInput() && AlertController.confirmation("Are your data correct?\nYour username will be:\n"+username)){
+    	if (chekdInput() && AlertController.confirmation("Are your data correct?\nYour username will be:\n"+username)) {
 			UserBean userBean = new UserBean();
 			userBean.setUsername(username);
-	    	userBean.setName(name);
-	    	userBean.setSurname(surname);
-	    	userBean.setEmail(email);
-	    	userBean.setPassword(password);
-	    	System.out.println("SIGNUP DATA:\n\tuser: "+userBean.getUsername() + "\n\tpass: "+userBean.getPassword());
-	    	signupController = new SignupController();
-		    try {
+			userBean.setName(name);
+			userBean.setSurname(surname);
+			userBean.setEmail(email);
+			userBean.setPassword(password);
+			System.out
+					.println("SIGNUP DATA:\n\tuser: " + userBean.getUsername() + "\n\tpass: " + userBean.getPassword());
+			signupController = new SignupController();
+			try {
 				signupController.signup(userBean);
-				AlertController.buildInfoAlert("Registration completed!\nYou will'be redirect to the login page.", "Welcome" );
+				AlertController.buildInfoAlert("Registration completed!\nYou will'be redirect to the login page.",
+						"Welcome");
 				PageLoader.getInstance().buildPage(Page.LOGIN, event);
 			} catch (SQLException e) {
-				AlertController.buildInfoAlert("Connection failed!", "Warning" );
+				AlertController.buildInfoAlert("Connection failed!", "Warning");
 			} catch (DuplicatedRecordException e) {
-				AlertController.buildInfoAlert("A user already exists with this email!\nTry to login.", "Registration Failed" );
+				AlertController.buildInfoAlert("A user already exists with this email!\nTry to login.",
+						"Registration Failed");
 			}
-    	}
+		}
 	}
 
-	
-
 	private boolean chekdInput() {
-		String email = textEmail.getText(); 
-		if (email.contains("@") && (email.contains(".com")|| email.contains(".it")))
-				return true;
+		String email = textEmail.getText();
+		if (email.contains("@") && (email.contains(".com") || email.contains(".it")))
+			return true;
 		else {
 			AlertController.buildInfoAlert("Invalid email", "Error");
 			return false;
@@ -86,12 +86,14 @@ public class SignupView implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		btnSignup.disableProperty().bind(Bindings.isEmpty(textName.textProperty())
-				  				   .or(Bindings.isEmpty(textSurname.textProperty())
-				  				   .or(Bindings.isEmpty(textEmail.textProperty())
-				  				   .or(Bindings.isEmpty(textPassword.textProperty())))));
-		
+
+		btnSignup.disableProperty()
+				.bind(Bindings.isEmpty(textName.textProperty())
+						.or(Bindings.isEmpty(textSurname.textProperty())
+								.or(Bindings.isEmpty(textEmail.textProperty())
+										.or(Bindings.isEmpty(textUsername.textProperty()))
+										.or(Bindings.isEmpty(textPassword.textProperty())))));
+
 		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -103,11 +105,12 @@ public class SignupView implements Initializable{
 				}
 			}
 		};
-		
+
 		textName.setOnAction(eventHandler);
 		textSurname.setOnAction(eventHandler);
 		textEmail.setOnAction(eventHandler);
-		textPassword.setOnAction(eventHandler);		
+		textPassword.setOnAction(eventHandler);
+		textUsername.setOnAction(eventHandler);
 	}
 
 }

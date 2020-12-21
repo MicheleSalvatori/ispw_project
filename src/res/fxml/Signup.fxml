@@ -8,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" stylesheets="@../style/Signup.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.SignupView">
    <children>
@@ -23,14 +24,15 @@
       <TextField fx:id="textSurname" layoutX="737.0" layoutY="369.0" promptText="Surname" stylesheets="@../style/Signup.css" />
       
       <TextField fx:id="textEmail" layoutX="384.0" layoutY="450.0" promptText="Email" stylesheets="@../style/Signup.css" />
+      <TextField fx:id="textUsername" layoutX="737.0" layoutY="531.0" promptText="Username" stylesheets="@../style/Signup.css" />
       
       <PasswordField fx:id="textPassword" layoutX="737.0" layoutY="450.0" promptText="Password" stylesheets="@../style/Signup.css" />
       
-      <Button fx:id="btnSignup" disable="true" layoutX="532.0" layoutY="552.0" mnemonicParsing="false" onAction="#signup" styleClass="signup-button" stylesheets="@../style/Signup.css" text="Sign Up" />
+      <Button fx:id="btnSignup" disable="true" layoutX="532.0" layoutY="637.0" mnemonicParsing="false" onAction="#signup" styleClass="signup-button" stylesheets="@../style/Signup.css" text="Sign Up" />
       
-      <Button fx:id="btnLogin" layoutX="590.0" layoutY="710.0" mnemonicParsing="false" onAction="#gotoLogin" styleClass="login-button" stylesheets="@../style/Signup.css" text="Already have an account? Log In" />
+      <Button fx:id="btnLogin" layoutX="590.0" layoutY="795.0" mnemonicParsing="false" onAction="#gotoLogin" styleClass="login-button" stylesheets="@../style/Signup.css" text="Already have an account? Log In" />
     
-      <Button fx:id="btnGoogle" layoutX="726.0" layoutY="633.0" mnemonicParsing="false" styleClass="image-button" stylesheets="@../style/Signup.css">
+      <Button fx:id="btnGoogle" layoutX="726.0" layoutY="718.0" mnemonicParsing="false" styleClass="image-button" stylesheets="@../style/Signup.css">
       	<graphic>
       		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true">
       			<children>
@@ -48,7 +50,7 @@
       	</graphic>
       </Button>
       
-      <Button fx:id="btnFacebook" layoutX="532.0" layoutY="633.0" mnemonicParsing="false" styleClass="image-button" stylesheets="@../style/Signup.css">
+      <Button fx:id="btnFacebook" layoutX="532.0" layoutY="718.0" mnemonicParsing="false" styleClass="image-button" stylesheets="@../style/Signup.css">
       	<graphic>
       		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true">
       			<children>
@@ -65,6 +67,7 @@
       		</HBox>
       	</graphic>
       </Button>
+      <Text layoutX="385.0" layoutY="568.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Choose a username to use on the system:" />
    	  
    </children>
 </AnchorPane>
