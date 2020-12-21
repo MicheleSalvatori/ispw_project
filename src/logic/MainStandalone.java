@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import logic.utilities.SingletonDB;
 
 public class MainStandalone extends Application{
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {

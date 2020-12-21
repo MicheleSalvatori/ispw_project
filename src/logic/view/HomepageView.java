@@ -1,14 +1,10 @@
 package logic.view;
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
@@ -36,15 +32,15 @@ public class HomepageView implements Initializable {
 		
 		User user = Session.getSession().getUserLogged();
 		
-		/*try {
-			ProfessorCard professorCard = new ProfessorCard(10);
+		try {
+			ProfessorStatCard professorCard = new ProfessorStatCard(10);
 			hboxStats.getChildren().add(professorCard);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
-		}*/
+		}
 		
-		for (int i=0; i<2; i++) {
+		/*for (int i=0; i<2; i++) {
 			StudentStatCard studentCard;
 			try {
 				studentCard = new StudentStatCard(22, "Verbalized", "Grades");
@@ -53,7 +49,7 @@ public class HomepageView implements Initializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
 		
 		
 		for (int i = 0; i<5; i++) {

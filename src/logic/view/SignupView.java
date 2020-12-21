@@ -22,9 +22,9 @@ import logic.utilities.PageLoader;
 public class SignupView implements Initializable{
 	
 	@FXML
-	private TextField textName, textSurname, textEmail;
+	private TextField textUsername, textName, textSurname, textEmail;
 	@FXML
-	private PasswordField textPassword;
+	private PasswordField textPassword, textConfirmPassword;
 	@FXML
 	private Button btnSignup, btnLogin, btnFacebook, btnGoogle;
 	
@@ -39,19 +39,18 @@ public class SignupView implements Initializable{
 	@FXML
 	void signup(ActionEvent event) throws IOException {
 		
+		String username = (textUsername.getText().replaceAll("\\s", "")).toLowerCase();
+		String password = textPassword.getText();
+		String email = textEmail.getText();
 		String name = textName.getText();
 		String surname = textSurname.getText();
-		String username = (name.replaceAll("\\s", "")).toLowerCase() + "." +
-							(surname.replaceAll("\\s", "")).toLowerCase();
-		String email = textEmail.getText();
-    	String password = textPassword.getText();
     	
     	if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
     		System.out.println("One or more fields are empty -> Alert");
     		return;
     	}
 	
-    	if (chekdInput() && AlertController.confirmation("Are your data correct?\nYour username will be:\n"+username)){
+    	if (chekdInput() && AlertController.confirmation("Are your data correct?\nYour username will be:\n" + username)){
 			UserBean userBean = new UserBean();
 			userBean.setUsername(username);
 	    	userBean.setName(name);
@@ -75,13 +74,29 @@ public class SignupView implements Initializable{
 	
 
 	private boolean chekdInput() {
+		
 		String email = textEmail.getText(); 
-		if (email.contains("@") && (email.contains(".com")|| email.contains(".it")))
+		String password = textPassword.getText();
+		String confirmPassword = textConfirmPassword.getText();
+		
+		// Check if email is valid and if passwords are the same
+		if (email.contains("@") && (email.contains(".com")|| email.contains(".it"))) {
+			
+			if (password.equals(confirmPassword)) {
 				return true;
+			}
+			else {
+				AlertController.buildInfoAlert("Different password", "Error");
+				return false;
+			}
+		}
+				
 		else {
 			AlertController.buildInfoAlert("Invalid email", "Error");
 			return false;
 		}
+		
+		
 	}
 
 	@Override
@@ -104,10 +119,11 @@ public class SignupView implements Initializable{
 			}
 		};
 		
+		textUsername.setOnAction(eventHandler);
+		textPassword.setOnAction(eventHandler);	
+		textEmail.setOnAction(eventHandler);
+		textConfirmPassword.setOnAction(eventHandler);
 		textName.setOnAction(eventHandler);
 		textSurname.setOnAction(eventHandler);
-		textEmail.setOnAction(eventHandler);
-		textPassword.setOnAction(eventHandler);		
 	}
-
 }

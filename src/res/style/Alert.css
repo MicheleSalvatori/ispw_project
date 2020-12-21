@@ -15,23 +15,35 @@
  	src: url("../font/Roboto/Roboto-Light.ttf");
  }
 
-.dialog-pane{
-	-fx-background-color: white;
+.dialog-pane {
+	-fx-background-color: gray;
 	-fx-pref-width: 500;
+	-fx-border-radius: 100px;
+	-fx-background-radius: 100px;
 }
 
 .dialog-pane > .button-bar {
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 20;
+	-fx-text-fill: #0C0B0B;
+	-fx-alignment: CENTER;
 }
 
 .dialog-pane > .content.label {
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 20;
 	-fx-text-alignment: CENTER;
+	-fx-text-fill: #0C0B0B;
+	-fx-alignment: CENTER;
 }
 
-.dialog-pane .header-panel {
+.dialog-pane > .header-panel > .label {
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 20;
+	-fx-text-alignment: CENTER;
+	-fx-text-fill: #0C0B0B;
+}
+
+.alert.confirmation.dialog-pane {
+	-fx-text-alignment: CENTER;
 }
