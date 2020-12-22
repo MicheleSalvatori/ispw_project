@@ -70,7 +70,7 @@ public class HomepageView implements Initializable {
 		addWeatherCards();
 		addLessonCards();
 		
-		webMap.getEngine().load(getClass().getResource("../../res/html/map.html").toString());
+		webMap.getEngine().load(getClass().getResource("../../res/html/a.html").toString());
 	}
 	
 	// Add Lesson cards to the scene
