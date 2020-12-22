@@ -32,6 +32,12 @@
  	-fx-font-weight: bold;
 }
 
+.text{
+	-fx-font-family: "Roboto";
+    -fx-font-size: 17px;
+ 	-fx-text-fill: #F0F0F2;
+ 	
+}
 
 /*Labels */
 .label {

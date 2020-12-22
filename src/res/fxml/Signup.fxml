@@ -8,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" stylesheets="@../style/Signup.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.SignupView">
    <children>
@@ -23,9 +24,10 @@
       <PasswordField fx:id="textPassword" layoutX="737.0" layoutY="369.0" promptText="Password" stylesheets="@../style/Signup.css" />
       
       <TextField fx:id="textEmail" layoutX="384.0" layoutY="450.0" promptText="Email" stylesheets="@../style/Signup.css" />
+      <TextField fx:id="textUsername" layoutX="737.0" layoutY="531.0" promptText="Username" stylesheets="@../style/Signup.css" />
       
       <PasswordField fx:id="textConfirmPassword" layoutX="737.0" layoutY="450.0" promptText="Confirm Password" stylesheets="@../style/Signup.css" />
-      
+
       <TextField fx:id="textName" layoutX="384.0" layoutY="531.0" promptText="Name" stylesheets="@../style/Signup.css" />
       
       <TextField fx:id="textSurname" layoutX="737.0" layoutY="531.0" promptText="Surname" stylesheets="@../style/Signup.css" />
@@ -69,6 +71,5 @@
       		</HBox>
       	</graphic>
       </Button>
-      
    </children>
 </AnchorPane>

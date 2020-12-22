@@ -53,25 +53,26 @@ public class SignupView implements Initializable{
     	if (chekdInput() && AlertController.confirmation("Are your data correct?\nYour username will be:\n" + username)){
 			UserBean userBean = new UserBean();
 			userBean.setUsername(username);
-	    	userBean.setName(name);
-	    	userBean.setSurname(surname);
-	    	userBean.setEmail(email);
-	    	userBean.setPassword(password);
-	    	System.out.println("SIGNUP DATA:\n\tuser: "+userBean.getUsername() + "\n\tpass: "+userBean.getPassword());
-	    	signupController = new SignupController();
-		    try {
+			userBean.setName(name);
+			userBean.setSurname(surname);
+			userBean.setEmail(email);
+			userBean.setPassword(password);
+			System.out
+					.println("SIGNUP DATA:\n\tuser: " + userBean.getUsername() + "\n\tpass: " + userBean.getPassword());
+			signupController = new SignupController();
+			try {
 				signupController.signup(userBean);
-				AlertController.buildInfoAlert("Registration completed!\nYou will'be redirect to the login page.", "Welcome" );
+				AlertController.buildInfoAlert("Registration completed!\nYou will'be redirect to the login page.",
+						"Welcome");
 				PageLoader.getInstance().buildPage(Page.LOGIN, event);
 			} catch (SQLException e) {
-				AlertController.buildInfoAlert("Connection failed!", "Warning" );
+				AlertController.buildInfoAlert("Connection failed!", "Warning");
 			} catch (DuplicatedRecordException e) {
-				AlertController.buildInfoAlert("A user already exists with this email!\nTry to login.", "Registration Failed" );
+				AlertController.buildInfoAlert("A user already exists with this email!\nTry to login.",
+						"Registration Failed");
 			}
-    	}
+		}
 	}
-
-	
 
 	private boolean chekdInput() {
 		
@@ -90,7 +91,6 @@ public class SignupView implements Initializable{
 				return false;
 			}
 		}
-				
 		else {
 			AlertController.buildInfoAlert("Invalid email", "Error");
 			return false;
@@ -101,12 +101,14 @@ public class SignupView implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		btnSignup.disableProperty().bind(Bindings.isEmpty(textName.textProperty())
-				  				   .or(Bindings.isEmpty(textSurname.textProperty())
-				  				   .or(Bindings.isEmpty(textEmail.textProperty())
-				  				   .or(Bindings.isEmpty(textPassword.textProperty())))));
-		
+
+		btnSignup.disableProperty()
+				.bind(Bindings.isEmpty(textName.textProperty())
+						.or(Bindings.isEmpty(textSurname.textProperty())
+								.or(Bindings.isEmpty(textEmail.textProperty())
+										.or(Bindings.isEmpty(textUsername.textProperty()))
+										.or(Bindings.isEmpty(textPassword.textProperty())))));
+
 		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -125,5 +127,6 @@ public class SignupView implements Initializable{
 		textConfirmPassword.setOnAction(eventHandler);
 		textName.setOnAction(eventHandler);
 		textSurname.setOnAction(eventHandler);
+
 	}
 }
