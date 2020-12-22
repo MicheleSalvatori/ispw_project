@@ -1,0 +1,49 @@
+ /*Roboto font */
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Regular.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ }
+ 
+ /* BalooBhai font */
+@font-face {
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+ 
+ 
+.root-professor {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14px;
+	
+	-fx-pref-width: 440;
+	-fx-pref-height: 96;
+}
+ 
+.root-student {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14px;
+	
+	-fx-pref-width: 208;
+	-fx-pref-height: 96;
+}
+ 
+.label {
+	-fx-text-fill: #0C0B0B;
+}
+ 
+.label-number {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 64;
+}
+
+.label-question {
+	-fx-font-family: "Roboto";
+	-fx-font-weight: normal;
+	-fx-font-size: 18;
+}
