@@ -5,7 +5,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -25,7 +24,6 @@ public class AlertController {
 		centerButtons(alert.getDialogPane());
 		alert.initStyle(StageStyle.TRANSPARENT);
 		
-		BoxBlur blur = new BoxBlur(3, 3, 3);
 		alert.showAndWait();
 	}
 

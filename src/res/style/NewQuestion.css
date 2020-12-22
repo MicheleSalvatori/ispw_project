@@ -35,9 +35,15 @@
 	-fx-max-height: -height;
 }
 
+.button:hover{
+	-fx-cursor: hand;
+}
+
 .text-area{
     -fx-background-color: #000000;
+    -fx-border-color: #0C0B0B;
     -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
     -fx-font-size: 18;
     -fx-font-family: "Roboto";
     -width: 1124;

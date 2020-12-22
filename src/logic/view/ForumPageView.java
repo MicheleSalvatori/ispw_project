@@ -12,6 +12,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.view.card.element.AssignmentCard;
+import logic.view.card.element.QuestionCard;
 
 public class ForumPageView implements Initializable {
 

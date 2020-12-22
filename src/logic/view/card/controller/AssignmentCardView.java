@@ -1,4 +1,4 @@
-package logic.view;
+package logic.view.card.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

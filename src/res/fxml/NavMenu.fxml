@@ -16,13 +16,13 @@
       
       <Button fx:id="btnHome" mnemonicParsing="false" onAction="#homeButton" styleClass="home-button" stylesheets="@../style/NavBarButton.css" />
       
-      <Button fx:id="btnExams" mnemonicParsing="false" styleClass="exams-button" stylesheets="@../style/NavBarButton.css" />
+      <Button fx:id="btnExams" mnemonicParsing="false" onAction="#examsButton" styleClass="exams-button" stylesheets="@../style/NavBarButton.css" />
       
-      <Button fx:id="btnProfile" mnemonicParsing="false" onAction="#homeButton" styleClass="profile-button" stylesheets="@../style/NavBarButton.css" />
+      <Button fx:id="btnProfile" mnemonicParsing="false" onAction="#profileButton" styleClass="profile-button" stylesheets="@../style/NavBarButton.css" />
       
-      <Button fx:id="btnForum" mnemonicParsing="false" onAction="#homeButton" styleClass="forum-button" stylesheets="@../style/NavBarButton.css" />
+      <Button fx:id="btnForum" mnemonicParsing="false" onAction="#forumButton" styleClass="forum-button" stylesheets="@../style/NavBarButton.css" />
       
-      <Button fx:id="btnNews" mnemonicParsing="false" onAction="#homeButton" styleClass="news-button" stylesheets="@../style/NavBarButton.css" />
+      <Button fx:id="btnNews" mnemonicParsing="false" onAction="#newsButton" styleClass="news-button" stylesheets="@../style/NavBarButton.css" />
       
       <Button fx:id="btnBack" mnemonicParsing="false" onAction="#backButton" styleClass="back-button" stylesheets="@../style/NavBarButton.css">
          <VBox.margin>

@@ -12,7 +12,7 @@ import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
 public class NavBarView implements Initializable {
-	
+
 	@FXML
 	private Button btnHome;
 	@FXML
@@ -25,19 +25,38 @@ public class NavBarView implements Initializable {
 	private Button btnNews;
 	@FXML
 	private Button btnBack;
-	
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 	}
-	
+
 	@FXML
 	public void homeButton(ActionEvent event) throws IOException {
 		System.out.println("HomeButton");
+		PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+	}
+
+	@FXML
+	public void newsButton(ActionEvent event) throws IOException {
+		System.out.println("NewsButton");
+	}
+
+	@FXML
+	public void profileButton(ActionEvent event) throws IOException {
+		System.out.println("ProfileButton");
+	}
+
+	@FXML
+	public void examsButton(ActionEvent event) throws IOException {
+		System.out.println("ExamsButton");
+	}
+
+	@FXML
+	public void forumButton(ActionEvent event) throws IOException {
 		PageLoader.getInstance().buildPage(Page.FORUM, event);
 	}
-	
+
 	@FXML
 	public void backButton(ActionEvent event) throws IOException {
 		System.out.println("Back");

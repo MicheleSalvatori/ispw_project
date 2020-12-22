@@ -34,3 +34,7 @@
 	-fx-max-width: -width;
 	-fx-max-height: -height;
 }
+
+.button:hover{
+	-fx-cursor: hand;
+}
