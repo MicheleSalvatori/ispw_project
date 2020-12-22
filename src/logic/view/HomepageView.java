@@ -95,14 +95,16 @@ public class HomepageView implements Initializable {
 		
 		for (int i=0; i<5; i++) {
 			
-			try {
+			try {			
 				JSONArray hourly = info.getJSONObject(hour+i).getJSONArray("weather");
 				JSONObject weather = hourly.getJSONObject(0);
-				image = Weather.weatherImage(hour, weather.getString("main"));
+				
+				int hourMod = (hour+i)%24;
+				image = Weather.weatherImage(hourMod, weather.getString("main"));
 				
 				String h;
-				if ((hour+i) < 10) {
-					h = "0" + (hour+i);
+				if ((hourMod) < 10) {
+					h = "0" + (hourMod);
 				}
 				else {
 					h = Integer.toString(hour+i);
