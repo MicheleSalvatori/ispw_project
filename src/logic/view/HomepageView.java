@@ -1,16 +1,24 @@
 package logic.view;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import logic.Session;
 import logic.model.User;
+import logic.utilities.Weather;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.ProfessorStatCard;
 import logic.view.card.element.StudentStatCard;
@@ -51,10 +59,67 @@ public class HomepageView implements Initializable {
 			}
 		}*/
 		
-		
+		Image image;
+		JSONArray info = Weather.getInfo();
+		int hour = LocalDateTime.now().getHour();
 		for (int i = 0; i<5; i++) {
 			try {
-				WeatherCard weatherCard = new WeatherCard("1°C", "10:00");
+				JSONArray a = info.getJSONObject(hour+i).getJSONArray("weather");
+				JSONObject b = a.getJSONObject(0);
+				if ((hour+i) < 6) {
+					if (b.getString("main") == "Clear") {
+						File file = new File("src/res/png/Weather/Moon.png");
+						image = new Image(file.toURI().toString());
+					}
+					else if (b.getString("main") == "Clouds") {
+						File file = new File("src/res/png/Weather/CloudMoon.png");
+						image = new Image(file.toURI().toString());
+					}
+					else if (b.getString("main") == "Rain") {
+						File file = new File("src/res/png/Weather/Rain.png");
+						image = new Image(file.toURI().toString());
+					}
+					else if (b.getString("main") == "Thunderstorm") {
+						File file = new File("src/res/png/Weather/Thunderstorm.png");
+						image = new Image(file.toURI().toString());
+					}
+					else {
+						File file = new File("src/res/png/Weather/Cloud.png");
+						image = new Image(file.toURI().toString());
+					}
+				}
+				else {
+					if (b.getString("main") == "Clear") {
+						File file = new File("src/res/png/Weather/Sun.png");
+						image = new Image(file.toURI().toString());
+					}
+					else if (b.getString("main") == "Clouds") {
+						File file = new File("src/res/png/Weather/CloudSun.png");
+						image = new Image(file.toURI().toString());
+					}
+					else if (b.getString("main") == "Rain") {
+						File file = new File("src/res/png/Weather/Rain.png");
+						image = new Image(file.toURI().toString());
+					}
+					else if (b.getString("main") == "Thunderstorm") {
+						File file = new File("src/res/png/Weather/Thunderstorm.png");
+						image = new Image(file.toURI().toString());
+					}
+					else {
+						File file = new File("src/res/png/Weather/Cloud.png");
+						image = new Image(file.toURI().toString());
+					}
+				}
+				
+				String h;
+				if ((hour+i) < 10) {
+					h = "0" + (hour+i);
+				}
+				else {
+					h = Integer.toString(hour+i);
+				}
+				
+				WeatherCard weatherCard = new WeatherCard(Weather.convert(info.getJSONObject(hour+i).getDouble("temp")) + "°C", image, h + ":00");
 				hboxWeather.getChildren().add(weatherCard);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block

@@ -19,20 +19,14 @@ public class WeatherCardView implements Initializable {
 	@FXML
 	private ImageView imgWeather;
 	
-	public void setCard(String temp, String time) throws FileNotFoundException {
+	public void setCard(String temp, Image img, String time) throws FileNotFoundException {
 		labelTemp.setText(temp);
-		//imgWeather.setImage(img);
-		labelTime.setText(time);
-		
-		InputStream stream = new FileInputStream("src/res/png/Weather/CloudSun.png");
-		Image img = new Image(stream);
 		imgWeather.setImage(img);
+		labelTime.setText(time);
 	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
-
 }
