@@ -40,11 +40,13 @@ public class NavBarView implements Initializable {
 	@FXML
 	public void newsButton(ActionEvent event) throws IOException {
 		System.out.println("NewsButton");
+		PageLoader.getInstance().buildPage(Page.NEWS, event);
 	}
 
 	@FXML
 	public void profileButton(ActionEvent event) throws IOException {
 		System.out.println("ProfileButton");
+		PageLoader.getInstance().buildPage(Page.PROFILE, event);
 	}
 
 	@FXML
