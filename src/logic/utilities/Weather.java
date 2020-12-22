@@ -44,7 +44,7 @@ public class Weather {
 	public static JSONArray getInfo() {
 
 		String API_KEY = "a4f22e032f9d48ee8fd3a2dfe5101878";
-		String LOCATION = "Rome, IT";
+		//String LOCATION = "Rome, IT";
 		String LAT = "41.89";
 		String LON = "12.48";
 		//String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + LOCATION + "&appid=" + API_KEY + "&units=imperial";

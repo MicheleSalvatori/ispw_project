@@ -7,7 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.46-bin.jar"/>
-	<classpathentry kind="lib" path="D:/Projects/EclipseProjects/ispw_project/branches/Weather/lib/gson-2.8.6.jar"/>
 	<classpathentry kind="lib" path="lib/json-20201115.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

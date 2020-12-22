@@ -17,8 +17,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.effect.BoxBlur;
-import javafx.scene.layout.Region;
-import javafx.stage.Stage;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.exceptions.RecordNotFoundException;
