@@ -18,6 +18,7 @@ import logic.view.NavBar;
 import logic.view.StatusBar;
 
 public class PageLoader {
+	
 	private static PageLoader instance = null;
 	private Page page;
 	private Stage primaryStage;

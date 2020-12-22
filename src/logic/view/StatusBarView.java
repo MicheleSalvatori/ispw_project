@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import logic.Session;
 import logic.controller.LoginController;
-import logic.model.Professor;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
@@ -40,8 +39,6 @@ public class StatusBarView implements Initializable {
 		LoginController loginController = new LoginController();
 		loginController.logout();
 		PageLoader.getInstance().buildPage(Page.LOGIN, event);
-		
-		
 	}
 	
 	@FXML

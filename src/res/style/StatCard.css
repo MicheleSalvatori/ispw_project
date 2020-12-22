@@ -1,7 +1,3 @@
-@font-face {
-	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
-}
-
  /*Roboto font */
  @font-face {
  	src: url("../font/Roboto/Roboto-Regular.ttf");
@@ -14,33 +10,40 @@
  @font-face {
  	src: url("../font/Roboto/Roboto-Light.ttf");
  }
-
-.root {
-	-fx-background-color: white;
+ 
+ /* BalooBhai font */
+@font-face {
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
 }
-
-.pane {
+ 
+ 
+.root-professor {
 	-fx-background-color: #E5E5EB;
 	-fx-background-radius: 14px;
+	
+	-fx-pref-width: 440;
+	-fx-pref-height: 96;
 }
-
+ 
+.root-student {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14px;
+	
+	-fx-pref-width: 208;
+	-fx-pref-height: 96;
+}
+ 
 .label {
-	-fx-font-family: "Baloo Bhai";
-	-fx-font-size: 24;
 	-fx-text-fill: #0C0B0B;
 }
-
-.pane-mainlabel {
-	-fx-font-size: 36;
+ 
+.label-number {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 64;
 }
 
-.pane-otherlabel {
+.label-question {
 	-fx-font-family: "Roboto";
 	-fx-font-weight: normal;
 	-fx-font-size: 18;
-}
-
-.web-view {
-	-fx-border-radius: 14 14 14 14;
-	-fx-background-radius: 14px;
 }

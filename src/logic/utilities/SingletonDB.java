@@ -19,9 +19,6 @@ public class SingletonDB {
 
 	public Connection getConnection() throws SQLException {
 		if (conn == null) {
-			System.out.println(AppProperties.getInstance().getProperty("dburl"));
-			System.out.println(AppProperties.getInstance().getProperty("dbuser"));
-			System.out.println(AppProperties.getInstance().getProperty("dbpasswd"));
 			conn = DriverManager.getConnection(AppProperties.getInstance().getProperty("dburl"),
 					AppProperties.getInstance().getProperty("dbuser"),
 					AppProperties.getInstance().getProperty("dbpasswd"));

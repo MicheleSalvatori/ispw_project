@@ -22,18 +22,22 @@ public class LoginController {
 		
 		//Gestione Sessione
 		Session.getSession().setUserLogged(professor);
+		Session.getSession().setType(1);
 	}
 	
 	public void loginAsStudent(UserBean userBean) throws SQLException, RecordNotFoundException {
 			
-			String username = userBean.getUsername();
-			String password = userBean.getPassword();
+		String username = userBean.getUsername();
+		String password = userBean.getPassword();
 			
-			Student student = StudentDAO.findStudent(username, password);
+		Student student = StudentDAO.findStudent(username, password);
+		System.out.println("FINE: "+ student.getUsername());
 			
-			//Gestione Sessione
-			Session.getSession().setUserLogged(student);
-		}
+		//Gestione Sessione
+		Session.getSession().setUserLogged(student);
+		Session.getSession().setType(0);
+	}
+	
 	public void logout() throws SQLException, ClassNotFoundException {
 		
 		// Delete Session
