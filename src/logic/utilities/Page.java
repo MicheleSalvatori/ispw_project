@@ -8,7 +8,8 @@ public enum Page {
 	FORUM("src/res/fxml/ForumPage.fxml", "App - Forum"), 
 	NEWQUESTION("src/res/fxml/NewQuestionPage.fxml", "App - Insert new question"),
 	QUESTION("src/res/fxml/QuestionPage.fxml", "App - Forum"), 
-	EXAM("src/res/fxml/ExamPage.fxml", "App - Exams");
+	EXAM("src/res/fxml/ExamPage.fxml", "App - Exams"), 
+	LESSON("src/res/fxml/LessonPage.fxml", "App - Lesson");
 	
 	
 	private String res;

@@ -12,7 +12,7 @@
       
       <Label fx:id="labelClass" layoutX="96.5" layoutY="42.0" styleClass="classroom-label" text="Classroom" />
       
-      <Button layoutX="483.0" layoutY="20.0" mnemonicParsing="false" text="View" />
+      <Button fx:id="btnView" layoutX="483.0" layoutY="20.0" mnemonicParsing="false" onAction="#viewLesson" text="View" />
       
       <Label fx:id="labelTime" layoutX="357.0" layoutY="6.0" styleClass="time-label" text="10:00" AnchorPane.rightAnchor="164.0" />
       
