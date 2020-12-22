@@ -1,0 +1,48 @@
+@font-face {
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
+ /*Roboto font */
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Regular.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ }
+ 
+.text-area{
+    -fx-background-color: #000000;
+    -fx-border-color: #0C0B0B;
+    -fx-background-radius: 14.0px;
+    -fx-border-radius: 14.0px;
+    -fx-font-size: 18.0;
+    -fx-font-family: "Roboto";
+    -width: 1124.0;
+	-height: 207.0;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;
+    }
+
+.text-area .scroll-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 14.0px;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+

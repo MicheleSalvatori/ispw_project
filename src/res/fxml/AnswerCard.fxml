@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="173.0" prefWidth="1124.0" styleClass="root" stylesheets="@../style/AnswerCard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea fx:id="textAnswer" layoutX="6.0" layoutY="38.0" prefHeight="200.0" prefWidth="200.0" promptText="Risposta" />
+      <Label fx:id="labelStudent" layoutX="19.0" layoutY="6.0" styleClass="label_student" stylesheets="@../style/AnswerCard.css" text="Student" />
+      <Label fx:id="labelDate" layoutX="926.0" layoutY="17.0" nodeOrientation="RIGHT_TO_LEFT" styleClass="label_date" stylesheets="@../style/AnswerCard.css" text="Date" AnchorPane.rightAnchor="19.0" />
+      <Line endX="1085.14" layoutX="19.0" layoutY="37.0" />
+   </children>
+</AnchorPane>

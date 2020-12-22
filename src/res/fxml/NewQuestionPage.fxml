@@ -11,10 +11,10 @@
    <children>
       
       <Label layoutX="6.0" layoutY="14.0" stylesheets="@../style/Homepage.css" text="Post new question" />
-      <TextArea fx:id="textQuestion" layoutX="7.0" layoutY="142.0" prefHeight="200.0" prefWidth="659.0" promptText="Question" stylesheets="@../style/NewQuestion.css" />
-      <TextField fx:id="textSubject" layoutX="14.0" layoutY="69.0" promptText="Subject" stylesheets="@../style/NewQuestion.css" />
-      <Button fx:id="btnSubmit" layoutX="901.0" layoutY="371.0" mnemonicParsing="false" styleClass="pane-mainlabel" stylesheets="@../style/NewQuestion.css" text="Submit" />
-      <ComboBox layoutX="981.0" layoutY="94.0" prefWidth="150.0" promptText="Select course" />
+      <TextArea fx:id="textQuestion" layoutX="7.0" layoutY="142.0" promptText="Question" styleClass="text-area" stylesheets="@../style/NewQuestion.css" />
+      <TextField fx:id="textSubject" layoutX="7.0" layoutY="69.0" promptText="Subject" styleClass="text-field" stylesheets="@../style/NewQuestion.css" />
+      <Button fx:id="btnSubmit" layoutX="901.0" layoutY="371.0" mnemonicParsing="false" stylesheets="@../style/NewQuestion.css" text="Submit" />
+      <ComboBox fx:id="courseComboBox" layoutX="981.0" layoutY="69.0" prefWidth="150.0" promptText="Select course" styleClass="combo-box-base" stylesheets="@../style/NewQuestion.css" />
       
    </children>
 </AnchorPane>
