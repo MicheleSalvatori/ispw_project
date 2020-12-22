@@ -1,6 +1,7 @@
 package logic.utilities;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,11 +14,85 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javafx.scene.image.Image;
+
 public class Weather {
 	
-	public static double convert(double kelvin) {
+	public static double kelvinToCelsius(double kelvin) {
 		BigDecimal bd = new BigDecimal(kelvin-273.15).setScale(1, RoundingMode.HALF_UP);
 		return bd.doubleValue();
+	}
+	
+	public static Image weatherImage(int hour, String weather) {
+		
+		Image image;
+		File file;
+		
+		if (hour < 6) {
+			
+			switch (weather) {
+			
+			case "Clear":
+				file = new File("src/res/png/Weather/Moon.png");
+				image = new Image(file.toURI().toString());
+				break;
+				
+			case "Clouds":
+				file = new File("src/res/png/Weather/CloudMoon.png");
+				image = new Image(file.toURI().toString());
+				break;
+				
+			case "Rain":
+				file = new File("src/res/png/Weather/Rain.png");
+				image = new Image(file.toURI().toString());
+				break;
+				
+			case "Thunderstorm":
+				file = new File("src/res/png/Weather/Thunderstorm.png");
+				image = new Image(file.toURI().toString());
+				break;
+				
+			default:
+				file = new File("src/res/png/Weather/Cloud.png");
+				image = new Image(file.toURI().toString());
+				break;
+			
+			}
+		}
+		
+		else {
+			
+			switch (weather) {
+			
+			case "Clear":
+				file = new File("src/res/png/Weather/Sun.png");
+				image = new Image(file.toURI().toString());
+				break;
+				
+			case "Clouds":
+				file = new File("src/res/png/Weather/CloudSun.png");
+				image = new Image(file.toURI().toString());
+				break;
+				
+			case "Rain":
+				file = new File("src/res/png/Weather/Rain.png");
+				image = new Image(file.toURI().toString());
+				break;
+				
+			case "Thunderstorm":
+				file = new File("src/res/png/Weather/Thunderstorm.png");
+				image = new Image(file.toURI().toString());
+				break;
+				
+			default:
+				file = new File("src/res/png/Weather/Cloud.png");
+				image = new Image(file.toURI().toString());
+				break;
+			
+			}
+		}
+		
+		return image;
 	}
 	
 	private static String readAll(Reader rd) throws IOException {
@@ -57,7 +132,10 @@ public class Weather {
 		    JSONArray array = json.getJSONArray("hourly");
 		    return array;
 		    
-		} catch (JSONException | IOException e) {
+		} catch (JSONException e) {
+			e.printStackTrace();
+			
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

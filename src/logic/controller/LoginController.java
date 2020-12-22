@@ -22,6 +22,7 @@ public class LoginController {
 		
 		//Gestione Sessione
 		Session.getSession().setUserLogged(professor);
+		Session.getSession().setType(1);
 	}
 	
 	public void loginAsStudent(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -34,6 +35,7 @@ public class LoginController {
 			
 		//Gestione Sessione
 		Session.getSession().setUserLogged(student);
+		Session.getSession().setType(0);
 	}
 	
 	public void logout() throws SQLException, ClassNotFoundException {

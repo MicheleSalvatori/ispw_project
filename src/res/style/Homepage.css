@@ -39,3 +39,8 @@
 	-fx-font-weight: normal;
 	-fx-font-size: 18;
 }
+
+.web-view {
+	-fx-border-radius: 14 14 14 14;
+	-fx-background-radius: 14px;
+}
