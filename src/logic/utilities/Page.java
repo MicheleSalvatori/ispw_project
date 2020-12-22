@@ -7,7 +7,8 @@ public enum Page {
 	SIGNUP("src/res/fxml/Signup.fxml", "App - Signup"), 
 	FORUM("src/res/fxml/ForumPage.fxml", "App - Forum"), 
 	NEWQUESTION("src/res/fxml/NewQuestionPage.fxml", "App - Insert new question"),
-	QUESTION("src/res/fxml/QuestionPage.fxml", "App - Forum");
+	QUESTION("src/res/fxml/QuestionPage.fxml", "App - Forum"), 
+	EXAM("src/res/fxml/ExamPage.fxml", "App - Exams");
 	
 	
 	private String res;
