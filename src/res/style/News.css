@@ -1,0 +1,33 @@
+@font-face {
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
+ /*Roboto font */
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Regular.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ }
+
+.root {
+	-fx-background-color: white;
+}
+
+.anchor-pane {
+	-fx-background-color: transparent;
+	-fx-border-color: #0C0B0B;
+	-fx-border-radius: 14px;
+	-fx-border-width: 2px;
+}
+
+.label {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24;
+	-fx-text-fill: #0C0B0B;
+}

@@ -1,0 +1,83 @@
+@font-face {
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
+ /* Roboto font */
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Regular.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ }
+
+.root {
+	-fx-background-color: white;
+}
+
+.anchor-pane {
+	-fx-background-color: transparent;
+	-fx-border-color: #0C0B0B;
+	-fx-border-radius: 14px;
+	-fx-border-width: 2px;
+}
+
+.label {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24;
+	-fx-text-fill: #0C0B0B;
+}
+
+.label-desc {
+	-fx-font-family: "Roboto";
+	-fx-font-weight: normal;
+	-fx-font-size: 22;
+	-fx-text-fill: #0C0B0B;
+	-fx-text-alignment: RIGHT;
+	-fx-underline: true;
+}
+
+.button:hover {
+	-fx-cursor: hand;
+}
+
+.button-show {
+	-fx-background-color: #0C0B0B;
+	
+	-size: 52;
+	-fx-min-height: 13;
+	-fx-min-width: 18;
+	-fx-pref-height: 13;
+	-fx-pref-width: 18;
+	-fx-max-height: 13;
+	-fx-max-width: 18;
+	
+	-fx-shape: "M9 0C2.45455 0 0 6.5 0 6.5C0 6.5 2.45455 13 9 13C15.5455 13 18 6.5 18 6.5C18 6.5 15.5455 0 9 0ZM9 2.4375C11.259 2.4375 13.0909 4.25669 13.0909 6.5C13.0909 8.74331 11.259 10.5625 9 10.5625C6.741 10.5625 4.90909 8.74331 4.90909 6.5C4.90909 4.25669 6.741 2.4375 9 2.4375ZM9 4.0625C8.34901 4.0625 7.72469 4.31931 7.26437 4.77643C6.80406 5.23355 6.54545 5.85353 6.54545 6.5C6.54545 7.14647 6.80406 7.76645 7.26437 8.22357C7.72469 8.68069 8.34901 8.9375 9 8.9375C9.65099 8.9375 10.2753 8.68069 10.7356 8.22357C11.1959 7.76645 11.4545 7.14647 11.4545 6.5C11.4545 5.85353 11.1959 5.23355 10.7356 4.77643C10.2753 4.31931 9.65099 4.0625 9 4.0625Z";
+}
+
+.button-course {
+	-fx-pref-height: 43;
+	-fx-pref-width: 253;
+	
+	-fx-background-color: #F0F0F2;
+	-fx-background-radius: 14px;
+	
+	-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 10, 0, 0, 1);
+}
+
+.button-change {
+	-fx-background-color: transparent;
+	
+	-fx-pref-height: 10;
+	-fx-pref-width: 190;
+	
+	-fx-font-family: "Roboto";
+	-fx-font-size: 16px;
+	-fx-font-weight: lighter;
+	-fx-text-fill: #241C1C;
+	-fx-underline: true;	
+}
