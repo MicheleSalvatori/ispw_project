@@ -19,7 +19,7 @@ import logic.exceptions.DuplicatedRecordException;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
-public class SignupView implements Initializable{
+public class SignupView implements Initializable {
 	
 	@FXML
 	private TextField textUsername, textName, textSurname, textEmail;
@@ -50,7 +50,7 @@ public class SignupView implements Initializable{
     		return;
     	}
 	
-    	if (chekdInput() && AlertController.confirmation("Are your data correct?\nYour username will be:\n" + username)){
+    	if (chekdInput(event) && AlertController.confirmation("Are your data correct?\nYour username will be:\n" + username, event)){
 			UserBean userBean = new UserBean();
 			userBean.setUsername(username);
 			userBean.setName(name);
@@ -61,18 +61,19 @@ public class SignupView implements Initializable{
 			signupController = new SignupController();
 			try {
 				signupController.signup(userBean);
-				AlertController.buildInfoAlert("Registration completed!\nYou will'be redirect to the login page.",
-						"Welcome");
+				AlertController.buildInfoAlert("Registration completed!\nYou will'be redirect to the login page.", "Welcome", event);
 				PageLoader.getInstance().buildPage(Page.LOGIN, event);
+				
 			} catch (SQLException e) {
-				AlertController.buildInfoAlert("Connection failed!", "Warning");
+				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+				
 			} catch (DuplicatedRecordException e) {
-				AlertController.buildInfoAlert("A user already exists with this email!\nTry to login.", "Registration Failed");
+				AlertController.buildInfoAlert("A user already exists with this email!\nTry to login.", "Registration Failed", event);
 			}
 		}
 	}
 
-	private boolean chekdInput() {
+	private boolean chekdInput(ActionEvent event) {
 		
 		String email = textEmail.getText(); 
 		String password = textPassword.getText();
@@ -85,12 +86,12 @@ public class SignupView implements Initializable{
 				return true;
 			}
 			else {
-				AlertController.buildInfoAlert("Different password", "Error");
+				AlertController.buildInfoAlert("Different password", "Error", event);
 				return false;
 			}
 		}
 		else {
-			AlertController.buildInfoAlert("Invalid email", "Error");
+			AlertController.buildInfoAlert("Invalid email", "Error", event);
 			return false;
 		}
 		
@@ -100,13 +101,13 @@ public class SignupView implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		/*btnSignup.disableProperty()
+		btnSignup.disableProperty()
 				.bind(Bindings.isEmpty(textName.textProperty())
 				.or(Bindings.isEmpty(textSurname.textProperty()))
 				.or(Bindings.isEmpty(textUsername.textProperty()))
 				.or(Bindings.isEmpty(textEmail.textProperty()))
 				.or(Bindings.isEmpty(textPassword.textProperty()))
-				.or(Bindings.isEmpty(textConfirmPassword.textProperty())));*/
+				.or(Bindings.isEmpty(textConfirmPassword.textProperty())));
 
 		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
 			@Override

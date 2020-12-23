@@ -21,10 +21,8 @@
 
 .anchor-pane {
 	-fx-background-color: #F0F0F2;
-	-fx-border-color: #0C0B0B;
 	-fx-border-radius: 14px;
 	-fx-background-radius: 14px;
-	-fx-border-width: 2px;
 }
 .anchor-pane-seat {
 	-fx-background-color: white;
@@ -41,12 +39,6 @@
     -fx-font-size: 18.0;
     -fx-font-family: "Roboto";
 	-fx-border-width: 2px;
-	-fx-min-width: -width;
-	-fx-min-height: -height;
-	-fx-pref-width: -width;
-	-fx-pref-height: -height;
-	-fx-max-width: -width;
-	-fx-max-height: -height;
 }
 
 .text-area .scroll-pane {

@@ -6,8 +6,12 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
@@ -21,7 +25,7 @@ public class AlertController {
 	
 	private AlertController() {}
 	
-	public static void buildInfoAlert(String message, String titleAlert) {
+	public static void buildInfoAlert(String message, String titleAlert, ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle(titleAlert);
 		alert.setHeaderText(null);
@@ -30,12 +34,23 @@ public class AlertController {
 		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
 		centerButtons(alert.getDialogPane());
 		alert.initStyle(StageStyle.TRANSPARENT);
-
+		
+		Node source = (Node) event.getSource();
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+	    GaussianBlur blur = new GaussianBlur(55);
+	    adj.setInput(blur);
+		source.getScene().getRoot().setEffect(adj);
+		
 		alert.show();
 		animation(alert);
+		alert.close();
+		
+		alert.showAndWait();
+		source.getScene().getRoot().setEffect(null);
+		alert.close();
 	}
 
-	public static boolean confirmation(String message) {
+	public static boolean confirmation(String message, ActionEvent event) {
 	 	Alert alert = new Alert(AlertType.CONFIRMATION, message, ButtonType.YES, ButtonType.NO);
 	 	alert.setTitle("Confirmation");
 	 	alert.setHeaderText(null);
@@ -44,8 +59,19 @@ public class AlertController {
 		centerButtons(alert.getDialogPane());
 		alert.initStyle(StageStyle.TRANSPARENT);
 		
+		Node source = (Node) event.getSource();
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+	    GaussianBlur blur = new GaussianBlur(55);
+	    adj.setInput(blur);
+		source.getScene().getRoot().setEffect(adj);
+		
 		alert.show();
 		animation(alert);
+		alert.close();
+		
+		alert.showAndWait();
+		source.getScene().getRoot().setEffect(null);
+		
 		return alert.getResult() == ButtonType.YES;
 	}
 	

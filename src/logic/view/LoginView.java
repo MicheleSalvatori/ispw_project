@@ -1,6 +1,7 @@
 package logic.view;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -10,13 +11,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.effect.BoxBlur;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.exceptions.RecordNotFoundException;
@@ -63,13 +62,14 @@ public class LoginView implements Initializable {
 				loginController.loginAsProfessor(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
 			} catch (SQLException e) {
-				AlertController.buildInfoAlert("Connection failed!", "Warning" );
+				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+				
+			} catch (ConnectException e) {
+				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
+			
 			} catch (RecordNotFoundException e) {
-				BoxBlur blur = new BoxBlur(5, 5, 5);
-				Node source = (Node) event.getSource();
-				source.getScene().getRoot().setEffect(blur);
-				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed" );
-				source.getScene().getRoot().setEffect(null);
+
+				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
 			}
 			break;
 
@@ -83,9 +83,9 @@ public class LoginView implements Initializable {
 				loginController.loginAsStudent(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
 			} catch (SQLException e) {
-				AlertController.buildInfoAlert("Connection failed!", "Warning" );
+				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
 			} catch (RecordNotFoundException e) {
-				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed" );
+				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
 			}
 			break;
 		}

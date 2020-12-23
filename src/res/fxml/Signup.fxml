@@ -23,7 +23,6 @@
       <PasswordField fx:id="textPassword" layoutX="737.0" layoutY="369.0" promptText="Password" stylesheets="@../style/Signup.css" />
       
       <TextField fx:id="textEmail" layoutX="384.0" layoutY="450.0" promptText="Email" stylesheets="@../style/Signup.css" />
-      <TextField fx:id="textUsername" layoutX="737.0" layoutY="531.0" promptText="Username" stylesheets="@../style/Signup.css" />
       
       <PasswordField fx:id="textConfirmPassword" layoutX="737.0" layoutY="450.0" promptText="Confirm Password" stylesheets="@../style/Signup.css" />
 
