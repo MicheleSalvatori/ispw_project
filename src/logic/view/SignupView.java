@@ -57,8 +57,7 @@ public class SignupView implements Initializable{
 			userBean.setSurname(surname);
 			userBean.setEmail(email);
 			userBean.setPassword(password);
-			System.out
-					.println("SIGNUP DATA:\n\tuser: " + userBean.getUsername() + "\n\tpass: " + userBean.getPassword());
+			System.out.println("SIGNUP DATA:\n\tuser: " + userBean.getUsername() + "\n\tpass: " + userBean.getPassword());
 			signupController = new SignupController();
 			try {
 				signupController.signup(userBean);
@@ -68,8 +67,7 @@ public class SignupView implements Initializable{
 			} catch (SQLException e) {
 				AlertController.buildInfoAlert("Connection failed!", "Warning");
 			} catch (DuplicatedRecordException e) {
-				AlertController.buildInfoAlert("A user already exists with this email!\nTry to login.",
-						"Registration Failed");
+				AlertController.buildInfoAlert("A user already exists with this email!\nTry to login.", "Registration Failed");
 			}
 		}
 	}
@@ -102,12 +100,13 @@ public class SignupView implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		btnSignup.disableProperty()
+		/*btnSignup.disableProperty()
 				.bind(Bindings.isEmpty(textName.textProperty())
-						.or(Bindings.isEmpty(textSurname.textProperty())
-								.or(Bindings.isEmpty(textEmail.textProperty())
-										.or(Bindings.isEmpty(textUsername.textProperty()))
-										.or(Bindings.isEmpty(textPassword.textProperty())))));
+				.or(Bindings.isEmpty(textSurname.textProperty()))
+				.or(Bindings.isEmpty(textUsername.textProperty()))
+				.or(Bindings.isEmpty(textEmail.textProperty()))
+				.or(Bindings.isEmpty(textPassword.textProperty()))
+				.or(Bindings.isEmpty(textConfirmPassword.textProperty())));*/
 
 		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
 			@Override
