@@ -7,9 +7,13 @@ public enum Page {
 	SIGNUP("src/res/fxml/Signup.fxml", "App - Signup"), 
 	FORUM("src/res/fxml/ForumPage.fxml", "App - Forum"), 
 	NEWQUESTION("src/res/fxml/NewQuestionPage.fxml", "App - Insert new question"),
-	QUESTION("src/res/fxml/QuestionPage.fxml", "App - Forum"), 
+	QUESTION("src/res/fxml/QuestionPage.fxml", "App - Forum"),
+	NEWS("src/res/fxml/NewsPage.fxml", "App - News"),
+	PROFILE("src/res/fxml/ProfilePage.fxml", "App - Profile"),
+	PROFESSOR("src/res/fxml/ProfessorPage.fxml", "App - Professor"),
 	EXAM("src/res/fxml/ExamPage.fxml", "App - Exams"), 
 	LESSON("src/res/fxml/LessonPage.fxml", "App - Lesson");
+
 	
 	
 	private String res;

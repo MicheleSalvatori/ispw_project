@@ -11,8 +11,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import logic.view.NavBar;
 import logic.view.StatusBar;
@@ -24,6 +28,8 @@ public class PageLoader {
 	private Stage primaryStage;
 	private HBox mainLayoutHBox;
 	private Scene scene;
+	
+	private Background background = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 	
 	private PageLoader() {}
 	
@@ -72,6 +78,7 @@ public class PageLoader {
 		vBox.getChildren().addAll(configStatusBar(), pageView);
 		mainLayoutHBox = new HBox(configNavBar(), vBox);						
 		HBox.setMargin(NavBar.getInstance(), new Insets(24.0, 72.0, 24.0, 32.0));
+		mainLayoutHBox.setBackground(background);									// Set white color to the scene
 		
 		scene = new Scene(mainLayoutHBox);
 		primaryStage.setScene(scene);

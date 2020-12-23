@@ -1,30 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" styleClass="root" stylesheets="@../style/Profile.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.ProfessorView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" styleClass="root" stylesheets="@../style/Profile.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.ProfessorPageView">
    <children>
+      
       <AnchorPane layoutY="45.0" prefHeight="729.0" prefWidth="1124.0" styleClass="anchor-pane">
          <children>
+         
             <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="83.0" layoutY="132.0" pickOnBounds="true" AnchorPane.leftAnchor="13.0" AnchorPane.topAnchor="13.0">
                <image>
                   <Image url="@../jpeg/avatar.png" />
                </image>
             </ImageView>
-            <Label layoutX="245.0" layoutY="25.0" text="Homepage:" />
-            <Label layoutX="437.0" layoutY="32.0" styleClass="label-desc" stylesheets="@../style/ProfessorPage.css" text="homepage" AnchorPane.rightAnchor="583.0" />
+            
+            <Label layoutX="245.0" layoutY="25.0" text="Site:" />
+            
+            <Label fx:id="labelSite" layoutX="437.0" layoutY="32.0" styleClass="label-desc-underline" stylesheets="@../style/ProfessorPage.css" text="homepage" AnchorPane.rightAnchor="583.0" />
+            
             <Label layoutX="245.0" layoutY="70.0" text="Linkedin:" />
+            
             <Label layoutX="245.0" layoutY="115.0" text="E-mail:" />
-            <Label layoutX="245.0" layoutY="160.0" text="Ufficio:" />
-            <Label layoutX="437.0" layoutY="76.0" styleClass="label-desc" stylesheets="@../style/ProfessorPage.css" text="linkedin" AnchorPane.rightAnchor="583.0" />
-            <Label layoutX="437.0" layoutY="120.0" styleClass="label-desc" stylesheets="@../style/ProfessorPage.css" text="email" AnchorPane.rightAnchor="583.0" />
-            <Label layoutX="463.0" layoutY="166.0" styleClass="label-desc" stylesheets="@../style/ProfessorPage.css" text="ufficio" AnchorPane.rightAnchor="583.0" />
+            
+            <Label layoutX="245.0" layoutY="160.0" text="Office:" />
+            
+            <Label fx:id="labelLinkedin" layoutX="437.0" layoutY="76.0" styleClass="label-desc-underline" stylesheets="@../style/ProfessorPage.css" text="linkedin" AnchorPane.rightAnchor="583.0" />
+            
+            <Label fx:id="labelEmail" layoutX="437.0" layoutY="120.0" styleClass="label-desc-underline" stylesheets="@../style/ProfessorPage.css" text="email" AnchorPane.rightAnchor="583.0" />
+            
+            <Label fx:id="labelOffice" layoutX="463.0" layoutY="166.0" styleClass="label-desc" stylesheets="@../style/ProfessorPage.css" text="ufficio" AnchorPane.rightAnchor="583.0" />
+            
+            <Label layoutX="15.0" layoutY="254.0" text="About me:" />
+            
+            <TextArea fx:id="textDesc" editable="false" layoutX="7.0" layoutY="295.0" prefHeight="429.0" prefWidth="1114.0" stylesheets="@../style/ProfessorPage.css" text="Ciao mi chiamo giovanni e sono un lezzo" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" />
+         
          </children>
       </AnchorPane>
-      <Label layoutY="5.0" text="Professor Gulyx" />
+      
+      <Label fx:id="labelName" layoutY="5.0" text="Professor Gulyx" />
+      
    </children>
 </AnchorPane>

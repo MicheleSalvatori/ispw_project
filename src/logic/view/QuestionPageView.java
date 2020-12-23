@@ -11,7 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import logic.view.card.element.AnswerCard;
 
-public class QuestionPageView implements Initializable{
+public class QuestionPageView implements Initializable {
 
     @FXML
     private ScrollPane scrollAnswers;
