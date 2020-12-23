@@ -10,7 +10,10 @@ public enum Page {
 	QUESTION("src/res/fxml/QuestionPage.fxml", "App - Forum"),
 	NEWS("src/res/fxml/NewsPage.fxml", "App - News"),
 	PROFILE("src/res/fxml/ProfilePage.fxml", "App - Profile"),
-	PROFESSOR("src/res/fxml/ProfessorPage.fxml", "App - Professor");
+	PROFESSOR("src/res/fxml/ProfessorPage.fxml", "App - Professor"),
+	EXAM("src/res/fxml/ExamPage.fxml", "App - Exams"), 
+	LESSON("src/res/fxml/LessonPage.fxml", "App - Lesson");
+
 	
 	
 	private String res;

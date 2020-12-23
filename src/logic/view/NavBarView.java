@@ -52,6 +52,7 @@ public class NavBarView implements Initializable {
 	@FXML
 	public void examsButton(ActionEvent event) throws IOException {
 		System.out.println("ExamsButton");
+		PageLoader.getInstance().buildPage(Page.EXAM, event);
 	}
 
 	@FXML
