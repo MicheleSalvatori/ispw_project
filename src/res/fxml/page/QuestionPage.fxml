@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../../style/page/QuestionPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.QuestionPageView">
+   <children>
+      
+      <ScrollPane fx:id="scrollAnswers" stylesheets="@../../style/ScrollPane.css" layoutY="357.0" prefHeight="379.0" prefWidth="1150.0">
+         <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="620.0" />
+         </content>
+      </ScrollPane>
+      
+      <Label layoutX="6.0" layoutY="14.0" text="Question" />
+      
+      <TextArea fx:id="textQuestion" editable="false" layoutX="7.0" layoutY="60.0" prefHeight="200.0" prefWidth="659.0" />
+      
+      <Label layoutX="6.0" layoutY="311.0" text="Answers" />
+      
+   </children>
+</AnchorPane>

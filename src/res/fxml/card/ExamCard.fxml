@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane prefHeight="80.0" prefWidth="1094.0" styleClass="root" stylesheets="@../../style/card/ExamCard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+   
+      <Label fx:id="labelName" layoutX="115.0" layoutY="16.0" styleClass="exam-label" text="Exam Name" />
+      
+      <Label fx:id="labelDate" layoutX="115.0" layoutY="46.0" styleClass="date-label" text="Date" />
+      
+      <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="21.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../png/card/Exam.png" />
+         </image>
+      </ImageView>
+      
+      <Label fx:id="labelVote" layoutX="618.44" layoutY="28.0" styleClass="details-label" text="Vote" />
+      
+      <Label fx:id="labelCourse" layoutX="976.0" layoutY="28.0" styleClass="details-label" text="Course" />
+      
+      <Label fx:id="labelCFU" layoutX="800.44" layoutY="28.0" styleClass="details-label" text="CFU" />
+      
+      <Line endY="54.0" layoutX="547.0" layoutY="13.0" />
+      
+      <Line endY="54.0" layoutX="731.16" layoutY="13.0" />
+      
+      <Line endY="54.0" layoutX="905.57" layoutY="13.0" />
+      
+      <Line endY="54.0" layoutX="98.0" layoutY="13.0" />
+      
+      <Label fx:id="labelNumber" layoutX="70.0" layoutY="23.0" styleClass="exam-label" text="?" />
+      
+   </children>
+</AnchorPane>
