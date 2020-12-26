@@ -1,0 +1,72 @@
+@font-face {
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+@font-face {
+	src: url("../font/BalooBhai/BalooBhai2-Regular.ttf");
+}
+
+ /*Roboto font */
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Regular.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ }
+ 
+.anchor-pane {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14px;
+}
+.label-title{
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 36px;
+}
+
+.label-secondtitle{
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24px;
+}
+
+.label-detail{
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai 2";
+	-fx-font-size: 36px;
+}
+
+.label-detailother{
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai 2";
+	-fx-font-size: 24px;
+}
+
+
+.button {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14px;
+	
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-weight: bold;
+	-fx-font-size: 34;
+	
+	-width: 431;
+	-height: 96.33;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;
+}
+
+.button:hover{
+	-fx-cursor: hand;
+	-fx-background-color: #CFCFCF;
+}

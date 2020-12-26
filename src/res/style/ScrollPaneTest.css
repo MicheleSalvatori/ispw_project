@@ -29,7 +29,7 @@
 }
 
 .scroll-bar:vertical:hover .thumb {
-	-fx-background-color: red;
+    -fx-background-color: red;
 }
 
 .scroll-bar:vertical:pressed .thumb {

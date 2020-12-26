@@ -47,7 +47,6 @@ public class ExamPageView implements Initializable {
 //		scrollExams.setContent(examBox);
 		scrollAnchor.getChildren().add(examBox);
 		
-		
 //	Setup media
 		labelGPA.setText("23.7");
 		labelWPA.setText("25");
