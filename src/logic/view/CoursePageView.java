@@ -89,6 +89,8 @@ public class CoursePageView implements Initializable{
 		labelPrerequisites.setText("Algorithms and data structures");
 		labelProfessor.setText("Gulyx");
 		labelSemester.setText("II");
+		
+		labelReception.wrapTextProperty().setValue(true);
 	}
 
 }
