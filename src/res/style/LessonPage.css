@@ -54,6 +54,7 @@
 .text-area .scroll-pane .content{
     -fx-background-color: transparent;
 }
+
 .label {
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 31;

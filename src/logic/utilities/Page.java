@@ -12,7 +12,8 @@ public enum Page {
 	PROFILE("src/res/fxml/ProfilePage.fxml", "App - Profile"),
 	PROFESSOR("src/res/fxml/ProfessorPage.fxml", "App - Professor"),
 	EXAM("src/res/fxml/ExamPage.fxml", "App - Exams"), 
-	LESSON("src/res/fxml/LessonPage.fxml", "App - Lesson");
+	LESSON("src/res/fxml/LessonPage.fxml", "App - Lesson"),
+	ASSIGNMENT("src/res/fxml/AssignmentPage.fxml", "App - Assignment");
 
 	
 	

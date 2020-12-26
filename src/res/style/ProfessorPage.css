@@ -59,6 +59,12 @@
 	-fx-text-fill: #0C0B0B;
 }
 
+.text-area .scroll-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 14.0px;
+    -fx-boreder-color:#0C0B0B;
+}
+
 .text-area .content {
     -fx-background-color: transparent, white, transparent, white;
 }
