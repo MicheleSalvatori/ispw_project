@@ -14,7 +14,7 @@ public class AssignmentCard extends AnchorPane {
 	private AssignmentCardView assignmentCardView = new AssignmentCardView();
 	
 	public AssignmentCard(String number, String title, String date, String course) throws IOException {
-		URL url = new File("src/res/fxml/AssignmentCard.fxml").toURI().toURL();
+		URL url = new File("src/res/fxml/card/AssignmentCard.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(assignmentCardView);
 		this.getChildren().add(loader.load());

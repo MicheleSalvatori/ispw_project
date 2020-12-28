@@ -1,0 +1,34 @@
+/* Baloo Bhai font */
+@font-face {
+	src: url("../../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
+.label {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24;
+	-fx-text-fill: #0C0B0B;
+}
+ 
+.big-button {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14px;
+	
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-weight: bold;
+	-fx-font-size: 36;
+	
+	-width: 431;
+	-height: 96.33;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;
+}
+
+.button:hover{
+	-fx-cursor: hand;
+	-fx-background-color: #CFCFCF;
+}

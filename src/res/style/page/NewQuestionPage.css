@@ -1,0 +1,164 @@
+/* Baloo Bhai font */
+@font-face {
+	src: url("../../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
+/*Roboto font */
+@font-face {
+ 	src: url("../../font/Roboto/Roboto-Regular.ttf");
+}
+ 
+@font-face {
+ 	src: url("../../font/Roboto/Roboto-Bold.ttf");
+}
+ 
+@font-face {
+ 	src: url("../../font/Roboto/Roboto-Light.ttf");
+}
+
+.label {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24;
+	-fx-text-fill: #0C0B0B;
+}
+ 
+.button {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14.0px;
+	
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-weight: bold;
+	-fx-font-size: 24.0;
+	
+	-width: 230.0;
+	-height: 55.0;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;
+}
+
+.button:hover {
+	-fx-cursor: hand;
+	-fx-background-color: #CFCFCF;
+}
+
+.button:pressed {
+	-fx-background-color: #FF00FF;
+}
+
+.text-area {
+	-fx-padding: 3px;
+    -fx-background-color: transparent;
+    -fx-border-color: #0C0B0B;
+    -fx-background-radius: 14.0px;
+    -fx-border-radius: 14.0px;
+    -fx-border-width: 2px;
+    -fx-font-size: 18.0;
+    -fx-font-family: "Roboto";
+    -width: 1124.0;
+	-height: 207.0;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;
+}
+
+.text-area .content {
+    -fx-background-color: transparent, white, transparent, white;   
+}
+
+.text-area:focused .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent; 
+}
+
+.text-area .scroll-pane .viewport {
+	-fx-background-radius: 14px;
+   	-fx-background-color: transparent;
+}
+
+.text-area .scroll-bar:horizontal, .text-area .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.text-area .increment-button, .text-area .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-color: white;
+}
+
+.text-area .scroll-bar:horizontal .track,
+.text-area .scroll-bar:vertical .track{
+    -fx-background-color: #E5E5EB;
+    -fx-border-color: transparent;
+    -fx-background-radius: 10px;
+}
+
+.text-area .scroll-bar:vertical:hover .thumb {
+	-fx-background-color: red;
+}
+
+.text-area .scroll-bar:vertical:pressed .thumb {
+	-fx-background-color: purple;
+}
+
+.text-area .scroll-bar:horizontal .thumb,
+.text-area .scroll-bar:vertical .thumb {
+    -fx-background-color: #0C0B0B;
+    -fx-background-radius: 5em;
+}
+
+.text-area .scroll-pane .corner {
+    -fx-background-color: transparent;
+}
+
+.text-field {
+ 	-fx-border-color: #0C0B0B;
+ 	-fx-border-radius: 10.0px;
+    -fx-background-radius: 10.0px;
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 2px;
+    -fx-pref-height: 40.0;
+    -fx-pref-width: 400.0;
+ 	
+ 	-fx-font-family: "Roboto";
+ 	-fx-font-size: 18.0px;
+ 	-fx-font-weight: bold;
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: 0.4;
+}
+
+.combo-box-base {
+    -fx-background-color: #E5E5EB;
+    -fx-background-radius: 5px;
+    
+    -fx-font-family: "Baloo Bhai";
+    -fx-font-size: 18px;
+    -fx-text-fill: #0C0B0B;
+}
+
+.combo-box-base:hover {
+    -fx-cursor: hand;
+	-fx-background-color: #CFCFCF;
+}
+
+.combo-box-base:showing {
+    -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:focused {
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #0C0B0B;
+}

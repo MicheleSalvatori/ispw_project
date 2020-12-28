@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../../style/page/LessonPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.LessonPageView">
+   <children>
+      
+      <AnchorPane layoutX="307.0" layoutY="255.0" prefHeight="191.0" prefWidth="474.0" styleClass="anchor-pane" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="8.0" layoutY="14.0" text="Course:" AnchorPane.leftAnchor="13.0" />
+            <Label layoutX="11.0" layoutY="75.0" styleClass="label-info" text="Professor:" AnchorPane.leftAnchor="13.0" />
+            <Label layoutX="10.0" layoutY="126.0" styleClass="label-info" text="Classroom:" AnchorPane.leftAnchor="13.0" />
+            <Label fx:id="labelCourse" layoutX="358.0" layoutY="20.0" styleClass="label-info-course" text="course" AnchorPane.rightAnchor="22.0" />
+            <Label fx:id="labelProfessor" layoutX="354.0" layoutY="78.0" styleClass="label-desc" text="professor" AnchorPane.rightAnchor="22.0" />
+            <Label fx:id="labelClassroom" layoutX="424.0" layoutY="128.0" styleClass="label-desc" text="A3" AnchorPane.rightAnchor="22.0" />
+         </children>
+      </AnchorPane>
+      
+      <AnchorPane layoutX="317.0" layoutY="221.0" prefHeight="144.0" prefWidth="379.0" styleClass="anchor-pane" AnchorPane.leftAnchor="0.0">
+         <children>
+            <Label fx:id="labelTime" layoutX="185.0" layoutY="37.0" styleClass="label-time" AnchorPane.bottomAnchor="37.0" AnchorPane.rightAnchor="99.0" AnchorPane.topAnchor="35.0" />
+            <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="88.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="88.0" AnchorPane.topAnchor="38.0">
+               <image>
+                  <Image url="@../../png/card/Time.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      
+      <Label layoutY="385.0" text="Lesson Topic" AnchorPane.leftAnchor="0.0" />
+      
+      <TextArea fx:id="textTopic" editable="false" layoutY="435.0" prefHeight="338.0" prefWidth="474.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+      
+      <AnchorPane layoutX="730.0" layoutY="212.0" prefHeight="703.0" prefWidth="595.0" styleClass="anchor-pane-seat" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="70.0">
+         <children>
+            
+            <ImageView fitHeight="79.43" fitWidth="86.0" layoutX="251.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="251.0" AnchorPane.rightAnchor="260.0" AnchorPane.topAnchor="20.0">
+               <image>
+                  <Image url="@../../png/ClassProf.png" />
+               </image>
+            </ImageView>
+            
+            <ScrollPane fx:id="scrollPane" layoutX="9.0" layoutY="124.0" prefHeight="571.0" prefWidth="993.0" stylesheets="@../../style/ScrollPane.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="120.0">
+              <content>
+                <AnchorPane fx:id="paneSeat" minHeight="0.0" minWidth="0.0" />
+              </content>
+            </ScrollPane> 
+              
+         </children> 
+      </AnchorPane>
+      
+      <Label layoutX="566.0" layoutY="23.0" text="Seat Map" AnchorPane.rightAnchor="545.0" AnchorPane.topAnchor="20.0" />
+      
+      <AnchorPane fx:id="weatherCard" layoutX="408.0" layoutY="222.0" styleClass="root" stylesheets="@../../style/card/WeatherCard.css">
+         <children>
+         
+            <Label fx:id="labelTemp" layoutX="14.0" layoutY="12.0" text="25°C" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="12.0" />
+            
+            <ImageView fx:id="imgWeather" fitHeight="50.0" fitWidth="50.0" layoutX="9.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="9.0" />
+            
+            <Label fx:id="labelTime1" layoutX="11.5" layoutY="106.0" text="23:00" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+         
+         </children>
+      </AnchorPane>
+      
+   </children>
+</AnchorPane>

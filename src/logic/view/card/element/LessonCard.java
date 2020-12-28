@@ -13,7 +13,7 @@ public class LessonCard extends AnchorPane {
 	private LessonCardView lessonCardView = new LessonCardView();
 	
 	public LessonCard(String lesson, String classroom, String time) throws IOException {
-		URL url = new File("src/res/fxml/LessonCard.fxml").toURI().toURL();
+		URL url = new File("src/res/fxml/card/LessonCard.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(lessonCardView);
 		this.getChildren().add(loader.load());

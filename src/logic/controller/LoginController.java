@@ -1,5 +1,6 @@
 package logic.controller;
 
+import java.net.ConnectException;
 import java.sql.SQLException;
 
 import logic.Session;
@@ -12,7 +13,7 @@ import logic.model.dao.StudentDAO;
 
 public class LoginController {
 
-	public void loginAsProfessor(UserBean userBean) throws SQLException, RecordNotFoundException {
+	public void loginAsProfessor(UserBean userBean) throws SQLException, RecordNotFoundException, ConnectException {
 		
 		String username = userBean.getUsername();
 		String password = userBean.getPassword();

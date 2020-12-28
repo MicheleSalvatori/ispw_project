@@ -14,7 +14,7 @@ public class WeatherCard extends AnchorPane {
 	private WeatherCardView weatherCardView = new WeatherCardView();
 	
 	public WeatherCard(String temp, Image img, String time) throws IOException {
-		URL url = new File("src/res/fxml/WeatherCard.fxml").toURI().toURL();
+		URL url = new File("src/res/fxml/card/WeatherCard.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(weatherCardView);
 		this.getChildren().add(loader.load());

@@ -16,7 +16,7 @@
  }
 
 .dialog-pane {
-	-fx-background-color: gray;
+	-fx-background-color: white;
 	-fx-pref-width: 500;
 	-fx-border-radius: 100px;
 	-fx-background-radius: 100px;

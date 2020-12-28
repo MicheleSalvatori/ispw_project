@@ -19,9 +19,9 @@ public class MainStandalone extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle(AppProperties.getInstance().getProperty("title"));
-		URL url = new File("src/res/fxml/Login.fxml").toURI().toURL();
+		URL url = new File("src/res/fxml/page/LoginPage.fxml").toURI().toURL();
 		Parent root = FXMLLoader.load(url);
-		Scene scene = new Scene(root,1440,900);
+		Scene scene = new Scene(root, 1440, 900);
 		primaryStage.setScene(scene);
 		primaryStage.setMaximized(false);
 		primaryStage.setResizable(false);

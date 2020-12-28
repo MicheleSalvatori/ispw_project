@@ -1,0 +1,40 @@
+@font-face {
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+ 
+.button {
+	/*-fx-font-family: "Baloo Bhai";*/
+	-fx-font-size: 15px;
+	-fx-text-fill: black;
+	
+	-fx-background-radius: 80px;
+	-fx-background-color: #38D06B;
+	
+	-size: 42;
+	-fx-max-width: -size;
+	-fx-max-height: -size;
+	-fx-pref-width: -size;
+	-fx-pref-height: -size;
+	-fx-min-width: -size;
+	-fx-min-height: -size;
+}
+
+.button:hover {
+	-fx-cursor: hand;
+}
+
+.free-seat {
+	-fx-background-color: #38D06B;
+}
+
+.booked-seat {
+	-fx-background-color: #DD2D2D;
+}
+
+.your-seat {
+	-fx-background-color: #3899D0;
+}
+
+.not-available-seat {
+	-fx-background-color: #DFDFDF;
+}

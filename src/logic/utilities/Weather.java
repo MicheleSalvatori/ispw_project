@@ -28,7 +28,7 @@ public class Weather {
 		Image image;
 		File file;
 		
-		if (hour < 6) {
+		if (hour < 6 || hour > 19) {
 			
 			switch (weather) {
 			

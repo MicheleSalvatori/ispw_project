@@ -1,0 +1,86 @@
+/* Baloo Bhai font */
+@font-face {
+	src: url("../../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
+ /* Roboto font */
+ @font-face {
+ 	src: url("../../font/Roboto/Roboto-Regular.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../../font/Roboto/Roboto-Bold.ttf");
+ }
+ 
+ @font-face {
+ 	src: url("../../font/Roboto/Roboto-Light.ttf");
+ }
+ 
+ .root {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14px;
+	
+	-width: 401;
+	-height: 80;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;	
+}
+ 
+ .label_title {
+	-fx-text-fill: #0C0B0B;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 20px;
+}
+
+.label_number{
+	-fx-text-fill: #0C0B0B;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24px;
+}
+
+.label_expires {
+	-fx-text-fill: #0C0B0B;
+	-fx-font-family: "Roboto";
+	-fx-font-weight: bold;
+	-fx-font-size: 13px;
+}
+
+.label_date {
+	-fx-text-fill: #0C0B0B;
+	-fx-font-family: "Roboto";
+	-fx-font-size: 13px;
+}
+
+.label_course {
+	-fx-text-fill: #0C0B0B;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 16px;
+}
+
+
+.button {
+	-fx-background-color: #0C0B0B;
+	-fx-background-radius: 8px;
+	
+	-fx-text-fill: white;
+	-fx-font-family: "Roboto";
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+	
+	-width: 61.28;
+	-height: 32;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;	
+}
+
+.button:hover {
+	-fx-cursor: hand;
+}

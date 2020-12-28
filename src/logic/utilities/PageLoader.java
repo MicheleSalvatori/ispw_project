@@ -11,11 +11,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import logic.view.NavBar;
-import logic.view.StatusBar;
+import logic.view.menu.element.NavigationBar;
+import logic.view.menu.element.StatusBar;
 
 public class PageLoader {
 	
@@ -24,6 +28,8 @@ public class PageLoader {
 	private Stage primaryStage;
 	private HBox mainLayoutHBox;
 	private Scene scene;
+	
+	private Background background = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 	
 	private PageLoader() {}
 	
@@ -53,8 +59,8 @@ public class PageLoader {
 		configPage(loader.load());
 	}
 	
-	private NavBar configNavBar() throws IOException {
-		return NavBar.getInstance();
+	private NavigationBar configNavBar() throws IOException {
+		return NavigationBar.getInstance();
 	}
 	
 	private HBox configStatusBar() throws IOException {
@@ -71,7 +77,8 @@ public class PageLoader {
 		VBox vBox = new VBox();
 		vBox.getChildren().addAll(configStatusBar(), pageView);
 		mainLayoutHBox = new HBox(configNavBar(), vBox);						
-		HBox.setMargin(NavBar.getInstance(), new Insets(24.0, 72.0, 24.0, 32.0));
+		HBox.setMargin(NavigationBar.getInstance(), new Insets(24.0, 72.0, 24.0, 32.0));
+		mainLayoutHBox.setBackground(background);									// Set white color to the scene
 		
 		scene = new Scene(mainLayoutHBox);
 		primaryStage.setScene(scene);
