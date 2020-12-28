@@ -8,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -18,10 +17,9 @@ import logic.view.card.element.QuestionCard;
 public class ForumPageView implements Initializable {
 
 	@FXML
-	private ScrollPane scrollQuestion, scrollAssignments;
-	@FXML
 	private Button btnMyQuestion, btnNewQuestion;
-	private VBox questionBox, assignmentsBox;
+	@FXML
+	private VBox vboxQuestion, vboxAssignment;
 
 	@FXML
 	private void myQuestion(ActionEvent ae) {
@@ -35,33 +33,25 @@ public class ForumPageView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		questionBox = new VBox();
+		
 		for (int i = 1; i < 10; i++) {
 			QuestionCard questionCard;
 			try {
-				questionCard = new QuestionCard(String.valueOf(i), "Domanda di merda", "21/12/2020", "Emanuele",
-						"Alfano", "ISPW");
-				questionBox.getChildren().add(questionCard);
+				questionCard = new QuestionCard(String.valueOf(i), "Domanda di merda", "21/12/2020", "Emanuele", "Alfano", "ISPW");
+				vboxQuestion.getChildren().add(questionCard);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
-		assignmentsBox = new VBox();
 		for (int i = 1; i < 10; i++) {
 			AssignmentCard assignmentCard;
 			try {
 				assignmentCard = new AssignmentCard(String.valueOf(i), "Use-Cases", "02/02/2021", "ISPW");
-				assignmentsBox.getChildren().add(assignmentCard);
+				vboxAssignment.getChildren().add(assignmentCard);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-
-		questionBox.setSpacing(20);
-		assignmentsBox.setSpacing(20);
-		scrollQuestion.setContent(questionBox);
-		scrollAssignments.setContent(assignmentsBox);
 	}
-
 }

@@ -34,9 +34,9 @@
       
       <Label layoutY="385.0" text="Lesson Topic" AnchorPane.leftAnchor="0.0" />
       
-      <TextArea fx:id="textTopic" editable="false" layoutY="430.0" prefHeight="265.0" prefWidth="474.0" />
+      <TextArea fx:id="textTopic" editable="false" layoutY="435.0" prefHeight="338.0" prefWidth="474.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
       
-      <AnchorPane layoutX="730.0" layoutY="212.0" prefHeight="700.0" prefWidth="587.0" styleClass="anchor-pane-seat" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="70.0">
+      <AnchorPane layoutX="730.0" layoutY="212.0" prefHeight="703.0" prefWidth="595.0" styleClass="anchor-pane-seat" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="70.0">
          <children>
             
             <ImageView fitHeight="79.43" fitWidth="86.0" layoutX="251.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="251.0" AnchorPane.rightAnchor="260.0" AnchorPane.topAnchor="20.0">
@@ -54,7 +54,7 @@
          </children> 
       </AnchorPane>
       
-      <Label layoutX="566.0" layoutY="23.0" text="Seat Map" AnchorPane.rightAnchor="508.0" AnchorPane.topAnchor="23.0" />
+      <Label layoutX="566.0" layoutY="23.0" text="Seat Map" AnchorPane.rightAnchor="545.0" AnchorPane.topAnchor="20.0" />
       
       <AnchorPane fx:id="weatherCard" layoutX="408.0" layoutY="222.0" styleClass="root" stylesheets="@../../style/card/WeatherCard.css">
          <children>

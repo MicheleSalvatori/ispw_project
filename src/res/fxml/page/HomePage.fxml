@@ -15,7 +15,7 @@
       
       <AnchorPane fx:id="anchorNextLesson" layoutY="120.0" prefHeight="80.0" prefWidth="620.0" styleClass="anchor-pane" AnchorPane.leftAnchor="0.0" />
       
-      <ScrollPane fx:id="scroll" layoutY="266.0" prefHeight="507.0" prefWidth="642.0" stylesheets="@../../style/ScrollPane.css">
+      <ScrollPane layoutY="266.0" prefHeight="507.0" prefWidth="642.0" stylesheets="@../../style/ScrollPane.css">
          <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="620.0">
                <children>

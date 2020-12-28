@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -27,15 +26,17 @@ import logic.view.card.element.WeatherCard;
 public class HomepageView implements Initializable {
 	
 	@FXML
-	private ScrollPane scroll;
-	@FXML
 	private Label labelUsername;
+	
 	@FXML
 	private HBox hboxWeather, hboxStats;
+	
 	@FXML
 	private VBox vboxScroll;
+	
 	@FXML
 	private WebView webMap;
+	
 	@FXML
 	private AnchorPane anchorNextLesson;
 	
@@ -73,7 +74,7 @@ public class HomepageView implements Initializable {
 		addWeatherCards();
 		addLessonCards();
 		
-		webMap.getEngine().load(getClass().getResource("../../../res/html/a.html").toString());
+		webMap.getEngine().load(getClass().getResource("/res/html/map.html").toString());
 	}
 	
 	// Add Lesson cards to the scene

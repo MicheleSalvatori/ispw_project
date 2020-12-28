@@ -4,29 +4,38 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../../style/page/ForumPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.ForumPageView">
    <children>
       
-      <ScrollPane fx:id="scrollQuestion" layoutY="55.0" prefHeight="709.0" prefWidth="642.0" stylesheets="@../../style/ScrollPaneTest.css">
+      <ScrollPane layoutY="55.0" prefHeight="719.0" prefWidth="618.0" stylesheets="@../../style/ScrollPaneTest.css" AnchorPane.leftAnchor="0.0">
          <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="620.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="598.0">
+               <children>
+                  <VBox fx:id="vboxQuestion" prefWidth="600.0" spacing="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+          </AnchorPane>
          </content>
       </ScrollPane>
       
       <Label layoutX="6.0" layoutY="14.0" text="Questions" />
       
-      <Button fx:id="btnNewQuestion" layoutX="711.0" layoutY="100.0" mnemonicParsing="false" onAction="#newQuestion" styleClass="big-button" text="Insert new question" />
+      <Button fx:id="btnNewQuestion" layoutX="711.0" layoutY="100.0" mnemonicParsing="false" onAction="#newQuestion" styleClass="big-button" text="Insert new question" AnchorPane.rightAnchor="80.0" />
       
-      <Button fx:id="btnMyQuestion" layoutX="711.0" layoutY="214.33" mnemonicParsing="false" onAction="#myQuestion" styleClass="big-button" text="My question" />
+      <Button fx:id="btnMyQuestion" layoutX="711.0" layoutY="214.33" mnemonicParsing="false" onAction="#myQuestion" styleClass="big-button" text="My question" AnchorPane.rightAnchor="80.0" />
       
-      <ScrollPane fx:id="scrollAssignments" layoutX="711.0" layoutY="379.0" prefHeight="386.0" prefWidth="431.0" stylesheets="@../../style/ScrollPaneTest.css">
+      <ScrollPane layoutX="711.0" layoutY="379.0" prefHeight="395.0" prefWidth="438.0" stylesheets="@../../style/ScrollPaneTest.css" AnchorPane.rightAnchor="72.0">
          <content>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefWidth="431.0" />
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="414.0">
+               <children>
+                  <VBox fx:id="vboxAssignment" prefWidth="414.0" spacing="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
          </content>
       </ScrollPane>
       
-      <Label layoutX="711.0" layoutY="338.0" text="Assignments" />
+      <Label layoutX="711.0" layoutY="338.0" text="Assignments" AnchorPane.rightAnchor="367.0" />
       
    </children>
 </AnchorPane>

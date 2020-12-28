@@ -18,24 +18,22 @@ public class QuestionPageView implements Initializable {
 
     @FXML
     private TextArea textQuestion;
-    private VBox answerBox;
+    
+    @FXML
+    private VBox vboxAnswer;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		answerBox = new VBox();
 		for (int i = 0; i < 10; i++) {
 			AnswerCard answerCard;
 			try {
 				answerCard = new AnswerCard("Molliccio", "2030301232123", "Risposta non esaustiva");
-				answerBox.getChildren().add(answerCard);
+				vboxAnswer.getChildren().add(answerCard);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
-		answerBox.setSpacing(20.0);
-		scrollAnswers.setContent(answerBox);
 	}
 
 }

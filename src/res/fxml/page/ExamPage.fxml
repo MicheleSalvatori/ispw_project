@@ -3,13 +3,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../../style/page/ExamPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.ExamPageView">
    <children>
       
-      <ScrollPane fx:id="scrollExams" layoutY="32.0" prefHeight="576.0" prefWidth="1135.0" stylesheets="@../../style/ScrollPaneTest.css">
+      <ScrollPane layoutY="40.0" prefHeight="576.0" prefWidth="1135.0" stylesheets="@../../style/ScrollPaneTest.css">
          <content>
-          <AnchorPane fx:id="scrollAnchor" minHeight="0.0" minWidth="0.0" prefWidth="620.0" styleClass="scroll-pane" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="1118.0" styleClass="scroll-pane">
+               <children>
+                  <VBox fx:id="vboxExam" prefWidth="100.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+          </AnchorPane>
          </content>
       </ScrollPane>
       
