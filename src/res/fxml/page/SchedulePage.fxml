@@ -27,12 +27,12 @@
       
       <ComboBox fx:id="comboClassLesson" layoutX="912.0" layoutY="41.0" prefWidth="150.0" promptText="Select Class" />
       
-      <DatePicker fx:id="dateLesson" layoutX="669.0" layoutY="109.0" />
+      <DatePicker fx:id="dateLesson" editable="false" layoutX="669.0" layoutY="109.0" />
       
-      <HBox alignment="CENTER" layoutX="669.0" layoutY="187.0" prefHeight="100.0" prefWidth="200.0" styleClass="vbox">
+      <HBox alignment="CENTER" layoutX="669.0" layoutY="187.0" prefHeight="100.0" prefWidth="200.0" styleClass="hbox">
          <children>
-            <TextField fx:id="textTimeLesson" styleClass="text-field-time" />
-            <Button fx:id="btnTimeLesson" mnemonicParsing="false" styleClass="button-time">
+            <TextField fx:id="textTimeLesson" editable="false" styleClass="text-field-time" />
+            <Button fx:id="btnTimeLesson" mnemonicParsing="false" onAction="#time" styleClass="button-time">
                <HBox.margin>
                   <Insets bottom="1.0" right="1.0" top="1.0" />
                </HBox.margin>
@@ -51,12 +51,12 @@
       
       <ComboBox fx:id="comboClasExam" layoutX="912.0" layoutY="428.0" prefWidth="150.0" promptText="Select Class" />
       
-      <DatePicker fx:id="dateExam" layoutX="669.0" layoutY="496.0" />
+      <DatePicker fx:id="dateExam" editable="false" layoutX="669.0" layoutY="496.0" />
       
-      <HBox alignment="CENTER" layoutX="669.0" layoutY="574.0" prefHeight="100.0" prefWidth="200.0" styleClass="vbox">
+      <HBox alignment="CENTER" layoutX="669.0" layoutY="574.0" prefHeight="100.0" prefWidth="200.0" styleClass="hbox">
          <children>
-            <TextField fx:id="textTimeExam" styleClass="text-field-time" />
-            <Button fx:id="btnTimeExam" mnemonicParsing="false" styleClass="button-time">
+            <TextField fx:id="textTimeExam" editable="false" styleClass="text-field-time" />
+            <Button fx:id="btnTimeExam" mnemonicParsing="false" onAction="#time" styleClass="button-time">
                <HBox.margin>
                   <Insets bottom="1.0" right="1.0" top="1.0" />
                </HBox.margin>

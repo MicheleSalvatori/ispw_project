@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import logic.utilities.Page;
+import logic.utilities.PageLoader;
 import logic.view.card.element.LessonCard;
 
 public class CoursePageView implements Initializable{
@@ -52,13 +54,13 @@ public class CoursePageView implements Initializable{
     private VBox vboxScroll;
 
     @FXML
-    void viewScheduledExams(ActionEvent event) {
-
+    void viewScheduledExams(ActionEvent event) throws IOException {
+    	PageLoader.getInstance().buildPage(Page.SCHEDULED_EXAMS, event);
     }
 
     @FXML
-    void viewScheduledLessons(ActionEvent event) {
-
+    void viewScheduledLessons(ActionEvent event) throws IOException {
+    	PageLoader.getInstance().buildPage(Page.SCHEDULED_LESSONS, event);
     }
 
 	@Override

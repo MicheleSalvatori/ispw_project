@@ -1,12 +1,16 @@
 package logic.utilities;
 
+import java.util.Optional;
+
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -14,12 +18,17 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import javafx.util.Pair;
 
 public class AlertController {
 	
@@ -75,6 +84,84 @@ public class AlertController {
 		return alert.getResult() == ButtonType.YES;
 	}
 	
+	public static Pair<String, String> time(ActionEvent event) {
+		// Create the custom dialog.
+	    Dialog<Pair<String, String>> dialog = new Dialog<>();
+	    dialog.setHeaderText("Insert time");
+
+	    // Set the button types.
+	    dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+	    GridPane gridPane = new GridPane();
+	    gridPane.setHgap(10);
+	    gridPane.setVgap(10);
+	    gridPane.setPadding(new Insets(20, 10, 10, 10));
+
+	    TextField hour = new TextField();
+	    hour.setPromptText("Hour");
+	    TextField minutes = new TextField();
+	    minutes.setPromptText("Minutes");
+	    
+	    // Only number from 00 to 23
+	    hour.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+	    	if (!newValue) {
+	    		if (!hour.getText().matches("^(0[0-9]|1[0-9]|2[0-3])")) {
+	    			hour.setText("");
+	    		}
+	    	}
+	    });
+	    
+	    // Only number from 00 to 59
+	    minutes.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+	    	if (!newValue) {
+	    		if (!minutes.getText().matches("[0-5][0-9]")) {
+	    			minutes.setText("");
+	    		}
+	    	}
+	    });
+	    
+	    // Disable OK button until all text fields aren't empty
+	    dialog.getDialogPane().lookupButton(ButtonType.OK).disableProperty()
+	    						.bind(Bindings.isEmpty(hour.textProperty())
+	    						.or(Bindings.isEmpty(minutes.textProperty())));
+	    
+	    gridPane.add(hour, 0, 0);
+	    gridPane.add(new Label(":"), 1, 0);
+	    gridPane.add(minutes, 2, 0);
+
+	    dialog.getDialogPane().setContent(gridPane);
+
+	    // Convert the result to a pair when the OK button is clicked.
+	    dialog.setResultConverter(dialogButton -> {
+	        if (dialogButton == ButtonType.OK) {
+	            return new Pair<>(hour.getText(), minutes.getText());
+	        }
+	        return null;
+	    });
+
+	    dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
+	    dialog.initStyle(StageStyle.TRANSPARENT);
+	    centerButtons(dialog.getDialogPane());
+	    
+	    Node source = (Node) event.getSource();
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+	    GaussianBlur blur = new GaussianBlur(55);
+	    adj.setInput(blur);
+		source.getScene().getRoot().setEffect(adj);
+		
+		dialog.show();
+		animation(dialog);
+		dialog.close();
+	    
+	    Optional<Pair<String, String>> result = dialog.showAndWait();
+	    source.getScene().getRoot().setEffect(null);
+	    
+	    if (result.isPresent()) {
+	    	return result.get();
+	    }
+	    return null;
+	}
+	
 	private static void centerButtons(DialogPane dialogPane) {
 		Region spacer = new Region();
 		ButtonBar.setButtonData(spacer, ButtonBar.ButtonData.BIG_GAP);	
@@ -84,6 +171,21 @@ public class AlertController {
 		hboxDialogPane.getChildren().add(spacer);
 	}
 	
+	// Animation for Dialog type
+	private static void animation(Dialog<Pair<String, String>> alert) {
+		double yIni = -alert.getHeight();
+		double yEnd = alert.getY();
+		alert.setY(yIni+500);
+		
+		DoubleProperty yProperty = new SimpleDoubleProperty(yIni);
+		yProperty.addListener((ob,n,n1)->alert.setY(n1.doubleValue()));
+		
+		Timeline timeIn = new Timeline();
+		timeIn.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(yProperty, yEnd, Interpolator.EASE_BOTH)));
+		timeIn.play();
+	}
+	
+	// Animation for Alert type
 	private static void animation(Alert alert) {
 		double yIni = -alert.getHeight();
 		double yEnd = alert.getY();

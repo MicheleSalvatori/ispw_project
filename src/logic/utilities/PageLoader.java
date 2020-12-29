@@ -24,7 +24,7 @@ import logic.view.menu.element.StatusBar;
 public class PageLoader {
 	
 	private static PageLoader instance = null;
-	private Page page;
+	private static Page page;
 	private Stage primaryStage;
 	private HBox mainLayoutHBox;
 	private Scene scene;
@@ -40,9 +40,13 @@ public class PageLoader {
 		return instance;
 	}
 	
+	public static Page getPage() {
+		return page;
+	}
+	
 	public void buildPage(Page page, ActionEvent event) throws IOException {
-		this.page = page;
-		if (page.getStageTitle() == "App - Signup" || page.getStageTitle() == "App - Login") {
+		PageLoader.page = page;
+		if (page == Page.SIGNUP || page == Page.LOGIN) {
 			loadPageNoNavBar(event);
 		}
 		else {

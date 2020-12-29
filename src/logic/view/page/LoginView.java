@@ -63,7 +63,7 @@ public class LoginView implements Initializable {
 				loginController.loginAsProfessor(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
 			} catch (SQLException e) {
-				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+				AlertController.buildInfoAlert("Connection failed!\nCheck your internet connection", "Warning", event);
 				
 			} catch (ConnectException e) {
 				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
