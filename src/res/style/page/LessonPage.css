@@ -25,6 +25,7 @@
 	-fx-border-radius: 14px;
 	-fx-background-radius: 14px;
 }
+
 .anchor-pane-seat {
 	-fx-background-color: white;
 	-fx-border-color: #0C0B0B;
@@ -32,6 +33,7 @@
 	-fx-background-radius: 14px;
 	-fx-border-width: 2px;
 }
+
 .text-area{
 	-fx-background-color: white;
 	-fx-border-color: #0C0B0B;

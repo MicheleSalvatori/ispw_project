@@ -14,7 +14,9 @@ public enum Page {
 	EXAM("src/res/fxml/page/ExamPage.fxml", "App - Exams"), 
 	LESSON("src/res/fxml/page/LessonPage.fxml", "App - Lesson"),
 	ASSIGNMENT("src/res/fxml/page/AssignmentPage.fxml", "App - Assignment"), 
-	COURSE("src/res/fxml/page/CoursePage.fxml", "App - Course");
+	COURSE("src/res/fxml/page/CoursePage.fxml", "App - Course"),
+	SCHEDULE("src/res/fxml/page/SchedulePage.fxml", "App - Schedule"),
+	REQUEST("src/res/fxml/page/RequestPage.fxml", "App - Request");
 
 	private String res;
 	private String stageTitle;

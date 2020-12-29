@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import logic.Session;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
@@ -25,10 +26,24 @@ public class NavigationBarView implements Initializable {
 	private Button btnNews;
 	@FXML
 	private Button btnBack;
+	@FXML
+	private Button btnRequest;
+	@FXML
+	private Button btnSchedule;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		
+		// User logged as Student
+		if (Session.getSession().getType() == Session.STUDENT) {
+			btnRequest.setVisible(false);
+			btnSchedule.setVisible(false);
+		}
+		
+		// User logged as Professor
+		else {
+			btnExams.setVisible(false);
+		}
 	}
 
 	@FXML
@@ -64,5 +79,17 @@ public class NavigationBarView implements Initializable {
 	public void backButton(ActionEvent event) throws IOException {
 		System.out.println("Back");
 		PageLoader.getInstance().buildPage(Page.COURSE, event);
+	}
+	
+	@FXML
+	public void requestButton(ActionEvent event) throws IOException {
+		System.out.println("Request");
+		PageLoader.getInstance().buildPage(Page.REQUEST, event);
+	}
+	
+	@FXML
+	public void scheduleButton(ActionEvent event) throws IOException {
+		System.out.println("Schedule");
+		PageLoader.getInstance().buildPage(Page.SCHEDULE, event);
 	}
 }

@@ -29,4 +29,8 @@ public class NavigationBar extends VBox {
 		loader.setController(new NavigationBarView());
 		instance.getChildren().add(loader.load());
 	}
+	
+	public static void setInstance(NavigationBar navBar) {
+		instance = navBar;
+	}
 }

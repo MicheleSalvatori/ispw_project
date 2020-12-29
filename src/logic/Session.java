@@ -4,6 +4,9 @@ import logic.model.User;
 
 public class Session {
 	
+	public static int PROFESSOR = 1;
+	public static int STUDENT = 0;
+	
 	private static Session instance = null;
 	private User userLogged;
 	private int type;

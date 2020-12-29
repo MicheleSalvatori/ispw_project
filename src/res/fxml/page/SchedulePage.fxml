@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" styleClass="root" stylesheets="@../../style/page/SchedulePage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.SchedulePageView">
+   <children>
+      
+      <Label layoutX="58.0" layoutY="57.0" text="Schedule Lesson" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      
+      <TextArea fx:id="textTopic" layoutY="41.0" prefHeight="200.0" prefWidth="200.0" promptText="Insert lesson topic" AnchorPane.leftAnchor="0.0" />
+      
+      <Label layoutY="320.0" text="Schedule Exam" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="387.0" />
+      
+      <TextArea fx:id="textNote" layoutY="428.0" prefHeight="200.0" prefWidth="200.0" promptText="Note" AnchorPane.leftAnchor="0.0" />
+      
+      <ComboBox fx:id="comboCourseLesson" layoutX="669.0" layoutY="41.0" prefWidth="150.0" promptText="Select Course" />
+      
+      <ComboBox fx:id="comboClassLesson" layoutX="912.0" layoutY="41.0" prefWidth="150.0" promptText="Select Class" />
+      
+      <DatePicker fx:id="dateLesson" layoutX="669.0" layoutY="109.0" />
+      
+      <HBox alignment="CENTER" layoutX="669.0" layoutY="187.0" prefHeight="100.0" prefWidth="200.0" styleClass="vbox">
+         <children>
+            <TextField fx:id="textTimeLesson" styleClass="text-field-time" />
+            <Button fx:id="btnTimeLesson" mnemonicParsing="false" styleClass="button-time">
+               <HBox.margin>
+                  <Insets bottom="1.0" right="1.0" top="1.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../png/card/Time.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+      
+      <ComboBox fx:id="comboCourseExam" layoutX="669.0" layoutY="428.0" prefWidth="150.0" promptText="Select Course" />
+      
+      <ComboBox fx:id="comboClasExam" layoutX="912.0" layoutY="428.0" prefWidth="150.0" promptText="Select Class" />
+      
+      <DatePicker fx:id="dateExam" layoutX="669.0" layoutY="496.0" />
+      
+      <HBox alignment="CENTER" layoutX="669.0" layoutY="574.0" prefHeight="100.0" prefWidth="200.0" styleClass="vbox">
+         <children>
+            <TextField fx:id="textTimeExam" styleClass="text-field-time" />
+            <Button fx:id="btnTimeExam" mnemonicParsing="false" styleClass="button-time">
+               <HBox.margin>
+                  <Insets bottom="1.0" right="1.0" top="1.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../png/card/Time.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+      
+      <Button fx:id="btnAddLesson" layoutX="770.0" layoutY="258.0" mnemonicParsing="false" styleClass="button-add">
+      	<graphic>
+      		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true" spacing="10.0">
+      			<children>
+      				
+      				<ImageView fitHeight="28.0" fitWidth="28.0">
+            			<image>
+            				<Image url="@../../png/button/Plus.png" />
+            			</image>
+            		</ImageView>
+      			
+      				<Label text="Schedule Lesson" />
+            		
+      			</children>
+      		</HBox>
+      	</graphic>
+      </Button>
+      
+      <Button fx:id="btnAddExam" layoutX="770.0" layoutY="643.0" mnemonicParsing="false" styleClass="button-add">
+         <graphic>
+            <HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="28.0" fitWidth="28.0">
+                     <image>
+                        <Image url="@../../png/button/Plus.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Schedule Exam" />
+               </children>
+            </HBox>
+         </graphic>
+      </Button>
+   
+   </children>
+</AnchorPane>
