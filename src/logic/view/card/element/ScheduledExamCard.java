@@ -12,13 +12,13 @@ public class ScheduledExamCard extends AnchorPane {
 	
 	private ScheduledExamCardView scheduledExamCardView = new ScheduledExamCardView();
 	
-	public ScheduledExamCard(String course, String classroom, String time) throws IOException {
+	public ScheduledExamCard(String day, String course, String classroom, String time) throws IOException {
 		URL url = new File("src/res/fxml/card/ScheduledExamCard.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(scheduledExamCardView);
 		this.getChildren().add(loader.load());
 
-		scheduledExamCardView.setCard(course, classroom, time);
+		scheduledExamCardView.setCard(day, course, classroom, time);
 	}
 
 }

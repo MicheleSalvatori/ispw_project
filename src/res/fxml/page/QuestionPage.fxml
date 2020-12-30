@@ -25,7 +25,8 @@
       <TextArea fx:id="textQuestion" editable="false" layoutY="83.0" prefHeight="200.0" prefWidth="659.0" AnchorPane.leftAnchor="0.0" />
       
       <Label layoutX="3.0" layoutY="299.0" text="Answers" AnchorPane.leftAnchor="3.0" />
-      <Button layoutX="906.0" layoutY="16.0" mnemonicParsing="false" text="Asnwer question" />
+      
+      <Button fx:id="btnAnswer" layoutX="906.0" layoutY="16.0" onAction="#answer" mnemonicParsing="false" text="Answer question" />
       
    </children>
 </AnchorPane>

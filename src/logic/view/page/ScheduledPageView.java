@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.view.card.element.CourseFilterCard;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.ScheduledExamCard;
 
@@ -19,7 +20,7 @@ public class ScheduledPageView implements Initializable {
 	private Label labelPage;
 	
 	@FXML
-	private VBox vboxScroll;
+	private VBox vboxScroll, vboxCourse;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -28,7 +29,7 @@ public class ScheduledPageView implements Initializable {
 		
 			for (int i=0; i<10; i++) {
 				try {
-					LessonCard lessonCard = new LessonCard("mhanz", "z5", "25:96");
+					LessonCard lessonCard = new LessonCard("30/12/2020", "Z5", "ISPW", "25:96");
 					vboxScroll.getChildren().add(lessonCard);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -42,12 +43,22 @@ public class ScheduledPageView implements Initializable {
 			
 			for (int i=0; i<10; i++) {
 				try {
-					ScheduledExamCard scheduledExamCard = new ScheduledExamCard("mhanzino", "z555", "37:96");
+					ScheduledExamCard scheduledExamCard = new ScheduledExamCard("03/12/2020", "ISPW", "z555", "37:96");
 					vboxScroll.getChildren().add(scheduledExamCard);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+		}
+		
+		for (int i=0; i<10; i++) {
+			try {
+				CourseFilterCard courseFilterCard = new CourseFilterCard("ISPW");
+				vboxCourse.getChildren().add(courseFilterCard);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		

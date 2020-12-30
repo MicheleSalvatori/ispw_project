@@ -24,7 +24,7 @@
       
       <AnchorPane fx:id="anchorNextLesson" layoutY="142.0" prefHeight="80.0" prefWidth="620.0" styleClass="anchor-pane" AnchorPane.leftAnchor="0.0" />
       
-      <Label layoutY="250.0" styleClass="label-secondtitle" text="Weekly Lessons" AnchorPane.leftAnchor="0.0" />
+      <Label layoutY="250.0" styleClass="label-secondtitle" text="Weekly Schedule" AnchorPane.leftAnchor="0.0" />
       
       <ScrollPane layoutY="300.0" prefHeight="474.0" prefWidth="642.0" stylesheets="@../../style/ScrollPane.css" AnchorPane.leftAnchor="0.0">
          <content>

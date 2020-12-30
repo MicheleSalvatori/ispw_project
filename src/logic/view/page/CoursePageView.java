@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.LessonCard;
+import logic.view.card.element.WeeklyLessonCard;
 
 public class CoursePageView implements Initializable{
 
@@ -64,18 +65,27 @@ public class CoursePageView implements Initializable{
     }
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {;
-		for (int i=0; i<19; i++) {
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		LessonCard lesson;
+		try {
+			lesson = new LessonCard("Caccia", "B9", "15:00");
+			anchorNextLesson.getChildren().add(lesson);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		for (int i=0; i<5; i++) {
 			try {
-				LessonCard lesson = new LessonCard("Caccia", "B9", "15:00");
-				vboxScroll.getChildren().add(lesson);
-				if (i == 0) {		// prima lezione della settimana la mette nell'anchorpane
-					anchorNextLesson.getChildren().add(lesson);
-				}
+				WeeklyLessonCard weeklyLessonCard = new WeeklyLessonCard("Monday", "A3", "10:00");
+				vboxScroll.getChildren().add(weeklyLessonCard);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}	
+		
 		//carica dettagli corso
 		labelYear.setText("3");
 		labelCourse.setText("ISPW");
@@ -86,5 +96,4 @@ public class CoursePageView implements Initializable{
 		labelProfessor.setText("Gulyx");
 		labelSemester.setText("II");
 	}
-
 }
