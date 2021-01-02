@@ -14,10 +14,6 @@ public class Course {
 		this.abbrevation = abbrevation;
 		this.professor = professor;
 	}
-	
-	public Course() {
-		
-	}
 
 	public String getName() {
 		return name;
