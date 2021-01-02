@@ -53,4 +53,41 @@ public class ProfessorDAO {
 		System.out.println("ProfessorDAO -> username = " + professorLogged.getUsername());
 		return professorLogged;
 	}
+	
+	
+	public static Professor findProfessor(String username) throws SQLException {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		Professor professor = null;
+		ResultSet resultSet = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			resultSet = Queries.selectProfessor(stmt, username);
+			
+			if (!resultSet.first()) {
+				professor = null;
+			}else {
+				resultSet.first();				// mi riposiziono alla prima riga 
+				professor = new Professor();
+				professor.setUsername(resultSet.getString("username"));
+				professor.setName(resultSet.getString("name"));
+				professor.setSurname(resultSet.getString("surname"));
+				professor.setEmail(resultSet.getString("email"));
+				professor.setPassword(resultSet.getString("password"));
+			}
+			
+			resultSet.close();
+		} finally {
+			if(stmt != null)
+				stmt.close();
+		}
+		System.out.println("ProfessorDAO -> username = " + professor.getUsername());
+		return professor;
+	}
 }

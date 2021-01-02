@@ -9,7 +9,7 @@
 <AnchorPane prefHeight="80.0" prefWidth="620.0" styleClass="root" stylesheets="@../../style/card/ScheduledExamCard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
   
-      <Label fx:id="labelDay" layoutX="96.5" layoutY="15.0" text="Next Lesson" AnchorPane.leftAnchor="80.0" />
+      <Label fx:id="labelDay" layoutX="96.5" layoutY="15.0" text="Date" AnchorPane.leftAnchor="80.0" />
       
       <Label fx:id="labelClass" layoutX="96.5" layoutY="42.0" styleClass="classroom-label" text="Classroom" AnchorPane.leftAnchor="80.0" />
       

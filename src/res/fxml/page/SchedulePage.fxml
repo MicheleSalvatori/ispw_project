@@ -49,7 +49,7 @@
       
       <ComboBox fx:id="comboCourseExam" layoutX="669.0" layoutY="428.0" prefWidth="150.0" promptText="Select Course" />
       
-      <ComboBox fx:id="comboClasExam" layoutX="912.0" layoutY="428.0" prefWidth="150.0" promptText="Select Class" />
+      <ComboBox fx:id="comboClassExam" layoutX="912.0" layoutY="428.0" prefWidth="150.0" promptText="Select Class" />
       
       <DatePicker fx:id="dateExam" editable="false" layoutX="669.0" layoutY="496.0" />
       
@@ -71,7 +71,7 @@
          </children>
       </HBox>
       
-      <Button fx:id="btnAddLesson" layoutX="770.0" layoutY="258.0" mnemonicParsing="false" styleClass="button-add">
+      <Button fx:id="btnAddLesson" onAction="#addLesson" layoutX="770.0" layoutY="258.0" mnemonicParsing="false" styleClass="button-add">
       	<graphic>
       		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true" spacing="10.0">
       			<children>
@@ -89,7 +89,7 @@
       	</graphic>
       </Button>
       
-      <Button fx:id="btnAddExam" layoutX="770.0" layoutY="643.0" mnemonicParsing="false" styleClass="button-add">
+      <Button fx:id="btnAddExam" onAction="#addExam" layoutX="770.0" layoutY="643.0" mnemonicParsing="false" styleClass="button-add">
          <graphic>
             <HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true" spacing="10.0">
                <children>

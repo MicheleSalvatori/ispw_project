@@ -53,6 +53,7 @@ public class LoginView implements Initializable {
 		radioSelected = (RadioButton) radioGroup.getSelectedToggle();
 		UserBean userBean = new UserBean();
 		switch (radioSelected.getId()) {
+		
 //		login professor
 		case "rdProfessor":
 			userBean.setPassword(password);
@@ -62,6 +63,7 @@ public class LoginView implements Initializable {
 			try {
 				loginController.loginAsProfessor(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+				
 			} catch (SQLException e) {
 				AlertController.buildInfoAlert("Connection failed!\nCheck your internet connection", "Warning", event);
 				
@@ -69,7 +71,6 @@ public class LoginView implements Initializable {
 				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
 			
 			} catch (RecordNotFoundException e) {
-
 				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
 			}
 			break;

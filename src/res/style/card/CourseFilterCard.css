@@ -21,7 +21,7 @@
 	-fx-background-radius: 14.0px;
 }
 
-.button {
+.toggle-button {
 	-fx-background-color: transparent;
 	
 	-fx-font-family: "Roboto";
@@ -32,12 +32,12 @@
 	-fx-background-radius: 14px;
 }
 
-.button:hover {
+.toggle-button:hover {
 	-fx-cursor: hand;
 	-fx-background-color: #CFCFCF;
 }
 
-.button:pressed {
+.toggle-button:selected {
 	-fx-background-color: purple;
 	-fx-text-fill: white;
 }

@@ -60,7 +60,7 @@ public class StudentDAO {
 		Connection conn = null;
 		Statement stmt = null;
 		Student userRegistered = null;
-		ResultSet resultSet = null;
+		ResultSet rs = null;
 		int result;
 		
 		try {
@@ -70,8 +70,8 @@ public class StudentDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			resultSet = Queries.selectStudent(stmt, username, password);
-			if (!resultSet.first()) {
+			rs = Queries.selectStudent(stmt, username, password);
+			if (!rs.first()) {
 				userRegistered = null;
 			} else {
 				// Raise duplicate entry exception
@@ -91,7 +91,7 @@ public class StudentDAO {
 				}
 			}
 			
-			resultSet.close();
+			rs.close();
 			
 		} finally {
 			if(stmt != null)
@@ -113,7 +113,7 @@ public class StudentDAO {
 				throw new SQLException();
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			resultSet = Queries.findStudent(stmt, username);
+			resultSet = Queries.selectStudentByUsername(stmt, username);
 			
 			if (!resultSet.first()) {
 				student = null;

@@ -13,7 +13,7 @@
       
       <Label fx:id="labelClass" layoutX="96.5" layoutY="42.0" styleClass="classroom-label" text="Classroom" AnchorPane.leftAnchor="80.0" />
       
-      <Button fx:id="btnView" layoutX="483.0" layoutY="20.0" mnemonicParsing="false" onAction="#viewLesson" text="View" />
+      <Button fx:id="btnView" layoutX="483.0" layoutY="20.0" mnemonicParsing="false" onAction="#viewLesson" styleClass="button-view" text="View" />
       
       <Label fx:id="labelTime" layoutX="357.0" layoutY="6.0" styleClass="time-label" text="10:00" AnchorPane.rightAnchor="150.0" />
       
@@ -23,9 +23,9 @@
       
       <Line fx:id="line1" endX="100.0" endY="132.5" layoutX="110.0" layoutY="-67.0" startX="100.0" startY="85.0" strokeWidth="2.0" AnchorPane.bottomAnchor="15.0" AnchorPane.topAnchor="15.0" />
       
-      <Label fx:id="labelCourse" alignment="CENTER" layoutX="211.0" layoutY="2.0" prefHeight="80.0" prefWidth="98.0" text="Course" underline="true" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      
       <Line fx:id="line2" endX="100.0" endY="132.5" layoutX="210.0" layoutY="-69.0" startX="100.0" startY="85.0" strokeWidth="2.0" AnchorPane.bottomAnchor="15.0" AnchorPane.topAnchor="15.0" />
+      
+      <Button fx:id="btnCourse" onAction="#course" layoutX="211.0" layoutY="30.0" mnemonicParsing="false" prefWidth="98.0" styleClass="button-course" text="Course" AnchorPane.bottomAnchor="15.0" AnchorPane.topAnchor="15.0" />
       
    </children>
 </AnchorPane>

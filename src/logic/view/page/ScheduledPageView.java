@@ -2,14 +2,24 @@ package logic.view.page;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import logic.model.Course;
+import logic.model.Lesson;
+import logic.model.dao.CourseDAO;
+import logic.model.dao.LessonDAO;
+import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.utilities.SQLConverter;
 import logic.view.card.element.CourseFilterCard;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.ScheduledExamCard;
@@ -22,19 +32,105 @@ public class ScheduledPageView implements Initializable {
 	@FXML
 	private VBox vboxScroll, vboxCourse;
 	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void setLessonPage(String course) {
+		Date date = new Date(System.currentTimeMillis());
+		Time time = new Time(System.currentTimeMillis());
+		vboxScroll.getChildren().clear();
+		insertFilters(course);
+	
+		try {
+			List<Lesson> lessons = LessonDAO.getLessonByCourse(date, time, course);
+			for (Lesson lesson : lessons) {
+				LessonCard lessonCard = new LessonCard(SQLConverter.date(lesson.getDate()), lesson.getClassroom().getName(), lesson.getCourse().getAbbrevation(), SQLConverter.time(lesson.getTime()));
+				vboxScroll.getChildren().add(lessonCard);
+			}
+			
+		} catch (NullPointerException e) {
+			AlertController.buildInfoAlert("No lesson found", "lesson", labelPage.getScene());
+			return;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void setExamPage(String course) {
+		// TODO db exam
+		Date date = new Date(System.currentTimeMillis());
+		Time time = new Time(System.currentTimeMillis());
+		vboxScroll.getChildren().clear();
+		insertFilters(course);
+	
+		try {
+			List<Lesson> lessons = LessonDAO.getLessonByCourse(date, time, course);
+			for (Lesson lesson : lessons) {
+				LessonCard lessonCard = new LessonCard(SQLConverter.date(lesson.getDate()), lesson.getClassroom().getName(), lesson.getCourse().getAbbrevation(), SQLConverter.time(lesson.getTime()));
+				vboxScroll.getChildren().add(lessonCard);
+			}
+			
+		} catch (NullPointerException e) {
+			AlertController.buildInfoAlert("No lesson found", "lesson", labelPage.getScene());
+			return;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void insertFilters(String c) {
+		try {
+			vboxCourse.getChildren().clear();
+			List<Course> courses = CourseDAO.getAllCourses();
+			for (Course course : courses) {
+				CourseFilterCard courseFilterCard = new CourseFilterCard(course.getAbbrevation());
+				vboxCourse.getChildren().add(courseFilterCard);
+				System.out.println(course.getAbbrevation() + "  :  " + c);
+				if (course.getAbbrevation().compareTo(c) == 0) {
+					courseFilterCard.getController().getButton().setSelected(true);
+				}
+			}
+			
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void setPage() {
 		
 		if (PageLoader.getPage() == Page.SCHEDULED_LESSONS) {
+			
+			Date date = new Date(System.currentTimeMillis());
+			Time time = new Time(System.currentTimeMillis());
 		
-			for (int i=0; i<10; i++) {
-				try {
-					LessonCard lessonCard = new LessonCard("30/12/2020", "Z5", "ISPW", "25:96");
+			try {
+				List<Lesson> lessons = LessonDAO.getNextLessons(date, time);
+				for (Lesson lesson : lessons) {
+					LessonCard lessonCard = new LessonCard(SQLConverter.date(lesson.getDate()), lesson.getClassroom().getName(), lesson.getCourse().getAbbrevation(), SQLConverter.time(lesson.getTime()));
 					vboxScroll.getChildren().add(lessonCard);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
+				
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		
@@ -52,16 +148,26 @@ public class ScheduledPageView implements Initializable {
 			}
 		}
 		
-		for (int i=0; i<10; i++) {
-			try {
-				CourseFilterCard courseFilterCard = new CourseFilterCard("ISPW");
+		try {
+			List<Course> courses = CourseDAO.getAllCourses();
+			for (Course course : courses) {
+				CourseFilterCard courseFilterCard = new CourseFilterCard(course.getAbbrevation());
 				vboxCourse.getChildren().add(courseFilterCard);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
 			}
+			
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 		
 	}
-
 }

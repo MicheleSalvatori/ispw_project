@@ -1,13 +1,19 @@
 package logic.model;
 
 public class Question {
+	
 	private int id;
 	private String title;
 	private String text;
 	private Course course;
 	private Student student;
 
-	public Question() {
+	public Question(int id, String title, String text, Course course, Student student) {
+		this.id = id;
+		this.title = title;
+		this.text = text;
+		this.course = course;
+		this.student = student;
 	}
 
 	public int getId() {

@@ -1,13 +1,15 @@
 package logic.view.page;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ResourceBundle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -20,13 +22,20 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import logic.bean.CourseBean;
+import logic.bean.LessonBean;
+import logic.model.Course;
+import logic.model.dao.CourseDAO;
+import logic.utilities.Page;
+import logic.utilities.PageLoader;
+import logic.utilities.SQLConverter;
 import logic.utilities.Weather;
 import logic.view.card.element.WeatherCard;
 
 public class LessonPageView implements Initializable {
 
     @FXML
-    private Label labelCourse;
+    private Button btnCourse;
 
     @FXML
     private Label labelProfessor;
@@ -36,6 +45,9 @@ public class LessonPageView implements Initializable {
 
     @FXML
     private Label labelTime;
+    
+    @FXML
+    private Label labelDate;
 
     @FXML
     private TextArea textTopic;
@@ -48,7 +60,34 @@ public class LessonPageView implements Initializable {
     
     @FXML
     private AnchorPane weatherCard;
+    
+    
+    public void setPage(LessonBean lessonBean) {
+    	btnCourse.setText(lessonBean.getCourse().getAbbrevation());
+    	labelClassroom.setText(lessonBean.getClassroom().getName());
+    	labelTime.setText(SQLConverter.time(lessonBean.getTime()));
+    	labelDate.setText(SQLConverter.date(lessonBean.getDate()));
+    	labelProfessor.setText(lessonBean.getCourse().getProfessor().getName() + " " + lessonBean.getCourse().getProfessor().getSurname());
+    	textTopic.setText(lessonBean.getTopic());
+    	
+    	setWeatherCard(lessonBean.getTime());
+    }
 
+    
+    @FXML
+    private void course(ActionEvent event) throws IOException, SQLException {
+    	PageLoader.getInstance().buildPage(Page.COURSE, event);
+    	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
+    	
+    	Course course = CourseDAO.getCourseByAbbrevation(btnCourse.getText());
+    	
+    	CourseBean courseBean = new CourseBean();
+    	courseBean.setAbbrevation(course.getAbbrevation());
+    	courseBean.setName(course.getName());
+    	courseBean.setProfessor(course.getProfessor());
+    	
+    	coursePageView.setPage(courseBean);
+    }
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -92,11 +131,14 @@ public class LessonPageView implements Initializable {
 		for (int j=0; j<numRow; j++) {
 			Label label = new Label(String.valueOf((char)(65+j)));
 			gridSeat.add(label, seatPerRow, j);
-		}
+		}	
+	}
+	
+	private void setWeatherCard(Time time) {
 		
 		Image image;
 		JSONArray info = Weather.getInfo();
-		int hour = LocalDateTime.now().getHour();
+		int hour = time.toLocalTime().getHour();
 		
 		JSONArray hourly = info.getJSONObject(hour).getJSONArray("weather");
 		JSONObject weather = hourly.getJSONObject(0);
@@ -123,7 +165,6 @@ public class LessonPageView implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 }

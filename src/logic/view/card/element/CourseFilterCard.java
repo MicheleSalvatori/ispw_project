@@ -20,4 +20,8 @@ public class CourseFilterCard extends AnchorPane {
 
 		courseFilterCardView.setCard(name);
 	}
+	
+	public CourseFilterCardView getController() {
+		return courseFilterCardView;
+	}
 }

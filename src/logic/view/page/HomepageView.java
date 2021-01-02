@@ -1,7 +1,11 @@
 package logic.view.page;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.json.JSONArray;
@@ -16,7 +20,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import logic.Session;
+import logic.model.Lesson;
 import logic.model.User;
+import logic.model.dao.LessonDAO;
+import logic.utilities.SQLConverter;
 import logic.utilities.Weather;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.ProfessorStatCard;
@@ -60,6 +67,7 @@ public class HomepageView implements Initializable {
 				}
 			}
 		}
+		
 		// User is a Professor
 		else {
 			try {
@@ -72,25 +80,49 @@ public class HomepageView implements Initializable {
 		}
 
 		addWeatherCards();
-		addLessonCards();
 		
+		Date date = new Date(System.currentTimeMillis());
+		Time time = new Time(System.currentTimeMillis());
+		addLessonCards(date, time);
+
 		webMap.getEngine().load(getClass().getResource("/res/html/map.html").toString());
 	}
 	
 	// Add Lesson cards to the scene
-	private void addLessonCards() {
-		for (int i=0; i<10; i++) {
-			LessonCard lessonCard;
-			try {
-				lessonCard = new LessonCard(i+"",i+"",i+"");
-				vboxScroll.getChildren().add(lessonCard);
-				if (i == 0) {		// prima lezione della settimana la mette nell'anchorpane
-					anchorNextLesson.getChildren().add(lessonCard);
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	private void addLessonCards(Date date, Time time) {
+		try {
+			List<Lesson> lessons = LessonDAO.getNextLessons(date, time);
+			
+			if (lessons == null) {
+				Label label = new Label("There are no future lessons today");
+				vboxScroll.getChildren().add(label);
+				return;
 			}
+			
+			if (lessons.size() == 1) {
+				Label label = new Label("There are no future lessons today");
+				vboxScroll.getChildren().add(label);
+			}
+			
+			Boolean i = true;
+			for (Lesson lesson : lessons) {
+				try {
+					LessonCard lessonCard = new LessonCard(lesson.getCourse().getAbbrevation(), lesson.getClassroom().getName(), SQLConverter.time(lesson.getTime()));
+					if (i) {
+						anchorNextLesson.getChildren().add(lessonCard);
+						i = false;
+					}
+					else {
+						vboxScroll.getChildren().add(lessonCard);
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

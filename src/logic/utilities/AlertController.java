@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.ColorAdjust;
@@ -56,6 +57,30 @@ public class AlertController {
 		
 		alert.showAndWait();
 		source.getScene().getRoot().setEffect(null);
+		alert.close();
+	}
+	
+	public static void buildInfoAlert(String message, String titleAlert, Scene scene) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(titleAlert);
+		alert.setHeaderText(null);
+		alert.setGraphic(null);
+		alert.setContentText(message);
+		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
+		centerButtons(alert.getDialogPane());
+		alert.initStyle(StageStyle.TRANSPARENT);
+		
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+	    GaussianBlur blur = new GaussianBlur(55);
+	    adj.setInput(blur);
+		scene.getRoot().setEffect(adj);
+		
+		alert.show();
+		animation(alert);
+		alert.close();
+		
+		alert.showAndWait();
+		scene.getRoot().setEffect(null);
 		alert.close();
 	}
 
