@@ -62,7 +62,6 @@ public class LessonCardView implements Initializable {
     	CourseBean courseBean = new CourseBean();
     	courseBean.setAbbrevation(course.getAbbrevation());
     	courseBean.setName(course.getName());
-    	courseBean.setProfessor(course.getProfessor());
     	
     	coursePageView.setPage(courseBean);
 	}
@@ -83,6 +82,7 @@ public class LessonCardView implements Initializable {
 		lessonBean.setCourse(lesson.getCourse());
 		lessonBean.setClassroom(lesson.getClassroom());
 		lessonBean.setTopic(lesson.getTopic());
+		lessonBean.setProfessor(lesson.getProfessor());
 		
 		lessonPageView.setPage(lessonBean);
 	}

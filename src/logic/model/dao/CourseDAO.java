@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.model.Course;
-import logic.model.Professor;
 import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
@@ -39,8 +38,7 @@ public class CourseDAO {
 				rs.first();
 				String n = rs.getString("name");
 				String a = rs.getString("abbrevation");
-				Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
-				course = new Course(n, a, p);
+				course = new Course(n, a);
 			}
 			rs.close();
 		} finally {
@@ -74,8 +72,79 @@ public class CourseDAO {
 				do {
 					String n = rs.getString("name");
 					String a = rs.getString("abbrevation");
-					Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
-					Course course = new Course(n, a, p);
+					Course course = new Course(n, a);
+					courses.add(course);
+				} while (rs.next());
+			}
+			rs.close();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return courses;
+	}
+	
+	public static List<Course> getProfessorCourses(String professor) throws SQLException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		List<Course> courses;
+		
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.selectCoursesByProfessor(stmt, professor);
+
+			if (!rs.first()) {
+				courses = null;
+			} else {
+				courses = new ArrayList<>();
+				rs.first();
+				do {
+					String n = rs.getString("name");
+					String a = rs.getString("abbrevation");
+					Course course = new Course(n, a);
+					courses.add(course);
+				} while (rs.next());
+			}
+			rs.close();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return courses;
+	}
+	
+	public static List<Course> getStudentCourses(String student) throws SQLException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		List<Course> courses;
+		
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.selectCoursesByStudent(stmt, student);
+
+			if (!rs.first()) {
+				courses = null;
+			} else {
+				courses = new ArrayList<>();
+				rs.first();
+				do {
+					String n = rs.getString("name");
+					String a = rs.getString("abbrevation");
+					Course course = new Course(n, a);
 					courses.add(course);
 				} while (rs.next());
 			}

@@ -21,6 +21,12 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
+	public static ResultSet selectProfessorsByCourse(Statement stmt, String course) throws SQLException {
+		String query = "SELECT username, name, surname, email FROM teach JOIN professor on teach.professor = professor.username WHERE teach.course = '" + course + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
 	
 	// Student queries
 	public static ResultSet selectStudent(Statement stmt, String username, String password) throws SQLException {
@@ -49,8 +55,14 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
-	public static ResultSet selectNextLessons(Statement stmt, Date date, Time time) throws SQLException {
-		String query = "SELECT * FROM lesson WHERE date = '" + date + "' AND time >= '" + time + "';";
+	public static ResultSet selectNextLessonsByProfessor(Statement stmt, Date date, Time time, String professor) throws SQLException {
+		String query = "SELECT date, time, course, classroom, topic FROM lesson WHERE date = '" + date + "' AND time >= '" + time + "' AND professor = '" + professor + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query); 
+	}
+	
+	public static ResultSet selectNextLessonsByStudent(Statement stmt, Date date, Time time, String student) throws SQLException {
+		String query = "SELECT date, time, lesson.course, classroom, topic FROM lesson JOIN follow ON lesson.course = follow.course WHERE date = '" + date + "' AND time >= '" + time + "' AND student = '" + student + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query); 
 	}
@@ -61,14 +73,14 @@ public class Queries {
 		return stmt.executeQuery(query); 
 	}
 	
-	public static ResultSet selectLessonByCourse(Statement stmt, Date date, Time time, String course) throws SQLException {
-		String query = "SELECT * FROM lesson WHERE date = '" + date + "' AND time >= '" + time + "' AND course = '" + course + "';";
+	public static ResultSet selectLessonsByCourse(Statement stmt, Date date, Time time, String course) throws SQLException {
+		String query = "SELECT * FROM lesson WHERE date >= '" + date + "' AND time >= '" + time + "' AND course = '" + course + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query); 
 	}
 	
-	public static int insertLesson(Statement stmt, Date date, Time time, String course, String classroom, String topic) throws SQLException {
-		String query = String.format("INSERT INTO lesson (date, time, course, classroom, topic) VALUES('%s', '%s', '%s', '%s', '%s')", date, time, course, classroom, topic);
+	public static int insertLesson(Statement stmt, Date date, Time time, String course, String classroom, String topic, String professor) throws SQLException {
+		String query = String.format("INSERT INTO lesson (date, time, course, classroom, topic, professor) VALUES('%s', '%s', '%s', '%s', '%s', '%s')", date, time, course, classroom, topic, professor);
 		System.out.println(query);
 		return stmt.executeUpdate(query); 
 	}
@@ -83,6 +95,12 @@ public class Queries {
 	
 	public static ResultSet selectNextExams(Statement stmt, Date date, Time time) throws SQLException {
 		String query = "SELECT * FROM exam WHERE date = '" + date + "' AND time >= '" + time + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query); 
+	}
+	
+	public static ResultSet selectExamsByCourse(Statement stmt, Date date, Time time, String course) throws SQLException {
+		String query = "SELECT * FROM exam WHERE date >= '" + date + "' AND time >= '" + time + "' AND course = '" + course + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query); 
 	}
@@ -103,6 +121,17 @@ public class Queries {
 	
 	public static ResultSet selectCourseOfStudent(Statement stmt, String username) throws SQLException {
 		String query = "SELECT * FROM follow JOIN course WHERE follow.student = '" + username + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
+	public static ResultSet selectCoursesByProfessor(Statement stmt, String professor) throws SQLException {
+		String query = "SELECT course.abbrevation, course.name FROM teach JOIN course ON teach.course = course.abbrevation WHERE teach.professor = '" + professor + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	public static ResultSet selectCoursesByStudent(Statement stmt, String student) throws SQLException {
+		String query = "SELECT course.abbrevation, course.name FROM follow JOIN course ON follow.course = course.abbrevation WHERE follow.student = '" + student + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}

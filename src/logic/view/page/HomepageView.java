@@ -23,6 +23,7 @@ import logic.Session;
 import logic.model.Lesson;
 import logic.model.User;
 import logic.model.dao.LessonDAO;
+import logic.utilities.Role;
 import logic.utilities.SQLConverter;
 import logic.utilities.Weather;
 import logic.view.card.element.LessonCard;
@@ -55,7 +56,7 @@ public class HomepageView implements Initializable {
 		labelUsername.setText("Hello " + user.getName() + "!");
 		
 		// User is a Student
-		if (Session.getSession().getType() == 0) {
+		if (Session.getSession().getType() == Role.STUDENT) {
 			for (int i=0; i<2; i++) {
 				StudentStatCard studentCard;
 				try {
@@ -69,7 +70,7 @@ public class HomepageView implements Initializable {
 		}
 		
 		// User is a Professor
-		else {
+		else if (Session.getSession().getType() == Role.PROFESSOR) {
 			try {
 				ProfessorStatCard professorCard = new ProfessorStatCard(10);
 				hboxStats.getChildren().add(professorCard);
@@ -83,15 +84,25 @@ public class HomepageView implements Initializable {
 		
 		Date date = new Date(System.currentTimeMillis());
 		Time time = new Time(System.currentTimeMillis());
-		addLessonCards(date, time);
+		addLessonCards(date, time, Session.getSession().getUserLogged().getUsername());
 
 		webMap.getEngine().load(getClass().getResource("/res/html/map.html").toString());
 	}
 	
 	// Add Lesson cards to the scene
-	private void addLessonCards(Date date, Time time) {
+	private void addLessonCards(Date date, Time time, String username) {
 		try {
-			List<Lesson> lessons = LessonDAO.getNextLessons(date, time);
+			
+			List<Lesson> lessons;
+			if (Session.getSession().getType() == Role.STUDENT) {
+				lessons = LessonDAO.getNextLessonsStudent(date, time, username);
+			}
+			else if (Session.getSession().getType() == Role.PROFESSOR) {
+				lessons = LessonDAO.getNextLessonsProfessor(date, time, username);
+			}
+			else {
+				return;
+			}
 			
 			if (lessons == null) {
 				Label label = new Label("There are no future lessons today");

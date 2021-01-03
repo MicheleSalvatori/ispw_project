@@ -13,6 +13,7 @@ import logic.bean.LessonBean;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Lesson;
+import logic.model.Professor;
 import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
@@ -45,7 +46,8 @@ public class LessonDAO {
 				Course course = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
 				Classroom classroom = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
 				String topic = rs.getString("topic");
-				lesson = new Lesson(rs_date, rs_time, course, classroom, topic);
+				Professor professor = ProfessorDAO.findProfessor(rs.getString("professor"));
+				lesson = new Lesson(rs_date, rs_time, course, classroom, topic, professor);
 			}
 			rs.close();
 		} finally {
@@ -56,7 +58,7 @@ public class LessonDAO {
 		return lesson;
 	}
 	
-	public static List<Lesson> getLessonByCourse(Date date, Time time, String course) throws SQLException {
+	public static List<Lesson> getLessonsByCourse(Date date, Time time, String course) throws SQLException {
 		Statement stmt = null;
 		Connection conn = null;
 		List<Lesson> lessons;
@@ -68,7 +70,7 @@ public class LessonDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = Queries.selectLessonByCourse(stmt, date, time, course);
+			ResultSet rs = Queries.selectLessonsByCourse(stmt, date, time, course);
 
 			if (!rs.first()) {
 				lessons = null;
@@ -127,7 +129,7 @@ public class LessonDAO {
 		return lesson;
 	}
 	
-	public static List<Lesson> getNextLessons(Date date, Time time) throws SQLException {
+	public static List<Lesson> getNextLessonsProfessor(Date date, Time time, String professor) throws SQLException {
 		Statement stmt = null;
 		Connection conn = null;
 		List<Lesson> lessons;
@@ -139,7 +141,43 @@ public class LessonDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = Queries.selectNextLessons(stmt, date, time);
+			ResultSet rs = Queries.selectNextLessonsByProfessor(stmt, date, time, professor);
+
+			if (!rs.first()) {
+				lessons = null;
+			} else {
+				lessons = new ArrayList<>();
+				rs.first();
+				do {
+					Date d = rs.getDate("date");
+					Time t = rs.getTime("time");
+					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
+					Lesson lesson = new Lesson(d, t, c, cl);
+					lessons.add(lesson);
+				} while (rs.next());
+			}
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return lessons;
+	}
+	
+	public static List<Lesson> getNextLessonsStudent(Date date, Time time, String student) throws SQLException {
+		Statement stmt = null;
+		Connection conn = null;
+		List<Lesson> lessons;
+
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.selectNextLessonsByStudent(stmt, date, time, student);
 
 			if (!rs.first()) {
 				lessons = null;
@@ -180,8 +218,9 @@ public class LessonDAO {
 			Course course = lessonBean.getCourse();
 			Classroom classroom = lessonBean.getClassroom();
 			String topic = lessonBean.getTopic();
+			Professor professor = lessonBean.getProfessor();
 			
-			Queries.insertLesson(stmt, date, time, course.getAbbrevation(), classroom.getName(), topic);
+			Queries.insertLesson(stmt, date, time, course.getAbbrevation(), classroom.getName(), topic, professor.getUsername());
 			
 		} catch (SQLException e) {
 			return false;

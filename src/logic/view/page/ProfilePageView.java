@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import logic.Session;
+import logic.utilities.Role;
 import logic.view.card.element.CourseCard;
 
 public class ProfilePageView implements Initializable {
@@ -29,7 +30,7 @@ public class ProfilePageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		if (Session.getSession().getType() == Session.PROFESSOR) {
+		if (Session.getSession().getType() == Role.PROFESSOR) {
 			btnAdd.setVisible(false);
 			btnRemove.setVisible(false);
 		}

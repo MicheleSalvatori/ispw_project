@@ -12,13 +12,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import logic.Session;
 import logic.model.Course;
+import logic.model.Exam;
 import logic.model.Lesson;
 import logic.model.dao.CourseDAO;
+import logic.model.dao.ExamDAO;
 import logic.model.dao.LessonDAO;
 import logic.utilities.AlertController;
-import logic.utilities.Page;
-import logic.utilities.PageLoader;
+import logic.utilities.Role;
 import logic.utilities.SQLConverter;
 import logic.view.card.element.CourseFilterCard;
 import logic.view.card.element.LessonCard;
@@ -39,7 +41,18 @@ public class ScheduledPageView implements Initializable {
 		insertFilters(course);
 	
 		try {
-			List<Lesson> lessons = LessonDAO.getLessonByCourse(date, time, course);
+			
+			List<Lesson> lessons;
+			if (Session.getSession().getType() == Role.STUDENT) {
+				lessons = LessonDAO.getNextLessonsStudent(date, time, Session.getSession().getUserLogged().getUsername());
+			}
+			else if (Session.getSession().getType() == Role.PROFESSOR) {
+				lessons = LessonDAO.getNextLessonsProfessor(date, time, Session.getSession().getUserLogged().getUsername());
+			}
+			else {
+				return;
+			}
+
 			for (Lesson lesson : lessons) {
 				LessonCard lessonCard = new LessonCard(SQLConverter.date(lesson.getDate()), lesson.getClassroom().getName(), lesson.getCourse().getAbbrevation(), SQLConverter.time(lesson.getTime()));
 				vboxScroll.getChildren().add(lessonCard);
@@ -60,21 +73,22 @@ public class ScheduledPageView implements Initializable {
 	}
 	
 	public void setExamPage(String course) {
-		// TODO db exam
+		labelPage.setText("Exams");
+		
 		Date date = new Date(System.currentTimeMillis());
 		Time time = new Time(System.currentTimeMillis());
 		vboxScroll.getChildren().clear();
 		insertFilters(course);
 	
 		try {
-			List<Lesson> lessons = LessonDAO.getLessonByCourse(date, time, course);
-			for (Lesson lesson : lessons) {
-				LessonCard lessonCard = new LessonCard(SQLConverter.date(lesson.getDate()), lesson.getClassroom().getName(), lesson.getCourse().getAbbrevation(), SQLConverter.time(lesson.getTime()));
-				vboxScroll.getChildren().add(lessonCard);
+			List<Exam> exams = ExamDAO.getExamsByCourse(date, time, course);
+			for (Exam exam : exams) {
+				ScheduledExamCard examCard = new ScheduledExamCard(SQLConverter.date(exam.getDate()), exam.getCourse().getAbbrevation(), exam.getClassroom().getName(), SQLConverter.time(exam.getTime()));
+				vboxScroll.getChildren().add(examCard);
 			}
 			
 		} catch (NullPointerException e) {
-			AlertController.buildInfoAlert("No lesson found", "lesson", labelPage.getScene());
+			AlertController.buildInfoAlert("No exam found", "exam", labelPage.getScene());
 			return;
 			
 		} catch (SQLException e) {
@@ -90,7 +104,17 @@ public class ScheduledPageView implements Initializable {
 	private void insertFilters(String c) {
 		try {
 			vboxCourse.getChildren().clear();
-			List<Course> courses = CourseDAO.getAllCourses();
+			List<Course> courses;
+			if (Session.getSession().getType() == Role.STUDENT) {
+				courses = CourseDAO.getStudentCourses(Session.getSession().getUserLogged().getUsername());
+			}
+			else if (Session.getSession().getType() == Role.PROFESSOR) {
+				courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
+			}
+			else {
+				return;
+			}
+
 			for (Course course : courses) {
 				CourseFilterCard courseFilterCard = new CourseFilterCard(course.getAbbrevation());
 				vboxCourse.getChildren().add(courseFilterCard);
@@ -110,7 +134,7 @@ public class ScheduledPageView implements Initializable {
 		}
 	}
 	
-	public void setPage() {
+	/*public void setPage() {
 		
 		if (PageLoader.getPage() == Page.SCHEDULED_LESSONS) {
 			
@@ -118,7 +142,18 @@ public class ScheduledPageView implements Initializable {
 			Time time = new Time(System.currentTimeMillis());
 		
 			try {
-				List<Lesson> lessons = LessonDAO.getNextLessons(date, time);
+				
+				List<Lesson> lessons;
+				if (Session.getSession().getType() == Session.Role.STUDENT) {
+					lessons = LessonDAO.getNextLessonsStudent(date, time, Session.getSession().getUserLogged().getUsername());
+				}
+				else if (Session.getSession().getType() == Session.Role.PROFESSOR) {
+					lessons = LessonDAO.getNextLessonsProfessor(date, time, Session.getSession().getUserLogged().getUsername());
+				}
+				else {
+					return;
+				}
+				
 				for (Lesson lesson : lessons) {
 					LessonCard lessonCard = new LessonCard(SQLConverter.date(lesson.getDate()), lesson.getClassroom().getName(), lesson.getCourse().getAbbrevation(), SQLConverter.time(lesson.getTime()));
 					vboxScroll.getChildren().add(lessonCard);
@@ -149,7 +184,7 @@ public class ScheduledPageView implements Initializable {
 		}
 		
 		try {
-			List<Course> courses = CourseDAO.getAllCourses();
+			List<Course> courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
 			for (Course course : courses) {
 				CourseFilterCard courseFilterCard = new CourseFilterCard(course.getAbbrevation());
 				vboxCourse.getChildren().add(courseFilterCard);
@@ -164,7 +199,7 @@ public class ScheduledPageView implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

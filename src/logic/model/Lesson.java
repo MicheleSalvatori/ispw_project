@@ -9,7 +9,17 @@ public class Lesson {
 	private Time time;
 	private Course course;
 	private Classroom classroom;
+	private Professor professor;
 	private String topic;
+	
+	public Lesson(Date date, Time time, Course course, Classroom classroom, String topic, Professor professor) {
+		this.date = date;
+		this.time = time;
+		this.course = course;
+		this.classroom = classroom;
+		this.topic = topic;
+		this.professor = professor;
+	}
 	
 	public Lesson(Date date, Time time, Course course, Classroom classroom, String topic) {
 		this.date = date;
@@ -64,5 +74,13 @@ public class Lesson {
 
 	public void setTopic(String topic) {
 		this.topic = topic;
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
 	}
 }

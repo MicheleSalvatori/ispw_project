@@ -5,6 +5,7 @@ import java.sql.Time;
 
 import logic.model.Classroom;
 import logic.model.Course;
+import logic.model.Professor;
 
 public class LessonBean {
 
@@ -12,6 +13,7 @@ public class LessonBean {
 	private Time time;
 	private Course course;
 	private Classroom classroom;
+	private Professor professor;
 	private String topic;
 	
 	public LessonBean() {
@@ -56,5 +58,13 @@ public class LessonBean {
 
 	public void setTopic(String topic) {
 		this.topic = topic;
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
 	}
 }

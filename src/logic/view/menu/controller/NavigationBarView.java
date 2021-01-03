@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import logic.Session;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.utilities.Role;
 
 public class NavigationBarView implements Initializable {
 
@@ -35,13 +36,13 @@ public class NavigationBarView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		// User logged as Student
-		if (Session.getSession().getType() == Session.STUDENT) {
+		if (Session.getSession().getType() == Role.STUDENT) {
 			btnRequest.setVisible(false);
 			btnSchedule.setVisible(false);
 		}
 		
 		// User logged as Professor
-		else {
+		else if (Session.getSession().getType() == Role.PROFESSOR){
 			btnExams.setVisible(false);
 		}
 	}

@@ -22,7 +22,7 @@ public class ExamDAO {
 		
 	}
 	
-	public static Exam getLessonByDateAndTime(Date date, Time time) throws SQLException {
+	public static Exam getExamByDateAndTime(Date date, Time time) throws SQLException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -55,6 +55,45 @@ public class ExamDAO {
 			}
 		}
 		return exam;
+	}
+	
+	
+	public static List<Exam> getExamsByCourse(Date date, Time time, String course) throws SQLException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		List<Exam> exams;
+		
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.selectExamsByCourse(stmt, date, time, course);
+
+			if (!rs.first()) {
+				exams = null;
+			} else {
+				exams = new ArrayList<>();
+				rs.first();
+				do {
+					Date d = rs.getDate("date");
+					Time t = rs.getTime("time");
+					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
+					Exam exam = new Exam(d, t, c, cl);
+					exams.add(exam);
+				} while (rs.next());
+			}
+			rs.close();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return exams;
 	}
 	
 	

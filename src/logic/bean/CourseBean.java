@@ -2,7 +2,6 @@ package logic.bean;
 
 import java.util.List;
 
-import logic.model.Professor;
 import logic.model.Student;
 
 public class CourseBean {
@@ -10,7 +9,6 @@ public class CourseBean {
 	private String name;
 	private String abbrevation;
 	private List<Student> studentOfCourse;
-	private Professor professor;
 	
 	public CourseBean() {
 		
@@ -38,13 +36,5 @@ public class CourseBean {
 
 	public void setAbbrevation(String abbrevation) {
 		this.abbrevation = abbrevation;
-	}
-
-	public Professor getProfessor() {
-		return professor;
-	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
 	}
 }

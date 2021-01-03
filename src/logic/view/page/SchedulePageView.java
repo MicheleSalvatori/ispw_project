@@ -18,12 +18,14 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.Pair;
+import logic.Session;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
 import logic.controller.ScheduleExamController;
 import logic.controller.ScheduleLessonController;
 import logic.model.Classroom;
 import logic.model.Course;
+import logic.model.Professor;
 import logic.model.dao.ClassroomDAO;
 import logic.model.dao.CourseDAO;
 import logic.utilities.AlertController;
@@ -49,7 +51,7 @@ public class SchedulePageView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		try {
-			List<Course> courses = CourseDAO.getAllCourses();
+			List<Course> courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
 			for (Course course : courses) {
 				comboCourseLesson.getItems().add(course.getAbbrevation());
 				comboCourseExam.getItems().add(course.getAbbrevation());
@@ -60,6 +62,10 @@ public class SchedulePageView implements Initializable {
 				comboClassLesson.getItems().add(classroom.getName());
 				comboClassExam.getItems().add(classroom.getName());
 			}
+			
+		} catch (NullPointerException e) {
+			AlertController.buildInfoAlert("No courses found", "course", btnAddLesson.getScene());
+			return;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -101,6 +107,9 @@ public class SchedulePageView implements Initializable {
 		
 		Classroom classroom = ClassroomDAO.getClassroomByName(comboClassLesson.getValue());
 		lessonBean.setClassroom(classroom);
+		
+		Professor professor = (Professor) Session.getSession().getUserLogged();
+		lessonBean.setProfessor(professor);
 		
 		ScheduleLessonController scheduleLessonController = new ScheduleLessonController();
 		if (!scheduleLessonController.scheduleLesson(lessonBean)) {

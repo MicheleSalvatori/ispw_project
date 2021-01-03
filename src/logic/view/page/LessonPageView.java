@@ -67,7 +67,7 @@ public class LessonPageView implements Initializable {
     	labelClassroom.setText(lessonBean.getClassroom().getName());
     	labelTime.setText(SQLConverter.time(lessonBean.getTime()));
     	labelDate.setText(SQLConverter.date(lessonBean.getDate()));
-    	labelProfessor.setText(lessonBean.getCourse().getProfessor().getName() + " " + lessonBean.getCourse().getProfessor().getSurname());
+    	labelProfessor.setText(lessonBean.getProfessor().getName() + " " + lessonBean.getProfessor().getSurname());
     	textTopic.setText(lessonBean.getTopic());
     	
     	setWeatherCard(lessonBean.getTime());
@@ -84,7 +84,6 @@ public class LessonPageView implements Initializable {
     	CourseBean courseBean = new CourseBean();
     	courseBean.setAbbrevation(course.getAbbrevation());
     	courseBean.setName(course.getName());
-    	courseBean.setProfessor(course.getProfessor());
     	
     	coursePageView.setPage(courseBean);
     }

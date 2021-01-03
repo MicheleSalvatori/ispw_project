@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -17,7 +18,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
 import logic.model.Lesson;
+import logic.model.Professor;
 import logic.model.dao.LessonDAO;
+import logic.model.dao.ProfessorDAO;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
@@ -65,6 +68,8 @@ public class CoursePageView implements Initializable{
     @FXML
     void viewScheduledExams(ActionEvent event) throws IOException {
     	PageLoader.getInstance().buildPage(Page.SCHEDULED_EXAMS, event);
+    	ScheduledPageView scheduledPageView = (ScheduledPageView) PageLoader.getInstance().getController();
+		scheduledPageView.setExamPage(labelCourse.getText());
     }
 
     @FXML
@@ -123,8 +128,13 @@ public class CoursePageView implements Initializable{
 		labelSemester.setText("II");
 	}
 	
-	public void setPage(CourseBean courseBean) {
+	public void setPage(CourseBean courseBean) throws SQLException {
 		labelCourse.setText(courseBean.getAbbrevation());
-		labelProfessor.setText(courseBean.getProfessor().getName() + " " + courseBean.getProfessor().getSurname());
+		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbrevation());
+		labelProfessor.setText("");
+		for (Professor professor : professors) {
+			labelProfessor.setText(labelProfessor.getText()+"/"+professor.getName() + " " + professor.getSurname());
+		}
+		
 	}
 }

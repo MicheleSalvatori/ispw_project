@@ -7,12 +7,10 @@ public class Course {
 	private String name;
 	private String abbrevation;
 	private List<Student> studentOfCourse;
-	private Professor professor;
 	
-	public Course(String name, String abbrevation, Professor professor) {
+	public Course(String name, String abbrevation) {
 		this.name = name;
 		this.abbrevation = abbrevation;
-		this.professor = professor;
 	}
 
 	public String getName() {
@@ -37,13 +35,5 @@ public class Course {
 
 	public void setAbbrevation(String abbrevation) {
 		this.abbrevation = abbrevation;
-	}
-
-	public Professor getProfessor() {
-		return professor;
-	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
 	}
 }
