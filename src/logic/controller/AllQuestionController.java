@@ -25,7 +25,6 @@ public class AllQuestionController {
 
 	public List<QuestionBean> getAllQuestions() throws SQLException {
 		List<QuestionBean> questionBeans = new ArrayList<>();
-
 		try {
 			questionList = QuestionDAO.getCoursesQuestions(Session.getSession().getUserLogged().getUsername());
 			for (Question q : questionList) {
@@ -53,27 +52,4 @@ public class AllQuestionController {
 		}
 		return questionBeans;
 	}
-
-	// Metodo inutile, le domande vengono filtrate dalla view. Vedere se serve
-	// per la parte web
-//	public List<QuestionBean> myQuestions() {
-//		List<QuestionBean> questionBeans = new ArrayList<>();
-//		String userSession = Session.getSession().getUserLogged().getUsername();
-//			for (Question q : questionList) {
-//				String userQuestion = q.getStudent().getUsername();
-//				if (userQuestion.equals(userSession)) {
-//					QuestionBean bean = new QuestionBean();
-//					bean.setId(q.getId());
-//					bean.setStudent(q.getStudent());
-//					bean.setText(q.getText());
-//					bean.setTitle(q.getTitle());
-//					bean.setQuestionCourse(q.getCourse());
-//					bean.setSolved(q.isSolved());
-//					bean.setDate(q.getDate());
-//					bean.setAnswers(q.getAnswers());
-//					questionBeans.add(bean);
-//				}
-//			}
-//		return questionBeans;
-//	}
 }
