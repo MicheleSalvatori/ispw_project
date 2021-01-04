@@ -15,6 +15,10 @@ public class Course {
 	
 	public Course() {
 	}
+	
+	public Course(String abbrevation) {
+		this.abbrevation = abbrevation;
+	}
 
 	public String getName() {
 		return name;
@@ -39,6 +43,5 @@ public class Course {
 	public void setAbbrevation(String abbrevation) {
 		this.abbrevation = abbrevation;
 	}
-	
 	
 }

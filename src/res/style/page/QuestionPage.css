@@ -16,6 +16,12 @@
 	-fx-font-size: 24;
 	-fx-text-fill: #0C0B0B;
 }
+
+.label-author {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 16;
+	-fx-text-fill: #0C0B0B;
+}
  
 .text-area{
     -fx-background-color: transparent;

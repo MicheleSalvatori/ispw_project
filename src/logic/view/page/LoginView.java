@@ -6,7 +6,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -42,8 +41,10 @@ public class LoginView implements Initializable {
 	@FXML
 	void loginUser(ActionEvent event) throws IOException {
 
-		String username = textUsername.getText();
-		String password = textPassword.getText();
+//		String username = textUsername.getText();
+//		String password = textPassword.getText();
+		String username = "michele.salvatori";
+		String password = "pass";
 
 		if (username.isEmpty() || password.isEmpty() || (!rdProfessor.isSelected() && !rdStudent.isSelected())) {
 			System.out.println("One or more fields are empty");
@@ -101,10 +102,10 @@ public class LoginView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		btnLogin.disableProperty()
-				.bind(Bindings.isEmpty(textUsername.textProperty())
-				.or(Bindings.isEmpty(textPassword.textProperty()))
-				.or((rdProfessor.selectedProperty().not()).and(rdStudent.selectedProperty().not())));
+//		btnLogin.disableProperty()
+//				.bind(Bindings.isEmpty(textUsername.textProperty())
+//				.or(Bindings.isEmpty(textPassword.textProperty()))
+//				.or((rdProfessor.selectedProperty().not()).and(rdStudent.selectedProperty().not())));
 
 		
 		
@@ -123,6 +124,7 @@ public class LoginView implements Initializable {
 		// Se premi invio quando sei sul campo username o password fa il login
 		textUsername.setOnAction(eventHandler);
 		textPassword.setOnAction(eventHandler);
+		rdStudent.setSelected(true);
 	}
 
 }

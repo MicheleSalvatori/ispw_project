@@ -22,8 +22,19 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class AlertController {
-	
+//	TODO riorganizzare metodi utilizzando costruttori diversi per node e event 
+//	private static Node node;
+//	private static ActionEvent event;
+//	TODO unire confirmation 1 e 2
 	private AlertController() {}
+	
+//	public AlertController(Node node) {
+//		this.node = node;
+//	}
+//	
+//	public AlertController(ActionEvent event) {
+//		this.event = event;
+//	}
 	
 	public static void buildInfoAlert(String message, String titleAlert, ActionEvent event) {
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -49,6 +60,30 @@ public class AlertController {
 		source.getScene().getRoot().setEffect(null);
 		alert.close();
 	}
+	
+	public static void buildInfoAlert(String message, String titleAlert, Node source) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(titleAlert);
+		alert.setHeaderText(null);
+		alert.setGraphic(null);
+		alert.setContentText(message);
+		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
+		centerButtons(alert.getDialogPane());
+		alert.initStyle(StageStyle.TRANSPARENT);
+		
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+	    GaussianBlur blur = new GaussianBlur(55);
+	    adj.setInput(blur);
+		source.getScene().getRoot().setEffect(adj);
+		
+		alert.show();
+		animation(alert);
+		alert.close();
+		
+		alert.showAndWait();
+		source.getScene().getRoot().setEffect(null);
+		alert.close();
+	}
 
 	public static boolean confirmation(String message, ActionEvent event) {
 	 	Alert alert = new Alert(AlertType.CONFIRMATION, message, ButtonType.YES, ButtonType.NO);
@@ -60,6 +95,30 @@ public class AlertController {
 		alert.initStyle(StageStyle.TRANSPARENT);
 		
 		Node source = (Node) event.getSource();
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+	    GaussianBlur blur = new GaussianBlur(55);
+	    adj.setInput(blur);
+		source.getScene().getRoot().setEffect(adj);
+		
+		alert.show();
+		animation(alert);
+		alert.close();
+		
+		alert.showAndWait();
+		source.getScene().getRoot().setEffect(null);
+		
+		return alert.getResult() == ButtonType.YES;
+	}
+	
+	public static boolean confirmation_2(String message, Node source) {
+	 	Alert alert = new Alert(AlertType.CONFIRMATION, message, ButtonType.YES, ButtonType.NO);
+	 	alert.setTitle("Confirmation");
+	 	alert.setHeaderText(null);
+		alert.setGraphic(null);
+		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
+		centerButtons(alert.getDialogPane());
+		alert.initStyle(StageStyle.TRANSPARENT);
+		
 		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
 	    GaussianBlur blur = new GaussianBlur(55);
 	    adj.setInput(blur);
