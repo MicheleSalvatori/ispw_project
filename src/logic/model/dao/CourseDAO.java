@@ -38,7 +38,13 @@ public class CourseDAO {
 				rs.first();
 				String n = rs.getString("name");
 				String a = rs.getString("abbrevation");
-				course = new Course(n, a);
+				String y = rs.getString("year");
+				String s = rs.getString("semester");
+				String c = rs.getString("credits");
+				String p = rs.getString("prerequisites");
+				String g = rs.getString("goal");
+				String r = rs.getString("reception");
+				course = new Course(n, a, y, s, c, p, g, r);
 			}
 			rs.close();
 		} finally {
@@ -63,6 +69,42 @@ public class CourseDAO {
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectAllCourses(stmt);
+
+			if (!rs.first()) {
+				courses = null;
+			} else {
+				courses = new ArrayList<>();
+				rs.first();
+				do {
+					String n = rs.getString("name");
+					String a = rs.getString("abbrevation");
+					Course course = new Course(n, a);
+					courses.add(course);
+				} while (rs.next());
+			}
+			rs.close();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return courses;
+	}
+	
+	public static List<Course> getAvailableCourses(String student) throws SQLException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		List<Course> courses;
+		
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.selectAvailableCourses(stmt, student);
 
 			if (!rs.first()) {
 				courses = null;

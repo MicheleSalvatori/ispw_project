@@ -40,9 +40,38 @@
 .dialog-pane > .header-panel > .label {
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 20;
-	-fx-text-alignment: CENTER;
 	-fx-alignment: CENTER;
 	-fx-text-fill: #0C0B0B;
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: 0.4;
+}
+
+.combo-box-base {
+    -fx-background-color: #E5E5EB;
+    -fx-background-radius: 5px;
+    
+    -fx-font-family: "Baloo Bhai";
+    -fx-font-size: 20px;
+    -fx-text-fill: #0C0B0B;
+    
+    -fx-pref-width: 212;
+}
+
+.combo-box-base:hover {
+    -fx-cursor: hand;
+	-fx-background-color: #CFCFCF;
+}
+
+.combo-box-base:showing {
+    -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:focused {
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #0C0B0B;
 }
 
 .alert.confirmation.dialog-pane {

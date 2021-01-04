@@ -50,41 +50,41 @@ public class SchedulePageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
+		btnAddLesson.disableProperty()
+			.bind(textTimeLesson.textProperty().isEmpty()
+			.or(comboCourseLesson.valueProperty().isNull())
+			.or(comboClassLesson.valueProperty().isNull())
+			.or(dateLesson.valueProperty().isNull())
+			.or(textTopic.textProperty().isEmpty()));
+
+		btnAddExam.disableProperty()
+			.bind(textTimeExam.textProperty().isEmpty()
+			.or(comboCourseExam.valueProperty().isNull())
+			.or(comboClassExam.valueProperty().isNull())
+			.or(dateExam.valueProperty().isNull())
+			.or(textNote.textProperty().isEmpty()));
+		
 		try {
-			List<Course> courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
-			for (Course course : courses) {
-				comboCourseLesson.getItems().add(course.getAbbrevation());
-				comboCourseExam.getItems().add(course.getAbbrevation());
-			}
-			
 			List<Classroom> classrooms = ClassroomDAO.getAllClassrooms();
 			for (Classroom classroom : classrooms) {
 				comboClassLesson.getItems().add(classroom.getName());
 				comboClassExam.getItems().add(classroom.getName());
 			}
 			
+			List<Course> courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
+			for (Course course : courses) {
+				comboCourseLesson.getItems().add(course.getAbbrevation());
+				comboCourseExam.getItems().add(course.getAbbrevation());
+			}
+			
 		} catch (NullPointerException e) {
-			AlertController.buildInfoAlert("No courses found", "course", btnAddLesson.getScene());
+			System.out.println("No course available");
 			return;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		btnAddLesson.disableProperty()
-				.bind(textTimeLesson.textProperty().isEmpty()
-				.or(comboCourseLesson.valueProperty().isNull())
-				.or(comboClassLesson.valueProperty().isNull())
-				.or(dateLesson.valueProperty().isNull())
-				.or(textTopic.textProperty().isEmpty()));
-		
-		btnAddExam.disableProperty()
-				.bind(textTimeExam.textProperty().isEmpty()
-				.or(comboCourseExam.valueProperty().isNull())
-				.or(comboClassExam.valueProperty().isNull())
-				.or(dateExam.valueProperty().isNull())
-				.or(textNote.textProperty().isEmpty()));
 	}
 	
 	@FXML

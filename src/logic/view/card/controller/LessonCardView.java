@@ -62,6 +62,12 @@ public class LessonCardView implements Initializable {
     	CourseBean courseBean = new CourseBean();
     	courseBean.setAbbrevation(course.getAbbrevation());
     	courseBean.setName(course.getName());
+    	courseBean.setYear(course.getYear());
+    	courseBean.setCredits(course.getCredits());
+    	courseBean.setSemester(course.getSemester());
+    	courseBean.setPrerequisites(course.getPrerequisites());
+    	courseBean.setGoal(course.getGoal());
+    	courseBean.setReception(course.getReception());
     	
     	coursePageView.setPage(courseBean);
 	}

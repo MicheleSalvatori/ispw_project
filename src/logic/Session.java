@@ -33,4 +33,12 @@ public class Session {
 	public void setType(Role type) {
 		this.type = type;
 	}
+	
+	public String getUsername() {
+		return userLogged.getUsername();
+	}
+	
+	public String getPassword() {
+		return userLogged.getPassword();
+	}
 }

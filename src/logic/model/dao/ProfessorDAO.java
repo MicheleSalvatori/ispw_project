@@ -70,7 +70,7 @@ public class ProfessorDAO {
 				throw new SQLException();
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			resultSet = Queries.selectProfessor(stmt, username);
+			resultSet = Queries.selectProfessorByUsername(stmt, username);
 			
 			if (!resultSet.first()) {
 				professor = null;
@@ -130,5 +130,34 @@ public class ProfessorDAO {
 				stmt.close();
 		}
 		return professors;
+	}
+	
+	public static void changePassword(String username, String password) throws SQLException {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			rs = Queries.selectProfessorByUsername(stmt, username);
+			if (!rs.first()) {
+				System.out.println("No user found");
+			} else {
+				System.out.println("User found");
+			}
+			
+			Queries.updateProfessorPassword(stmt, username, password);
+			
+			rs.close();
+			
+		} finally {
+			if(stmt != null) stmt.close();
+		}
 	}
 }

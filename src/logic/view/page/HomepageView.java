@@ -104,14 +104,13 @@ public class HomepageView implements Initializable {
 				return;
 			}
 			
+			Label label = new Label("There are no future lessons today");
 			if (lessons == null) {
-				Label label = new Label("There are no future lessons today");
 				vboxScroll.getChildren().add(label);
 				return;
 			}
 			
 			if (lessons.size() == 1) {
-				Label label = new Label("There are no future lessons today");
 				vboxScroll.getChildren().add(label);
 			}
 			

@@ -8,6 +8,14 @@ import java.sql.Time;
 
 public class Queries {
 	
+	// Role queries
+	public static int insertRole(Statement stmt, String username) throws SQLException {
+		String query = "INSERT INTO role (username, type) VALUES ('" + username + "', 'student');";
+		System.out.println(query);
+		return stmt.executeUpdate(query);
+	}
+	
+	
 	// Porfessor queries
 	public static ResultSet selectProfessor(Statement stmt, String username, String password) throws SQLException {
 		String query = "SELECT * FROM professor WHERE username = '" +  username + "' AND password = '" + password + "';";
@@ -15,7 +23,7 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
-	public static ResultSet selectProfessor(Statement stmt, String username) throws SQLException {
+	public static ResultSet selectProfessorByUsername(Statement stmt, String username) throws SQLException {
 		String query = "SELECT * FROM professor WHERE username = '" +  username + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query);
@@ -25,6 +33,12 @@ public class Queries {
 		String query = "SELECT username, name, surname, email FROM teach JOIN professor on teach.professor = professor.username WHERE teach.course = '" + course + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query);
+	}
+	
+	public static int updateProfessorPassword(Statement stmt, String username, String password) throws SQLException {
+		String query = "UPDATE professor SET password = '" + password + "' WHERE username = '" + username + "';";
+		System.out.println(query);
+		return stmt.executeUpdate(query);
 	}
 	
 	
@@ -43,6 +57,12 @@ public class Queries {
 	
 	public static int insertStudent(Statement stmt, String username, String password, String name, String surname, String email) throws SQLException {
 		String query = "INSERT INTO student (username, password, name, surname, email) VALUES ('" + username + "', '" + password + "', '" + name + "', '" + surname + "', '" + email + "');";
+		System.out.println(query);
+		return stmt.executeUpdate(query);
+	}
+	
+	public static int updateStudentPassword(Statement stmt, String username, String password) throws SQLException {
+		String query = "UPDATE student SET password = '" + password + "' WHERE username = '" + username + "';";
 		System.out.println(query);
 		return stmt.executeUpdate(query);
 	}
@@ -68,7 +88,7 @@ public class Queries {
 	}
 	
 	public static ResultSet selectNextLesson(Statement stmt, Date date, Time time) throws SQLException {
-		String query = "SELECT * FROM lesson WHERE date = '" + date + "' AND time >= '" + time + "' LIMIT 1;";
+		String query = "SELECT * FROM lesson WHERE date >= '" + date + "' AND time >= '" + time + "' LIMIT 1;";
 		System.out.println(query);
 		return stmt.executeQuery(query); 
 	}
@@ -130,8 +150,16 @@ public class Queries {
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}
+	
 	public static ResultSet selectCoursesByStudent(Statement stmt, String student) throws SQLException {
 		String query = "SELECT course.abbrevation, course.name FROM follow JOIN course ON follow.course = course.abbrevation WHERE follow.student = '" + student + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
+	public static ResultSet selectAvailableCourses(Statement stmt, String student) throws SQLException {
+		String query = "SELECT * FROM course WHERE (abbrevation, name) NOT IN "
+						+ "(SELECT course.abbrevation, course.name FROM follow JOIN course ON follow.course = course.abbrevation WHERE follow.student = '" + student + "');";
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}
@@ -170,10 +198,42 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
-	public static ResultSet insertQuestion(Statement stmt, String title, String text, String username, String course) throws SQLException {
+	public static int insertQuestion(Statement stmt, String title, String text, String username, String course) throws SQLException {
 		String query = String.format("INSERT INTO question (title, text, username, course) VALUES('%s', '%s', '%s', '%s')", title, text, username, course);
 		System.out.println(query);
+		return stmt.executeUpdate(query);
+	}
+	
+	
+	// Request queries
+	public static ResultSet selectRequestsByProfessor(Statement stmt, String professor) throws SQLException {
+		String query = "SELECT student, request.course FROM request JOIN teach ON request.course = teach.course WHERE professor = '" + professor + "';";
+		System.out.println(query);
 		return stmt.executeQuery(query);
+	}
+	
+	public static int insertRequest(Statement stmt, String student, String course) throws SQLException {
+		String query = String.format("INSERT INTO request (student, course) VALUES('%s', '%s')", student, course);
+		System.out.println(query);
+		return stmt.executeUpdate(query);
+	}
+	
+	public static int insertFollow(Statement stmt, String student, String course) throws SQLException {
+		String query = String.format("INSERT INTO follow (course, student) VALUES('%s', '%s')", course, student);
+		System.out.println(query);
+		return stmt.executeUpdate(query);
+	}
+	
+	public static int deleteRequest(Statement stmt, String student, String course) throws SQLException {
+		String query = String.format("DELETE FROM request WHERE student = '%s' AND course = '%s';", student, course);
+		System.out.println(query);
+		return stmt.executeUpdate(query);
+	}
+	
+	public static int deleteFollow(Statement stmt, String student, String course) throws SQLException {
+		String query = String.format("DELETE FROM follow WHERE student = '%s' AND course = '%s';", student, course);
+		System.out.println(query);
+		return stmt.executeUpdate(query);
 	}
 }
 

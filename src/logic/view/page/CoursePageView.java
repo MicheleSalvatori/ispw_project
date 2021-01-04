@@ -98,9 +98,12 @@ public class CoursePageView implements Initializable{
 			}
 			anchorNextLesson.getChildren().add(lessonCard);
 			
-		} catch (IOException e1) {
+		} catch (NullPointerException e) {
+			
+			
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -136,5 +139,11 @@ public class CoursePageView implements Initializable{
 			labelProfessor.setText(labelProfessor.getText()+"/"+professor.getName() + " " + professor.getSurname());
 		}
 		
+		labelYear.setText(courseBean.getYear());
+		labelCredits.setText(courseBean.getCredits());
+		labelGoal.setText(courseBean.getGoal());
+		labelReception.setText(courseBean.getReception());
+		labelPrerequisites.setText(courseBean.getPrerequisites());
+		labelSemester.setText(courseBean.getSemester());
 	}
 }
