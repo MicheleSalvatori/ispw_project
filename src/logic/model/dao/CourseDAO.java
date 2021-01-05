@@ -154,6 +154,7 @@ public static int getCourseNumberOf(String username) throws SQLException {
 				stmt.close();
 			}
 		}
+		return courses;
 	}
 
 	public static List<Course> getStudentCourses(String student) throws SQLException {
@@ -178,7 +179,7 @@ public static int getCourseNumberOf(String username) throws SQLException {
 				rs.first();
 				do {
 					String a = rs.getString("course");
-					Course course = new Course( a);
+					Course course = new Course(a);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -227,7 +228,7 @@ public static int getCourseNumberOf(String username) throws SQLException {
 		return courses;
 	}
 	
-	public static List<Course> getStudentCourses(String student) throws SQLException {
+	public static List<Course> getStudentCourses_1(String student) throws SQLException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -301,3 +302,4 @@ public static int getCourseNumberOf(String username) throws SQLException {
 		return courses;
 	}
 }
+

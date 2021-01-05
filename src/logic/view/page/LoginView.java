@@ -4,7 +4,17 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.ResourceBundle;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -104,7 +114,7 @@ public class LoginView implements Initializable {
 		
 	}
   
-  @FXML
+	@FXML
 	private void forgotPassword(ActionEvent event) throws MessagingException {
 		
 		Properties prop = new Properties();

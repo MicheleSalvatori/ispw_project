@@ -32,8 +32,12 @@ public class Course {
 
 	}
   
-  public Course(String abbrevation) {
+	public Course(String abbrevation) {
 		this.abbrevation = abbrevation;
+	}
+	
+	public Course() {
+		
 	}
 
 	public String getName() {

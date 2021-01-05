@@ -60,7 +60,7 @@ public class LoginController {
 			
 		//Gestione Sessione
 		Session.getSession().setUserLogged(admin);
-		Session.getSession().setType(Session.ADMIN_ROLE);
+		Session.getSession().setType(Role.ADMIN);
 		
 	}
 	public void logout() throws SQLException, ClassNotFoundException {

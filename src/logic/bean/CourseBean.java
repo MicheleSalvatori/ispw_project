@@ -22,6 +22,11 @@ public class CourseBean {
 	public CourseBean() {
 		
 	}
+	
+	public CourseBean(String course, String abbrv) {
+		this.name = course;
+		this.abbrevation = abbrv;
+	}
 
 	public String getName() {
 		return name;
