@@ -1,7 +1,7 @@
 package logic.model;
 
 public class Question {
-	
+
 	private int id;
 	private String title;
 	private String text;
@@ -14,6 +14,7 @@ public class Question {
 		this.text = text;
 		this.course = course;
 		this.student = student;
+
 	}
 
 	public int getId() {

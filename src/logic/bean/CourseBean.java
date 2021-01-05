@@ -92,4 +92,5 @@ public class CourseBean {
 	public void setReception(String reception) {
 		this.reception = reception;
 	}
+
 }

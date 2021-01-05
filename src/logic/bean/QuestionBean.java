@@ -13,6 +13,7 @@ public class QuestionBean {
 
 	public QuestionBean() {
 		
+
 	}
 
 	public int getId() {
@@ -45,6 +46,7 @@ public class QuestionBean {
 
 	public void setCourse(Course course) {
 		this.course = course;
+
 	}
 
 	public Student getStudent() {
@@ -64,4 +66,5 @@ public class QuestionBean {
 			+"\nCourse: "+getCourse().getAbbrevation();
 		return buildString;
 	}
+
 }

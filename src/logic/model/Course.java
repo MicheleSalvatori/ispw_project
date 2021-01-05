@@ -29,6 +29,7 @@ public class Course {
 	public Course(String name, String abbrevation) {
 		this.name = name;
 		this.abbrevation = abbrevation;
+
 	}
 
 	public String getName() {
@@ -102,4 +103,5 @@ public class Course {
 	public void setReception(String reception) {
 		this.reception = reception;
 	}
+
 }
