@@ -13,6 +13,8 @@ import logic.model.dao.AdminDAO;
 import logic.model.dao.ProfessorDAO;
 import logic.model.dao.RoleDAO;
 import logic.model.dao.StudentDAO;
+import logic.utilities.Role;
+import logic.view.menu.element.NavigationBar;
 
 public class LoginController {
 	
@@ -33,7 +35,7 @@ public class LoginController {
 		
 		//Gestione Sessione
 		Session.getSession().setUserLogged(professor);
-		Session.getSession().setType(Session.PROFESSOR_ROLE);
+		Session.getSession().setType(Role.PROFESSOR);
 	}
 	
 	public void loginAsStudent(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -46,7 +48,7 @@ public class LoginController {
 			
 		//Gestione Sessione
 		Session.getSession().setUserLogged(student);
-		Session.getSession().setType(Session.STUDENT_ROLE);
+		Session.getSession().setType(Role.STUDENT);
 	}
 	
 	public void loginAsAdmin(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -65,6 +67,9 @@ public class LoginController {
 		
 		// Delete Session
 		Session.getSession().setUserLogged(null);
+		
+		// Delete Navigation Bar
+		NavigationBar.setInstance(null);;
 	}
 
 

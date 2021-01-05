@@ -1,4 +1,10 @@
-/*Roboto font */
+/* Baloo Bhai font */
+@font-face {
+	src: url("../../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
+
+/* Roboto font */
 @font-face {
  	src: url("../../font/Roboto/Roboto-Regular.ttf");
 }
@@ -14,6 +20,12 @@
 .label {
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 24;
+	-fx-text-fill: #0C0B0B;
+}
+
+.label-author {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 16;
 	-fx-text-fill: #0C0B0B;
 }
  
@@ -46,6 +58,19 @@
 
 .text-area .scroll-pane .content{
     -fx-background-color: transparent;
+}
+
+.button {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24;
+	-fx-text-fill: #0C0B0B;
+	
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 8px;
+}
+
+.button:hover {
+	-fx-cursor: hand;
 }
 
 

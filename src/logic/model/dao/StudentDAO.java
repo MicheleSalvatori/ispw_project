@@ -60,7 +60,7 @@ public class StudentDAO {
 		Connection conn = null;
 		Statement stmt = null;
 		Student userRegistered = null;
-		ResultSet resultSet = null;
+		ResultSet rs = null;
 		int result;
 		
 		try {
@@ -70,8 +70,8 @@ public class StudentDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			resultSet = Queries.selectStudent(stmt, username, password);
-			if (!resultSet.first()) {
+			rs = Queries.selectStudent(stmt, username, password);
+			if (!rs.first()) {
 				userRegistered = null;
 			} else {
 				// Raise duplicate entry exception
@@ -81,17 +81,27 @@ public class StudentDAO {
 			
 			if (userRegistered == null) {
 				// If there are no entry then insert a new User
+				result = Queries.insertRole(stmt, username);
+				if (result == 0) {
+					System.out.println("Insert role error");
+					return;
+				}
+				else {
+					System.out.println("Insert role done");
+				}
+				
 				result = Queries.insertStudent(stmt, username, password, name, surname, email);
 				
 				if (result == 0) {
-					System.out.println("Insert error");
+					System.out.println("Insert studenterror");
+					return;
 				}
 				else {
-					System.out.println("Insert done");
+					System.out.println("Insert student done");
 				}
 			}
 			
-			resultSet.close();
+			rs.close();
 			
 		} finally {
 			if(stmt != null)
@@ -99,6 +109,37 @@ public class StudentDAO {
 		}
 		
 		System.out.println("StudentDAO: new student entry created with username = " + username + "\n");
+	}
+	
+	
+	public static void changePassword(String username, String password) throws SQLException {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			rs = Queries.selectStudentByUsername(stmt, username);
+			if (!rs.first()) {
+				System.out.println("No user found");
+			} else {
+				// Raise duplicate entry exception
+				System.out.println("User found");
+			}
+			
+			Queries.updateStudentPassword(stmt, username, password);
+			
+			rs.close();
+			
+		} finally {
+			if(stmt != null) stmt.close();
+		}
 	}
 	
 	public static Student findStudentByUsername(String username) throws SQLException, RecordNotFoundException {
@@ -113,7 +154,7 @@ public class StudentDAO {
 				throw new SQLException();
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			resultSet = Queries.findStudent(stmt, username);
+			resultSet = Queries.selectStudentByUsername(stmt, username);
 			
 			if (!resultSet.first()) {
 				student = null;

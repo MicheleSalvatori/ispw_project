@@ -12,11 +12,11 @@
       
       <Label layoutX="6.0" layoutY="14.0" text="Post new question" />
       
-      <TextArea fx:id="textQuestion" layoutX="7.0" layoutY="142.0" promptText="Question" styleClass="text-area" AnchorPane.rightAnchor="73.0" />
+      <TextArea fx:id="textQuestion" layoutX="7.0" layoutY="142.0" promptText="Question" styleClass="text-area" wrapText="true" AnchorPane.rightAnchor="73.0" />
       
       <TextField fx:id="textSubject" layoutX="7.0" layoutY="69.0" promptText="Subject" styleClass="text-field" />
       
-      <Button fx:id="btnSubmit" layoutX="901.0" layoutY="371.0" mnemonicParsing="false" text="Submit" />
+      <Button fx:id="btnSubmit" layoutX="901.0" layoutY="371.0" mnemonicParsing="false" onAction="#saveQuestion" text="Submit" />
       
       <ComboBox fx:id="courseComboBox" layoutX="981.0" layoutY="69.0" prefWidth="200.0" promptText="Select course" AnchorPane.rightAnchor="73.0" />
       

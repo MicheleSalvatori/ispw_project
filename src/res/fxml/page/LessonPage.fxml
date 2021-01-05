@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
@@ -15,7 +16,8 @@
             <Label layoutX="8.0" layoutY="14.0" text="Course:" AnchorPane.leftAnchor="13.0" />
             <Label layoutX="11.0" layoutY="75.0" styleClass="label-info" text="Professor:" AnchorPane.leftAnchor="13.0" />
             <Label layoutX="10.0" layoutY="126.0" styleClass="label-info" text="Classroom:" AnchorPane.leftAnchor="13.0" />
-            <Label fx:id="labelCourse" layoutX="358.0" layoutY="20.0" styleClass="label-info-course" text="course" AnchorPane.rightAnchor="22.0" />
+            
+            <Button fx:id="btnCourse" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="316.0" layoutY="5.0" mnemonicParsing="false" onAction="#course" prefHeight="60.0" styleClass="button-label" text="course" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="6.0" />
             <Label fx:id="labelProfessor" layoutX="354.0" layoutY="78.0" styleClass="label-desc" text="professor" AnchorPane.rightAnchor="22.0" />
             <Label fx:id="labelClassroom" layoutX="424.0" layoutY="128.0" styleClass="label-desc" text="A3" AnchorPane.rightAnchor="22.0" />
          </children>
@@ -23,10 +25,16 @@
       
       <AnchorPane layoutX="317.0" layoutY="221.0" prefHeight="144.0" prefWidth="379.0" styleClass="anchor-pane" AnchorPane.leftAnchor="0.0">
          <children>
-            <Label fx:id="labelTime" layoutX="185.0" layoutY="37.0" styleClass="label-time" AnchorPane.bottomAnchor="37.0" AnchorPane.rightAnchor="99.0" AnchorPane.topAnchor="35.0" />
-            <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="88.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="88.0" AnchorPane.topAnchor="38.0">
+            <Label fx:id="labelTime" layoutX="185.0" layoutY="37.0" styleClass="label-time" text="10:00" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="22.0" />
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="88.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="88.0" AnchorPane.topAnchor="30.0">
                <image>
                   <Image url="@../../png/card/Time.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelDate" layoutX="235.0" layoutY="91.0" styleClass="label-time" text="02/01/2021" AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="70.0" />
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="88.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="88.0">
+               <image>
+                  <Image url="@../../png/card/Calendar.png" />
                </image>
             </ImageView>
          </children>

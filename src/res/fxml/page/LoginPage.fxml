@@ -31,7 +31,7 @@
       
       <Button fx:id="btnSignup" layoutX="561.0" layoutY="454.0" mnemonicParsing="false" onAction="#gotoSignup" styleClass="signup-button" text="Sign Up" AnchorPane.leftAnchor="561.0" AnchorPane.topAnchor="539.0" />
       
-      <Button fx:id="btnForgot" layoutX="635.0" layoutY="540.0" mnemonicParsing="false" styleClass="forgot-button" text="Forgot Your Password?" AnchorPane.leftAnchor="635.0" AnchorPane.topAnchor="625.0" />
+      <Button fx:id="btnForgot" onAction="#forgotPassword" layoutX="635.0" layoutY="540.0" mnemonicParsing="false" styleClass="forgot-button" text="Forgot Your Password?" AnchorPane.leftAnchor="635.0" AnchorPane.topAnchor="625.0" />
 
    </children>
 </AnchorPane>

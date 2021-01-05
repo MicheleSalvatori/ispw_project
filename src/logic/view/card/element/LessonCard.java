@@ -20,4 +20,13 @@ public class LessonCard extends AnchorPane {
 		
 		lessonCardView.setLabel(lesson, classroom, time);
 	}
+	
+	public LessonCard(String day, String classroom, String course, String time) throws IOException {
+		URL url = new File("src/res/fxml/card/LessonCard.fxml").toURI().toURL();
+		FXMLLoader loader = new FXMLLoader(url);
+		loader.setController(lessonCardView);
+		this.getChildren().add(loader.load());
+		
+		lessonCardView.setLabel(day, classroom, course, time);
+	}
 }

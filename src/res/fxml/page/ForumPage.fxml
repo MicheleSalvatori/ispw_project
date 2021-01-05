@@ -9,11 +9,12 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../../style/page/ForumPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.ForumPageView">
    <children>
       
-      <ScrollPane layoutY="55.0" prefHeight="719.0" prefWidth="618.0" stylesheets="@../../style/ScrollPaneTest.css" AnchorPane.leftAnchor="0.0">
+      <ScrollPane layoutY="55.0" prefHeight="719.0" prefWidth="670.0" stylesheets="@../../style/ScrollPaneTest.css" AnchorPane.leftAnchor="0.0">
          <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="598.0">
                <children>
                   <VBox fx:id="vboxQuestion" prefWidth="600.0" spacing="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                  <Label fx:id="labelLoading" alignment="CENTER" text="Loading..." textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="300.0" />
                </children>
           </AnchorPane>
          </content>
@@ -23,7 +24,7 @@
       
       <Button fx:id="btnNewQuestion" layoutX="711.0" layoutY="100.0" mnemonicParsing="false" onAction="#newQuestion" styleClass="big-button" text="Insert new question" AnchorPane.rightAnchor="80.0" />
       
-      <Button fx:id="btnMyQuestion" layoutX="711.0" layoutY="214.33" mnemonicParsing="false" onAction="#myQuestion" styleClass="big-button" text="My question" AnchorPane.rightAnchor="80.0" />
+      <Button fx:id="btnMyQuestions" layoutX="711.0" layoutY="214.0" maxHeight="97.0" minWidth="198.0" mnemonicParsing="false" onAction="#myQuestion" prefHeight="97.0" prefWidth="198.0" styleClass="small-button" text="My Questions" AnchorPane.rightAnchor="313.0" />
       
       <ScrollPane layoutX="711.0" layoutY="379.0" prefHeight="395.0" prefWidth="438.0" stylesheets="@../../style/ScrollPaneTest.css" AnchorPane.rightAnchor="72.0">
          <content>
@@ -36,6 +37,7 @@
       </ScrollPane>
       
       <Label layoutX="711.0" layoutY="338.0" text="Assignments" AnchorPane.rightAnchor="367.0" />
+      <Button fx:id="btnAllQuestions" disable="true" layoutX="926.0" layoutY="214.0" maxHeight="97.0" minWidth="198.0" mnemonicParsing="false" onAction="#allQuestions" prefHeight="97.0" prefWidth="198.0" styleClass="small-button" text="All Questions" />
       
    </children>
 </AnchorPane>
