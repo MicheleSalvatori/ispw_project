@@ -22,30 +22,16 @@
       <TextField fx:id="textUsername" layoutX="384.0" layoutY="369.0" promptText="Username" />
 
       <PasswordField fx:id="textPassword" layoutX="737.0" layoutY="369.0" promptText="Password" />
-      
-      <Label layoutX="384.0" layoutY="454.0" text="Who are you?" />
-      
-      <RadioButton fx:id="rdProfessor" layoutX="760.0" layoutY="473.0" mnemonicParsing="false" text="Professor">
-      	<toggleGroup>
-       		<ToggleGroup fx:id="radioGroup" />
-   		</toggleGroup>
-      </RadioButton>
-      
-      <RadioButton fx:id="rdStudent" layoutX="927.0" layoutY="475.0" mnemonicParsing="false" text="Student">
-      	<toggleGroup>
-       		<fx:reference source="radioGroup" />
-   		</toggleGroup>
-      </RadioButton>
 
-      <Button fx:id="btnLogin" layoutX="561.0" layoutY="539.0" mnemonicParsing="false" onAction="#loginUser" prefWidth="182.0" styleClass="login-button" text="LOG IN" />
+      <Button fx:id="btnLogin" layoutX="561.0" layoutY="454.0" mnemonicParsing="false" onAction="#loginUser" prefWidth="182.0" styleClass="login-button" text="LOG IN" />
 
-      <Button fx:id="btnFacebook" layoutX="759.0" layoutY="545.0" mnemonicParsing="false" styleClass="facebook-button" />
+      <Button fx:id="btnFacebook" layoutX="759.0" layoutY="460.0" mnemonicParsing="false" styleClass="facebook-button" />
 
-      <Button fx:id="btnGoogle" layoutX="828.0" layoutY="545.0" mnemonicParsing="false" styleClass="google-button" />
+      <Button fx:id="btnGoogle" layoutX="828.0" layoutY="460.0" mnemonicParsing="false" styleClass="google-button" />
       
-      <Button fx:id="btnSignup" layoutX="561.0" layoutY="624.0" mnemonicParsing="false" onAction="#gotoSignup" styleClass="signup-button" text="Sign Up" AnchorPane.leftAnchor="561.0" AnchorPane.topAnchor="624.0" />
+      <Button fx:id="btnSignup" layoutX="561.0" layoutY="454.0" mnemonicParsing="false" onAction="#gotoSignup" styleClass="signup-button" text="Sign Up" AnchorPane.leftAnchor="561.0" AnchorPane.topAnchor="539.0" />
       
-      <Button fx:id="btnForgot" onAction="#forgotPassword" layoutX="635.0" layoutY="710.0" mnemonicParsing="false" styleClass="forgot-button" text="Forgot Your Password?" AnchorPane.leftAnchor="635.0" AnchorPane.topAnchor="710.0" />
+      <Button fx:id="btnForgot" onAction="#forgotPassword" layoutX="635.0" layoutY="540.0" mnemonicParsing="false" styleClass="forgot-button" text="Forgot Your Password?" AnchorPane.leftAnchor="635.0" AnchorPane.topAnchor="625.0" />
 
    </children>
 </AnchorPane>

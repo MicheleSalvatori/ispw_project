@@ -1,4 +1,3 @@
-
 package logic.model;
 
 import java.util.List;

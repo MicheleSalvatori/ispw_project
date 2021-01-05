@@ -6,14 +6,24 @@ import java.sql.SQLException;
 import logic.Session;
 import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
+import logic.model.Admin;
 import logic.model.Professor;
 import logic.model.Student;
+import logic.model.dao.AdminDAO;
 import logic.model.dao.ProfessorDAO;
+import logic.model.dao.RoleDAO;
 import logic.model.dao.StudentDAO;
 import logic.utilities.Role;
 import logic.view.menu.element.NavigationBar;
 
 public class LoginController {
+	
+	public String getTypeUser(UserBean userBean) throws SQLException, RecordNotFoundException {
+		String username = userBean.getUsername();
+		String type = RoleDAO.findType(username);
+		System.out.println("FINE: "+ type);
+		return type;
+	}
 
 	public void loginAsProfessor(UserBean userBean) throws SQLException, RecordNotFoundException, ConnectException {
 		
@@ -41,6 +51,18 @@ public class LoginController {
 		Session.getSession().setType(Role.STUDENT);
 	}
 	
+	public void loginAsAdmin(UserBean userBean) throws SQLException, RecordNotFoundException {
+		String username = userBean.getUsername();
+		String password = userBean.getPassword();
+			
+		Admin admin = AdminDAO.findAdmin(username, password);
+		System.out.println("FINE: "+ admin.getUsername());
+			
+		//Gestione Sessione
+		Session.getSession().setUserLogged(admin);
+		Session.getSession().setType(Session.ADMIN_ROLE);
+		
+	}
 	public void logout() throws SQLException, ClassNotFoundException {
 		
 		// Delete Session
@@ -49,4 +71,8 @@ public class LoginController {
 		// Delete Navigation Bar
 		NavigationBar.setInstance(null);;
 	}
+
+
+
+
 }

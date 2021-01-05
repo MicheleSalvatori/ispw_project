@@ -6,10 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
-
 import com.mysql.jdbc.PreparedStatement;
 
 public class Queries {
+	
+	public static ResultSet selectRole(Statement stmt, String username) throws SQLException {
+		String query = "SELECT * FROM role WHERE username = '" +  username +  "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
 	
 	// Role queries
 	public static int insertRole(Statement stmt, String username) throws SQLException {
