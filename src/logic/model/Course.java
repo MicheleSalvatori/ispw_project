@@ -1,3 +1,4 @@
+
 package logic.model;
 
 import java.util.List;
@@ -30,6 +31,10 @@ public class Course {
 		this.name = name;
 		this.abbrevation = abbrevation;
 
+	}
+  
+  public Course(String abbrevation) {
+		this.abbrevation = abbrevation;
 	}
 
 	public String getName() {

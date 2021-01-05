@@ -1,3 +1,4 @@
+
 package logic.bean;
 
 import java.util.List;
