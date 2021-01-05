@@ -1,12 +1,13 @@
 package logic;
 
 import logic.model.User;
+import logic.utilities.Role;
 
 public class Session {
 	
 	private static Session instance = null;
 	private User userLogged;
-	private int type;
+	private Role type;
 	
 	private Session() {}
 
@@ -25,12 +26,19 @@ public class Session {
 		this.userLogged = userLogged;
 	}
 
-	public int getType() {
+	public Role getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(Role type) {
 		this.type = type;
 	}
-
+	
+	public String getUsername() {
+		return userLogged.getUsername();
+	}
+	
+	public String getPassword() {
+		return userLogged.getPassword();
+	}
 }

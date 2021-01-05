@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import logic.utilities.AppProperties;
 
@@ -25,6 +26,7 @@ public class MainStandalone extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.setMaximized(false);
 		primaryStage.setResizable(false);
+		primaryStage.getIcons().add(new Image("/res/png/Logo.png"));
 		primaryStage.show();
 	}
 }

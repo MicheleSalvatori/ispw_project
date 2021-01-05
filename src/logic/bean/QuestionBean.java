@@ -4,13 +4,16 @@ import logic.model.Course;
 import logic.model.Student;
 
 public class QuestionBean {
+	
 	private int id;
 	private String title;
 	private String text;
-	private Course questionCourse;
+	private Course course;
 	private Student student;
 
 	public QuestionBean() {
+		
+
 	}
 
 	public int getId() {
@@ -36,13 +39,14 @@ public class QuestionBean {
 	public void setText(String text) {
 		this.text = text;
 	}
-
-	public Course getQuestionCourse() {
-		return questionCourse;
+	
+	public Course getCourse() {
+		return course;
 	}
 
-	public void setQuestionCourse(Course questionCourse) {
-		this.questionCourse = questionCourse;
+	public void setCourse(Course course) {
+		this.course = course;
+
 	}
 
 	public Student getStudent() {
@@ -59,7 +63,7 @@ public class QuestionBean {
 			+"\nTitle: "+ getTitle()
 			+"\nText: "+ getText()
 			+"\nAuthor: "+getStudent().getName() + " " + getStudent().getSurname()
-			+"\nCourse: "+getQuestionCourse().getAbbrevation();
+			+"\nCourse: "+getCourse().getAbbrevation();
 		return buildString;
 	}
 

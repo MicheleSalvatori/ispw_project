@@ -3,9 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="853.12" prefWidth="132.0" spacing="50.0" styleClass="root" stylesheets="@../../style/menu/NavigationBar.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="853.12" prefWidth="132.0" spacing="50.0" styleClass="root" stylesheets="@../../style/menu/NavigationBar.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       
       <Label text="F.">
@@ -16,13 +17,20 @@
       
       <Button fx:id="btnHome" mnemonicParsing="false" onAction="#homeButton" styleClass="home-button" />
       
-      <Button fx:id="btnExams" mnemonicParsing="false" onAction="#examsButton" styleClass="exams-button" />
+      <AnchorPane>
+         <children>
+            <Button fx:id="btnExams" mnemonicParsing="false" onAction="#examsButton" styleClass="exams-button" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.0" />
+            <Button fx:id="btnRequest" mnemonicParsing="false" onAction="#requestButton" styleClass="request-button" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="56.0" />
+         </children>
+      </AnchorPane>
       
       <Button fx:id="btnProfile" mnemonicParsing="false" onAction="#profileButton" styleClass="profile-button" />
       
       <Button fx:id="btnForum" mnemonicParsing="false" onAction="#forumButton" styleClass="forum-button" />
       
       <Button fx:id="btnNews" mnemonicParsing="false" onAction="#newsButton" styleClass="news-button" />
+      
+      <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#scheduleButton" styleClass="schedule-button" />
       
       <Button fx:id="btnBack" mnemonicParsing="false" onAction="#backButton" styleClass="back-button">
          <VBox.margin>

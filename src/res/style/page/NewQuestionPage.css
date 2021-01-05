@@ -16,6 +16,10 @@
  	src: url("../../font/Roboto/Roboto-Light.ttf");
 }
 
+.root {
+	-fx-background-color: transparent;
+}
+
 .label {
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 24;

@@ -16,8 +16,7 @@ public class QuestionCardView {
 	@FXML
 	private Button btnView;
 
-	public void setLabel(String number, String questionObject, String date, String name, String surname,
-			String course) {
+	public void setLabel(String number, String questionObject, String date, String name, String surname, String course) {
 		labelCourse.setText(course);
 		labelName.setText(name);
 		labelSurname.setText(surname);

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -9,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" styleClass="root" stylesheets="@../../style/page/ProfilePage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.ProfilePageView">
    <children>
@@ -17,11 +17,8 @@
       
       <AnchorPane layoutY="83.0" prefHeight="465.0" prefWidth="345.0" styleClass="anchor-pane">
          <children>
-            <ImageView fx:id="imgAvatar" fitHeight="200.0" fitWidth="200.0" layoutX="73.0" layoutY="41.0" pickOnBounds="true" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="29.0">
-               <image>
-                  <Image url="@../../png/avatar.png" />
-               </image>
-            </ImageView>
+            
+            <Rectangle fx:id="rect" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="200.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="200.0" AnchorPane.leftAnchor="71.5" AnchorPane.rightAnchor="71.5" AnchorPane.topAnchor="29.0" />
             
             <Label layoutX="23.0" layoutY="231.0" text="Username:" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="245.0" />
             
@@ -43,7 +40,8 @@
             
             <Label fx:id="labelPassword" layoutX="236.0" layoutY="420.0" styleClass="label-desc" text="password" AnchorPane.rightAnchor="23.0" />
             
-            <Button fx:id="btnShowPass" layoutX="156.0" layoutY="430.0" mnemonicParsing="false" styleClass="button-show" text="Button" />
+            <Button fx:id="btnShowPass" onAction="#showPass" layoutX="156.0" layoutY="430.0" mnemonicParsing="false" styleClass="button-show" text="Button" />
+            
          </children>
       </AnchorPane>
       
@@ -53,15 +51,15 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="715.0">
                <children>
-                  <VBox fx:id="vboxScroll" prefWidth="730.0" spacing="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="13.0" />
+                  <VBox fx:id="vboxScroll" alignment="CENTER" prefWidth="730.0" spacing="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="13.0" />
                </children>
           </AnchorPane>
         </content>
       </ScrollPane>
       
-      <Button fx:id="btnChangePass" layoutX="78.0" layoutY="555.0" mnemonicParsing="false" styleClass="button-change" text="Change your password" />
+      <Button fx:id="btnChangePass" onAction="#changePass" layoutX="78.0" layoutY="555.0" mnemonicParsing="false" styleClass="button-change" text="Change your password" />
       
-      <Button fx:id="btnAdd" layoutX="469.0" layoutY="560.0" mnemonicParsing="false" styleClass="button-course">
+      <Button fx:id="btnAdd" onAction="#addCourse" layoutX="469.0" layoutY="560.0" mnemonicParsing="false" styleClass="button-course">
       	<graphic>
       		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true" spacing="10.0">
       			<children>
@@ -79,7 +77,7 @@
       	</graphic>
       </Button>
       
-      <Button fx:id="btnRemove" layoutX="807.0" layoutY="560.0" mnemonicParsing="false" styleClass="button-course">
+      <Button fx:id="btnRemove" onAction="#removeCourse" layoutX="807.0" layoutY="560.0" mnemonicParsing="false" styleClass="button-course">
       	<graphic>
       		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true" spacing="10.0">
       			<children>

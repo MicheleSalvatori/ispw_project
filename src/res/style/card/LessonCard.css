@@ -36,8 +36,7 @@
 	-fx-font-size: 40px;
 }
 
-
-.button {
+.button-view {
 	-fx-background-color: #0C0B0B;
 	-fx-background-radius: 8px;
 	
@@ -54,6 +53,15 @@
 	-fx-pref-height: -height;
 	-fx-max-width: -width;
 	-fx-max-height: -height;	
+}
+
+.button-course {
+	-fx-background-color: transparent;
+	
+	-fx-text-fill: #0C0B0B;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 20px;
+	-fx-underline: true;
 }
 
 .button:hover {

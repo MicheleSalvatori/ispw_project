@@ -25,6 +25,14 @@
 	-fx-background-radius: 14px;
 }
 
+.anchor-pane-lesson {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14px;
+	
+	-fx-pref-width: 620;
+	-fx-pref-height: 80;
+}
+
 .label {
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 24;

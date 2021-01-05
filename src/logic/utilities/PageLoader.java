@@ -24,14 +24,17 @@ import logic.view.menu.element.StatusBar;
 public class PageLoader {
 	
 	private static PageLoader instance = null;
-	private Page page;
+	private static Page page;
+	private FXMLLoader loader;
 	private Stage primaryStage;
 	private HBox mainLayoutHBox;
 	private Scene scene;
 	
 	private Background background = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 	
-	private PageLoader() {}
+	private PageLoader() {
+		
+	}
 	
 	public static PageLoader getInstance() {
 		if (instance == null) {
@@ -40,9 +43,13 @@ public class PageLoader {
 		return instance;
 	}
 	
+	public static Page getPage() {
+		return page;
+	}
+	
 	public void buildPage(Page page, ActionEvent event) throws IOException {
-		this.page = page;
-		if (page.getStageTitle() == "App - Signup" || page.getStageTitle() == "App - Login") {
+		PageLoader.page = page;
+		if (page == Page.SIGNUP || page == Page.LOGIN) {
 			loadPageNoNavBar(event);
 		}
 		else {
@@ -54,7 +61,7 @@ public class PageLoader {
 		Node source = (Node) ae.getSource();
 		primaryStage = (Stage) source.getScene().getWindow();
 		URL url = new File(page.getRes()).toURI().toURL();
-		FXMLLoader loader = new FXMLLoader(url);
+		loader = new FXMLLoader(url);
 		
 		configPage(loader.load());
 	}
@@ -73,7 +80,6 @@ public class PageLoader {
 	}
 	
 	private void configPage(Parent pageView) throws IOException {
-		
 		VBox vBox = new VBox();
 		vBox.getChildren().addAll(configStatusBar(), pageView);
 		mainLayoutHBox = new HBox(configNavBar(), vBox);						
@@ -90,7 +96,7 @@ public class PageLoader {
 		Node source = (Node) ae.getSource();
 		Stage stage = (Stage) source.getScene().getWindow();
 		URL url = new File(page.getRes()).toURI().toURL();
-		FXMLLoader loader = new FXMLLoader(url);
+		loader = new FXMLLoader(url);
 		Parent parent = loader.load();
 
 		Scene scene = new Scene(parent);
@@ -98,5 +104,8 @@ public class PageLoader {
 		stage.setTitle(page.getStageTitle());
 		stage.show();
 	}
-
+	
+	public Object getController() {
+		return loader.getController();
+	}
 }
