@@ -29,6 +29,7 @@ import logic.bean.QuestionBean;
 import logic.controller.InsertAnswerController;
 import logic.model.Student;
 import logic.utilities.AlertController;
+
 import logic.view.card.element.AnswerCard;
 
 public class QuestionPageView implements Initializable {

@@ -51,7 +51,7 @@
 }
 
 
-.button {
+.button-scheduled {
 	-fx-background-color: #E5E5EB;
 	-fx-background-radius: 14px;
 	
@@ -70,7 +70,7 @@
 	-fx-max-height: -height;
 }
 
-.button:hover{
+.button-scheduled:hover{
 	-fx-cursor: hand;
 	-fx-background-color: #CFCFCF;
 }
