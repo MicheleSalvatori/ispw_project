@@ -12,4 +12,8 @@ public class JoinCourseController {
 	public boolean removeCourse(RequestBean requestBean) {
 		return RequestDAO.deleteFollow(requestBean);
 	}
+	
+	public boolean deleteRequest(RequestBean requestBean) {
+		return RequestDAO.deleteRequest(requestBean);
+	}
 }

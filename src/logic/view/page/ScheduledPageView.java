@@ -19,7 +19,6 @@ import logic.model.Lesson;
 import logic.model.dao.CourseDAO;
 import logic.model.dao.ExamDAO;
 import logic.model.dao.LessonDAO;
-import logic.utilities.AlertController;
 import logic.utilities.Role;
 import logic.utilities.SQLConverter;
 import logic.view.card.element.CourseFilterCard;
@@ -59,7 +58,7 @@ public class ScheduledPageView implements Initializable {
 			}
 			
 		} catch (NullPointerException e) {
-			AlertController.buildInfoAlert("No lesson found", "lesson", labelPage.getScene());
+			vboxScroll.getChildren().add(new Label("No lesson found"));
 			return;
 			
 		} catch (SQLException e) {
@@ -88,7 +87,7 @@ public class ScheduledPageView implements Initializable {
 			}
 			
 		} catch (NullPointerException e) {
-			AlertController.buildInfoAlert("No exam found", "exam", labelPage.getScene());
+			vboxScroll.getChildren().add(new Label("No exam found"));
 			return;
 			
 		} catch (SQLException e) {
@@ -124,9 +123,9 @@ public class ScheduledPageView implements Initializable {
 				}
 			}
 			
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

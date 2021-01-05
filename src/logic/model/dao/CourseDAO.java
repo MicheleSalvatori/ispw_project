@@ -198,4 +198,40 @@ public class CourseDAO {
 		}
 		return courses;
 	}
+	
+	public static List<Course> getStudentCoursesByRequest(String student) throws SQLException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		List<Course> courses;
+		
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.selectCoursesRequestedByStudent(stmt, student);
+
+			if (!rs.first()) {
+				courses = null;
+			} else {
+				courses = new ArrayList<>();
+				rs.first();
+				do {
+					String n = rs.getString("name");
+					String a = rs.getString("abbrevation");
+					Course course = new Course(n, a);
+					courses.add(course);
+				} while (rs.next());
+			}
+			rs.close();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return courses;
+	}
 }

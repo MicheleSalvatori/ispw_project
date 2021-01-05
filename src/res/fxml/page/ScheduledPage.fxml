@@ -12,7 +12,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0">
                <children>
-                  <VBox fx:id="vboxScroll" spacing="20" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="13.0" />
+                  <VBox fx:id="vboxScroll" alignment="CENTER" prefWidth="620.0" spacing="20" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="13.0" />
                </children>
             </AnchorPane>
         </content>

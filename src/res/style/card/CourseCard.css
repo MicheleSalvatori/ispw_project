@@ -28,40 +28,46 @@
 	-fx-alignment: CENTER;	
 }
 
-.course-label {
-	-fx-text-fill: #0C0B0B;
-	-fx-font-family: "Baloo Bhai";
-	-fx-font-size: 20px;
-}
-
-.button {
-	-fx-background-color: transparent;
-	-fx-alignment: CENTER_LEFT;
-	-fx-underline:true;
+.button-delete {
+	-fx-background-color: #0C0B0B;
+	-fx-background-radius: 8px;
+	
+	-fx-text-fill: white;
+	-fx-font-family: "Roboto";
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+	
+	-width: 120;
+	-height: 40;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;
 }
 
 .button-label-course {
+	-fx-background-color: transparent;
+	
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 20px;
+	-fx-underline:true;
+	-fx-alignment: CENTER_LEFT;
 }
 
 .button-label-professor {
-	-fx-font-weight: normal;
+	-fx-background-color: transparent;
+	
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Roboto";
+	-fx-font-weight: normal;
 	-fx-font-size: 13.0px;
 	-fx-underline: true;
+	-fx-alignment: CENTER_LEFT;
 }
 
 .button:hover {
 	-fx-cursor: hand;
-}
-
-.professor-label {
-	-fx-font-weight: normal;
-	-fx-text-fill: #0C0B0B;
-	-fx-font-family: "Roboto";
-	-fx-font-size: 13.0px;
-	-fx-underline: true;
 }

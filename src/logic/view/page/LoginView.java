@@ -4,7 +4,17 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.ResourceBundle;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -94,9 +104,36 @@ public class LoginView implements Initializable {
 	}
 
 	@FXML
-	void gotoSignup(ActionEvent event) throws IOException {
+	private void gotoSignup(ActionEvent event) throws IOException {
 		// load Signup Page
 		PageLoader.getInstance().buildPage(Page.SIGNUP, event);
+	}
+	
+	@FXML
+	private void forgotPassword(ActionEvent event) throws MessagingException {
+		
+		Properties prop = new Properties();
+		prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
+		
+		Session session = Session.getInstance(prop, new Authenticator() {
+			@Override
+		    protected PasswordAuthentication getPasswordAuthentication() {
+		          return new PasswordAuthentication("account", "password");          
+		    }    
+		});
+	
+		MimeMessage message = new MimeMessage(session);
+		message.setFrom(new InternetAddress("xpunitorex@gmail.com"));
+		message.setRecipient(Message.RecipientType.TO, new InternetAddress("xpunitorex@outlook.com"));
+		message.setSubject("MHANZ");
+		message.setText("Lutz");
+		
+		Transport.send(message);
+		
+		AlertController.buildInfoAlert("Your password will be sended to your e-mail.", "password", event);
 	}
 
 	@Override
@@ -107,8 +144,6 @@ public class LoginView implements Initializable {
 				.or(Bindings.isEmpty(textPassword.textProperty()))
 				.or((rdProfessor.selectedProperty().not()).and(rdStudent.selectedProperty().not())));
 
-		
-		
 		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {

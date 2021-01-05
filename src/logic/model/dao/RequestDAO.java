@@ -21,6 +21,38 @@ public class RequestDAO {
 		
 	}
 	
+	public static Request getRequest(String student, String course) throws SQLException, RecordNotFoundException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		Request request;
+		
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.selectRequest(stmt, student, course);
+
+			if (!rs.first()) {
+				request = null;
+			} else {
+				rs.first();
+				Student s = StudentDAO.findStudentByUsername(rs.getString("student"));
+				Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+				request = new Request(s, c);
+			}
+			rs.close();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return request;
+	}
+	
 	public static List<Request> getRequestsByProfessor(String professor) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
@@ -45,6 +77,42 @@ public class RequestDAO {
 					Student student = StudentDAO.findStudentByUsername(rs.getString("student"));
 					Course course = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
 					Request request = new Request(student, course);
+					requests.add(request);
+				} while (rs.next());
+			}
+			rs.close();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return requests;
+	}
+	
+	public static List<Request> getRequestsByProfessorAndCourse(String professor, String course) throws SQLException, RecordNotFoundException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		List<Request> requests;
+		
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.selectRequestsByProfessorAndCourse(stmt, professor, course);
+
+			if (!rs.first()) {
+				requests = null;
+			} else {
+				requests = new ArrayList<>();
+				rs.first();
+				do {
+					Student s = StudentDAO.findStudentByUsername(rs.getString("student"));
+					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+					Request request = new Request(s, c);
 					requests.add(request);
 				} while (rs.next());
 			}

@@ -19,7 +19,16 @@ public class CourseCard extends AnchorPane {
 		loader.setController(courseCardView);
 		this.getChildren().add(loader.load());
 
-		courseCardView.setLabel(name, professor, year, semester);
+		courseCardView.setCard(name, professor, year, semester);
+	}
+	
+	public CourseCard(String name, String professor) throws IOException {
+		URL url = new File("src/res/fxml/card/CourseCard.fxml").toURI().toURL();
+		FXMLLoader loader = new FXMLLoader(url);
+		loader.setController(courseCardView);
+		this.getChildren().add(loader.load());
+
+		courseCardView.setCard(name, professor);
 	}
 	
 	// TODO

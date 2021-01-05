@@ -139,12 +139,6 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
-	public static ResultSet selectCourseOfStudent(Statement stmt, String username) throws SQLException {
-		String query = "SELECT * FROM follow JOIN course WHERE follow.student = '" + username + "';";
-		System.out.println(query);
-		return stmt.executeQuery(query);
-	}
-	
 	public static ResultSet selectCoursesByProfessor(Statement stmt, String professor) throws SQLException {
 		String query = "SELECT course.abbrevation, course.name FROM teach JOIN course ON teach.course = course.abbrevation WHERE teach.professor = '" + professor + "';";
 		System.out.println(query);
@@ -157,9 +151,16 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
+	public static ResultSet selectCoursesRequestedByStudent(Statement stmt, String student) throws SQLException {
+		String query = "SELECT course.abbrevation, course.name FROM request JOIN course ON request.course = course.abbrevation WHERE request.student = '" + student + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
 	public static ResultSet selectAvailableCourses(Statement stmt, String student) throws SQLException {
 		String query = "SELECT * FROM course WHERE (abbrevation, name) NOT IN "
-						+ "(SELECT course.abbrevation, course.name FROM follow JOIN course ON follow.course = course.abbrevation WHERE follow.student = '" + student + "');";
+						+ "(SELECT course.abbrevation, course.name FROM follow JOIN course ON follow.course = course.abbrevation WHERE follow.student = '" + student + "') "
+						+ "AND (abbrevation, name) NOT IN (SELECT course.abbrevation, course.name FROM request JOIN course ON request.course = course.abbrevation WHERE request.student = '" + student + "');";
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}
@@ -206,8 +207,20 @@ public class Queries {
 	
 	
 	// Request queries
+	public static ResultSet selectRequest(Statement stmt, String student, String course) throws SQLException {
+		String query = "SELECT * FROM request WHERE student = '" + student + "' AND course = '" + course + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
 	public static ResultSet selectRequestsByProfessor(Statement stmt, String professor) throws SQLException {
 		String query = "SELECT student, request.course FROM request JOIN teach ON request.course = teach.course WHERE professor = '" + professor + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
+	public static ResultSet selectRequestsByProfessorAndCourse(Statement stmt, String professor, String course) throws SQLException {
+		String query = "SELECT student, request.course FROM request JOIN teach ON request.course = teach.course WHERE professor = '" + professor + "' AND request.course = '" + course + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}

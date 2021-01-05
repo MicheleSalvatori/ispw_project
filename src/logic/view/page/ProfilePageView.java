@@ -134,7 +134,8 @@ public class ProfilePageView implements Initializable {
 			joinCourseController.sendRequest(requestBean);
 			
 			AlertController.buildInfoAlert("Request sended to course's professor.\nYou will receive a notification when the request will be approved", "request", event);
-		}
+			loadCourses();
+		}	
 	}
 	
 	@FXML
@@ -178,30 +179,59 @@ public class ProfilePageView implements Initializable {
 		rect.setFill(pattern);
 	}
 	
-	private void loadCourses() {
+	public void loadCourses() {
 		vboxScroll.getChildren().clear();
 		
 		try {
+			List<Course> c1;
+			List<Course> c2;
 			List<Course> courses;
+			
 			if (Session.getSession().getType() == Role.STUDENT) {
-				courses = CourseDAO.getStudentCourses(Session.getSession().getUserLogged().getUsername());
+				c1 = CourseDAO.getStudentCourses(Session.getSession().getUsername());
+				c2 = CourseDAO.getStudentCoursesByRequest(Session.getSession().getUsername());
+				
+				courses = new ArrayList<>();
+				
+				if (c1 != null) {
+					for (Course course : c1) {
+						List<Professor> professor = ProfessorDAO.getCourseProfessors(course.getAbbrevation());
+						CourseCard courseCard = new CourseCard(course.getAbbrevation(), professor.get(0).getName() + " " + professor.get(0).getSurname(), "3", "3");
+						//CourseCard courseCard = new CourseCard(course);
+						vboxScroll.getChildren().add(courseCard);
+					}
+				}
+				
+				if (c2 != null) {
+					for (Course course : c2) {
+						List<Professor> professor = ProfessorDAO.getCourseProfessors(course.getAbbrevation());
+						CourseCard courseCard = new CourseCard(course.getAbbrevation(), professor.get(0).getName() + " " + professor.get(0).getSurname());
+						//CourseCard courseCard = new CourseCard(course);
+						vboxScroll.getChildren().add(courseCard);
+					}
+				}
+				
+				if (c1 == null && c2 == null) {
+					throw new NullPointerException();
+				}
+				
 			}
+			
 			else if (Session.getSession().getType() == Role.PROFESSOR) {
 				courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
+				for (Course course : courses) {
+					List<Professor> professor = ProfessorDAO.getCourseProfessors(course.getAbbrevation());
+					CourseCard courseCard = new CourseCard(course.getAbbrevation(), professor.get(0).getName() + " " + professor.get(0).getSurname(), "3", "3");
+					//CourseCard courseCard = new CourseCard(course);
+					vboxScroll.getChildren().add(courseCard);
+				}
 			}
+			
 			else {
 				return;
 			}
 			
-			for (Course course : courses) {
-				List<Professor> professor = ProfessorDAO.getCourseProfessors(course.getAbbrevation());
-				CourseCard courseCard = new CourseCard(course.getAbbrevation(), professor.get(0).getName() + " " + professor.get(0).getSurname(), "3", "3");
-				//CourseCard courseCard = new CourseCard(course);
-				vboxScroll.getChildren().add(courseCard);
-			}
-			
 		} catch (NullPointerException e) {
-			System.out.println("NULL");
 			Label label = new Label("No course available");
 			vboxScroll.getChildren().add(label);
 			return;

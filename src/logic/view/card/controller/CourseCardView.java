@@ -7,12 +7,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.shape.Line;
+import logic.Session;
 import logic.bean.CourseBean;
+import logic.bean.RequestBean;
+import logic.controller.JoinCourseController;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
+import logic.model.Request;
 import logic.model.dao.CourseDAO;
+import logic.model.dao.RequestDAO;
+import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.page.CoursePageView;
+import logic.view.page.ProfilePageView;
 
 public class CourseCardView {
 	
@@ -20,7 +29,10 @@ public class CourseCardView {
 	private Course course;
 
 	@FXML
-	private Button btnCourse, btnProfessor;
+	private Button btnCourse, btnProfessor, btnDelete;
+	
+	@FXML
+	private Line line1, line2;
 	
 	@FXML
 	private Label labelYear, labelSemester;
@@ -50,11 +62,43 @@ public class CourseCardView {
 		PageLoader.getInstance().buildPage(Page.PROFESSOR, event);
 	}
 	
-	public void setLabel(String name, String professor, String year, String semester) {
-		btnCourse.setText(name);
+	@FXML
+	private void deleteRequest(ActionEvent event) throws SQLException, RecordNotFoundException {
+		
+		if (AlertController.confirmation("Do you want to cancel this request?", event)) {
+			Request request = RequestDAO.getRequest(Session.getSession().getUsername(), btnCourse.getText());
+			
+			RequestBean requestBean = new RequestBean();
+			requestBean.setStudent(request.getStudent());
+			requestBean.setCourse(request.getCourse());
+			
+			JoinCourseController joinCourseController = new JoinCourseController();
+			joinCourseController.deleteRequest(requestBean);
+			
+			AlertController.buildInfoAlert("Request of course '" + request.getCourse().getAbbrevation() + "' deleted.", "request", event);
+			
+			ProfilePageView profilePageView = (ProfilePageView) PageLoader.getInstance().getController();
+			profilePageView.loadCourses();
+		}
+	}
+	
+	public void setCard(String course, String professor, String year, String semester) {
+		labelYear.setVisible(true);
+		labelSemester.setVisible(true);
+		line1.setVisible(true);
+		line2.setVisible(true);
+		
+		btnCourse.setText(course);
 		btnProfessor.setText(professor);
 		labelYear.setText(year);
 		labelSemester.setText(semester);
+	}
+	
+	public void setCard(String course, String professor) {
+		btnDelete.setVisible(true);
+		
+		btnCourse.setText(course);
+		btnProfessor.setText(professor);
 	}
 	
 	// TODO

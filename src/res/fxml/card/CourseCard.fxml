@@ -8,17 +8,19 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="692.0" styleClass="root" stylesheets="@../../style/card/CourseCard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
       
-      <Label fx:id="labelYear" layoutX="510.0" layoutY="28.0" styleClass="details-label" text="0" textAlignment="CENTER" AnchorPane.leftAnchor="515.0" AnchorPane.rightAnchor="147.0" />
+      <Label fx:id="labelYear" layoutX="510.0" layoutY="28.0" styleClass="details-label" text="0" textAlignment="CENTER" visible="false" AnchorPane.leftAnchor="515.0" AnchorPane.rightAnchor="147.0" />
       
-      <Label fx:id="labelSemester" layoutX="620.0" layoutY="28.0" prefHeight="28.0" prefWidth="30.0" styleClass="details-label" text="0" AnchorPane.leftAnchor="617.0" AnchorPane.rightAnchor="45.0" />
+      <Label fx:id="labelSemester" layoutX="620.0" layoutY="28.0" prefHeight="28.0" prefWidth="30.0" styleClass="details-label" text="0" visible="false" AnchorPane.leftAnchor="617.0" AnchorPane.rightAnchor="45.0" />
       
-      <Line endY="54.0" layoutX="480.0" layoutY="13.0" />
+      <Line fx:id="line1" endY="54.0" layoutX="480.0" layoutY="13.0" visible="false" />
       
-      <Line endY="54.0" layoutX="580.0" layoutY="13.0" />
+      <Line fx:id="line2" endY="54.0" layoutX="580.0" layoutY="13.0" visible="false" />
       
-      <Button fx:id="btnCourse" onAction="#course" layoutX="262.0" layoutY="2.0" mnemonicParsing="false" styleClass="button-label-course" text="Button" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="btnCourse" layoutX="262.0" layoutY="2.0" mnemonicParsing="false" onAction="#course" styleClass="button-label-course" text="Course" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0" />
       
-      <Button fx:id="btnProfessor" onAction="#professor" layoutX="215.0" layoutY="45.0" mnemonicParsing="false" styleClass="button-label-professor" text="Button" AnchorPane.leftAnchor="10.0" />
+      <Button fx:id="btnProfessor" layoutX="215.0" layoutY="45.0" mnemonicParsing="false" onAction="#professor" styleClass="button-label-professor" text="Professor" AnchorPane.leftAnchor="10.0" />
+      
+      <Button fx:id="btnDelete" layoutX="520.0" layoutY="20.0" mnemonicParsing="false" onAction="#deleteRequest" styleClass="button-delete" text="Delete Request" visible="false" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="20.0" />
       
    </children>
 </AnchorPane>
