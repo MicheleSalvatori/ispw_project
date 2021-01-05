@@ -5,6 +5,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Queries {
+	
+	public static ResultSet selectRole(Statement stmt, String username) throws SQLException {
+		String query = "SELECT * FROM role WHERE username = '" +  username +  "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
 
 	public static ResultSet selectProfessor(Statement stmt, String username, String password) throws SQLException {
 		String query = "SELECT * FROM professor WHERE username = '" +  username + "' AND password = '" + password + "';";

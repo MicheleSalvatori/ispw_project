@@ -8,6 +8,11 @@ public class Session {
 	private User userLogged;
 	private int type;
 	
+	public static final int STUDENT_ROLE = 1;
+	public static final int PROFESSOR_ROLE = 2;
+	public static final int ADMIN_ROLE = 3;
+	
+	
 	private Session() {}
 
 	public static Session getSession() {

@@ -32,12 +32,11 @@ public class LoginView implements Initializable {
 	@FXML
 	private PasswordField textPassword;
 	@FXML
-	private RadioButton rdProfessor, rdStudent;
-	@FXML
 	private ToggleGroup radioGroup;
 	
 	private RadioButton radioSelected;
 	private LoginController loginController;
+	private String type;
 
 	@FXML
 	void loginUser(ActionEvent event) throws IOException {
@@ -45,41 +44,29 @@ public class LoginView implements Initializable {
 		String username = textUsername.getText();
 		String password = textPassword.getText();
 
-		if (username.isEmpty() || password.isEmpty() || (!rdProfessor.isSelected() && !rdStudent.isSelected())) {
+		if (username.isEmpty() || password.isEmpty()) {
 			System.out.println("One or more fields are empty");
 			return;
 		}
-
-		radioSelected = (RadioButton) radioGroup.getSelectedToggle();
+		
+		// get type user
 		UserBean userBean = new UserBean();
-		switch (radioSelected.getId()) {
-//		login professor
-		case "rdProfessor":
-			userBean.setPassword(password);
-			userBean.setUsername(username);
-
-			loginController = new LoginController();
-			try {
-				loginController.loginAsProfessor(userBean);
-				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
-			} catch (SQLException e) {
-				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
-				
-			} catch (ConnectException e) {
-				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
-			
-			} catch (RecordNotFoundException e) {
-
-				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
-			}
-			break;
-
-//		login student
-		case "rdStudent":
-			userBean.setPassword(password);
-			userBean.setUsername(username);
-
-			loginController = new LoginController();
+		userBean.setPassword(password);
+		userBean.setUsername(username);
+		loginController = new LoginController();
+		try {
+			type = loginController.getTypeUser(userBean);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// switch for type user login
+		switch (type) {
+		case "student":
 			try {
 				loginController.loginAsStudent(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
@@ -89,7 +76,32 @@ public class LoginView implements Initializable {
 				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
 			}
 			break;
+		case "professor":
+			try {
+				loginController.loginAsProfessor(userBean);
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+			} catch (SQLException e) {
+				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+			} catch (ConnectException e) {
+				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
+			} catch (RecordNotFoundException e) {
+				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
+			}
+			break;
+		case "admin":
+			try {
+				loginController.loginAsAdmin(userBean);
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+			} catch (SQLException e) {
+				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+			} catch (ConnectException e) {
+				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
+			} catch (RecordNotFoundException e) {
+				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
+			}
+			break;
 		}
+		
 	}
 
 	@FXML
@@ -103,8 +115,7 @@ public class LoginView implements Initializable {
 
 		btnLogin.disableProperty()
 				.bind(Bindings.isEmpty(textUsername.textProperty())
-				.or(Bindings.isEmpty(textPassword.textProperty()))
-				.or((rdProfessor.selectedProperty().not()).and(rdStudent.selectedProperty().not())));
+				.or(Bindings.isEmpty(textPassword.textProperty())));
 
 		
 		
