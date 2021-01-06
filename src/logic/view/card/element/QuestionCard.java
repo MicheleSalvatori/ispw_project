@@ -21,6 +21,5 @@ public class QuestionCard extends AnchorPane {
 		this.getChildren().add(loader.load());
 		
 		questionCardView.setLabel(question);
-		
 	}
 }

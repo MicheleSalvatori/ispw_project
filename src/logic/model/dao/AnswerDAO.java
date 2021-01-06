@@ -10,6 +10,7 @@ import java.util.List;
 
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Answer;
+import logic.model.Student;
 import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
@@ -35,11 +36,11 @@ public class AnswerDAO {
 				answers = new ArrayList<>();
 				rs.first();
 				do {
-					Answer a = new Answer();
-					a.setDate(rs.getDate("date"));
-					a.setText(rs.getString("text"));
-					a.setStudent(StudentDAO.findStudentByUsername(rs.getString("username")));
-					a.setId(rs.getInt("id"));
+					Date d = rs.getDate("date");
+					String t = rs.getString("text");
+					Student s = StudentDAO.findStudentByUsername(rs.getString("username"));
+					int i = rs.getInt("id");
+					Answer a = new Answer(i, t, s, d);
 					answers.add(a);
 				} while (rs.next());
 			}

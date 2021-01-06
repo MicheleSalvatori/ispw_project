@@ -3,41 +3,28 @@ package logic.view.card.element;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import logic.model.Course;
+import logic.bean.CourseBean;
 import logic.view.card.controller.CourseCardView;
 
 public class CourseCard extends AnchorPane {
 	
 	private CourseCardView courseCardView = new CourseCardView();
 	
-	public CourseCard(String name, String professor, String year, String semester) throws IOException {
+	public CourseCard(CourseBean courseBean, Type type) throws IOException, SQLException {
 		URL url = new File("src/res/fxml/card/CourseCard.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(courseCardView);
 		this.getChildren().add(loader.load());
 
-		courseCardView.setCard(name, professor, year, semester);
+		courseCardView.setCourse(courseBean, type);
 	}
 	
-	public CourseCard(String name, String professor) throws IOException {
-		URL url = new File("src/res/fxml/card/CourseCard.fxml").toURI().toURL();
-		FXMLLoader loader = new FXMLLoader(url);
-		loader.setController(courseCardView);
-		this.getChildren().add(loader.load());
-
-		courseCardView.setCard(name, professor);
-	}
-	
-	// TODO
-	public CourseCard(Course course) throws IOException {
-		URL url = new File("src/res/fxml/card/CourseCard.fxml").toURI().toURL();
-		FXMLLoader loader = new FXMLLoader(url);
-		loader.setController(courseCardView);
-		this.getChildren().add(loader.load());
-
-		courseCardView.setCourse(course);
+	public enum Type {
+		FOLLOW,
+		REQUEST;
 	}
 }

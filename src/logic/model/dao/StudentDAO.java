@@ -70,13 +70,23 @@ public class StudentDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			rs = Queries.selectStudent(stmt, username, password);
+			rs = Queries.selectStudentByUsername(stmt, username);
 			if (!rs.first()) {
 				userRegistered = null;
 			} else {
 				// Raise duplicate entry exception
-				DuplicatedRecordException e = new DuplicatedRecordException("Duplicated Instance Username. Username " + username + " was already assigned");
+				DuplicatedRecordException e = new DuplicatedRecordException("Duplicated Instance Username. Username '" + username + "' already in use.");
             	throw e;   
+			}
+			
+			rs = Queries.selectUserByEmail(stmt, email);
+			if (!rs.first()) {
+				userRegistered = null;
+			}
+			else {
+				// Raise duplicate entry exception
+				DuplicatedRecordException e = new DuplicatedRecordException("Duplicated Instance Email. Email '" + email + "' already in use.");
+            	throw e;
 			}
 			
 			if (userRegistered == null) {

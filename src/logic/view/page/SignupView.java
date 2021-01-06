@@ -69,7 +69,7 @@ public class SignupView implements Initializable {
 				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
 				
 			} catch (DuplicatedRecordException e) {
-				AlertController.buildInfoAlert("A user already exists with this email!\nTry to login.", "Registration Failed", event);
+				AlertController.buildInfoAlert(e.getMessage(), "Registration Failed", event);
 			}
 		}
 	}

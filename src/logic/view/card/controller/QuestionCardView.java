@@ -13,20 +13,22 @@ import logic.utilities.PageLoader;
 public class QuestionCardView {
 
 	@FXML
-	private Label labelCourse, labelName, labelSurname, labelNumber, labelQuestionObject, labelQuestionDate,
-			labelSolved;
+	private Label labelCourse, labelName, labelSurname, labelNumber, labelQuestionObject, labelQuestionDate, labelSolved;
+	
 	@FXML
 	private Button btnView;
-	private QuestionBean quest;
+	
+	private QuestionBean question;
 
 	public void setLabel(QuestionBean bean) {
-		this.quest = bean;
-		labelCourse.setText(bean.getQuestionCourse().getAbbrevation());
+		this.question = bean;
+		labelCourse.setText(bean.getCourse().getAbbrevation());
 		labelName.setText(bean.getStudent().getName());
 		labelSurname.setText(bean.getStudent().getSurname());
 		labelNumber.setText(String.valueOf(bean.getId()));
 		labelQuestionDate.setText(bean.getDate().toString());
 		labelQuestionObject.setText(bean.getTitle());
+		
 		if (bean.isSolved()) {
 			labelSolved.setText("Solved");
 			labelSolved.setStyle("-fx-text-fill: green");
@@ -38,6 +40,6 @@ public class QuestionCardView {
 
 	@FXML
 	private void viewQuestion(ActionEvent ae) throws IOException {
-		PageLoader.getInstance().buildPage(Page.QUESTION, ae, (Object) quest);
+		PageLoader.getInstance().buildPage(Page.QUESTION, ae, (Object) question);
 	}
 }

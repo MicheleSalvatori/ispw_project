@@ -13,6 +13,27 @@ public class Question {
 	private Date date;
 	private List<Answer> answers;
 	
+	public Question(int id, String title, String text, Course course, Student student, boolean solved, Date date, List<Answer> answers) {
+		this.id = id;
+		this.title = title;
+		this.text = text;
+		this.course = course;
+		this.student = student;
+		this.solved = solved;
+		this.date = date;
+		this.answers = answers;
+	}
+	
+	public Question(String title, String text, Course course, Student student, boolean solved, Date date, List<Answer> answers) {
+		this.title = title;
+		this.text = text;
+		this.course = course;
+		this.student = student;
+		this.solved = solved;
+		this.date = date;
+		this.answers = answers;
+	}
+	
 	public List<Answer> getAnswers() {
 		return answers;
 	}
@@ -25,9 +46,6 @@ public class Question {
 		this.answers.add(answer);
 	}
 
-	public Question() {
-	}
-	
 	public Date getDate() {
 		return date;
 	}

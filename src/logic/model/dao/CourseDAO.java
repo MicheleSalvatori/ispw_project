@@ -14,13 +14,14 @@ import logic.utilities.SingletonDB;
 public class CourseDAO {
 
 	private CourseDAO() {
+		
 	}
 
 	public static Course getCourseByAbbrevation(String abbrevation) throws SQLException {
+		
 		Statement stmt = null;
 		Connection conn = null;
 		Course course;
-
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -55,7 +56,7 @@ public class CourseDAO {
 		return course;
 	}
 
-public static int getCourseNumberOf(String username) throws SQLException {
+	public static int getCourseNumberOf(String username) throws SQLException {
 		Statement stmt = null;
 		Connection conn = null;
 		int number;
@@ -107,7 +108,13 @@ public static int getCourseNumberOf(String username) throws SQLException {
 				do {
 					String n = rs.getString("name");
 					String a = rs.getString("abbrevation");
-					Course course = new Course(n, a);
+					String y = rs.getString("year");
+					String s = rs.getString("semester");
+					String c = rs.getString("credits");
+					String p = rs.getString("prerequisites");
+					String g = rs.getString("goal");
+					String r = rs.getString("reception");
+					Course course = new Course(n, a, y, s, c, p, g, r);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -144,7 +151,13 @@ public static int getCourseNumberOf(String username) throws SQLException {
 				do {
 					String n = rs.getString("name");
 					String a = rs.getString("abbrevation");
-					Course course = new Course(n, a);
+					String y = rs.getString("year");
+					String s = rs.getString("semester");
+					String c = rs.getString("credits");
+					String p = rs.getString("prerequisites");
+					String g = rs.getString("goal");
+					String r = rs.getString("reception");
+					Course course = new Course(n, a, y, s, c, p, g, r);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -170,7 +183,7 @@ public static int getCourseNumberOf(String username) throws SQLException {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = Queries.findCourseOfStudent(stmt, student);
+			ResultSet rs = Queries.selectCoursesByStudent(stmt, student);
 
 			if (!rs.first()) {
 				courses = null;
@@ -178,8 +191,15 @@ public static int getCourseNumberOf(String username) throws SQLException {
 				courses = new ArrayList<>();
 				rs.first();
 				do {
-					String a = rs.getString("course");
-					Course course = new Course(a);
+					String n = rs.getString("name");
+					String a = rs.getString("abbrevation");
+					String y = rs.getString("year");
+					String s = rs.getString("semester");
+					String c = rs.getString("credits");
+					String p = rs.getString("prerequisites");
+					String g = rs.getString("goal");
+					String r = rs.getString("reception");
+					Course course = new Course(n, a, y, s, c, p, g, r);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -215,7 +235,13 @@ public static int getCourseNumberOf(String username) throws SQLException {
 				do {
 					String n = rs.getString("name");
 					String a = rs.getString("abbrevation");
-					Course course = new Course(n, a);
+					String y = rs.getString("year");
+					String s = rs.getString("semester");
+					String c = rs.getString("credits");
+					String p = rs.getString("prerequisites");
+					String g = rs.getString("goal");
+					String r = rs.getString("reception");
+					Course course = new Course(n, a, y, s, c, p, g, r);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -251,7 +277,13 @@ public static int getCourseNumberOf(String username) throws SQLException {
 				do {
 					String n = rs.getString("name");
 					String a = rs.getString("abbrevation");
-					Course course = new Course(n, a);
+					String y = rs.getString("year");
+					String s = rs.getString("semester");
+					String c = rs.getString("credits");
+					String p = rs.getString("prerequisites");
+					String g = rs.getString("goal");
+					String r = rs.getString("reception");
+					Course course = new Course(n, a, y, s, c, p, g, r);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -286,10 +318,15 @@ public static int getCourseNumberOf(String username) throws SQLException {
 				courses = new ArrayList<>();
 				rs.first();
 				do {
-
 					String n = rs.getString("name");
 					String a = rs.getString("abbrevation");
-					Course course = new Course(n, a);
+					String y = rs.getString("year");
+					String s = rs.getString("semester");
+					String c = rs.getString("credits");
+					String p = rs.getString("prerequisites");
+					String g = rs.getString("goal");
+					String r = rs.getString("reception");
+					Course course = new Course(n, a, y, s, c, p, g, r);
 					courses.add(course);
 				} while (rs.next());
 			}

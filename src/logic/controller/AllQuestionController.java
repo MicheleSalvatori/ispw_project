@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.Session;
-import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Answer;
@@ -39,8 +38,7 @@ public class AllQuestionController {
 				List<Answer> answers = q.getAnswers();
 				if (answers != null) {
 					for (Answer a : answers) {
-						AnswerBean answerBean = new AnswerBean(a.getId(), a.getText(), a.getStudent(), a.getDate());
-						bean.addAnswers(answerBean);
+						bean.addAnswers(a);
 					}
 				}
 				questionBeans.add(bean);

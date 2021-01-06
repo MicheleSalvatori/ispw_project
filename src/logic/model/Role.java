@@ -17,9 +17,4 @@ public class Role {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
-
-	
-	
 }

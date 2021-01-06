@@ -34,8 +34,8 @@ public class PageLoader {
 	private Background background = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 
 	private PageLoader() {
+		
 	}
-
 
 	public static PageLoader getInstance() {
 		if (instance == null) {
@@ -59,7 +59,7 @@ public class PageLoader {
 
 	public void buildPage(Page page, ActionEvent event, Object obj) throws IOException {
 		//TODO riorganizzare PageLoader
-		this.page = page;
+		PageLoader.page = page;
 		switch (page) {
 		case QUESTION:
 			loadPage(event, obj);

@@ -25,7 +25,6 @@ import javafx.scene.layout.Priority;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.model.Course;
-import logic.model.dao.CourseDAO;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
@@ -38,16 +37,7 @@ public class LessonPageView implements Initializable {
     private Button btnCourse;
 
     @FXML
-    private Label labelProfessor;
-
-    @FXML
-    private Label labelClassroom;
-
-    @FXML
-    private Label labelTime;
-    
-    @FXML
-    private Label labelDate;
+    private Label labelProfessor, labelClassroom, labelTime, labelDate;
 
     @FXML
     private TextArea textTopic;
@@ -61,16 +51,19 @@ public class LessonPageView implements Initializable {
     @FXML
     private AnchorPane weatherCard;
     
+    private LessonBean lesson;
     
-    public void setPage(LessonBean lessonBean) {
-    	btnCourse.setText(lessonBean.getCourse().getAbbrevation());
-    	labelClassroom.setText(lessonBean.getClassroom().getName());
-    	labelTime.setText(SQLConverter.time(lessonBean.getTime()));
-    	labelDate.setText(SQLConverter.date(lessonBean.getDate()));
-    	labelProfessor.setText(lessonBean.getProfessor().getName() + " " + lessonBean.getProfessor().getSurname());
-    	textTopic.setText(lessonBean.getTopic());
+    public void setPage(LessonBean lesson) {
+    	this.lesson = lesson;
     	
-    	setWeatherCard(lessonBean.getTime());
+    	btnCourse.setText(lesson.getCourse().getAbbrevation());
+    	labelClassroom.setText(lesson.getClassroom().getName());
+    	labelTime.setText(SQLConverter.time(lesson.getTime()));
+    	labelDate.setText(SQLConverter.date(lesson.getDate()));
+    	labelProfessor.setText(lesson.getProfessor().getName() + " " + lesson.getProfessor().getSurname());
+    	textTopic.setText(lesson.getTopic());
+    	
+    	setWeatherCard(lesson.getTime());
     }
 
     
@@ -79,11 +72,17 @@ public class LessonPageView implements Initializable {
     	PageLoader.getInstance().buildPage(Page.COURSE, event);
     	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
     	
-    	Course course = CourseDAO.getCourseByAbbrevation(btnCourse.getText());
+    	Course course = lesson.getCourse();
     	
     	CourseBean courseBean = new CourseBean();
     	courseBean.setAbbrevation(course.getAbbrevation());
     	courseBean.setName(course.getName());
+    	courseBean.setYear(course.getYear());
+    	courseBean.setCredits(course.getCredits());
+    	courseBean.setSemester(course.getSemester());
+    	courseBean.setPrerequisites(course.getPrerequisites());
+    	courseBean.setGoal(course.getGoal());
+    	courseBean.setReception(course.getReception());
     	
     	coursePageView.setPage(courseBean);
     }

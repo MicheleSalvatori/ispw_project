@@ -23,12 +23,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.exceptions.RecordNotFoundException;
+import logic.model.dao.RoleDAO;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -37,14 +36,13 @@ public class LoginView implements Initializable {
 
 	@FXML
 	private Button btnLogin;
+	
 	@FXML
 	private TextField textUsername;
+	
 	@FXML
 	private PasswordField textPassword;
-	@FXML
-	private ToggleGroup radioGroup;
 	
-	private RadioButton radioSelected;
 	private LoginController loginController;
 	private String type;
 
@@ -80,42 +78,62 @@ public class LoginView implements Initializable {
 			try {
 				loginController.loginAsStudent(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+				
 			} catch (SQLException e) {
 				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+				
+			} catch (ConnectException e) {
+				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
+				
 			} catch (RecordNotFoundException e) {
 				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
 			}
 			break;
+			
 		case "professor":
 			try {
 				loginController.loginAsProfessor(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+				
 			} catch (SQLException e) {
 				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+				
 			} catch (ConnectException e) {
 				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
+				
 			} catch (RecordNotFoundException e) {
 				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
 			}
 			break;
+			
 		case "admin":
 			try {
 				loginController.loginAsAdmin(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+				
 			} catch (SQLException e) {
 				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+				
 			} catch (ConnectException e) {
 				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
+				
 			} catch (RecordNotFoundException e) {
 				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
 			}
 			break;
 		}
-		
 	}
   
+	
+	// TODO da finire
 	@FXML
 	private void forgotPassword(ActionEvent event) throws MessagingException {
+		
+		String FROM = "project.ispw@gmail.com";
+		String TO = AlertController.emailInput(event);
+		String PASS = "ISPWProject";
+		
+		
 		
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -126,15 +144,31 @@ public class LoginView implements Initializable {
 		Session session = Session.getInstance(prop, new Authenticator() {
 			@Override
 		    protected PasswordAuthentication getPasswordAuthentication() {
-		          return new PasswordAuthentication("account", "password");          
+		          return new PasswordAuthentication(FROM, PASS);          
 		    }    
 		});
 	
 		MimeMessage message = new MimeMessage(session);
-		message.setFrom(new InternetAddress("xpunitorex@gmail.com"));
-		message.setRecipient(Message.RecipientType.TO, new InternetAddress("xpunitorex@outlook.com"));
-		message.setSubject("MHANZ");
-		message.setText("Lutz");
+		message.setFrom(new InternetAddress(FROM));
+		message.setRecipient(Message.RecipientType.TO, new InternetAddress(TO));
+		message.setSubject("Account password");
+		
+		String password;
+		try {
+			password = RoleDAO.getPasswordByEmail(TO);
+			message.setText("Your password is: " + password);
+			
+		} catch (NullPointerException e) {
+			System.out.println("NULL");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (RecordNotFoundException e) {
+			AlertController.buildInfoAlert(e.getMessage(), "error", event);
+			return;
+		}
 		
 		Transport.send(message);
 		
@@ -153,8 +187,6 @@ public class LoginView implements Initializable {
 		btnLogin.disableProperty()
 				.bind(Bindings.isEmpty(textUsername.textProperty())
 				.or(Bindings.isEmpty(textPassword.textProperty())));
-
-		
 		
 		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
 			@Override

@@ -7,8 +7,6 @@ import java.sql.Statement;
 
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Admin;
-import logic.model.Professor;
-import logic.model.Student;
 import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 

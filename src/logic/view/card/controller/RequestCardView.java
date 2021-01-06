@@ -10,10 +10,8 @@ import javafx.scene.control.Label;
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.controller.AcceptRequestController;
-import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Student;
-import logic.model.dao.CourseDAO;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -28,35 +26,27 @@ public class RequestCardView {
 	@FXML
 	private Button btnCourse, btnDecline, btnAccept;
 	
-	private Student student;
+	private RequestBean request;
 	
 	@FXML
-	private void acceptRequest(ActionEvent event) throws SQLException, RecordNotFoundException, IOException {
-		RequestBean requestBean = new RequestBean();
-		requestBean.setStudent(student);
-		requestBean.setCourse(CourseDAO.getCourseByAbbrevation(btnCourse.getText()));
-		
+	private void acceptRequest(ActionEvent event) throws SQLException, IOException {
 		AcceptRequestController acceptRequestController = new AcceptRequestController();
-		if (acceptRequestController.acceptRequest(requestBean)) {
+		if (acceptRequestController.acceptRequest(request)) {
 			AlertController.buildInfoAlert("Request accepted.\nThe student will be notified", "request", event);
 			
 			RequestPageView requestPageView =  (RequestPageView) PageLoader.getInstance().getController();
-			requestPageView.loadRequests();
+			requestPageView.setRequestPage();
 		}
 	}
 	
 	@FXML
-	private void declineRequest(ActionEvent event) throws SQLException {
-		RequestBean requestBean = new RequestBean();
-		requestBean.setStudent(student);
-		requestBean.setCourse(CourseDAO.getCourseByAbbrevation(btnCourse.getText()));
-		
+	private void declineRequest(ActionEvent event) throws SQLException, IOException {
 		AcceptRequestController acceptRequestController = new AcceptRequestController();
-		if (acceptRequestController.declineRequest(requestBean)) {
+		if (acceptRequestController.declineRequest(request)) {
 			AlertController.buildInfoAlert("Request declined.\nThe student will be notified", "request", event);
 			
 			RequestPageView requestPageView =  (RequestPageView) PageLoader.getInstance().getController();
-			requestPageView.loadRequests();
+			requestPageView.setRequestPage();;
 		}
 	}
 	
@@ -65,7 +55,7 @@ public class RequestCardView {
 		PageLoader.getInstance().buildPage(Page.COURSE, event);
     	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
     	
-    	Course course = CourseDAO.getCourseByAbbrevation(btnCourse.getText());
+    	Course course = request.getCourse();
     	
     	CourseBean courseBean = new CourseBean();
     	courseBean.setAbbrevation(course.getAbbrevation());
@@ -80,10 +70,12 @@ public class RequestCardView {
     	coursePageView.setPage(courseBean);
 	}
 	
-	public void setCard(Student student, String course) {
-		this.student = student;
+	public void setCard(RequestBean request) {
+		this.request = request;
+		
+		Student student = request.getStudent();
 		labelName.setText(String.format("%s %s (%s)", student.getName(), student.getSurname(), student.getUsername()));
-		btnCourse.setText(course);
+		btnCourse.setText(request.getCourse().getAbbrevation());
 	}
 
 }

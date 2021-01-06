@@ -6,20 +6,19 @@ import java.net.URL;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import logic.model.Student;
+import logic.bean.RequestBean;
 import logic.view.card.controller.RequestCardView;
 
 public class RequestCard extends AnchorPane {
 	
 	private RequestCardView requestCardView = new RequestCardView();
 	
-	public RequestCard(Student student, String course) throws IOException {
+	public RequestCard(RequestBean request) throws IOException {
 		URL url = new File("src/res/fxml/card/RequestCard.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(requestCardView);
 		this.getChildren().add(loader.load());
 
-		requestCardView.setCard(student, course);
+		requestCardView.setCard(request);
 	}
-
 }

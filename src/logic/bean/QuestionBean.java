@@ -10,33 +10,35 @@ import logic.model.Course;
 import logic.model.Student;
 
 public class QuestionBean {
+	
 	private int id;
 	private String title;
 	private String text;
-	private CourseBean questionCourse;
+	private Course course;
 	private Student student;
 	private boolean solved;
 	private Date date;
-	private List<AnswerBean> answers;		
+	private List<Answer> answers;	
 	
-	public List<AnswerBean> getAnswers() {
+	public QuestionBean() {
+		
+	}
+	
+	public List<Answer> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(List<AnswerBean> answers) {
+	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
 	
-	public void addAnswers(AnswerBean answer) {
+	public void addAnswers(Answer answer) {
 		if (answers == null) {
 			this.answers = new ArrayList<>();
 		}
 		this.answers.add(answer);
 	}
 
-	public QuestionBean() {
-	}
-	
 	public Date getDate() {
 		return date;
 	}
@@ -76,19 +78,19 @@ public class QuestionBean {
 	public void setText(String text) {
 		this.text = text;
 	}
-
-	public CourseBean getQuestionCourse() {
-		return questionCourse;
-	}
-
-	public void setQuestionCourse(CourseBean questionCourse) {
-		this.questionCourse = questionCourse;
-	}
 	
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
 	public void setCourseByAbbr(String course) {
-		CourseBean c = new CourseBean();
+		Course c = new Course();
 		c.setAbbrevation(course);
-		this.questionCourse = c;
+		this.course = c;
 	}
 
 	public Student getStudent() {
@@ -105,8 +107,7 @@ public class QuestionBean {
 			+"\nTitle: "+ getTitle()
 			+"\nText: "+ getText()
 			+"\nAuthor: "+getStudent().getName() + " " + getStudent().getSurname()
-			+"\nCourse: "+getQuestionCourse().getAbbrevation();
+			+"\nCourse: "+getCourse().getAbbrevation();
 		return buildString;
 	}
-
 }

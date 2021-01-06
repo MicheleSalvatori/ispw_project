@@ -20,11 +20,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import logic.Session;
+import logic.bean.LessonBean;
 import logic.model.Lesson;
-import logic.model.User;
 import logic.model.dao.LessonDAO;
 import logic.utilities.Role;
-import logic.utilities.SQLConverter;
 import logic.utilities.Weather;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.ProfessorStatCard;
@@ -51,9 +50,7 @@ public class HomepageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		User user = Session.getSession().getUserLogged();
-		
-		labelUsername.setText("Hello " + user.getName() + "!");
+		setUserName(Session.getSession().getUserLogged().getName());
 		
 		// User is a Student
 		if (Session.getSession().getType() == Role.STUDENT) {
@@ -89,16 +86,21 @@ public class HomepageView implements Initializable {
 		webMap.getEngine().load(getClass().getResource("/res/html/map.html").toString());
 	}
 	
+	// Set name
+	private void setUserName(String name) {
+		labelUsername.setText("Hello " + name + "!");
+	}
+	
 	// Add Lesson cards to the scene
 	private void addLessonCards(Date date, Time time, String username) {
 		try {
 			
 			List<Lesson> lessons;
 			if (Session.getSession().getType() == Role.STUDENT) {
-				lessons = LessonDAO.getNextLessonsStudent(date, time, username);
+				lessons = LessonDAO.getTodayNextLessonsStudent(date, time, username);
 			}
 			else if (Session.getSession().getType() == Role.PROFESSOR) {
-				lessons = LessonDAO.getNextLessonsProfessor(date, time, username);
+				lessons = LessonDAO.getTodayNextLessonsProfessor(date, time, username);
 			}
 			else {
 				return;
@@ -113,18 +115,25 @@ public class HomepageView implements Initializable {
 			if (lessons.size() == 1) {
 				vboxScroll.getChildren().add(label);
 			}
-			
-			Boolean i = true;
+
 			for (Lesson lesson : lessons) {
 				try {
-					LessonCard lessonCard = new LessonCard(lesson.getCourse().getAbbrevation(), lesson.getClassroom().getName(), SQLConverter.time(lesson.getTime()));
-					if (i) {
+					LessonBean lessonBean = new LessonBean();
+					lessonBean.setCourse(lesson.getCourse());
+					lessonBean.setClassroom(lesson.getClassroom());
+					lessonBean.setDate(lesson.getDate());
+					lessonBean.setProfessor(lesson.getProfessor());
+					lessonBean.setTime(lesson.getTime());
+					lessonBean.setTopic(lesson.getTopic());
+					
+					LessonCard lessonCard = new LessonCard(lessonBean);
+					if (lesson == lessons.get(0)) {
 						anchorNextLesson.getChildren().add(lessonCard);
-						i = false;
 					}
 					else {
 						vboxScroll.getChildren().add(lessonCard);
 					}
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

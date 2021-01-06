@@ -38,17 +38,9 @@ public class InsertQuestionController {
 	}
 
 	public void save(QuestionBean questionBean) throws SQLException {
-		Question question = new Question();
-		long millis = System.currentTimeMillis();
-		Date date = new Date(millis);
-		question.setDate(date);
-		question.setStudent(questionBean.getStudent());
-		question.setText(questionBean.getText());
-		question.setTitle(questionBean.getText());
-		question.setSolved(false);
-		Course c = new Course();
-		c.setAbbrevation(questionBean.getQuestionCourse().getAbbrevation());
-		question.setCourse(c);
+		Question question = new Question(questionBean.getTitle(), questionBean.getText(), questionBean.getCourse(), questionBean.getStudent(),
+										 false, new Date(System.currentTimeMillis()), questionBean.getAnswers());
+
 		QuestionDAO.saveQuestion(question);
 	}
 

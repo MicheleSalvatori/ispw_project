@@ -27,6 +27,7 @@ import logic.Session;
 import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
 import logic.controller.InsertAnswerController;
+import logic.model.Answer;
 import logic.model.Student;
 import logic.utilities.AlertController;
 
@@ -36,16 +37,21 @@ public class QuestionPageView implements Initializable {
 
 	@FXML
 	private ScrollPane scrollAnswers;
+	
 	@FXML
 	private Label labelSubjectQuestion, labelAuthor, labelDate;
+	
 	@FXML
 	private TextArea textQuestion;
+	
 	@FXML
 	private Button btnAnswer;
+	
 	@FXML
 	private VBox vboxAnswer;
+	
 	private QuestionBean bean;
-	private List<AnswerBean> answers;
+	private List<Answer> answers;
 	private Stage dialogStage;
 	private EventHandler<ActionEvent> addAnswerEvent;
 	private Label label;
@@ -54,6 +60,7 @@ public class QuestionPageView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
 	}
 
 	public void setBean(Object obj) {
@@ -73,7 +80,7 @@ public class QuestionPageView implements Initializable {
 			vboxAnswer.getChildren().add(new Label("\"No one seems to have a solution. Be the first!"));
 			return;
 		}
-		for (AnswerBean a : answers) {
+		for (Answer a : answers) {
 			AnswerCard answerCard;
 			try {
 				String student = a.getStudent().getName() + " " + a.getStudent().getSurname();
@@ -115,8 +122,7 @@ public class QuestionPageView implements Initializable {
 
 		Scene scene = new Scene(box);
 //		da errori il caricamento dei font ma funziona uguale
-		scene.getStylesheets()
-				.add(QuestionPageView.class.getResource("../../../res/style/InsertAnswer.css").toExternalForm());
+		scene.getStylesheets().add(QuestionPageView.class.getResource("/res/style/InsertAnswer.css").toExternalForm());
 		dialogStage.setScene(scene);
 		dialogStage.setTitle("App - Insert Answer");
 		dialogStage.setResizable(false);
@@ -144,7 +150,9 @@ public class QuestionPageView implements Initializable {
 			controller.save(answer);
 			closeStage(dialogStage);
 			AlertController.buildInfoAlert("The answer has been entered correctly!", "", scrollAnswers);
-			this.bean.addAnswers(answer);
+			
+			Answer a = new Answer(answer.getId(), answer.getText(), answer.getStudent(), answer.getDate());
+			this.bean.addAnswers(a);
 			loadAnswer();
 		} catch (SQLException e) {
 			closeStage(dialogStage);

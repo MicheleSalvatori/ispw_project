@@ -79,7 +79,6 @@ public class NavigationBarView implements Initializable {
 	@FXML
 	public void backButton(ActionEvent event) throws IOException {
 		System.out.println("Back");
-		PageLoader.getInstance().buildPage(Page.COURSE, event);
 	}
 	
 	@FXML

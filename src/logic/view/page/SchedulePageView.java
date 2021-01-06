@@ -46,6 +46,12 @@ public class SchedulePageView implements Initializable {
 	
 	@FXML
 	private Button btnTimeLesson, btnTimeExam, btnAddLesson, btnAddExam;
+	
+	private List<Classroom> classrooms;
+	private List<Course> courses;
+	
+	private ScheduleLessonController scheduleLessonController;
+	private ScheduleExamController scheduleExamController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -65,13 +71,13 @@ public class SchedulePageView implements Initializable {
 			.or(textNote.textProperty().isEmpty()));
 		
 		try {
-			List<Classroom> classrooms = ClassroomDAO.getAllClassrooms();
+			classrooms = ClassroomDAO.getAllClassrooms();
 			for (Classroom classroom : classrooms) {
 				comboClassLesson.getItems().add(classroom.getName());
 				comboClassExam.getItems().add(classroom.getName());
 			}
 			
-			List<Course> courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
+			courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
 			for (Course course : courses) {
 				comboCourseLesson.getItems().add(course.getAbbrevation());
 				comboCourseExam.getItems().add(course.getAbbrevation());
@@ -99,19 +105,18 @@ public class SchedulePageView implements Initializable {
 		lessonBean.setDate(date);
 		
 		Time time = Time.valueOf(textTimeLesson.getText()+":00");
-		System.out.println(time);
 		lessonBean.setTime(time);
 		
-		Course course = CourseDAO.getCourseByAbbrevation(comboCourseLesson.getValue());
+		Course course = courses.get(comboCourseLesson.getSelectionModel().getSelectedIndex());
 		lessonBean.setCourse(course);
 		
-		Classroom classroom = ClassroomDAO.getClassroomByName(comboClassLesson.getValue());
+		Classroom classroom = classrooms.get(comboClassLesson.getSelectionModel().getSelectedIndex());
 		lessonBean.setClassroom(classroom);
 		
 		Professor professor = (Professor) Session.getSession().getUserLogged();
 		lessonBean.setProfessor(professor);
 		
-		ScheduleLessonController scheduleLessonController = new ScheduleLessonController();
+		scheduleLessonController = new ScheduleLessonController();
 		if (!scheduleLessonController.scheduleLesson(lessonBean)) {
 			AlertController.buildInfoAlert("Lesson doesn't added.\nTry later.", "Add lesson", event);
 		}
@@ -135,13 +140,13 @@ public class SchedulePageView implements Initializable {
 		System.out.println(time);
 		examBean.setTime(time);
 		
-		Course course = CourseDAO.getCourseByAbbrevation(comboCourseExam.getValue());
+		Course course = courses.get(comboCourseLesson.getSelectionModel().getSelectedIndex());
 		examBean.setCourse(course);
 		
-		Classroom classroom = ClassroomDAO.getClassroomByName(comboClassExam.getValue());
+		Classroom classroom = classrooms.get(comboClassLesson.getSelectionModel().getSelectedIndex());
 		examBean.setClassroom(classroom);
 		
-		ScheduleExamController scheduleExamController = new ScheduleExamController();
+		scheduleExamController = new ScheduleExamController();
 		if (!scheduleExamController.scheduleExam(examBean)) {
 			AlertController.buildInfoAlert("Exam doesn't added.\nTry later.", "Add exam", event);
 		}
