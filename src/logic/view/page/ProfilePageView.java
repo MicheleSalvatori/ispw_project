@@ -251,6 +251,6 @@ public class ProfilePageView implements Initializable {
 		
 		LoginController loginController = new LoginController();
 		loginController.logout();
-		PageLoader.getInstance().buildPage(Page.LOGIN, event);
+		PageLoader.getInstance().buildPage(Page.LOGIN, event, null);
 	}
 }

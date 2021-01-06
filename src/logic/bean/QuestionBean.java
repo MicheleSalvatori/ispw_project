@@ -1,12 +1,9 @@
-
 package logic.bean;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.model.Answer;
-import logic.model.Course;
 import logic.model.Student;
 
 public class QuestionBean {
@@ -17,8 +14,8 @@ public class QuestionBean {
 	private Student student;
 	private boolean solved;
 	private Date date;
-	private List<AnswerBean> answers;		
-	
+	private List<AnswerBean> answers;
+
 	public List<AnswerBean> getAnswers() {
 		return answers;
 	}
@@ -26,7 +23,7 @@ public class QuestionBean {
 	public void setAnswers(List<AnswerBean> answers) {
 		this.answers = answers;
 	}
-	
+
 	public void addAnswers(AnswerBean answer) {
 		if (answers == null) {
 			this.answers = new ArrayList<>();
@@ -36,7 +33,7 @@ public class QuestionBean {
 
 	public QuestionBean() {
 	}
-	
+
 	public Date getDate() {
 		return date;
 	}
@@ -84,7 +81,7 @@ public class QuestionBean {
 	public void setQuestionCourse(CourseBean questionCourse) {
 		this.questionCourse = questionCourse;
 	}
-	
+
 	public void setCourseByAbbr(String course) {
 		CourseBean c = new CourseBean();
 		c.setAbbrevation(course);
@@ -98,14 +95,12 @@ public class QuestionBean {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-	
+
 	@Override
 	public String toString() {
-		String buildString = "ID: "+getId()
-			+"\nTitle: "+ getTitle()
-			+"\nText: "+ getText()
-			+"\nAuthor: "+getStudent().getName() + " " + getStudent().getSurname()
-			+"\nCourse: "+getQuestionCourse().getAbbrevation();
+		String buildString = "ID: " + getId() + "\nTitle: " + getTitle() + "\nText: " + getText() + "\nAuthor: "
+				+ getStudent().getName() + " " + getStudent().getSurname() + "\nCourse: "
+				+ getQuestionCourse().getAbbrevation();
 		return buildString;
 	}
 

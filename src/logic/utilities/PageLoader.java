@@ -36,60 +36,48 @@ public class PageLoader {
 	private PageLoader() {
 	}
 
-
 	public static PageLoader getInstance() {
 		if (instance == null) {
 			instance = new PageLoader();
 		}
 		return instance;
 	}
-	
+
 	public static Page getPage() {
 		return page;
 	}
-	
-	public void buildPage(Page page, ActionEvent event) throws IOException {
-		PageLoader.page = page;
-		if (page == Page.SIGNUP || page == Page.LOGIN) {
-			loadPageNoNavBar(event);
-		} else {
-			loadPage(event);
-		}
-	}
 
 	public void buildPage(Page page, ActionEvent event, Object obj) throws IOException {
-		//TODO riorganizzare PageLoader
-		this.page = page;
+		PageLoader.page = page;
 		switch (page) {
+		case SIGNUP:
+		case LOGIN:
+			loadPage(event, null);
+			Scene scene = new Scene(loader.load());
+			primaryStage.setScene(scene);
+			primaryStage.setTitle(page.getStageTitle());
+			primaryStage.show();
+			break;
 		case QUESTION:
 			loadPage(event, obj);
+			QuestionPageView questionPageView = new QuestionPageView();
+			loader.setController(questionPageView);
+			configPage(loader.load());
+			questionPageView.setBean(obj);
 			break;
-
 		default:
+			loadPage(event, null);
+			configPage(loader.load());
 			break;
 		}
 	}
 
 	private void loadPage(ActionEvent ae, Object obj) throws IOException {
-		//TODO renderlo generale
 		Node source = (Node) ae.getSource();
 		primaryStage = (Stage) source.getScene().getWindow();
 		URL url = new File(page.getRes()).toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
-		QuestionPageView questionPageView = new QuestionPageView();
-		loader.setController(questionPageView);
-		configPage(loader.load());
-		questionPageView.setBean(obj);
-	}
-
-	private void loadPage(ActionEvent ae) throws IOException {
-		Node source = (Node) ae.getSource();
-		primaryStage = (Stage) source.getScene().getWindow();
-		URL url = new File(page.getRes()).toURI().toURL();
-
-		loader = new FXMLLoader(url);
-		
-		configPage(loader.load());
+		this.loader = loader;
 	}
 
 	private NavigationBar configNavBar() throws IOException {
@@ -119,19 +107,6 @@ public class PageLoader {
 		primaryStage.show();
 	}
 
-	private void loadPageNoNavBar(ActionEvent ae) throws IOException {
-		Node source = (Node) ae.getSource();
-		Stage stage = (Stage) source.getScene().getWindow();
-		URL url = new File(page.getRes()).toURI().toURL();
-		loader = new FXMLLoader(url);
-		Parent parent = loader.load();
-
-		Scene scene = new Scene(parent);
-		stage.setScene(scene);
-		stage.setTitle(page.getStageTitle());
-		stage.show();
-	}
-	
 	public Object getController() {
 		return loader.getController();
 	}

@@ -67,14 +67,14 @@ public class CoursePageView implements Initializable{
 
     @FXML
     void viewScheduledExams(ActionEvent event) throws IOException {
-    	PageLoader.getInstance().buildPage(Page.SCHEDULED_EXAMS, event);
+    	PageLoader.getInstance().buildPage(Page.SCHEDULED_EXAMS, event, null);
     	ScheduledPageView scheduledPageView = (ScheduledPageView) PageLoader.getInstance().getController();
 		scheduledPageView.setExamPage(labelCourse.getText());
     }
 
     @FXML
     void viewScheduledLessons(ActionEvent event) throws IOException {
-    	PageLoader.getInstance().buildPage(Page.SCHEDULED_LESSONS, event);
+    	PageLoader.getInstance().buildPage(Page.SCHEDULED_LESSONS, event, null);
     	ScheduledPageView scheduledPageView = (ScheduledPageView) PageLoader.getInstance().getController();
 		scheduledPageView.setLessonPage(labelCourse.getText());
     }

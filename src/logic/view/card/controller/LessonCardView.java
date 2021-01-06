@@ -54,7 +54,7 @@ public class LessonCardView implements Initializable {
 	
 	@FXML
 	public void course(ActionEvent event) throws IOException, SQLException {
-		PageLoader.getInstance().buildPage(Page.COURSE, event);
+		PageLoader.getInstance().buildPage(Page.COURSE, event, null);
     	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
     	
     	Course course = CourseDAO.getCourseByAbbrevation(btnCourse.getText());
@@ -74,7 +74,7 @@ public class LessonCardView implements Initializable {
 	
 	@FXML
 	public void viewLesson(ActionEvent ae) throws IOException, SQLException {
-		PageLoader.getInstance().buildPage(Page.LESSON, ae);
+		PageLoader.getInstance().buildPage(Page.LESSON, ae, null);
 		LessonPageView lessonPageView = (LessonPageView) PageLoader.getInstance().getController();
 		
 		Date date = new Date(System.currentTimeMillis());

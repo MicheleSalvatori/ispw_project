@@ -31,10 +31,9 @@ public class NavigationBarView implements Initializable {
 	private Button btnRequest;
 	@FXML
 	private Button btnSchedule;
-
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
 		// User logged as Student
 		if (Session.getSession().getType() == Role.STUDENT) {
 			btnRequest.setVisible(false);
@@ -50,47 +49,47 @@ public class NavigationBarView implements Initializable {
 	@FXML
 	public void homeButton(ActionEvent event) throws IOException {
 		System.out.println("HomeButton");
-		PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+		PageLoader.getInstance().buildPage(Page.HOMEPAGE, event, null);
 	}
 
 	@FXML
 	public void newsButton(ActionEvent event) throws IOException {
 		System.out.println("NewsButton");
-		PageLoader.getInstance().buildPage(Page.NEWS, event);
+		PageLoader.getInstance().buildPage(Page.NEWS, event, null);
 	}
 
 	@FXML
 	public void profileButton(ActionEvent event) throws IOException {
 		System.out.println("ProfileButton");
-		PageLoader.getInstance().buildPage(Page.PROFILE, event);
+		PageLoader.getInstance().buildPage(Page.PROFILE, event, null);
 	}
 
 	@FXML
 	public void examsButton(ActionEvent event) throws IOException {
 		System.out.println("ExamsButton");
-		PageLoader.getInstance().buildPage(Page.EXAM, event);
+		PageLoader.getInstance().buildPage(Page.EXAM, event, null);
 	}
 
 	@FXML
 	public void forumButton(ActionEvent event) throws IOException {
-		PageLoader.getInstance().buildPage(Page.FORUM, event);
+		PageLoader.getInstance().buildPage(Page.FORUM, event, null);
 	}
 
 	@FXML
 	public void backButton(ActionEvent event) throws IOException {
 		System.out.println("Back");
-		PageLoader.getInstance().buildPage(Page.COURSE, event);
+		PageLoader.getInstance().buildPage(Page.COURSE, event, null);
 	}
 	
 	@FXML
 	public void requestButton(ActionEvent event) throws IOException {
 		System.out.println("Request");
-		PageLoader.getInstance().buildPage(Page.REQUEST, event);
+		PageLoader.getInstance().buildPage(Page.REQUEST, event, null);
 	}
 	
 	@FXML
 	public void scheduleButton(ActionEvent event) throws IOException {
 		System.out.println("Schedule");
-		PageLoader.getInstance().buildPage(Page.SCHEDULE, event);
+		PageLoader.getInstance().buildPage(Page.SCHEDULE, event, null);
 	}
 }

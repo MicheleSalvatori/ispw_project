@@ -76,7 +76,7 @@ public class LessonPageView implements Initializable {
     
     @FXML
     private void course(ActionEvent event) throws IOException, SQLException {
-    	PageLoader.getInstance().buildPage(Page.COURSE, event);
+    	PageLoader.getInstance().buildPage(Page.COURSE, event, null);
     	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
     	
     	Course course = CourseDAO.getCourseByAbbrevation(btnCourse.getText());

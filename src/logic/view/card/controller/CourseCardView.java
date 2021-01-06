@@ -39,7 +39,7 @@ public class CourseCardView {
 	
 	@FXML
 	private void course(ActionEvent event) throws SQLException, IOException {
-		PageLoader.getInstance().buildPage(Page.COURSE, event);
+		PageLoader.getInstance().buildPage(Page.COURSE, event, null);
     	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
     	
     	Course course = CourseDAO.getCourseByAbbrevation(btnCourse.getText());
@@ -59,7 +59,7 @@ public class CourseCardView {
 	
 	@FXML
 	private void professor(ActionEvent event) throws IOException {
-		PageLoader.getInstance().buildPage(Page.PROFESSOR, event);
+		PageLoader.getInstance().buildPage(Page.PROFESSOR, event, null);
 	}
 	
 	@FXML

@@ -26,6 +26,6 @@ public class AssignmentCardView {
 	@FXML
 	private void viewAssignment(ActionEvent ae) throws IOException {
 		System.out.println("View Assignment");
-		PageLoader.getInstance().buildPage(Page.ASSIGNMENT, ae);
+		PageLoader.getInstance().buildPage(Page.ASSIGNMENT, ae, null);
 	}
 }
