@@ -70,7 +70,7 @@ public class ForumPageView implements Initializable {
 
 	@FXML
 	private void newQuestion(ActionEvent ae) throws IOException {
-		PageLoader.getInstance().buildPage(Page.NEWQUESTION, ae);
+		PageLoader.getInstance().buildPage(Page.NEWQUESTION, ae, null);
 	}
 
 	private void getAllQuestions() {

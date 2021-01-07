@@ -79,7 +79,7 @@ public class LoginView implements Initializable {
 		case "student":
 			try {
 				loginController.loginAsStudent(userBean);
-				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event, null);
 			} catch (SQLException e) {
 				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
 			} catch (RecordNotFoundException e) {
@@ -89,7 +89,7 @@ public class LoginView implements Initializable {
 		case "professor":
 			try {
 				loginController.loginAsProfessor(userBean);
-				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event, null);
 			} catch (SQLException e) {
 				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
 			} catch (ConnectException e) {
@@ -101,7 +101,7 @@ public class LoginView implements Initializable {
 		case "admin":
 			try {
 				loginController.loginAsAdmin(userBean);
-				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event, null);
 			} catch (SQLException e) {
 				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
 			} catch (ConnectException e) {
@@ -144,7 +144,7 @@ public class LoginView implements Initializable {
 	@FXML
 	void gotoSignup(ActionEvent event) throws IOException {
 		// load Signup Page
-		PageLoader.getInstance().buildPage(Page.SIGNUP, event);
+		PageLoader.getInstance().buildPage(Page.SIGNUP, event, null);
 	}
 
 	@Override

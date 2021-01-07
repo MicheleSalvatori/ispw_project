@@ -24,7 +24,7 @@ public class ScheduledExamCardView {
 	
 	@FXML
 	private void course(ActionEvent event) throws SQLException, IOException {
-		PageLoader.getInstance().buildPage(Page.COURSE, event);
+		PageLoader.getInstance().buildPage(Page.COURSE, event, null);
     	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
     	
     	Course course = CourseDAO.getCourseByAbbrevation(btnCourse.getText());
