@@ -11,7 +11,6 @@ import logic.view.card.controller.QuestionCardView;
 
 public class QuestionCard extends AnchorPane {
 	
-	
 	private QuestionCardView questionCardView = new QuestionCardView();
 	
 	public QuestionCard(QuestionBean question) throws IOException {
@@ -20,6 +19,6 @@ public class QuestionCard extends AnchorPane {
 		loader.setController(questionCardView);
 		this.getChildren().add(loader.load());
 		
-		questionCardView.setLabel(question);
+		questionCardView.setCard(question);
 	}
 }

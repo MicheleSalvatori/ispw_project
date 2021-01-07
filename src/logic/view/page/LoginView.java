@@ -1,7 +1,6 @@
 package logic.view.page;
 
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -64,68 +63,46 @@ public class LoginView implements Initializable {
 		loginController = new LoginController();
 		try {
 			type = loginController.getTypeUser(userBean);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
+			return;
 		}
 		
 		// switch for type user login
-		switch (type) {
-		case "student":
-			try {
+		try {
+		
+			switch (type) {
+			case "student":
 				loginController.loginAsStudent(userBean);
-				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+				break;
 				
-			} catch (SQLException e) {
-				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
-				
-			} catch (ConnectException e) {
-				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
-				
-			} catch (RecordNotFoundException e) {
-				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
-			}
-			break;
-			
-		case "professor":
-			try {
+			case "professor":
 				loginController.loginAsProfessor(userBean);
-				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+				break;
 				
-			} catch (SQLException e) {
-				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
-				
-			} catch (ConnectException e) {
-				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
-				
-			} catch (RecordNotFoundException e) {
-				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
-			}
-			break;
-			
-		case "admin":
-			try {
+			case "admin":
 				loginController.loginAsAdmin(userBean);
-				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
-				
-			} catch (SQLException e) {
-				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
-				
-			} catch (ConnectException e) {
-				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
-				
-			} catch (RecordNotFoundException e) {
-				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
+				break;
 			}
-			break;
+			
+		} catch (SQLException e) {
+			AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+			
+		} catch (RecordNotFoundException e) {
+			AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
+		
+		} finally {
+			// Build Homepage
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE, event, null);
 		}
 	}
   
-	
-	// TODO da finire
+	// TODO mettere i dati su un file
 	@FXML
 	private void forgotPassword(ActionEvent event) throws MessagingException {
 		
@@ -133,7 +110,9 @@ public class LoginView implements Initializable {
 		String TO = AlertController.emailInput(event);
 		String PASS = "ISPWProject";
 		
-		
+		if (TO == null) {
+			return;
+		}
 		
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -152,7 +131,7 @@ public class LoginView implements Initializable {
 		message.setFrom(new InternetAddress(FROM));
 		message.setRecipient(Message.RecipientType.TO, new InternetAddress(TO));
 		message.setSubject("Account password");
-		
+
 		String password;
 		try {
 			password = RoleDAO.getPasswordByEmail(TO);
@@ -171,14 +150,13 @@ public class LoginView implements Initializable {
 		}
 		
 		Transport.send(message);
-		
 		AlertController.buildInfoAlert("Your password will be sended to your e-mail.", "password", event);
 	}
 
 	@FXML
 	void gotoSignup(ActionEvent event) throws IOException {
 		// load Signup Page
-		PageLoader.getInstance().buildPage(Page.SIGNUP, event);
+		PageLoader.getInstance().buildPage(Page.SIGNUP, event, null);
 	}
 
 	@Override
@@ -204,5 +182,4 @@ public class LoginView implements Initializable {
 		textUsername.setOnAction(eventHandler);
 		textPassword.setOnAction(eventHandler);
 	}
-
 }

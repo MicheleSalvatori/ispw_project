@@ -12,8 +12,7 @@ public class ExamCard extends AnchorPane {
 
 	private ExamCardView examCardView = new ExamCardView();
 
-	public ExamCard(String number, String date, String cfu, String vote, String name, String course)
-			throws IOException {
+	public ExamCard(String number, String date, String cfu, String vote, String name, String course) throws IOException {
 		URL url = new File("src/res/fxml/card/ExamCard.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(examCardView);

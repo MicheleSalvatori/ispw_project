@@ -24,8 +24,10 @@ public class SignupView implements Initializable {
 	
 	@FXML
 	private TextField textUsername, textName, textSurname, textEmail;
+	
 	@FXML
 	private PasswordField textPassword, textConfirmPassword;
+	
 	@FXML
 	private Button btnSignup, btnLogin, btnFacebook, btnGoogle;
 	
@@ -34,7 +36,7 @@ public class SignupView implements Initializable {
 	@FXML
     void gotoLogin(ActionEvent event) throws IOException {
     	// load Login page
-		PageLoader.getInstance().buildPage(Page.LOGIN, event);
+		PageLoader.getInstance().buildPage(Page.LOGIN, event, null);
     }
 	
 	@FXML
@@ -63,7 +65,7 @@ public class SignupView implements Initializable {
 			try {
 				signupController.signup(userBean);
 				AlertController.buildInfoAlert("Registration completed!\nYou will'be redirect to the login page.", "Welcome", event);
-				PageLoader.getInstance().buildPage(Page.LOGIN, event);
+				PageLoader.getInstance().buildPage(Page.LOGIN, event, null);
 				
 			} catch (SQLException e) {
 				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
@@ -74,6 +76,7 @@ public class SignupView implements Initializable {
 		}
 	}
 
+	
 	private boolean chekdInput(ActionEvent event) {
 		
 		String email = textEmail.getText(); 
@@ -95,9 +98,8 @@ public class SignupView implements Initializable {
 			AlertController.buildInfoAlert("Invalid email", "Error", event);
 			return false;
 		}
-		
-		
 	}
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -128,6 +130,5 @@ public class SignupView implements Initializable {
 		textConfirmPassword.setOnAction(eventHandler);
 		textName.setOnAction(eventHandler);
 		textSurname.setOnAction(eventHandler);
-
 	}
 }

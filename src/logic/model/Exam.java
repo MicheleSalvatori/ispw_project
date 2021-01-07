@@ -18,14 +18,7 @@ public class Exam {
 		this.classroom = classroom;
 		this.note = note;
 	}
-	
-	public Exam(Date date, Time time, Course course, Classroom classroom) {
-		this.date = date;
-		this.time = time;
-		this.course = course;
-		this.classroom = classroom;
-	}
-	
+
 	public Date getDate() {
 		return date;
 	}

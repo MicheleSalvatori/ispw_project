@@ -26,16 +26,20 @@ public class ForumPageView implements Initializable {
 
 	@FXML
 	private Button btnMyQuestions, btnNewQuestion, btnAllQuestions;
+	
 	@FXML
 	private Label labelLoading;
+	
 	@FXML
 	private VBox vboxQuestion, vboxAssignment;
+	
 	private AllQuestionController allQuestionController;
 	private List<QuestionBean> allQuestions, myQuestions;
 
 	@FXML
 	private void myQuestion(ActionEvent ae) throws IOException {
-		vboxQuestion.getChildren().removeAll(vboxQuestion.getChildren());
+		vboxQuestion.getChildren().clear();
+		
 		if (myQuestions == null) {
 			myQuestions = new ArrayList<>();
 			if (allQuestions != null) {
@@ -57,6 +61,7 @@ public class ForumPageView implements Initializable {
 				vboxQuestion.getChildren().add(questionCard);
 			}
 		}
+		
 		btnMyQuestions.setDisable(true);
 		btnAllQuestions.setDisable(false);
 	}
@@ -85,7 +90,7 @@ public class ForumPageView implements Initializable {
 
 	private void setAllQuestions() {
 		if (vboxQuestion.getChildren() != null) {
-			vboxQuestion.getChildren().removeAll(vboxQuestion.getChildren());
+			vboxQuestion.getChildren().clear();
 		}
 		if (allQuestions == null) {
 			labelLoading.setText("No one seems to have any questions to ask in your courses. Be the first!");
@@ -93,12 +98,14 @@ public class ForumPageView implements Initializable {
 			btnAllQuestions.setDisable(true);
 			return;
 		}
+		
 		labelLoading.setVisible(false);
 		for (QuestionBean q : allQuestions) {
 			QuestionCard questionCard;
 			try {
 				questionCard = new QuestionCard(q);
 				vboxQuestion.getChildren().add(questionCard);
+				
 			} catch (IOException e) {
 				// TODO caricamento fxml card
 			}
@@ -115,9 +122,11 @@ public class ForumPageView implements Initializable {
 				labelLoading.setText("You are not enrolled in any course, you cannot ask questions.");
 				return;
 			}
+			
 		} catch (SQLException e) {
 			//Sollevata da CourseDAO.getCourseNumberOf(username)
 		}
+		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {

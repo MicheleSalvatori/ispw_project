@@ -36,10 +36,42 @@ public class RequestPageView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		try {
-			requests = RequestDAO.getRequestsByProfessor(Session.getSession().getUserLogged().getUsername());
 			courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
-
-			setRequestPage();
+			for (Course c : courses) {
+				CourseBean courseBean = new CourseBean();
+				courseBean.setAbbrevation(c.getAbbrevation());
+				courseBean.setCredits(c.getCredits());
+				courseBean.setGoal(c.getGoal());
+				courseBean.setName(c.getName());
+				courseBean.setPrerequisites(c.getPrerequisites());
+				courseBean.setReception(c.getReception());
+				courseBean.setSemester(c.getSemester());
+				courseBean.setYear(c.getYear());
+				
+				CourseFilterCard courseFilterCard = new CourseFilterCard(courseBean);
+				vboxCourse.getChildren().add(courseFilterCard);
+			}
+			
+			updateRequests();
+				
+		} catch (NullPointerException e) {
+			vboxCourse.getChildren().add(new Label("No course found"));
+			return;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateRequests() {
+		vboxRequest.getChildren().clear();
+		try {
+			requests = RequestDAO.getRequestsByProfessor(Session.getSession().getUserLogged().getUsername());
 			for (Request request : requests) {
 				RequestBean requestBean = new RequestBean();
 				requestBean.setCourse(request.getCourse());
@@ -48,13 +80,9 @@ public class RequestPageView implements Initializable {
 				RequestCard requestCard = new RequestCard(requestBean);
 				vboxRequest.getChildren().add(requestCard);
 			}
-				
-			if (vboxRequest.getChildren().isEmpty()) {
-				vboxRequest.getChildren().add(new Label("No request found."));
-			}	
 			
 		} catch (NullPointerException e) {
-			vboxCourse.getChildren().add(new Label("No course found"));
+			vboxRequest.getChildren().add(new Label("No request found"));
 			return;
 			
 		} catch (SQLException e) {
@@ -71,23 +99,6 @@ public class RequestPageView implements Initializable {
 		}
 	}
 	
-	public void setRequestPage() throws IOException {
-		for (Course c : courses) {
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(c.getAbbrevation());
-			courseBean.setCredits(c.getCredits());
-			courseBean.setGoal(c.getGoal());
-			courseBean.setName(c.getName());
-			courseBean.setPrerequisites(c.getPrerequisites());
-			courseBean.setReception(c.getReception());
-			courseBean.setSemester(c.getSemester());
-			courseBean.setYear(c.getYear());
-			
-			CourseFilterCard courseFilterCard = new CourseFilterCard(courseBean);
-			vboxCourse.getChildren().add(courseFilterCard);
-		}
-	}
-	
 	public void filterRequests(CourseBean course) {
 		
 		if (filteredCourses.contains(course.getAbbrevation())) {
@@ -97,8 +108,6 @@ public class RequestPageView implements Initializable {
 			filteredCourses.add(course.getAbbrevation());
 		}
 
-		System.out.println(filteredCourses);
-		
 		try {
 			vboxRequest.getChildren().clear();
 			for (Request request : requests) {

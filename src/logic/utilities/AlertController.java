@@ -386,8 +386,6 @@ public class AlertController {
 	    return null;
 	}
 	
-	
-	
 	private static void centerButtons(DialogPane dialogPane) {
 		Region spacer = new Region();
 		ButtonBar.setButtonData(spacer, ButtonBar.ButtonData.BIG_GAP);	

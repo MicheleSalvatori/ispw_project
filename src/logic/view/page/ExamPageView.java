@@ -37,7 +37,7 @@ public class ExamPageView implements Initializable {
 			}
 		}
 	
-//	Setup media
+		//	Setup media
 		labelGPA.setText("23.7");
 		labelWPA.setText("25");
 		labelVE.setText("8");

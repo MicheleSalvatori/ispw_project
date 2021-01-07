@@ -44,16 +44,12 @@ public class CoursePageView implements Initializable{
 
     @FXML
     void viewScheduledExams(ActionEvent event) throws IOException {
-    	PageLoader.getInstance().buildPage(Page.SCHEDULED_EXAMS, event);
-    	ScheduledPageView scheduledPageView = (ScheduledPageView) PageLoader.getInstance().getController();
-		scheduledPageView.setExamPage(course);
+    	PageLoader.getInstance().buildPage(Page.SCHEDULED_EXAMS, event, course);
     }
 
     @FXML
     void viewScheduledLessons(ActionEvent event) throws IOException {
-    	PageLoader.getInstance().buildPage(Page.SCHEDULED_LESSONS, event);
-    	ScheduledPageView scheduledPageView = (ScheduledPageView) PageLoader.getInstance().getController();
-		scheduledPageView.setLessonPage(course);
+    	PageLoader.getInstance().buildPage(Page.SCHEDULED_LESSONS, event, course);
     }
 
 	@Override
@@ -68,8 +64,12 @@ public class CoursePageView implements Initializable{
 		}	
 	}
 	
-	public void setPage(CourseBean course) throws SQLException {
-		this.course = course;
+	public void setBean(Object course) {
+		this.course = (CourseBean) course;
+		setPage();
+	}
+	
+	public void setPage() {
 		
 		Date date = new Date(System.currentTimeMillis());
 		Time time = new Time(System.currentTimeMillis());
@@ -104,12 +104,19 @@ public class CoursePageView implements Initializable{
 		}
 		
 		labelCourse.setText(course.getAbbrevation());
-		List<Professor> professors = ProfessorDAO.getCourseProfessors(course.getAbbrevation());
-		labelProfessor.setText("");
-		for (Professor professor : professors) {
-			labelProfessor.setText(labelProfessor.getText()+"/"+professor.getName() + " " + professor.getSurname());
+		List<Professor> professors;
+		try {
+			professors = ProfessorDAO.getCourseProfessors(course.getAbbrevation());
+			labelProfessor.setText("");
+			for (Professor professor : professors) {
+				labelProfessor.setText(labelProfessor.getText()+"/"+professor.getName() + " " + professor.getSurname());
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
+
 		labelYear.setText(course.getYear());
 		labelCredits.setText(course.getCredits());
 		labelGoal.setText(course.getGoal());

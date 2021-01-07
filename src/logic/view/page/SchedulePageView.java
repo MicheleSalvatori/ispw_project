@@ -140,10 +140,10 @@ public class SchedulePageView implements Initializable {
 		System.out.println(time);
 		examBean.setTime(time);
 		
-		Course course = courses.get(comboCourseLesson.getSelectionModel().getSelectedIndex());
+		Course course = courses.get(comboCourseExam.getSelectionModel().getSelectedIndex());
 		examBean.setCourse(course);
 		
-		Classroom classroom = classrooms.get(comboClassLesson.getSelectionModel().getSelectedIndex());
+		Classroom classroom = classrooms.get(comboClassExam.getSelectionModel().getSelectedIndex());
 		examBean.setClassroom(classroom);
 		
 		scheduleExamController = new ScheduleExamController();
@@ -173,7 +173,6 @@ public class SchedulePageView implements Initializable {
 			}
 			break;
 		}
-		
 	}
 	
 	private void resetLessonView() {

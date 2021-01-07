@@ -23,18 +23,16 @@ public class CourseFilterCardView {
 
 		if (PageLoader.getPage() == Page.REQUEST) {
 			RequestPageView requestPageView = (RequestPageView) PageLoader.getInstance().getController();
-			
 			requestPageView.filterRequests(course);
 		}
 		
 		else {
 			ScheduledPageView scheduledPageView = (ScheduledPageView) PageLoader.getInstance().getController();
-			
 			if (PageLoader.getPage() == Page.SCHEDULED_LESSONS) {
 				scheduledPageView.filterLessons(course);
 			}
 			else if (PageLoader.getPage() == Page.SCHEDULED_EXAMS ) {
-				scheduledPageView.setExamPage(course);
+				scheduledPageView.filterExams(course);
 			}
 		}
 	}

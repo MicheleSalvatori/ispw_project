@@ -3,7 +3,6 @@ package logic.utilities;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -20,7 +19,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import logic.view.menu.element.NavigationBar;
 import logic.view.menu.element.StatusBar;
+import logic.view.page.CoursePageView;
+import logic.view.page.LessonPageView;
 import logic.view.page.QuestionPageView;
+import logic.view.page.ScheduledPageView;
 
 public class PageLoader {
 
@@ -48,48 +50,83 @@ public class PageLoader {
 		return page;
 	}
 	
-	public void buildPage(Page page, ActionEvent event) throws IOException {
-		PageLoader.page = page;
-		if (page == Page.SIGNUP || page == Page.LOGIN) {
-			loadPageNoNavBar(event);
-		} else {
-			loadPage(event);
-		}
-	}
-
+	// BuildPage and pass a bean to the page controller
 	public void buildPage(Page page, ActionEvent event, Object obj) throws IOException {
-		//TODO riorganizzare PageLoader
 		PageLoader.page = page;
 		switch (page) {
-		case QUESTION:
-			loadPage(event, obj);
-			break;
 
+		case COURSE:
+			loadPage(event);
+			CoursePageView coursePageView = new CoursePageView();
+			loader.setController(coursePageView);
+			configPage(loader.load());
+			coursePageView.setBean(obj);
+			break;
+			
+		case SCHEDULED_LESSONS:
+			loadPage(event);
+			ScheduledPageView scheduledPageView = new ScheduledPageView();
+			loader.setController(scheduledPageView);
+			configPage(loader.load());
+			scheduledPageView.setLessonPage(obj);
+			break;
+			
+		case SCHEDULED_EXAMS:
+			loadPage(event);
+			ScheduledPageView scheduledExamPageView = new ScheduledPageView();
+			loader.setController(scheduledExamPageView);
+			configPage(loader.load());
+			scheduledExamPageView.setExamPage(obj);
+			break;
+			
+		case LESSON:
+			loadPage(event);
+			LessonPageView lessonPageView = new LessonPageView();
+			loader.setController(lessonPageView);
+			configPage(loader.load());
+			lessonPageView.setBean(obj);
+			break;
+			
+		case QUESTION:
+			loadPage(event);
+			QuestionPageView questionPageView = new QuestionPageView();
+			loader.setController(questionPageView);
+			configPage(loader.load());
+			questionPageView.setBean(obj);
+			break;
+			
 		default:
+			loadPage(event);
+			configPage(loader.load());
 			break;
 		}
 	}
-
-	private void loadPage(ActionEvent ae, Object obj) throws IOException {
-		//TODO renderlo generale
-		Node source = (Node) ae.getSource();
-		primaryStage = (Stage) source.getScene().getWindow();
-		URL url = new File(page.getRes()).toURI().toURL();
-		FXMLLoader loader = new FXMLLoader(url);
-		QuestionPageView questionPageView = new QuestionPageView();
-		loader.setController(questionPageView);
-		configPage(loader.load());
-		questionPageView.setBean(obj);
+	
+	// Build a page without pass a bean
+	public void buildPage(Page page, ActionEvent event) throws IOException {
+		PageLoader.page = page;
+		switch (page) {
+		
+		case SIGNUP:
+			loadPageNoNavBar(event);
+			break;
+			
+		case LOGIN:
+			loadPageNoNavBar(event);
+			break;
+			
+		default:
+			loadPage(event);
+			configPage(loader.load());
+			break;
+		}
 	}
-
+	
 	private void loadPage(ActionEvent ae) throws IOException {
 		Node source = (Node) ae.getSource();
 		primaryStage = (Stage) source.getScene().getWindow();
 		URL url = new File(page.getRes()).toURI().toURL();
-
 		loader = new FXMLLoader(url);
-		
-		configPage(loader.load());
 	}
 
 	private NavigationBar configNavBar() throws IOException {
@@ -97,8 +134,7 @@ public class PageLoader {
 	}
 
 	private HBox configStatusBar() throws IOException {
-		// Reset StatusBar instance every time in order to set label and user avatar
-		// properly
+		// Reset StatusBar instance every time in order to set label and user avatar properly
 		StatusBar.reset();
 		HBox statusBarHBox = new HBox(StatusBar.getInstance());
 		statusBarHBox.setAlignment(Pos.TOP_RIGHT);

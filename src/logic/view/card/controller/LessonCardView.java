@@ -18,8 +18,6 @@ import logic.model.Course;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
-import logic.view.page.CoursePageView;
-import logic.view.page.LessonPageView;
 
 public class LessonCardView implements Initializable {
 	
@@ -73,9 +71,6 @@ public class LessonCardView implements Initializable {
 	
 	@FXML
 	public void course(ActionEvent event) throws IOException, SQLException {
-		PageLoader.getInstance().buildPage(Page.COURSE, event);
-    	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
-    	
     	Course course = lesson.getCourse();
     	
     	CourseBean courseBean = new CourseBean();
@@ -87,20 +82,17 @@ public class LessonCardView implements Initializable {
     	courseBean.setPrerequisites(course.getPrerequisites());
     	courseBean.setGoal(course.getGoal());
     	courseBean.setReception(course.getReception());
-    	
-    	coursePageView.setPage(courseBean);
+
+    	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
 	}
 	
 	@FXML
-	public void viewLesson(ActionEvent ae) throws IOException, SQLException {
-		PageLoader.getInstance().buildPage(Page.LESSON, ae);
-		LessonPageView lessonPageView = (LessonPageView) PageLoader.getInstance().getController();
-		
-		lessonPageView.setPage(lesson);
+	public void viewLesson(ActionEvent event) throws IOException, SQLException {
+		PageLoader.getInstance().buildPage(Page.LESSON, event, lesson);
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub	
+			
 	}
 }

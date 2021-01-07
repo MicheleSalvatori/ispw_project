@@ -22,7 +22,6 @@ import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.CourseCard.Type;
-import logic.view.page.CoursePageView;
 import logic.view.page.ProfilePageView;
 
 public class CourseCardView {
@@ -40,10 +39,7 @@ public class CourseCardView {
 	
 	@FXML
 	private void course(ActionEvent event) throws SQLException, IOException {
-		PageLoader.getInstance().buildPage(Page.COURSE, event);
-    	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
-    	
-    	coursePageView.setPage(courseBean);
+		PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
 	}
 	
 	@FXML
@@ -81,7 +77,7 @@ public class CourseCardView {
 			btnDelete.setVisible(true);
 		}
 		
-		else {
+		else if (type == Type.FOLLOW){
 			labelYear.setVisible(true);
 			labelSemester.setVisible(true);
 			line1.setVisible(true);

@@ -53,9 +53,12 @@ public class LessonPageView implements Initializable {
     
     private LessonBean lesson;
     
-    public void setPage(LessonBean lesson) {
-    	this.lesson = lesson;
-    	
+    public void setBean(Object lesson) {
+    	this.lesson = (LessonBean) lesson;
+    	setPage();
+    }
+    
+    public void setPage() {
     	btnCourse.setText(lesson.getCourse().getAbbrevation());
     	labelClassroom.setText(lesson.getClassroom().getName());
     	labelTime.setText(SQLConverter.time(lesson.getTime()));
@@ -69,9 +72,6 @@ public class LessonPageView implements Initializable {
     
     @FXML
     private void course(ActionEvent event) throws IOException, SQLException {
-    	PageLoader.getInstance().buildPage(Page.COURSE, event);
-    	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
-    	
     	Course course = lesson.getCourse();
     	
     	CourseBean courseBean = new CourseBean();
@@ -83,8 +83,8 @@ public class LessonPageView implements Initializable {
     	courseBean.setPrerequisites(course.getPrerequisites());
     	courseBean.setGoal(course.getGoal());
     	courseBean.setReception(course.getReception());
-    	
-    	coursePageView.setPage(courseBean);
+
+    	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
     }
     
 	@Override

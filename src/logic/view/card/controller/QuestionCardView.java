@@ -20,8 +20,9 @@ public class QuestionCardView {
 	
 	private QuestionBean question;
 
-	public void setLabel(QuestionBean bean) {
+	public void setCard(QuestionBean bean) {
 		this.question = bean;
+		
 		labelCourse.setText(bean.getCourse().getAbbrevation());
 		labelName.setText(bean.getStudent().getName());
 		labelSurname.setText(bean.getStudent().getSurname());
@@ -40,6 +41,6 @@ public class QuestionCardView {
 
 	@FXML
 	private void viewQuestion(ActionEvent ae) throws IOException {
-		PageLoader.getInstance().buildPage(Page.QUESTION, ae, (Object) question);
+		PageLoader.getInstance().buildPage(Page.QUESTION, ae, question);
 	}
 }

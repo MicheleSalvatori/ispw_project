@@ -1,13 +1,13 @@
 /* Baloo Bhai font */
 @font-face {
-	src: url("../../font/BalooBhai/BalooBhai-Regular.ttf");
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
 }
 
 /* Roboto font */
 @font-face {
- 	src: url("../../font/Roboto/Roboto-Regular.ttf");
+ 	src: url("../font/Roboto/Roboto-Regular.ttf");
 }
- 
+
 .button {
 	-fx-background-color: #E5E5EB;
 	-fx-background-radius: 14.0px;
