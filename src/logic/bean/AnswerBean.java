@@ -2,7 +2,6 @@ package logic.bean;
 
 import java.sql.Date;
 
-import logic.model.Student;
 import logic.model.User;
 
 public class AnswerBean {

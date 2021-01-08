@@ -311,12 +311,6 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
-	public static ResultSet countCourses(Statement stmt, String username) throws SQLException {
-		String sql  = "SELECT count(distinct course) from follow where student ='"+username+"';"; 
-		return stmt.executeQuery(sql);
-	}
-	
-	
 	// Classroom queries
 	public static ResultSet selectClassroom(Statement stmt, String name) throws SQLException {
 		String query = "SELECT * FROM classroom WHERE name = '" + name + "';";
@@ -389,8 +383,6 @@ public class Queries {
 		return stmt.executeUpdate(sql);
 	}
 
-}
-
 
 	
 	// Assignment queries
@@ -405,3 +397,5 @@ public class Queries {
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}
+
+}

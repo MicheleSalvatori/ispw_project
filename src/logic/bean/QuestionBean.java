@@ -11,7 +11,7 @@ public class QuestionBean {
 	private int id;
 	private String title;
 	private String text;
-	private Course course;
+	private CourseBean course;
 	private Student student;
 	private boolean solved;
 	private Date date;
@@ -21,7 +21,7 @@ public class QuestionBean {
 		return answers;
 	}
 
-	public void setAnswers(List<Answer> answers) {
+	public void setAnswers(List<AnswerBean> answers) {
 		this.answers = answers;
 	}
 
@@ -72,16 +72,16 @@ public class QuestionBean {
 		this.text = text;
 	}
 	
-	public Course getCourse() {
+	public CourseBean getCourse() {
 		return course;
 	}
 
-	public void setCourse(Course course) {
+	public void setCourse(CourseBean course) {
 		this.course = course;
 	}
 
 	public void setCourseByAbbr(String course) {
-		Course c = new Course();
+		CourseBean c = new CourseBean();
 		c.setAbbrevation(course);
 		this.course = c;
 	}

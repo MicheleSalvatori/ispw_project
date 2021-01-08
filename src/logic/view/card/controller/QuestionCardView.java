@@ -19,16 +19,17 @@ public class QuestionCardView {
 	@FXML
 	private Button btnView, btnSolved;
 	private QuestionBean quest;
+
 	public void setCard(QuestionBean bean) {
-		this.question = bean;
-		
+		this.quest = bean;
+
 		labelCourse.setText(bean.getCourse().getAbbrevation());
 		labelName.setText(bean.getStudent().getName());
 		labelSurname.setText(bean.getStudent().getSurname());
 		labelNumber.setText(String.valueOf(bean.getId()));
 		labelQuestionDate.setText(bean.getDate().toString());
 		labelQuestionObject.setText(bean.getTitle());
-		
+
 		if (bean.isSolved()) {
 			btnSolved.setDisable(true);
 			btnSolved.setText("Solved");
@@ -47,16 +48,16 @@ public class QuestionCardView {
 
 	@FXML
 	private void viewQuestion(ActionEvent ae) throws IOException {
-		PageLoader.getInstance().buildPage(Page.QUESTION, ae, question);
+		PageLoader.getInstance().buildPage(Page.QUESTION, ae, quest);
 	}
+
 	@FXML
 	private void setSolved(ActionEvent ae) {
 		ForumPageView controller = (ForumPageView) PageLoader.getInstance().getController();
 		if (controller.setSolved(quest.getId())) {
 			quest.setSolved(true);
-			setLabel(quest);
+			setCard(quest);
 		}
 	}
 
 }
-

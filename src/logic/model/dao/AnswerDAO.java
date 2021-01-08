@@ -8,18 +8,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.Session;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Answer;
-import logic.model.Student;
+import logic.model.User;
 import logic.utilities.Queries;
 import logic.utilities.Role;
 import logic.utilities.SingletonDB;
 
 public class AnswerDAO {
-	
+
 	private AnswerDAO() {
-		
+
 	}
 
 	public static List<Answer> getAnswerOf(int id) throws SQLException, RecordNotFoundException {
@@ -49,7 +48,7 @@ public class AnswerDAO {
 					int i = rs.getInt("id");
 					String username = rs.getString("username");
 					answerUserRole = RoleDAO.findType(username);
-          User u = null;
+					User u = null;
 					switch (answerUserRole) {
 					case PROFESSOR:
 						u = ProfessorDAO.findProfessor(username);
@@ -60,7 +59,7 @@ public class AnswerDAO {
 					default:
 						break;
 					}
-          Answer a = new Answer(i, t, u, d);
+					Answer a = new Answer(i, t, u, d);
 					answers.add(a);
 				} while (rs.next());
 			}

@@ -8,10 +8,10 @@ public class Answer {
 	private User user;
 	private Date date;
 
-	public Answer(int id, String text, Student student, Date date) {
+	public Answer(int id, String text, User user, Date date) {
 		this.id = id;
 		this.text = text;
-		this.student = student;
+		this.user = user;
 		this.date = date;
 	}
 

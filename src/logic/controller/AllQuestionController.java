@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.Session;
+import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Answer;

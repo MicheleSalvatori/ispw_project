@@ -40,13 +40,11 @@ import logic.Session;
 import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
 import logic.controller.InsertAnswerController;
-import logic.model.Answer;
-import logic.model.Student;
-import logic.utilities.SQLConverter;
 import logic.utilities.AlertController;
+import logic.utilities.SQLConverter;
 import logic.view.card.element.AnswerCard;
 
-public class QuestionPageView implements Initializable {
+public class QuestionPageView implements Initializable{
 
 	@FXML
 	private ScrollPane scrollAnswers;
@@ -63,8 +61,6 @@ public class QuestionPageView implements Initializable {
 	@FXML
 	private VBox vboxAnswer;
 	
-	private InsertAnswerController insertAnswerController;
-	
 	private QuestionBean question;
 	private Stage dialogStage;
 	private EventHandler<ActionEvent> addAnswerEvent, cancAddAnswerEvent;
@@ -74,12 +70,11 @@ public class QuestionPageView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+		labelAuthor.setText("");
 	}
-
+	
 	public void setBean(Object obj) {
 		this.question = (QuestionBean) obj;
-		
 		textQuestion.setText(question.getText());
 		labelSubjectQuestion.setText(question.getTitle());
 		labelAuthor.setText(question.getStudent().getName() + " " + question.getStudent().getSurname());
@@ -94,16 +89,11 @@ public class QuestionPageView implements Initializable {
 			return;
 		}
 		
-		for (Answer answer : question.getAnswers()) {
+		for (AnswerBean answer : question.getAnswers()) {
 			AnswerCard answerCard;
 			try {
-				AnswerBean answerBean = new AnswerBean();
-				answerBean.setDate(answer.getDate());
-				answerBean.setUser(answer.getUser());
-				answerBean.setText(answer.getText());
-				answerBean.setId(question.getId());
 				
-				answerCard = new AnswerCard(answerBean);
+				answerCard = new AnswerCard(answer);
 				vboxAnswer.getChildren().add(answerCard);
 				
 			} catch (IOException e) {
@@ -127,7 +117,7 @@ public class QuestionPageView implements Initializable {
 		dialogStage = new Stage();
 		VBox box = new VBox();
 		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		dialogStage.initStyle(StageStyle.TRANSPARENT); // TODO blur
+		dialogStage.initStyle(StageStyle.TRANSPARENT); 
 		label = new Label("Answer:");
 		textAnswer = new TextArea();
 		btnSubmit = new Button("Submit");
@@ -158,10 +148,6 @@ public class QuestionPageView implements Initializable {
 		
 		dialogStage.show();
 		animation(dialogStage);
-		dialogStage.close();
-		
-		dialogStage.showAndWait();
-		labelAuthor.getScene().getRoot().setEffect(null);
 	}
 	
 	private void animation(Stage stage) {
@@ -186,6 +172,7 @@ public class QuestionPageView implements Initializable {
 		this.cancAddAnswerEvent = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				closeStage(dialogStage);
+				labelAuthor.getScene().getRoot().setEffect(null);
 			}
 		};
 	}
@@ -193,18 +180,16 @@ public class QuestionPageView implements Initializable {
 	private void saveAnswer(String text) {
 		InsertAnswerController controller = new InsertAnswerController();
 		AnswerBean answer = new AnswerBean();
-		answer.setId(bean.getId());
+		answer.setId(question.getId());
 		answer.setUser(Session.getSession().getUserLogged());
 		answer.setText(text);
 		answer.setDate(new Date(System.currentTimeMillis()));
 		
 		try {
-			insertAnswerController.save(answer);
+			controller.save(answer);
 			closeStage(dialogStage);
 			AlertController.buildInfoAlert("The answer has been entered correctly!", "", scrollAnswers);
-			
-			Answer a = new Answer(answer.getId(), answer.getText(), answer.getStudent(), answer.getDate());
-			this.question.addAnswers(a);
+			this.question.addAnswers(answer);
 			loadAnswer();
 			
 		} catch (SQLException e) {
