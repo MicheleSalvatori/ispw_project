@@ -2,7 +2,6 @@ package logic.view.page;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +11,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
-import logic.model.Course;
-import logic.model.Exam;
-import logic.model.Lesson;
-import logic.model.dao.CourseDAO;
-import logic.model.dao.ExamDAO;
-import logic.model.dao.LessonDAO;
+import logic.controller.ScheduledController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
-import logic.utilities.Role;
 import logic.view.card.element.CourseFilterCard;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.ScheduledExamCard;
@@ -37,51 +29,38 @@ public class ScheduledPageView implements Initializable {
 	@FXML
 	private VBox vboxScroll, vboxCourse;
 	
-	List<Lesson> lessons;
-	List<Exam> exams;
-	List<Course> courses;
+	private ScheduledController scheduledController;
 	
-	List<String> filteredCourses = new ArrayList<>();
+	private List<LessonBean> lessons;
+	private List<ExamBean> exams;
+	private List<CourseBean> courses;
+	
+	private List<String> filteredCourses;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		// Get current date
-		Date date = new Date(System.currentTimeMillis());
-		
+		scheduledController = new ScheduledController();
+		filteredCourses = new ArrayList<>();
+
 		try {
 			
 			if (PageLoader.getPage() == Page.SCHEDULED_LESSONS) {
 				labelPage.setText("Lessons");
-				// Get user lessons and courses
-				if (Session.getSession().getType() == Role.STUDENT) {
-					lessons = LessonDAO.getNextLessonsStudent(date, Session.getSession().getUsername());
-					courses = CourseDAO.getStudentCourses(Session.getSession().getUsername());
-				}
-				else if (Session.getSession().getType() == Role.PROFESSOR) {
-					lessons = LessonDAO.getNextLessonsProfessor(date, Session.getSession().getUsername());
-					courses = CourseDAO.getProfessorCourses(Session.getSession().getUsername());
-				}
-				else {
-					return;
-				}
+				
+				// Get user lessons
+				lessons = scheduledController.getLessons();
 			}
 			
 			else if (PageLoader.getPage() == Page.SCHEDULED_EXAMS) {
 				labelPage.setText("Exams");
-				// Get user exams and courses
-				if (Session.getSession().getType() == Role.STUDENT) {
-					exams = ExamDAO.getNextExamsStudent(date, Session.getSession().getUsername());
-					courses = CourseDAO.getStudentCourses(Session.getSession().getUsername());
-				}
-				else if (Session.getSession().getType() == Role.PROFESSOR) {
-					exams = ExamDAO.getNextExamsProfessor(date, Session.getSession().getUsername());
-					courses = CourseDAO.getProfessorCourses(Session.getSession().getUsername());
-				}
-				else {
-					return;
-				}
+				
+				// Get user exams
+				exams = scheduledController.getExams();
 			}
+			
+			// Get user courses
+			courses = scheduledController.getCourses();
 
 		} catch (NullPointerException e) {
 			vboxCourse.getChildren().add(new Label("No course found"));
@@ -105,19 +84,9 @@ public class ScheduledPageView implements Initializable {
 	}
 	
 	public void setFilters(CourseBean course) throws IOException {
-		for (Course c : courses) {
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(c.getAbbrevation());
-			courseBean.setCredits(c.getCredits());
-			courseBean.setGoal(c.getGoal());
-			courseBean.setName(c.getName());
-			courseBean.setPrerequisites(c.getPrerequisites());
-			courseBean.setReception(c.getReception());
-			courseBean.setSemester(c.getSemester());
-			courseBean.setYear(c.getYear());
-			
-			CourseFilterCard courseFilterCard = new CourseFilterCard(courseBean);
-			if (courseFilterCard.getController().getCourse().getAbbrevation().compareTo(course.getAbbrevation()) == 0) {
+		for (CourseBean c : courses) {	
+			CourseFilterCard courseFilterCard = new CourseFilterCard(c);
+			if (c.getAbbrevation().compareTo(course.getAbbrevation()) == 0) {
 				courseFilterCard.getController().getButton().setSelected(true);
 			}
 			vboxCourse.getChildren().add(courseFilterCard);
@@ -135,16 +104,9 @@ public class ScheduledPageView implements Initializable {
 		
 		try {
 			vboxScroll.getChildren().clear();
-			for (Lesson lesson : lessons) {
-				if (filteredCourses.contains(lesson.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
-					LessonBean lessonBean = new LessonBean();
-					lessonBean.setClassroom(lesson.getClassroom());
-					lessonBean.setCourse(lesson.getCourse());
-					lessonBean.setDate(lesson.getDate());
-					lessonBean.setProfessor(lesson.getProfessor());
-					lessonBean.setTime(lesson.getTime());
-					lessonBean.setTopic(lesson.getTopic());
-					
+			
+			for (LessonBean lessonBean : lessons) {
+				if (filteredCourses.contains(lessonBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
 					LessonCard lessonCard = new LessonCard(lessonBean);
 					vboxScroll.getChildren().add(lessonCard);
 				}
@@ -176,15 +138,8 @@ public class ScheduledPageView implements Initializable {
 		
 		try {
 			vboxScroll.getChildren().clear();
-			for (Exam exam : exams) {
-				if (filteredCourses.contains(exam.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
-					ExamBean examBean = new ExamBean();
-					examBean.setClassroom(exam.getClassroom());
-					examBean.setCourse(exam.getCourse());
-					examBean.setDate(exam.getDate());
-					examBean.setNote(exam.getNote());
-					examBean.setTime(exam.getTime());
-					
+			for (ExamBean examBean : exams) {
+				if (filteredCourses.contains(examBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
 					ScheduledExamCard scheduledExamCard = new ScheduledExamCard(examBean);
 					vboxScroll.getChildren().add(scheduledExamCard);
 				}

@@ -15,11 +15,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import logic.Session;
+import logic.bean.AssignmentBean;
 import logic.bean.QuestionBean;
 import logic.controller.AllQuestionController;
+import logic.model.Assignment;
+import logic.model.dao.AssignmentDAO;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.utilities.Role;
+import logic.view.card.element.AssignmentCard;
 import logic.view.card.element.QuestionCard;
 
 public class ForumPageView implements Initializable {
@@ -35,6 +40,10 @@ public class ForumPageView implements Initializable {
 	
 	private AllQuestionController allQuestionController;
 	private List<QuestionBean> allQuestions, myQuestions;
+	//private List<AssignmentBean> assignments;
+	
+	//TODO eliminare
+	private List<Assignment> assignments;
 
 	@FXML
 	private void myQuestion(ActionEvent ae) throws IOException {
@@ -114,6 +123,7 @@ public class ForumPageView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
 		allQuestionController = new AllQuestionController();
 		try {
 			if (allQuestionController.getNumberCourses() == 0) {
@@ -134,5 +144,40 @@ public class ForumPageView implements Initializable {
 				setAllQuestions();
 			}
 		});
+		
+		try {
+			
+			// TODO Controller
+			if (Session.getSession().getType() == Role.STUDENT) {
+				assignments = AssignmentDAO.getAssignmentsByStudent(Session.getSession().getUsername());
+			}
+			else {
+				assignments = AssignmentDAO.getAssignmentsByProfessor(Session.getSession().getUsername());
+			}
+			
+			for (Assignment assignment : assignments) {
+				AssignmentBean assignmentBean = new AssignmentBean();
+				assignmentBean.setCourse(assignment.getCourse());
+				assignmentBean.setDate(assignment.getDate());
+				assignmentBean.setId(assignment.getId());
+				assignmentBean.setText(assignment.getText());
+				assignmentBean.setTitle(assignment.getTitle());
+				
+				AssignmentCard assignmentCard = new AssignmentCard(assignmentBean);
+				vboxAssignment.getChildren().add(assignmentCard);
+			}
+			
+		} catch (NullPointerException e) {
+			vboxAssignment.getChildren().add(new Label("No assignment found"));
+			return;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

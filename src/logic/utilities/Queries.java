@@ -358,4 +358,26 @@ public class Queries {
 		System.out.println(query);
 		return stmt.executeUpdate(query);
 	}
+	
+	
+	// Verbalized queries
+	public static ResultSet selectVerbalizedExamsByStudent(Statement stmt, String student) throws SQLException {
+		String query = "SELECT * FROM verbalized WHERE student = '" + student + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+
+	
+	// Assignment queries
+	public static ResultSet selectAssignmentsByProfessor(Statement stmt, String professor) throws SQLException {
+		String query = "SELECT id, assignment.course, title, text, date FROM assignment JOIN teach ON assignment.course = teach.course WHERE professor = '" + professor + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
+	public static ResultSet selectAssignmentsByStudent(Statement stmt, String student) throws SQLException {
+		String query = "SELECT id, assignment.course, title, text, date FROM assignment JOIN follow ON assignment.course = follow.course WHERE student = '" + student + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
 }

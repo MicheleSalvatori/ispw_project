@@ -15,6 +15,10 @@ import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
 public class AnswerDAO {
+	
+	private AnswerDAO() {
+		
+	}
 
 	public static List<Answer> getAnswerOf(int id) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
@@ -55,11 +59,11 @@ public class AnswerDAO {
 	public static void saveAnswer(Answer answer) throws SQLException {
 		Connection conn = null;
 
-			conn = SingletonDB.getDbInstance().getConnection();
-			int id = answer.getId();
-			String text = answer.getText();
-			String username = answer.getStudent().getUsername();
-			Date date = answer.getDate();
-			Queries.saveAnswer(conn, id, username, text, date);
+		conn = SingletonDB.getDbInstance().getConnection();
+		int id = answer.getId();
+		String text = answer.getText();
+		String username = answer.getStudent().getUsername();
+		Date date = answer.getDate();
+		Queries.saveAnswer(conn, id, username, text, date);
 	}
 }

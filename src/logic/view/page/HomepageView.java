@@ -1,9 +1,7 @@
 package logic.view.page;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -21,8 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import logic.Session;
 import logic.bean.LessonBean;
-import logic.model.Lesson;
-import logic.model.dao.LessonDAO;
+import logic.controller.ViewNextLessonController;
 import logic.utilities.Role;
 import logic.utilities.Weather;
 import logic.view.card.element.LessonCard;
@@ -46,6 +43,10 @@ public class HomepageView implements Initializable {
 	
 	@FXML
 	private AnchorPane anchorNextLesson;
+	
+	
+	private ViewNextLessonController viewNextLessonController;
+	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -78,12 +79,8 @@ public class HomepageView implements Initializable {
 		}
 
 		addWeatherCards();
-		
-		Date date = new Date(System.currentTimeMillis());
-		Time time = new Time(System.currentTimeMillis());
-		addLessonCards(date, time, Session.getSession().getUserLogged().getUsername());
-
-		webMap.getEngine().load(getClass().getResource("/res/html/map.html").toString());
+		addLessonCards();
+		addWebMap();
 	}
 	
 	// Set name
@@ -91,54 +88,41 @@ public class HomepageView implements Initializable {
 		labelUsername.setText("Hello " + name + "!");
 	}
 	
+	
+	
 	// Add Lesson cards to the scene
-	private void addLessonCards(Date date, Time time, String username) {
+	private void addLessonCards() {
 		try {
 			
-			List<Lesson> lessons;
-			if (Session.getSession().getType() == Role.STUDENT) {
-				lessons = LessonDAO.getTodayNextLessonsStudent(date, time, username);
-			}
-			else if (Session.getSession().getType() == Role.PROFESSOR) {
-				lessons = LessonDAO.getTodayNextLessonsProfessor(date, time, username);
-			}
-			else {
-				return;
-			}
-			
-			Label label = new Label("There are no future lessons today");
-			if (lessons == null) {
-				vboxScroll.getChildren().add(label);
-				return;
-			}
+			viewNextLessonController = new ViewNextLessonController();
+			List<LessonBean> lessons = viewNextLessonController.getTodayLessons();
 			
 			if (lessons.size() == 1) {
-				vboxScroll.getChildren().add(label);
+				vboxScroll.getChildren().add(new Label("There are no future lessons today"));
 			}
 
-			for (Lesson lesson : lessons) {
-				try {
-					LessonBean lessonBean = new LessonBean();
-					lessonBean.setCourse(lesson.getCourse());
-					lessonBean.setClassroom(lesson.getClassroom());
-					lessonBean.setDate(lesson.getDate());
-					lessonBean.setProfessor(lesson.getProfessor());
-					lessonBean.setTime(lesson.getTime());
-					lessonBean.setTopic(lesson.getTopic());
-					
-					LessonCard lessonCard = new LessonCard(lessonBean);
-					if (lesson == lessons.get(0)) {
-						anchorNextLesson.getChildren().add(lessonCard);
-					}
-					else {
-						vboxScroll.getChildren().add(lessonCard);
-					}
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			for (LessonBean lessonBean : lessons) {
+				LessonCard lessonCard = new LessonCard(lessonBean);
+				
+				// AnchorPane case
+				if (lessonBean == lessons.get(0)) {
+					anchorNextLesson.getChildren().add(lessonCard);
+				}
+				
+				// ScrollPane case
+				else {
+					vboxScroll.getChildren().add(lessonCard);
 				}
 			}
+		
+		} catch (NullPointerException e) {
+			vboxScroll.getChildren().add(new Label("There are no future lessons today"));
+			return;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -176,5 +160,10 @@ public class HomepageView implements Initializable {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	// Add map
+	private void addWebMap() {
+		webMap.getEngine().load(getClass().getResource("/res/html/map.html").toString());
 	}
 }

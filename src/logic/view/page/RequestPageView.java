@@ -11,14 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
-import logic.exceptions.RecordNotFoundException;
-import logic.model.Course;
-import logic.model.Request;
-import logic.model.dao.CourseDAO;
-import logic.model.dao.RequestDAO;
+import logic.controller.AcceptRequestController;
 import logic.view.card.element.CourseFilterCard;
 import logic.view.card.element.RequestCard;
 
@@ -27,27 +22,21 @@ public class RequestPageView implements Initializable {
 	@FXML
 	private VBox vboxRequest, vboxCourse;
 	
-	List<Request> requests;
-	List<Course> courses;
+	private AcceptRequestController acceptRequestController;
 	
-	List<String> filteredCourses = new ArrayList<>();
+	private List<RequestBean> requests;
+	private List<CourseBean> courses;
+	
+	private List<String> filteredCourses = new ArrayList<>();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
+		acceptRequestController = new AcceptRequestController();
+
 		try {
-			courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
-			for (Course c : courses) {
-				CourseBean courseBean = new CourseBean();
-				courseBean.setAbbrevation(c.getAbbrevation());
-				courseBean.setCredits(c.getCredits());
-				courseBean.setGoal(c.getGoal());
-				courseBean.setName(c.getName());
-				courseBean.setPrerequisites(c.getPrerequisites());
-				courseBean.setReception(c.getReception());
-				courseBean.setSemester(c.getSemester());
-				courseBean.setYear(c.getYear());
-				
+			courses = acceptRequestController.getCourses();
+			for (CourseBean courseBean : courses) {
 				CourseFilterCard courseFilterCard = new CourseFilterCard(courseBean);
 				vboxCourse.getChildren().add(courseFilterCard);
 			}
@@ -69,14 +58,13 @@ public class RequestPageView implements Initializable {
 	}
 	
 	public void updateRequests() {
+		
 		vboxRequest.getChildren().clear();
+		acceptRequestController = new AcceptRequestController();
+		
 		try {
-			requests = RequestDAO.getRequestsByProfessor(Session.getSession().getUserLogged().getUsername());
-			for (Request request : requests) {
-				RequestBean requestBean = new RequestBean();
-				requestBean.setCourse(request.getCourse());
-				requestBean.setStudent(request.getStudent());
-						
+			requests = acceptRequestController.getRequests();
+			for (RequestBean requestBean : requests) {	
 				RequestCard requestCard = new RequestCard(requestBean);
 				vboxRequest.getChildren().add(requestCard);
 			}
@@ -86,10 +74,6 @@ public class RequestPageView implements Initializable {
 			return;
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} catch (RecordNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
@@ -110,12 +94,8 @@ public class RequestPageView implements Initializable {
 
 		try {
 			vboxRequest.getChildren().clear();
-			for (Request request : requests) {
-				if (filteredCourses.contains(request.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
-					RequestBean requestBean = new RequestBean();
-					requestBean.setCourse(request.getCourse());
-					requestBean.setStudent(request.getStudent());
-					
+			for (RequestBean requestBean : requests) {
+				if (filteredCourses.contains(requestBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
 					RequestCard requestCard = new RequestCard(requestBean);
 					vboxRequest.getChildren().add(requestCard);
 				}
@@ -124,10 +104,6 @@ public class RequestPageView implements Initializable {
 			if (vboxRequest.getChildren().isEmpty()) {
 				vboxRequest.getChildren().add(new Label("No request found."));
 			}
-			
-		} catch (NullPointerException e) {
-			vboxRequest.getChildren().add(new Label("No request found"));
-			return;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

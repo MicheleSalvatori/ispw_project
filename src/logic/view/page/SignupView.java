@@ -60,6 +60,7 @@ public class SignupView implements Initializable {
 			userBean.setSurname(surname);
 			userBean.setEmail(email);
 			userBean.setPassword(password);
+			
 			System.out.println("SIGNUP DATA:\n\tuser: " + userBean.getUsername() + "\n\tpass: " + userBean.getPassword());
 			signupController = new SignupController();
 			try {

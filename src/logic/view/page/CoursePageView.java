@@ -2,9 +2,7 @@ package logic.view.page;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -17,10 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.model.Lesson;
-import logic.model.Professor;
-import logic.model.dao.LessonDAO;
-import logic.model.dao.ProfessorDAO;
+import logic.bean.ProfessorBean;
+import logic.controller.CourseController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.LessonCard;
@@ -40,7 +36,24 @@ public class CoursePageView implements Initializable{
     @FXML
     private VBox vboxScroll;
 
+    private CourseController courseController;
+    
     private CourseBean course;
+    
+    
+    @Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		// TODO weeklyLesson DB
+		for (int i=0; i<5; i++) {
+			try {
+				WeeklyLessonCard weeklyLessonCard = new WeeklyLessonCard("Monday", "A3", "10:00");
+				vboxScroll.getChildren().add(weeklyLessonCard);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}	
+	}
 
     @FXML
     void viewScheduledExams(ActionEvent event) throws IOException {
@@ -52,17 +65,6 @@ public class CoursePageView implements Initializable{
     	PageLoader.getInstance().buildPage(Page.SCHEDULED_LESSONS, event, course);
     }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		for (int i=0; i<5; i++) {
-			try {
-				WeeklyLessonCard weeklyLessonCard = new WeeklyLessonCard("Monday", "A3", "10:00");
-				vboxScroll.getChildren().add(weeklyLessonCard);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}	
-	}
 	
 	public void setBean(Object course) {
 		this.course = (CourseBean) course;
@@ -71,27 +73,21 @@ public class CoursePageView implements Initializable{
 	
 	public void setPage() {
 		
-		Date date = new Date(System.currentTimeMillis());
-		Time time = new Time(System.currentTimeMillis());
+		courseController = new CourseController();
 		
-		Lesson lesson;
-		LessonCard lessonCard;
 		try {
-			lesson = LessonDAO.getNextLessonByCourse(date, time, course.getAbbrevation());
-			
-			LessonBean lessonBean = new LessonBean();
-			lessonBean.setClassroom(lesson.getClassroom());
-			lessonBean.setCourse(lesson.getCourse());
-			lessonBean.setDate(lesson.getDate());
-			lessonBean.setProfessor(lesson.getProfessor());
-			lessonBean.setTime(lesson.getTime());
-			lessonBean.setTopic(lesson.getTopic());
-			
-			lessonCard = new LessonCard(lessonBean);
-
+			LessonBean lessonBean = courseController.getNextLesson(course); 
+			LessonCard lessonCard = new LessonCard(lessonBean);
 			anchorNextLesson.getChildren().add(lessonCard); 
 			
+			List<ProfessorBean> professors = courseController.getCourseProfessors(course);
+			labelProfessor.setText("");
+			for (ProfessorBean professor : professors) {
+				labelProfessor.setText(labelProfessor.getText()+"/"+professor.getName() + " " + professor.getSurname());
+			}
+			
 		} catch (NullPointerException e) {
+			// Nothing
 			System.out.println("NullPointer");
 			
 		} catch (IOException e) {
@@ -104,18 +100,6 @@ public class CoursePageView implements Initializable{
 		}
 		
 		labelCourse.setText(course.getAbbrevation());
-		List<Professor> professors;
-		try {
-			professors = ProfessorDAO.getCourseProfessors(course.getAbbrevation());
-			labelProfessor.setText("");
-			for (Professor professor : professors) {
-				labelProfessor.setText(labelProfessor.getText()+"/"+professor.getName() + " " + professor.getSurname());
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		labelYear.setText(course.getYear());
 		labelCredits.setText(course.getCredits());

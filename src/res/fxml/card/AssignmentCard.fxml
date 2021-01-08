@@ -10,27 +10,27 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="580.0" styleClass="root" stylesheets="@../../style/card/AssignmentCard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       
-      <ImageView fitHeight="32.0" fitWidth="24.0" layoutX="24.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="32.0" fitWidth="24.0" layoutX="24.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="18.0" AnchorPane.topAnchor="24.0">
          <image>
             <Image url="@../../png/card/Assignment.png" />
          </image>
       </ImageView>
       
-      <Label fx:id="labelTitle" layoutX="97.18" layoutY="16.0" styleClass="label_title" text="Titolo" />
+      <Label fx:id="labelTitle" layoutX="97.18" layoutY="16.0" styleClass="label-title" text="Titolo" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="15.0" />
       
-      <Label fx:id="labelDate" layoutX="148.0" layoutY="48.0" styleClass="label_date" text="Data scadenza" />
+      <Label fx:id="labelDate" layoutX="148.0" layoutY="48.0" styleClass="label-date" text="Data scadenza" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="140.0" />
       
-      <Label fx:id="labelCourse" layoutX="254.0" layoutY="27.0" styleClass="label_course" text="Corso" />
+      <Button fx:id="btnCourse" onAction="#course" layoutX="245.0" layoutY="21.0" maxWidth="94.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="79.0" styleClass="button-label" text="Course" AnchorPane.bottomAnchor="20.0" AnchorPane.topAnchor="20.0" />
       
-      <Button fx:id="btnView" layoutX="320.0" layoutY="24.0" mnemonicParsing="false" onAction="#viewAssignment" text="View" />
+      <Button fx:id="btnView" layoutX="320.0" layoutY="24.0" mnemonicParsing="false" onAction="#viewAssignment" styleClass="button-view" text="View" AnchorPane.rightAnchor="15.0" />
       
-      <Label fx:id="labelNumber" layoutX="54.22" layoutY="23.0" styleClass="label_number" text="?" />
+      <Label fx:id="labelNumber" layoutX="54.22" layoutY="23.0" styleClass="label-number" text="?" AnchorPane.bottomAnchor="19.5" AnchorPane.leftAnchor="47.0" AnchorPane.topAnchor="19.5" />
       
       <Line endY="54.0" layoutX="76.72" layoutY="13.0" />
       
       <Line endY="54.0" layoutX="245.0" layoutY="13.0" />
       
-      <Label layoutX="97.18" layoutY="48.0" styleClass="label_expires" text="Expires:" />
+      <Label layoutX="97.18" layoutY="48.0" styleClass="label-expires" text="Expires:" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="90.0" />
    
    </children>
 </AnchorPane>

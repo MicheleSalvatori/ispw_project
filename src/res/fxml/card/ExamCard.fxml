@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -9,21 +10,19 @@
 <AnchorPane prefHeight="80.0" prefWidth="1094.0" styleClass="root" stylesheets="@../../style/card/ExamCard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
    
-      <Label fx:id="labelName" layoutX="115.0" layoutY="16.0" styleClass="exam-label" text="Exam Name" />
+      <Label fx:id="labelName" layoutX="115.0" layoutY="16.0" styleClass="exam-label" text="Exam Name" AnchorPane.topAnchor="12.0" />
       
-      <Label fx:id="labelDate" layoutX="115.0" layoutY="46.0" styleClass="date-label" text="Date" />
+      <Label fx:id="labelDate" layoutX="115.0" layoutY="46.0" styleClass="date-label" text="Date" AnchorPane.bottomAnchor="20.0" />
       
-      <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="21.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="21.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="15.0">
          <image>
             <Image url="@../../png/card/Exam.png" />
          </image>
       </ImageView>
       
-      <Label fx:id="labelVote" layoutX="618.44" layoutY="28.0" styleClass="details-label" text="Vote" />
+      <Label fx:id="labelVote" alignment="CENTER" layoutX="547.0" layoutY="28.0" prefHeight="28.0" prefWidth="184.0" styleClass="details-label" text="Vote" AnchorPane.bottomAnchor="26.0" AnchorPane.topAnchor="26.0" />
       
-      <Label fx:id="labelCourse" layoutX="976.0" layoutY="28.0" styleClass="details-label" text="Course" />
-      
-      <Label fx:id="labelCFU" layoutX="800.44" layoutY="28.0" styleClass="details-label" text="CFU" />
+      <Label fx:id="labelCFU" alignment="CENTER" layoutX="732.0" layoutY="28.0" prefHeight="28.0" prefWidth="174.0" styleClass="details-label" text="CFU" AnchorPane.bottomAnchor="26.0" AnchorPane.topAnchor="26.0" />
       
       <Line endY="54.0" layoutX="547.0" layoutY="13.0" />
       
@@ -33,7 +32,9 @@
       
       <Line endY="54.0" layoutX="98.0" layoutY="13.0" />
       
-      <Label fx:id="labelNumber" layoutX="70.0" layoutY="23.0" styleClass="exam-label" text="?" />
+      <Label fx:id="labelNumber" layoutX="70.0" layoutY="23.0" styleClass="exam-label" text="?" AnchorPane.leftAnchor="60.0" />
+      
+      <Button fx:id="btnCourse" onAction="#course" layoutX="906.0" layoutY="20.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="172.0" text="Course" AnchorPane.bottomAnchor="20.0" AnchorPane.topAnchor="20.0" />
       
    </children>
 </AnchorPane>

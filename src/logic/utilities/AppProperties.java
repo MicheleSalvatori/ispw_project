@@ -13,6 +13,7 @@ public class AppProperties {
 		try (InputStream input = AppProperties.class.getResourceAsStream("../system.properties")) {
 			prop = new Properties();
 			prop.load(input);
+			
 		} catch (IOException e) {
 			// TODO
 		}

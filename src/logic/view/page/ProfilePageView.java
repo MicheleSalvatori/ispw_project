@@ -86,7 +86,13 @@ public class ProfilePageView implements Initializable {
 	
 	@FXML
 	private void removeCourse(ActionEvent event) throws SQLException {
-		List<Course> courses = CourseDAO.getStudentCourses(Session.getSession().getUsername());
+		
+		joinCourseController = new JoinCourseController();
+		
+		UserBean userBean = new UserBean();
+		userBean.setUsername(Session.getSession().getUsername());
+		
+		List<CourseBean> courses = joinCourseController.getStudentCourses(userBean);
 		
 		if (courses == null) {
 			AlertController.buildInfoAlert("You don't have any courses available.", "delete", event);
@@ -94,18 +100,18 @@ public class ProfilePageView implements Initializable {
 		}
 		
 		List<String> names = new ArrayList<>();
-		for (Course course : courses) {
+		for (CourseBean course : courses) {
 			names.add(course.getName());
 		}
 		
 		int index = AlertController.courseRequest(event, names);
 		if (index != -1) {
-			Course course = courses.get(index);
+			CourseBean course = courses.get(index);
 			RequestBean requestBean = new RequestBean();
 			requestBean.setStudent((Student) Session.getSession().getUserLogged());
-			requestBean.setCourse(course);
+			requestBean.setCourse(new Course(course.getName(), course.getAbbrevation(), course.getYear(), course.getSemester(),
+									course.getCredits(), course.getPrerequisites(), course.getGoal(), course.getReception()));
 			
-			joinCourseController = new JoinCourseController();
 			joinCourseController.removeCourse(requestBean);
 			
 			AlertController.buildInfoAlert("Course " + course.getAbbrevation() + " removed.", "delete", event);
@@ -115,7 +121,13 @@ public class ProfilePageView implements Initializable {
 	
 	@FXML
 	private void addCourse(ActionEvent event) throws SQLException {
-		List<Course> courses = CourseDAO.getAvailableCourses(Session.getSession().getUsername());
+		
+		joinCourseController = new JoinCourseController();
+		
+		UserBean userBean = new UserBean();
+		userBean.setUsername(Session.getSession().getUsername());
+		
+		List<CourseBean> courses = joinCourseController.getAvailableCourses(userBean);
 		
 		if (courses == null) {
 			AlertController.buildInfoAlert("You don't have any courses to add.", "delete", event);
@@ -123,18 +135,18 @@ public class ProfilePageView implements Initializable {
 		}
 		
 		List<String> names = new ArrayList<>();
-		for (Course course : courses) {
+		for (CourseBean course : courses) {
 			names.add(course.getName());
 		}
 		
 		int index = AlertController.courseRequest(event, names);
 		if (index != -1) {
-			Course course = courses.get(index);
+			CourseBean course = courses.get(index);
 			RequestBean requestBean = new RequestBean();
 			requestBean.setStudent((Student) Session.getSession().getUserLogged());
-			requestBean.setCourse(course);
-			
-			joinCourseController = new JoinCourseController();
+			requestBean.setCourse(new Course(course.getName(), course.getAbbrevation(), course.getYear(), course.getSemester(),
+									course.getCredits(), course.getPrerequisites(), course.getGoal(), course.getReception()));
+
 			joinCourseController.sendRequest(requestBean);
 			
 			AlertController.buildInfoAlert("Request sended to course's professor.\nYou will receive a notification when the request will be approved", "request", event);

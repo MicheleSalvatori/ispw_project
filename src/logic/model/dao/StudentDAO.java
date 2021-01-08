@@ -152,7 +152,7 @@ public class StudentDAO {
 		}
 	}
 	
-	public static Student findStudentByUsername(String username) throws SQLException, RecordNotFoundException {
+	public static Student findStudentByUsername(String username) throws SQLException {
 		Connection conn = null;
 		Statement stmt = null;
 		Student student = null;
@@ -168,6 +168,7 @@ public class StudentDAO {
 			
 			if (!resultSet.first()) {
 				student = null;
+            	
 			}else {
 				resultSet.first();				// mi riposiziono alla prima riga 
 				student = new Student();
@@ -177,10 +178,6 @@ public class StudentDAO {
 				student.setSurname(resultSet.getString("surname"));
 				student.setEmail(resultSet.getString("email"));
 				student.setPassword(resultSet.getString("password"));
-			}
-			if (student == null) {
-				RecordNotFoundException e = new RecordNotFoundException("No Username Found matching with name: " + username);
-            	throw e;
 			}
 			
 			resultSet.close();

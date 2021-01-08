@@ -30,39 +30,38 @@
 	-fx-max-height: -height;	
 }
  
- .label_title {
+ .label-title {
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 20px;
 }
 
-.label_number{
+.label-number{
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 24px;
 }
 
-.label_expires {
+.label-expires {
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Roboto";
 	-fx-font-weight: bold;
 	-fx-font-size: 13px;
 }
 
-.label_date {
+.label-date {
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Roboto";
 	-fx-font-size: 13px;
 }
 
-.label_course {
+.label-course {
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 16px;
 }
 
-
-.button {
+.button-view {
 	-fx-background-color: #0C0B0B;
 	-fx-background-radius: 8px;
 	
@@ -78,7 +77,16 @@
 	-fx-pref-width: -width;
 	-fx-pref-height: -height;
 	-fx-max-width: -width;
-	-fx-max-height: -height;	
+	-fx-max-height: -height;
+}
+
+.button-label {
+	-fx-background-color: transparent;
+	
+	-fx-text-fill: #0C0B0B;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 16px;
+	-fx-underline: true;
 }
 
 .button:hover {
