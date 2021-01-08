@@ -42,8 +42,8 @@ import logic.bean.QuestionBean;
 import logic.controller.InsertAnswerController;
 import logic.model.Answer;
 import logic.model.Student;
-import logic.utilities.AlertController;
 import logic.utilities.SQLConverter;
+import logic.utilities.AlertController;
 import logic.view.card.element.AnswerCard;
 
 public class QuestionPageView implements Initializable {
@@ -99,7 +99,7 @@ public class QuestionPageView implements Initializable {
 			try {
 				AnswerBean answerBean = new AnswerBean();
 				answerBean.setDate(answer.getDate());
-				answerBean.setStudent(answer.getStudent());
+				answerBean.setUser(answer.getUser());
 				answerBean.setText(answer.getText());
 				answerBean.setId(question.getId());
 				
@@ -179,7 +179,7 @@ public class QuestionPageView implements Initializable {
 	private void setupEvent() {
 		this.addAnswerEvent = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				saveQuestion(textAnswer.getText());
+				saveAnswer(textAnswer.getText());
 			}
 		};
 		
@@ -190,12 +190,11 @@ public class QuestionPageView implements Initializable {
 		};
 	}
 
-	private void saveQuestion(String text) {
-		insertAnswerController = new InsertAnswerController();
-		
+	private void saveAnswer(String text) {
+		InsertAnswerController controller = new InsertAnswerController();
 		AnswerBean answer = new AnswerBean();
-		answer.setId(question.getId());
-		answer.setStudent((Student) Session.getSession().getUserLogged());
+		answer.setId(bean.getId());
+		answer.setUser(Session.getSession().getUserLogged());
 		answer.setText(text);
 		answer.setDate(new Date(System.currentTimeMillis()));
 		

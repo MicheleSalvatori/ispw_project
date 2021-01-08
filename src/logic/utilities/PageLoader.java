@@ -45,7 +45,7 @@ public class PageLoader {
 		}
 		return instance;
 	}
-	
+
 	public static Page getPage() {
 		return page;
 	}
@@ -115,18 +115,13 @@ public class PageLoader {
 			loadPageNoNavBar(event);
 			break;
 			
-		default:
-			loadPage(event);
-			configPage(loader.load());
-			break;
-		}
-	}
-	
-	private void loadPage(ActionEvent ae) throws IOException {
+
+	private void loadPage(ActionEvent ae, Object obj) throws IOException {
 		Node source = (Node) ae.getSource();
 		primaryStage = (Stage) source.getScene().getWindow();
 		URL url = new File(page.getRes()).toURI().toURL();
-		loader = new FXMLLoader(url);
+		FXMLLoader loader = new FXMLLoader(url);
+		this.loader = loader;
 	}
 
 	private NavigationBar configNavBar() throws IOException {
@@ -154,21 +149,21 @@ public class PageLoader {
 		primaryStage.setTitle(page.getStageTitle());
 		primaryStage.show();
 	}
+        
+  private void loadPageNoNavBar(ActionEvent ae) throws IOException {
+      Node source = (Node) ae.getSource();
+      Stage stage = (Stage) source.getScene().getWindow();
+      URL url = new File(page.getRes()).toURI().toURL();
+      loader = new FXMLLoader(url);
+      Parent parent = loader.load();
 
-	private void loadPageNoNavBar(ActionEvent ae) throws IOException {
-		Node source = (Node) ae.getSource();
-		Stage stage = (Stage) source.getScene().getWindow();
-		URL url = new File(page.getRes()).toURI().toURL();
-		loader = new FXMLLoader(url);
-		Parent parent = loader.load();
+      Scene scene = new Scene(parent);
+      stage.setScene(scene);
+      stage.setTitle(page.getStageTitle());
+      stage.show();
+    }
 
-		Scene scene = new Scene(parent);
-		stage.setScene(scene);
-		stage.setTitle(page.getStageTitle());
-		stage.show();
-	}
-	
-	public Object getController() {
+ public Object getController() {
 		return loader.getController();
 	}
 }

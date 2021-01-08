@@ -22,6 +22,7 @@ import logic.utilities.AlertController;
 import logic.utilities.Email;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.utilities.Role;
 
 public class LoginView implements Initializable {
 
@@ -35,7 +36,7 @@ public class LoginView implements Initializable {
 	private PasswordField textPassword;
 	
 	private LoginController loginController;
-	private String type;
+	private Role role;
 
 	@FXML
 	void loginUser(ActionEvent event) throws IOException {
@@ -54,8 +55,7 @@ public class LoginView implements Initializable {
 		userBean.setUsername(username);
 		loginController = new LoginController();
 		try {
-			type = loginController.getTypeUser(userBean);
-			
+			role = loginController.getTypeUser(userBean);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,20 +66,39 @@ public class LoginView implements Initializable {
 		}
 		
 		// switch for type user login
-		try {
-			switch (type) {
-			
-			case "student":
+		switch (role) {
+		case STUDENT:
+			try {
 				loginController.loginAsStudent(userBean);
-				break;
-				
-			case "professor":
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event, null);
+			} catch (SQLException e) {
+				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+			} catch (RecordNotFoundException e) {
+				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
+			}
+			break;
+		case PROFESSOR:
+			try {
 				loginController.loginAsProfessor(userBean);
-				break;
-				
-			case "admin":
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event, null);
+			} catch (SQLException e) {
+				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+			} catch (ConnectException e) {
+				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
+			} catch (RecordNotFoundException e) {
+				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
+			}
+			break;
+		case ADMIN:
+			try {
 				loginController.loginAsAdmin(userBean);
-				break;
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event, null);
+			} catch (SQLException e) {
+				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+			} catch (ConnectException e) {
+				AlertController.buildInfoAlert("Can't connect to internet\n.Try later", "Login failed", event);
+			} catch (RecordNotFoundException e) {
+				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
 			}
 			
 		} catch (SQLException e) {

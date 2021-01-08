@@ -39,6 +39,7 @@ public class AssignmentCardView {
 	}
 	
 	@FXML
+
 	private void course(ActionEvent event) throws IOException {
 		Course course = assignment.getCourse();
     	
@@ -53,5 +54,6 @@ public class AssignmentCardView {
     	courseBean.setReception(course.getReception());
 
     	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
+
 	}
 }

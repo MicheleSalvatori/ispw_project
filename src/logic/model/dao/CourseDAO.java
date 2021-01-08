@@ -9,6 +9,7 @@ import java.util.List;
 
 import logic.model.Course;
 import logic.utilities.Queries;
+import logic.utilities.Role;
 import logic.utilities.SingletonDB;
 
 public class CourseDAO {
@@ -31,7 +32,6 @@ public class CourseDAO {
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.findCourseByAbbr(stmt, abbrevation);
-
 
 			if (!rs.first()) {
 				course = null;
@@ -56,7 +56,8 @@ public class CourseDAO {
 		return course;
 	}
 
-	public static int getCourseNumberOf(String username) throws SQLException {
+
+	public static int getCourseNumberOf(String username, Role role) throws SQLException {
 		Statement stmt = null;
 		Connection conn = null;
 		int number;
@@ -68,7 +69,18 @@ public class CourseDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = Queries.countCourses(stmt, username);
+			ResultSet rs = null;
+
+			switch (role) {
+			case PROFESSOR:
+				rs = Queries.countCoursesProf(stmt, username);
+				break;
+			case STUDENT:
+				rs = Queries.countCourses(stmt, username);
+				break;
+			default:
+				break;
+			}
 
 			if (!rs.first()) {
 				number = 0;
@@ -84,13 +96,13 @@ public class CourseDAO {
 		}
 		return number;
 	}
-	
+
 	public static List<Course> getAllCourses() throws SQLException {
-		
+
 		Statement stmt = null;
 		Connection conn = null;
 		List<Course> courses;
-		
+
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			if (conn == null) {
@@ -126,13 +138,13 @@ public class CourseDAO {
 		}
 		return courses;
 	}
-	
+
 	public static List<Course> getAvailableCourses(String student) throws SQLException {
-		
+
 		Statement stmt = null;
 		Connection conn = null;
 		List<Course> courses;
-		
+
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			if (conn == null) {
@@ -211,13 +223,13 @@ public class CourseDAO {
 		}
 		return courses;
 	}
-	
+
 	public static List<Course> getProfessorCourses(String professor) throws SQLException {
-		
+
 		Statement stmt = null;
 		Connection conn = null;
 		List<Course> courses;
-		
+
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			if (conn == null) {
@@ -253,13 +265,13 @@ public class CourseDAO {
 		}
 		return courses;
 	}
-	
+
 	public static List<Course> getStudentCourses_1(String student) throws SQLException {
-		
+
 		Statement stmt = null;
 		Connection conn = null;
 		List<Course> courses;
-		
+
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			if (conn == null) {
@@ -295,13 +307,13 @@ public class CourseDAO {
 		}
 		return courses;
 	}
-	
+
 	public static List<Course> getStudentCoursesByRequest(String student) throws SQLException {
-		
+
 		Statement stmt = null;
 		Connection conn = null;
 		List<Course> courses;
-		
+
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			if (conn == null) {
@@ -339,4 +351,3 @@ public class CourseDAO {
 		return courses;
 	}
 }
-

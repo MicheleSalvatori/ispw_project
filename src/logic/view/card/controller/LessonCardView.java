@@ -19,7 +19,7 @@ import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
 
-public class LessonCardView implements Initializable {
+public class LessonCardView {
 	
 	@FXML
 	private Label labelLesson, labelClass, labelTime;
@@ -72,7 +72,7 @@ public class LessonCardView implements Initializable {
 	@FXML
 	public void course(ActionEvent event) throws IOException, SQLException {
     	Course course = lesson.getCourse();
-    	
+	
     	CourseBean courseBean = new CourseBean();
     	courseBean.setAbbrevation(course.getAbbrevation());
     	courseBean.setName(course.getName());
@@ -89,10 +89,5 @@ public class LessonCardView implements Initializable {
 	@FXML
 	public void viewLesson(ActionEvent event) throws IOException, SQLException {
 		PageLoader.getInstance().buildPage(Page.LESSON, event, lesson);
-	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-			
 	}
 }

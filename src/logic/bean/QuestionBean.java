@@ -1,12 +1,9 @@
-
 package logic.bean;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.model.Answer;
-import logic.model.Course;
 import logic.model.Student;
 
 public class QuestionBean {
@@ -18,27 +15,23 @@ public class QuestionBean {
 	private Student student;
 	private boolean solved;
 	private Date date;
-	private List<Answer> answers;	
-	
-	public QuestionBean() {
-		
-	}
-	
-	public List<Answer> getAnswers() {
+	private List<AnswerBean> answers;
+
+	public List<AnswerBean> getAnswers() {
 		return answers;
 	}
 
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
-	
-	public void addAnswers(Answer answer) {
+
+	public void addAnswers(AnswerBean answer) {
 		if (answers == null) {
 			this.answers = new ArrayList<>();
 		}
 		this.answers.add(answer);
 	}
-
+  
 	public Date getDate() {
 		return date;
 	}
@@ -100,7 +93,7 @@ public class QuestionBean {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-	
+
 	@Override
 	public String toString() {
 		String buildString = "ID: "+getId()

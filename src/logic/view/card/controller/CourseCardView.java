@@ -44,7 +44,7 @@ public class CourseCardView {
 	
 	@FXML
 	private void professor(ActionEvent event) throws IOException {
-		PageLoader.getInstance().buildPage(Page.PROFESSOR, event);
+		PageLoader.getInstance().buildPage(Page.PROFESSOR, event, null);
 	}
 	
 	@FXML

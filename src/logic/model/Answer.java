@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Answer {
 	private int id;
 	private String text;
-	private Student student;
+	private User user;
 	private Date date;
 
 	public Answer(int id, String text, Student student, Date date) {
@@ -31,12 +31,12 @@ public class Answer {
 		this.text = text;
 	}
 
-	public Student getStudent() {
-		return student;
+	public User getUser() {
+		return user;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Date getDate() {

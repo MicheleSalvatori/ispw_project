@@ -18,7 +18,7 @@
       
       <Label fx:id="labelQuestionObject" layoutX="110.0" layoutY="6.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="228.0" styleClass="label-object" text="Oggetto Domanda" />
       
-      <Label fx:id="labelQuestionDate" layoutX="113.0" layoutY="41.0" styleClass="label-date" text="Data" />
+      <Label fx:id="labelQuestionDate" layoutX="111.0" layoutY="41.0" styleClass="label-date" text="Data" />
       
       <Label fx:id="labelName" layoutX="369.0" layoutY="26.0" styleClass="label-author" text="Nome" />
       
@@ -26,7 +26,7 @@
       
       <Label fx:id="labelCourse" layoutX="491.0" layoutY="26.0" styleClass="label-course" text="Corso" />
       
-      <Button fx:id="btnView" layoutX="560.0" layoutY="23.0" mnemonicParsing="false" onAction="#viewQuestion" text="View" />
+      <Button fx:id="btnView" layoutX="560.0" layoutY="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewQuestion" prefHeight="32.0" prefWidth="60.0" text="View" />
       
       <Label fx:id="labelNumber" layoutX="70.0" layoutY="23.0" styleClass="label-number" text="?" />
       
@@ -35,7 +35,7 @@
       <Line endY="54.0" layoutX="351.0" layoutY="14.0" />
       
       <Line endY="54.0" layoutX="482.0" layoutY="14.0" />
-      <Label fx:id="labelSolved" layoutX="113.0" layoutY="58.0" styleClass="label-author" text="Solved" />
+      <Button fx:id="btnSolved" disable="true" layoutX="102.0" layoutY="55.0" mnemonicParsing="false" onAction="#setSolved" styleClass="button-label" text="Solved" />
    
    </children>
 </AnchorPane>

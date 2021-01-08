@@ -11,21 +11,26 @@ import logic.model.Answer;
 import logic.model.Question;
 import logic.model.dao.CourseDAO;
 import logic.model.dao.QuestionDAO;
+import logic.utilities.Role;
 
 public class AllQuestionController {
 	private List<Question> questionList;
 
 	public AllQuestionController() {
 	}
-	
+
 	public int getNumberCourses() throws SQLException {
-		return CourseDAO.getCourseNumberOf(Session.getSession().getUserLogged().getUsername());
+		Role role = Session.getSession().getType();
+		int courses;
+		courses = CourseDAO.getCourseNumberOf(Session.getSession().getUserLogged().getUsername(), role);
+		return courses;
 	}
 
 	public List<QuestionBean> getAllQuestions() throws SQLException {
 		List<QuestionBean> questionBeans = new ArrayList<>();
+		Role role = Session.getSession().getType();
 		try {
-			questionList = QuestionDAO.getCoursesQuestions(Session.getSession().getUserLogged().getUsername());
+			questionList = QuestionDAO.getCoursesQuestions(Session.getSession().getUserLogged().getUsername(), role);
 			for (Question q : questionList) {
 				QuestionBean bean = new QuestionBean();
 				bean.setId(q.getId());
@@ -38,7 +43,8 @@ public class AllQuestionController {
 				List<Answer> answers = q.getAnswers();
 				if (answers != null) {
 					for (Answer a : answers) {
-						bean.addAnswers(a);
+						AnswerBean answerBean = new AnswerBean(a.getId(), a.getText(), a.getUser(), a.getDate());
+						bean.addAnswers(answerBean);
 					}
 				}
 				questionBeans.add(bean);
@@ -49,5 +55,15 @@ public class AllQuestionController {
 			questionBeans = null;
 		}
 		return questionBeans;
+	}
+
+	public boolean setSolved(int questionID) {
+		try {
+			QuestionDAO.setSolved(questionID);
+		} catch (SQLException e) {
+//			AlertControl
+			return false;
+		}
+		return true;
 	}
 }

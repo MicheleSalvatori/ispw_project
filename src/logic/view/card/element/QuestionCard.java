@@ -17,8 +17,7 @@ public class QuestionCard extends AnchorPane {
 		URL url = new File("src/res/fxml/card/QuestionCard.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(questionCardView);
-		this.getChildren().add(loader.load());
-		
+		this.getChildren().add(loader.load());	
 		questionCardView.setCard(question);
 	}
 }

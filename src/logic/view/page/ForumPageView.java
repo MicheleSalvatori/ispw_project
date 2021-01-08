@@ -84,7 +84,7 @@ public class ForumPageView implements Initializable {
 
 	@FXML
 	private void newQuestion(ActionEvent ae) throws IOException {
-		PageLoader.getInstance().buildPage(Page.NEWQUESTION, ae);
+		PageLoader.getInstance().buildPage(Page.NEWQUESTION, ae, null);
 	}
 
 	private void getAllQuestions() {
@@ -125,16 +125,34 @@ public class ForumPageView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		allQuestionController = new AllQuestionController();
+		int nCourses;
 		try {
-			if (allQuestionController.getNumberCourses() == 0) {
+			nCourses = allQuestionController.getNumberCourses();
+		} catch (SQLException e) {
+			nCourses = 0;
+		}
+		
+		Role roleLogged = Session.getSession().getType();
+		switch (roleLogged) {
+		case PROFESSOR:
+			btnNewQuestion.setVisible(false);
+			btnMyQuestions.setVisible(false);
+			btnAllQuestions.setVisible(false);
+			if (nCourses== 0) {
+				labelLoading.setText("You are not assigned to any course at the moment.");
+				return;
+			}
+			break;
+		case STUDENT:
+			if (nCourses == 0) {
 				btnNewQuestion.setDisable(true);
 				btnMyQuestions.setDisable(true);
 				labelLoading.setText("You are not enrolled in any course, you cannot ask questions.");
 				return;
 			}
-			
-		} catch (SQLException e) {
-			//Sollevata da CourseDAO.getCourseNumberOf(username)
+			break;
+		default:
+			break;
 		}
 		
 		Platform.runLater(new Runnable() {
@@ -180,4 +198,9 @@ public class ForumPageView implements Initializable {
 			e.printStackTrace();
 		}
 	}
+  
+	public boolean setSolved(int questionID) {
+		return allQuestionController.setSolved(questionID);
+	}
 }
+

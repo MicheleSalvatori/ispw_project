@@ -72,7 +72,7 @@ public class NewQuestionView implements Initializable {
 			AlertController.buildInfoAlert("Something happened, your question was not acquired..", "Bad news..", ae);
 		} finally {
 			try {
-				PageLoader.getInstance().buildPage(Page.FORUM, ae);
+				PageLoader.getInstance().buildPage(Page.FORUM, ae, null);
 			} catch (IOException e) {
 				// errore caricamento fxml capire come gestirla. Conviene gestirla nel
 				// pageLoader

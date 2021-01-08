@@ -14,11 +14,12 @@ import logic.model.Course;
 import logic.model.Question;
 import logic.model.Student;
 import logic.utilities.Queries;
+import logic.utilities.Role;
 import logic.utilities.SingletonDB;
 
 public class QuestionDAO {
 
-	public static List<Question> getCoursesQuestions(String username) throws SQLException, RecordNotFoundException {
+	public static List<Question> getCoursesQuestions(String username, Role role) throws SQLException, RecordNotFoundException {
 		Connection conn;
 		Statement stmt;
 		List<Question> questions;
@@ -28,8 +29,17 @@ public class QuestionDAO {
 			questions = null;
 		}
 		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		ResultSet rs = Queries.getQuestionsCourse(stmt, username);
-
+		ResultSet rs = null;
+		switch (role) {
+		case PROFESSOR:
+			rs = Queries.getQuestionsProfessorCourse(stmt, username);
+			break;
+		case STUDENT:
+			rs = Queries.getQuestionsCourse(stmt, username);
+			break;
+		default:
+			break;
+		}
 		if (!rs.first()) {
 			questions = null;
 		} else {
@@ -64,5 +74,13 @@ public class QuestionDAO {
 		boolean solved = question.isSolved();
 		Queries.saveQuestion(conn, subject, text, username, course, date, solved);
 
+	}
+
+	public static void setSolved(int questionID) throws SQLException {
+		Connection conn;
+		Statement stmt = null;
+		conn = SingletonDB.getDbInstance().getConnection();
+		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		Queries.setQuestionSolved(stmt, questionID);
 	}
 }

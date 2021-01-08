@@ -8,10 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.Session;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Answer;
 import logic.model.Student;
 import logic.utilities.Queries;
+import logic.utilities.Role;
 import logic.utilities.SingletonDB;
 
 public class AnswerDAO {
@@ -24,6 +26,7 @@ public class AnswerDAO {
 		Statement stmt = null;
 		Connection conn = null;
 		List<Answer> answers;
+		Role answerUserRole = null;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -40,11 +43,24 @@ public class AnswerDAO {
 				answers = new ArrayList<>();
 				rs.first();
 				do {
+
 					Date d = rs.getDate("date");
 					String t = rs.getString("text");
-					Student s = StudentDAO.findStudentByUsername(rs.getString("username"));
 					int i = rs.getInt("id");
-					Answer a = new Answer(i, t, s, d);
+					String username = rs.getString("username");
+					answerUserRole = RoleDAO.findType(username);
+          User u = null;
+					switch (answerUserRole) {
+					case PROFESSOR:
+						u = ProfessorDAO.findProfessor(username);
+						break;
+					case STUDENT:
+						u = StudentDAO.findStudentByUsername(username);
+						break;
+					default:
+						break;
+					}
+          Answer a = new Answer(i, t, u, d);
 					answers.add(a);
 				} while (rs.next());
 			}
@@ -62,7 +78,7 @@ public class AnswerDAO {
 		conn = SingletonDB.getDbInstance().getConnection();
 		int id = answer.getId();
 		String text = answer.getText();
-		String username = answer.getStudent().getUsername();
+		String username = answer.getUser().getUsername();
 		Date date = answer.getDate();
 		Queries.saveAnswer(conn, id, username, text, date);
 	}
