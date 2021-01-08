@@ -21,21 +21,6 @@ public class Lesson {
 		this.professor = professor;
 	}
 	
-	public Lesson(Date date, Time time, Course course, Classroom classroom, String topic) {
-		this.date = date;
-		this.time = time;
-		this.course = course;
-		this.classroom = classroom;
-		this.topic = topic;
-	}
-	
-	public Lesson(Date date, Time time, Course course, Classroom classroom) {
-		this.date = date;
-		this.time = time;
-		this.course = course;
-		this.classroom = classroom;
-	}
-	
 	public Date getDate() {
 		return date;
 	}

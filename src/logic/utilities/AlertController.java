@@ -159,7 +159,7 @@ public class AlertController {
 		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
 		centerButtons(alert.getDialogPane());
 		alert.initStyle(StageStyle.TRANSPARENT);
-    ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
 	    GaussianBlur blur = new GaussianBlur(55);
 	    adj.setInput(blur);
 		source.getScene().getRoot().setEffect(adj);
@@ -176,7 +176,7 @@ public class AlertController {
 		
 	public static String changePassword(ActionEvent event) {
 		Dialog<String> dialog = new Dialog<>();
-		dialog.setHeaderText("Insert new password");
+		dialog.setHeaderText("Insert a new password");
 		dialog.setGraphic(null);
 		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -201,6 +201,56 @@ public class AlertController {
 	    dialog.setResultConverter(dialogButton -> {
 	        if (dialogButton == ButtonType.OK) {
 	            return pwd.getText();
+	        }
+	        return null;
+	    });
+	    
+		Node source = (Node) event.getSource();
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+	    GaussianBlur blur = new GaussianBlur(55);
+	    adj.setInput(blur);
+		source.getScene().getRoot().setEffect(adj);
+		
+		dialog.show();
+		animation(dialog);
+		dialog.close();
+		
+		Optional<String> result = dialog.showAndWait();
+		source.getScene().getRoot().setEffect(null);
+		
+		if (result.isPresent()) {
+	    	return result.get();
+	    }
+	    return null;
+	}
+	
+	public static String emailInput(ActionEvent event) {
+		Dialog<String> dialog = new Dialog<>();
+		dialog.setHeaderText("Insert your email");
+		dialog.setGraphic(null);
+		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
+		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+		centerButtons(dialog.getDialogPane());
+		dialog.initStyle(StageStyle.TRANSPARENT);
+		
+		TextField text = new TextField();
+		text.setPromptText("Email");
+		HBox content = new HBox();
+	    content.setAlignment(Pos.CENTER);
+	    HBox.setHgrow(text, Priority.ALWAYS);
+	    //pwd.setMinWidth(dialog.getDialogPane().getWidth());
+	    content.getChildren().add(text);
+	    
+	    
+	    // Disable OK button until all text fields aren't empty
+	    dialog.getDialogPane().lookupButton(ButtonType.OK).disableProperty()
+	    						.bind(Bindings.isEmpty(text.textProperty()));
+	    
+	    dialog.getDialogPane().setContent(content);
+	    
+	    dialog.setResultConverter(dialogButton -> {
+	        if (dialogButton == ButtonType.OK) {
+	            return text.getText();
 	        }
 	        return null;
 	    });
@@ -335,8 +385,6 @@ public class AlertController {
 	    }
 	    return null;
 	}
-	
-	
 	
 	private static void centerButtons(DialogPane dialogPane) {
 		Region spacer = new Region();

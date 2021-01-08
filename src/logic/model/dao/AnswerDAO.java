@@ -11,11 +11,16 @@ import java.util.List;
 import logic.Session;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Answer;
+import logic.model.Student;
 import logic.utilities.Queries;
 import logic.utilities.Role;
 import logic.utilities.SingletonDB;
 
 public class AnswerDAO {
+	
+	private AnswerDAO() {
+		
+	}
 
 	public static List<Answer> getAnswerOf(int id) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
@@ -38,22 +43,24 @@ public class AnswerDAO {
 				answers = new ArrayList<>();
 				rs.first();
 				do {
-					Answer a = new Answer();
-					a.setDate(rs.getDate("date"));
-					a.setText(rs.getString("text"));
-					a.setId(rs.getInt("id"));
+
+					Date d = rs.getDate("date");
+					String t = rs.getString("text");
+					int i = rs.getInt("id");
 					String username = rs.getString("username");
 					answerUserRole = RoleDAO.findType(username);
+          User u = null;
 					switch (answerUserRole) {
 					case PROFESSOR:
-						a.setUser(ProfessorDAO.findProfessor(username));
+						u = ProfessorDAO.findProfessor(username);
 						break;
 					case STUDENT:
-						a.setUser(StudentDAO.findStudentByUsername(username));
+						u = StudentDAO.findStudentByUsername(username);
 						break;
 					default:
 						break;
 					}
+          Answer a = new Answer(i, t, u, d);
 					answers.add(a);
 				} while (rs.next());
 			}

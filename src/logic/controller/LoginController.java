@@ -62,16 +62,13 @@ public class LoginController {
 		Session.getSession().setType(Role.ADMIN);
 		
 	}
+	
 	public void logout() throws SQLException, ClassNotFoundException {
-		
+
 		// Delete Session
 		Session.getSession().setUserLogged(null);
 		
 		// Delete Navigation Bar
 		NavigationBar.setInstance(null);;
 	}
-
-
-
-
 }

@@ -8,11 +8,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import logic.bean.CourseBean;
+import logic.bean.ExamBean;
 import logic.model.Course;
-import logic.model.dao.CourseDAO;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
-import logic.view.page.CoursePageView;
+import logic.utilities.SQLConverter;
 
 public class ScheduledExamCardView {
 	
@@ -22,12 +22,11 @@ public class ScheduledExamCardView {
 	@FXML
 	private Button btnCourse;
 	
+	private ExamBean exam;
+	
 	@FXML
 	private void course(ActionEvent event) throws SQLException, IOException {
-		PageLoader.getInstance().buildPage(Page.COURSE, event, null);
-    	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
-    	
-    	Course course = CourseDAO.getCourseByAbbrevation(btnCourse.getText());
+    	Course course = exam.getCourse();
     	
     	CourseBean courseBean = new CourseBean();
     	courseBean.setAbbrevation(course.getAbbrevation());
@@ -38,15 +37,16 @@ public class ScheduledExamCardView {
     	courseBean.setPrerequisites(course.getPrerequisites());
     	courseBean.setGoal(course.getGoal());
     	courseBean.setReception(course.getReception());;
-    	
-    	coursePageView.setPage(courseBean);
+
+    	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
 	}
 	
-	public void setCard(String day, String course, String classroom, String time) {
-		labelDay.setText(day);
-		btnCourse.setText(course);
-		labelClass.setText(classroom);
-		labelTime.setText(time);
+	public void setCard(ExamBean exam) {
+		this.exam = exam;
+		
+		labelDay.setText(SQLConverter.date(exam.getDate()));
+		btnCourse.setText(exam.getCourse().getAbbrevation());
+		labelClass.setText(exam.getClassroom().getName());
+		labelTime.setText(SQLConverter.time(exam.getTime()));
 	}
-
 }

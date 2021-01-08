@@ -25,7 +25,9 @@ public class AssignmentPageView implements Initializable {
 	private Button btnAdd, btnRemove;
 	
 	@FXML
-	private void addFile(ActionEvent ae) {
+	private void addFile(ActionEvent event) {
+		
+		// TODO vedere se salvare file (penso di no)
 		JFileChooser chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("*.pdf", "pdf");
 		chooser.setFileFilter(filter);
@@ -38,6 +40,5 @@ public class AssignmentPageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		
 	}
 }

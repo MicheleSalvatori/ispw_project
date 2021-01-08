@@ -3,7 +3,6 @@ package logic.utilities;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -20,7 +19,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import logic.view.menu.element.NavigationBar;
 import logic.view.menu.element.StatusBar;
+import logic.view.page.CoursePageView;
+import logic.view.page.LessonPageView;
 import logic.view.page.QuestionPageView;
+import logic.view.page.ScheduledPageView;
 
 public class PageLoader {
 
@@ -34,6 +36,7 @@ public class PageLoader {
 	private Background background = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 
 	private PageLoader() {
+		
 	}
 
 	public static PageLoader getInstance() {
@@ -46,47 +49,72 @@ public class PageLoader {
 	public static Page getPage() {
 		return page;
 	}
-
+	
+	// BuildPage and pass a bean to the page controller
 	public void buildPage(Page page, ActionEvent event, Object obj) throws IOException {
 		PageLoader.page = page;
 		switch (page) {
-		case SIGNUP:
-		case LOGIN:
-			loadPage(event, null);
-			Scene scene = new Scene(loader.load());
-			primaryStage.setScene(scene);
-			primaryStage.setTitle(page.getStageTitle());
-			primaryStage.show();
+
+		case COURSE:
+			loadPage(event);
+			CoursePageView coursePageView = new CoursePageView();
+			loader.setController(coursePageView);
+			configPage(loader.load());
+			coursePageView.setBean(obj);
 			break;
+			
+		case SCHEDULED_LESSONS:
+			loadPage(event);
+			ScheduledPageView scheduledPageView = new ScheduledPageView();
+			loader.setController(scheduledPageView);
+			configPage(loader.load());
+			scheduledPageView.setLessonPage(obj);
+			break;
+			
+		case SCHEDULED_EXAMS:
+			loadPage(event);
+			ScheduledPageView scheduledExamPageView = new ScheduledPageView();
+			loader.setController(scheduledExamPageView);
+			configPage(loader.load());
+			scheduledExamPageView.setExamPage(obj);
+			break;
+			
+		case LESSON:
+			loadPage(event);
+			LessonPageView lessonPageView = new LessonPageView();
+			loader.setController(lessonPageView);
+			configPage(loader.load());
+			lessonPageView.setBean(obj);
+			break;
+			
 		case QUESTION:
-			loadPage(event, obj);
+			loadPage(event);
 			QuestionPageView questionPageView = new QuestionPageView();
 			loader.setController(questionPageView);
 			configPage(loader.load());
 			questionPageView.setBean(obj);
 			break;
+			
 		default:
-			loadPage(event, null);
+			loadPage(event);
 			configPage(loader.load());
 			break;
 		}
 	}
-
+	
+	// Build a page without pass a bean
 	public void buildPage(Page page, ActionEvent event) throws IOException {
 		PageLoader.page = page;
 		switch (page) {
+		
 		case SIGNUP:
+			loadPageNoNavBar(event);
+			break;
+			
 		case LOGIN:
-			loadPage(event, null);
-			Scene scene = new Scene(loader.load());
-			primaryStage.setScene(scene);
-			primaryStage.setTitle(page.getStageTitle());
-			primaryStage.show();
+			loadPageNoNavBar(event);
 			break;
-		default:
-			break;
-		}
-	}
+			
 
 	private void loadPage(ActionEvent ae, Object obj) throws IOException {
 		Node source = (Node) ae.getSource();
@@ -101,8 +129,7 @@ public class PageLoader {
 	}
 
 	private HBox configStatusBar() throws IOException {
-		// Reset StatusBar instance every time in order to set label and user avatar
-		// properly
+		// Reset StatusBar instance every time in order to set label and user avatar properly
 		StatusBar.reset();
 		HBox statusBarHBox = new HBox(StatusBar.getInstance());
 		statusBarHBox.setAlignment(Pos.TOP_RIGHT);
@@ -122,8 +149,21 @@ public class PageLoader {
 		primaryStage.setTitle(page.getStageTitle());
 		primaryStage.show();
 	}
+        
+  private void loadPageNoNavBar(ActionEvent ae) throws IOException {
+      Node source = (Node) ae.getSource();
+      Stage stage = (Stage) source.getScene().getWindow();
+      URL url = new File(page.getRes()).toURI().toURL();
+      loader = new FXMLLoader(url);
+      Parent parent = loader.load();
 
-	public Object getController() {
+      Scene scene = new Scene(parent);
+      stage.setScene(scene);
+      stage.setTitle(page.getStageTitle());
+      stage.show();
+    }
+
+ public Object getController() {
 		return loader.getController();
 	}
 }

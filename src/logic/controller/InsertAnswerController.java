@@ -9,11 +9,7 @@ import logic.model.dao.AnswerDAO;
 public class InsertAnswerController {
 
 	public void save(AnswerBean answerBean) throws SQLException {
-		Answer answer = new Answer();
-		answer.setDate(answerBean.getDate());
-		answer.setId(answerBean.getId());
-		answer.setUser(answerBean.getUser());
-		answer.setText(answerBean.getText());
+		Answer answer = new Answer(answerBean.getId(), answerBean.getText(), answerBean.getUser(), answerBean.getDate());
 		AnswerDAO.saveAnswer(answer);	
 	}
 }

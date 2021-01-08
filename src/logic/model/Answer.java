@@ -8,7 +8,11 @@ public class Answer {
 	private User user;
 	private Date date;
 
-	public Answer() {
+	public Answer(int id, String text, Student student, Date date) {
+		this.id = id;
+		this.text = text;
+		this.student = student;
+		this.date = date;
 	}
 
 	public int getId() {

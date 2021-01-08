@@ -24,7 +24,6 @@ public class SingletonDB {
 					AppProperties.getInstance().getProperty("dbpasswd"));
 		}
 		return conn;
-
 	}
 
 	public static SingletonDB getDbInstance() throws SQLException {

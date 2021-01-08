@@ -2,9 +2,8 @@ package logic.view.page;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,15 +11,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import logic.Session;
-import logic.model.Course;
-import logic.model.Exam;
-import logic.model.Lesson;
-import logic.model.dao.CourseDAO;
-import logic.model.dao.ExamDAO;
-import logic.model.dao.LessonDAO;
-import logic.utilities.Role;
-import logic.utilities.SQLConverter;
+import logic.bean.CourseBean;
+import logic.bean.ExamBean;
+import logic.bean.LessonBean;
+import logic.controller.ScheduledController;
+import logic.utilities.Page;
+import logic.utilities.PageLoader;
 import logic.view.card.element.CourseFilterCard;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.ScheduledExamCard;
@@ -33,175 +29,133 @@ public class ScheduledPageView implements Initializable {
 	@FXML
 	private VBox vboxScroll, vboxCourse;
 	
-	public void setLessonPage(String course) {
-		Date date = new Date(System.currentTimeMillis());
-		Time time = new Time(System.currentTimeMillis());
-		vboxScroll.getChildren().clear();
-		insertFilters(course);
+	private ScheduledController scheduledController;
 	
+	private List<LessonBean> lessons;
+	private List<ExamBean> exams;
+	private List<CourseBean> courses;
+	
+	private List<String> filteredCourses;
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		scheduledController = new ScheduledController();
+		filteredCourses = new ArrayList<>();
+
 		try {
 			
-			List<Lesson> lessons;
-			if (Session.getSession().getType() == Role.STUDENT) {
-				lessons = LessonDAO.getNextLessonsStudent(date, time, Session.getSession().getUserLogged().getUsername());
+			if (PageLoader.getPage() == Page.SCHEDULED_LESSONS) {
+				labelPage.setText("Lessons");
+				
+				// Get user lessons
+				lessons = scheduledController.getLessons();
 			}
-			else if (Session.getSession().getType() == Role.PROFESSOR) {
-				lessons = LessonDAO.getNextLessonsProfessor(date, time, Session.getSession().getUserLogged().getUsername());
+			
+			else if (PageLoader.getPage() == Page.SCHEDULED_EXAMS) {
+				labelPage.setText("Exams");
+				
+				// Get user exams
+				exams = scheduledController.getExams();
 			}
-			else {
-				return;
-			}
+			
+			// Get user courses
+			courses = scheduledController.getCourses();
 
-			for (Lesson lesson : lessons) {
-				LessonCard lessonCard = new LessonCard(SQLConverter.date(lesson.getDate()), lesson.getClassroom().getName(), lesson.getCourse().getAbbrevation(), SQLConverter.time(lesson.getTime()));
-				vboxScroll.getChildren().add(lessonCard);
+		} catch (NullPointerException e) {
+			vboxCourse.getChildren().add(new Label("No course found"));
+			return;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setLessonPage(Object obj) throws IOException {
+		CourseBean course = (CourseBean) obj;
+		setFilters(course);
+		filterLessons(course);
+	}
+	
+	public void setExamPage(Object obj) throws IOException {
+		CourseBean course = (CourseBean) obj;
+		setFilters(course);
+		filterExams(course);
+	}
+	
+	public void setFilters(CourseBean course) throws IOException {
+		for (CourseBean c : courses) {	
+			CourseFilterCard courseFilterCard = new CourseFilterCard(c);
+			if (c.getAbbrevation().compareTo(course.getAbbrevation()) == 0) {
+				courseFilterCard.getController().getButton().setSelected(true);
+			}
+			vboxCourse.getChildren().add(courseFilterCard);
+		}
+	}
+	
+	public void filterLessons(CourseBean course) {
+		
+		if (filteredCourses.contains(course.getAbbrevation())) {
+			filteredCourses.remove(course.getAbbrevation());
+		}
+		else {
+			filteredCourses.add(course.getAbbrevation());
+		}
+		
+		try {
+			vboxScroll.getChildren().clear();
+			
+			for (LessonBean lessonBean : lessons) {
+				if (filteredCourses.contains(lessonBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
+					LessonCard lessonCard = new LessonCard(lessonBean);
+					vboxScroll.getChildren().add(lessonCard);
+				}
+			}
+			
+			if (vboxScroll.getChildren().isEmpty()) {
+				vboxScroll.getChildren().add(new Label("No lesson found."));
 			}
 			
 		} catch (NullPointerException e) {
 			vboxScroll.getChildren().add(new Label("No lesson found"));
 			return;
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void setExamPage(String course) {
-		labelPage.setText("Exams");
-		
-		Date date = new Date(System.currentTimeMillis());
-		Time time = new Time(System.currentTimeMillis());
-		vboxScroll.getChildren().clear();
-		insertFilters(course);
 	
+	public void filterExams(CourseBean course) {
+		
+		if (filteredCourses.contains(course.getAbbrevation())) {
+			filteredCourses.remove(course.getAbbrevation());
+		}
+		else {
+			filteredCourses.add(course.getAbbrevation());
+		}
+		
 		try {
-			List<Exam> exams = ExamDAO.getExamsByCourse(date, time, course);
-			for (Exam exam : exams) {
-				ScheduledExamCard examCard = new ScheduledExamCard(SQLConverter.date(exam.getDate()), exam.getCourse().getAbbrevation(), exam.getClassroom().getName(), SQLConverter.time(exam.getTime()));
-				vboxScroll.getChildren().add(examCard);
+			vboxScroll.getChildren().clear();
+			for (ExamBean examBean : exams) {
+				if (filteredCourses.contains(examBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
+					ScheduledExamCard scheduledExamCard = new ScheduledExamCard(examBean);
+					vboxScroll.getChildren().add(scheduledExamCard);
+				}
+			}
+			
+			if (vboxScroll.getChildren().isEmpty()) {
+				vboxScroll.getChildren().add(new Label("No exam found."));
 			}
 			
 		} catch (NullPointerException e) {
 			vboxScroll.getChildren().add(new Label("No exam found"));
 			return;
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	private void insertFilters(String c) {
-		try {
-			vboxCourse.getChildren().clear();
-			List<Course> courses;
-			if (Session.getSession().getType() == Role.STUDENT) {
-				courses = CourseDAO.getStudentCourses(Session.getSession().getUserLogged().getUsername());
-			}
-			else if (Session.getSession().getType() == Role.PROFESSOR) {
-				courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
-			}
-			else {
-				return;
-			}
-
-			for (Course course : courses) {
-				CourseFilterCard courseFilterCard = new CourseFilterCard(course.getAbbrevation());
-				vboxCourse.getChildren().add(courseFilterCard);
-				System.out.println(course.getAbbrevation() + "  :  " + c);
-				if (course.getAbbrevation().compareTo(c) == 0) {
-					courseFilterCard.getController().getButton().setSelected(true);
-				}
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	/*public void setPage() {
-		
-		if (PageLoader.getPage() == Page.SCHEDULED_LESSONS) {
-			
-			Date date = new Date(System.currentTimeMillis());
-			Time time = new Time(System.currentTimeMillis());
-		
-			try {
-				
-				List<Lesson> lessons;
-				if (Session.getSession().getType() == Session.Role.STUDENT) {
-					lessons = LessonDAO.getNextLessonsStudent(date, time, Session.getSession().getUserLogged().getUsername());
-				}
-				else if (Session.getSession().getType() == Session.Role.PROFESSOR) {
-					lessons = LessonDAO.getNextLessonsProfessor(date, time, Session.getSession().getUserLogged().getUsername());
-				}
-				else {
-					return;
-				}
-				
-				for (Lesson lesson : lessons) {
-					LessonCard lessonCard = new LessonCard(SQLConverter.date(lesson.getDate()), lesson.getClassroom().getName(), lesson.getCourse().getAbbrevation(), SQLConverter.time(lesson.getTime()));
-					vboxScroll.getChildren().add(lessonCard);
-				}
-				
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		else {
-			labelPage.setText("Exams");
-			
-			for (int i=0; i<10; i++) {
-				try {
-					ScheduledExamCard scheduledExamCard = new ScheduledExamCard("03/12/2020", "ISPW", "z555", "37:96");
-					vboxScroll.getChildren().add(scheduledExamCard);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		try {
-			List<Course> courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
-			for (Course course : courses) {
-				CourseFilterCard courseFilterCard = new CourseFilterCard(course.getAbbrevation());
-				vboxCourse.getChildren().add(courseFilterCard);
-
-			}
-			
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
 	}
 }

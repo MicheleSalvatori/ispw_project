@@ -17,21 +17,21 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import logic.Session;
+import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.bean.UserBean;
 import logic.controller.JoinCourseController;
 import logic.controller.LoginController;
 import logic.controller.SignupController;
 import logic.model.Course;
-import logic.model.Professor;
 import logic.model.Student;
 import logic.model.dao.CourseDAO;
-import logic.model.dao.ProfessorDAO;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.Role;
 import logic.view.card.element.CourseCard;
+import logic.view.card.element.CourseCard.Type;
 
 public class ProfilePageView implements Initializable {
 	
@@ -48,6 +48,10 @@ public class ProfilePageView implements Initializable {
 	private Label labelUsername, labelName, labelPassword, labelSurname, labelEmail;
 	
 	private Boolean show = false;
+	
+	private LoginController loginController;
+	private SignupController signupController;
+	private JoinCourseController joinCourseController;
 	
 	@FXML
 	private void changePass(ActionEvent event) throws SQLException, ClassNotFoundException, IOException {
@@ -74,7 +78,7 @@ public class ProfilePageView implements Initializable {
 		userBean.setPassword(password);
 		
 		if (AlertController.confirmation("Do you want to change your password?\nYou will be logged out.", event)) {
-			SignupController signupController = new SignupController();
+			signupController = new SignupController();
 			signupController.changePassword(userBean);
 			logout(event);
 		}
@@ -82,7 +86,13 @@ public class ProfilePageView implements Initializable {
 	
 	@FXML
 	private void removeCourse(ActionEvent event) throws SQLException {
-		List<Course> courses = CourseDAO.getStudentCourses(Session.getSession().getUsername());
+		
+		joinCourseController = new JoinCourseController();
+		
+		UserBean userBean = new UserBean();
+		userBean.setUsername(Session.getSession().getUsername());
+		
+		List<CourseBean> courses = joinCourseController.getStudentCourses(userBean);
 		
 		if (courses == null) {
 			AlertController.buildInfoAlert("You don't have any courses available.", "delete", event);
@@ -90,18 +100,18 @@ public class ProfilePageView implements Initializable {
 		}
 		
 		List<String> names = new ArrayList<>();
-		for (Course course : courses) {
+		for (CourseBean course : courses) {
 			names.add(course.getName());
 		}
 		
 		int index = AlertController.courseRequest(event, names);
 		if (index != -1) {
-			Course course = courses.get(index);
+			CourseBean course = courses.get(index);
 			RequestBean requestBean = new RequestBean();
 			requestBean.setStudent((Student) Session.getSession().getUserLogged());
-			requestBean.setCourse(course);
+			requestBean.setCourse(new Course(course.getName(), course.getAbbrevation(), course.getYear(), course.getSemester(),
+									course.getCredits(), course.getPrerequisites(), course.getGoal(), course.getReception()));
 			
-			JoinCourseController joinCourseController = new JoinCourseController();
 			joinCourseController.removeCourse(requestBean);
 			
 			AlertController.buildInfoAlert("Course " + course.getAbbrevation() + " removed.", "delete", event);
@@ -111,7 +121,13 @@ public class ProfilePageView implements Initializable {
 	
 	@FXML
 	private void addCourse(ActionEvent event) throws SQLException {
-		List<Course> courses = CourseDAO.getAvailableCourses(Session.getSession().getUsername());
+		
+		joinCourseController = new JoinCourseController();
+		
+		UserBean userBean = new UserBean();
+		userBean.setUsername(Session.getSession().getUsername());
+		
+		List<CourseBean> courses = joinCourseController.getAvailableCourses(userBean);
 		
 		if (courses == null) {
 			AlertController.buildInfoAlert("You don't have any courses to add.", "delete", event);
@@ -119,18 +135,18 @@ public class ProfilePageView implements Initializable {
 		}
 		
 		List<String> names = new ArrayList<>();
-		for (Course course : courses) {
+		for (CourseBean course : courses) {
 			names.add(course.getName());
 		}
 		
 		int index = AlertController.courseRequest(event, names);
 		if (index != -1) {
-			Course course = courses.get(index);
+			CourseBean course = courses.get(index);
 			RequestBean requestBean = new RequestBean();
 			requestBean.setStudent((Student) Session.getSession().getUserLogged());
-			requestBean.setCourse(course);
-			
-			JoinCourseController joinCourseController = new JoinCourseController();
+			requestBean.setCourse(new Course(course.getName(), course.getAbbrevation(), course.getYear(), course.getSemester(),
+									course.getCredits(), course.getPrerequisites(), course.getGoal(), course.getReception()));
+
 			joinCourseController.sendRequest(requestBean);
 			
 			AlertController.buildInfoAlert("Request sended to course's professor.\nYou will receive a notification when the request will be approved", "request", event);
@@ -194,41 +210,55 @@ public class ProfilePageView implements Initializable {
 				courses = new ArrayList<>();
 				
 				if (c1 != null) {
-					for (Course course : c1) {
-						List<Professor> professor = ProfessorDAO.getCourseProfessors(course.getAbbrevation());
-						CourseCard courseCard = new CourseCard(course.getAbbrevation(), professor.get(0).getName() + " " + professor.get(0).getSurname(), "3", "3");
-						//CourseCard courseCard = new CourseCard(course);
-						vboxScroll.getChildren().add(courseCard);
-					}
+					courses.addAll(c1);
 				}
 				
 				if (c2 != null) {
+					//courses.addAll(c2);
 					for (Course course : c2) {
-						List<Professor> professor = ProfessorDAO.getCourseProfessors(course.getAbbrevation());
-						CourseCard courseCard = new CourseCard(course.getAbbrevation(), professor.get(0).getName() + " " + professor.get(0).getSurname());
-						//CourseCard courseCard = new CourseCard(course);
+						CourseBean courseBean = new CourseBean();
+						
+						courseBean.setAbbrevation(course.getAbbrevation());
+						courseBean.setName(course.getName());
+						courseBean.setCredits(course.getCredits());
+						courseBean.setGoal(course.getGoal());
+						courseBean.setPrerequisites(course.getPrerequisites());
+						courseBean.setReception(course.getReception());
+						courseBean.setSemester(course.getSemester());
+						courseBean.setYear(course.getYear());
+						
+						CourseCard courseCard = new CourseCard(courseBean, Type.REQUEST);
 						vboxScroll.getChildren().add(courseCard);
 					}
 				}
 				
-				if (c1 == null && c2 == null) {
+				if (courses.isEmpty()) {
 					throw new NullPointerException();
-				}
-				
+				}	
 			}
 			
 			else if (Session.getSession().getType() == Role.PROFESSOR) {
 				courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
-				for (Course course : courses) {
-					List<Professor> professor = ProfessorDAO.getCourseProfessors(course.getAbbrevation());
-					CourseCard courseCard = new CourseCard(course.getAbbrevation(), professor.get(0).getName() + " " + professor.get(0).getSurname(), "3", "3");
-					//CourseCard courseCard = new CourseCard(course);
-					vboxScroll.getChildren().add(courseCard);
-				}
 			}
 			
 			else {
 				return;
+			}
+			
+			for (Course course : courses) {
+				CourseBean courseBean = new CourseBean();
+				
+				courseBean.setAbbrevation(course.getAbbrevation());
+				courseBean.setName(course.getName());
+				courseBean.setCredits(course.getCredits());
+				courseBean.setGoal(course.getGoal());
+				courseBean.setPrerequisites(course.getPrerequisites());
+				courseBean.setReception(course.getReception());
+				courseBean.setSemester(course.getSemester());
+				courseBean.setYear(course.getYear());
+				
+				CourseCard courseCard = new CourseCard(courseBean, Type.FOLLOW);
+				vboxScroll.getChildren().add(courseCard);
 			}
 			
 		} catch (NullPointerException e) {
@@ -249,7 +279,7 @@ public class ProfilePageView implements Initializable {
 	private void logout(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
 		System.out.println("Logout");
 		
-		LoginController loginController = new LoginController();
+		loginController = new LoginController();
 		loginController.logout();
 		PageLoader.getInstance().buildPage(Page.LOGIN, event, null);
 	}

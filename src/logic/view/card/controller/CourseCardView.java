@@ -2,6 +2,7 @@ package logic.view.card.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,20 +14,17 @@ import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.controller.JoinCourseController;
 import logic.exceptions.RecordNotFoundException;
-import logic.model.Course;
+import logic.model.Professor;
 import logic.model.Request;
-import logic.model.dao.CourseDAO;
+import logic.model.dao.ProfessorDAO;
 import logic.model.dao.RequestDAO;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
-import logic.view.page.CoursePageView;
+import logic.view.card.element.CourseCard.Type;
 import logic.view.page.ProfilePageView;
 
 public class CourseCardView {
-	
-	// TODO meglio con Entity o senza
-	private Course course;
 
 	@FXML
 	private Button btnCourse, btnProfessor, btnDelete;
@@ -37,24 +35,11 @@ public class CourseCardView {
 	@FXML
 	private Label labelYear, labelSemester;
 	
+	private CourseBean courseBean;
+	
 	@FXML
 	private void course(ActionEvent event) throws SQLException, IOException {
-		PageLoader.getInstance().buildPage(Page.COURSE, event, null);
-    	CoursePageView coursePageView = (CoursePageView) PageLoader.getInstance().getController();
-    	
-    	Course course = CourseDAO.getCourseByAbbrevation(btnCourse.getText());
-    	
-    	CourseBean courseBean = new CourseBean();
-    	courseBean.setAbbrevation(course.getAbbrevation());
-    	courseBean.setName(course.getName());
-    	courseBean.setYear(course.getYear());
-    	courseBean.setCredits(course.getCredits());
-    	courseBean.setSemester(course.getSemester());
-    	courseBean.setPrerequisites(course.getPrerequisites());
-    	courseBean.setGoal(course.getGoal());
-    	courseBean.setReception(course.getReception());
-    	
-    	coursePageView.setPage(courseBean);
+		PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
 	}
 	
 	@FXML
@@ -64,9 +49,8 @@ public class CourseCardView {
 	
 	@FXML
 	private void deleteRequest(ActionEvent event) throws SQLException, RecordNotFoundException {
-		
 		if (AlertController.confirmation("Do you want to cancel this request?", event)) {
-			Request request = RequestDAO.getRequest(Session.getSession().getUsername(), btnCourse.getText());
+			Request request = RequestDAO.getRequest(Session.getSession().getUsername(), courseBean.getAbbrevation());
 			
 			RequestBean requestBean = new RequestBean();
 			requestBean.setStudent(request.getStudent());
@@ -82,31 +66,25 @@ public class CourseCardView {
 		}
 	}
 	
-	public void setCard(String course, String professor, String year, String semester) {
-		labelYear.setVisible(true);
-		labelSemester.setVisible(true);
-		line1.setVisible(true);
-		line2.setVisible(true);
+	public void setCourse(CourseBean courseBean, Type type) throws SQLException {
+		this.courseBean = courseBean;
 		
-		btnCourse.setText(course);
-		btnProfessor.setText(professor);
-		labelYear.setText(year);
-		labelSemester.setText(semester);
-	}
-	
-	public void setCard(String course, String professor) {
-		btnDelete.setVisible(true);
+		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbrevation());
+		btnCourse.setText(courseBean.getAbbrevation());
+		btnProfessor.setText(professors.get(0).getName() + " " + professors.get(0).getSurname());
 		
-		btnCourse.setText(course);
-		btnProfessor.setText(professor);
-	}
-	
-	// TODO
-	public void setCourse(Course course) {
-		this.course = course;
-		btnCourse.setText(course.getAbbrevation());
-		btnProfessor.setText("lezzo");
-		labelYear.setText(course.getYear());
-		labelSemester.setText(course.getSemester());
+		if (type == Type.REQUEST) {
+			btnDelete.setVisible(true);
+		}
+		
+		else if (type == Type.FOLLOW){
+			labelYear.setVisible(true);
+			labelSemester.setVisible(true);
+			line1.setVisible(true);
+			line2.setVisible(true);
+			
+			labelYear.setText(courseBean.getYear());
+			labelSemester.setText(courseBean.getSemester());
+		}
 	}
 }

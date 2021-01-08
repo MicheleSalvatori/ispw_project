@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.exceptions.RecordNotFoundException;
+import logic.model.Answer;
 import logic.model.Course;
 import logic.model.Question;
+import logic.model.Student;
 import logic.utilities.Queries;
 import logic.utilities.Role;
 import logic.utilities.SingletonDB;
@@ -44,15 +46,15 @@ public class QuestionDAO {
 			questions = new ArrayList<>();
 			rs.first();
 			do {
-				Question q = new Question();
-				q.setId(rs.getInt(1));
-				q.setTitle(rs.getString("title"));
-				q.setText(rs.getString("Text"));
-				q.setStudent(StudentDAO.findStudentByUsername(rs.getString("username")));
-				q.setDate(rs.getDate("date"));
-				q.setSolved(rs.getBoolean("solved"));
-				q.setAnswers(AnswerDAO.getAnswerOf(rs.getInt("id")));
-				q.setCourse(new Course(rs.getString("course")));
+				int id = rs.getInt(1);
+				String t = rs.getString("title");
+				String te = rs.getString("text");
+				Student s = StudentDAO.findStudentByUsername(rs.getString("username"));
+				Date d = rs.getDate("date");
+				boolean so = rs.getBoolean("solved");
+				List<Answer> a = AnswerDAO.getAnswerOf(rs.getInt("id"));
+				Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+				Question q = new Question(id, t, te, c, s, so, d, a);
 				questions.add(q);
 			} while (rs.next());
 		}

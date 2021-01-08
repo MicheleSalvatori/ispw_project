@@ -2,10 +2,7 @@ package logic.view.page;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -17,89 +14,81 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
-import logic.model.Lesson;
-import logic.model.Professor;
-import logic.model.dao.LessonDAO;
-import logic.model.dao.ProfessorDAO;
+import logic.bean.LessonBean;
+import logic.bean.ProfessorBean;
+import logic.controller.CourseController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
-import logic.utilities.SQLConverter;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.WeeklyLessonCard;
 
 public class CoursePageView implements Initializable{
 
     @FXML
-    private Label labelCourse;
-
-    @FXML
-    private Label labelProfessor;
+    private Label labelCourse, labelProfessor, labelPrerequisites, labelGoal, labelReception, labelYear, labelSemester,labelCredits;
 
     @FXML
     private AnchorPane anchorNextLesson;
 
     @FXML
-    private Button btnViewLessons;
-
-    @FXML
-    private Button btnViewExams;
-
-    @FXML
-    private Label labelPrerequisites;
-
-    @FXML
-    private Label labelGoal;
-
-    @FXML
-    private Label labelReception;
-
-    @FXML
-    private Label labelYear;
-
-    @FXML
-    private Label labelSemester;
-
-    @FXML
-    private Label labelCredits;
+    private Button btnViewLessons, tnViewExams;
     
     @FXML
     private VBox vboxScroll;
 
+    private CourseController courseController;
+    
+    private CourseBean course;
+    
+    
+    @Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		// TODO weeklyLesson DB
+		for (int i=0; i<5; i++) {
+			try {
+				WeeklyLessonCard weeklyLessonCard = new WeeklyLessonCard("Monday", "A3", "10:00");
+				vboxScroll.getChildren().add(weeklyLessonCard);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}	
+	}
+
     @FXML
     void viewScheduledExams(ActionEvent event) throws IOException {
-    	PageLoader.getInstance().buildPage(Page.SCHEDULED_EXAMS, event, null);
-    	ScheduledPageView scheduledPageView = (ScheduledPageView) PageLoader.getInstance().getController();
-		scheduledPageView.setExamPage(labelCourse.getText());
+    	PageLoader.getInstance().buildPage(Page.SCHEDULED_EXAMS, event, course);
     }
 
     @FXML
     void viewScheduledLessons(ActionEvent event) throws IOException {
-    	PageLoader.getInstance().buildPage(Page.SCHEDULED_LESSONS, event, null);
-    	ScheduledPageView scheduledPageView = (ScheduledPageView) PageLoader.getInstance().getController();
-		scheduledPageView.setLessonPage(labelCourse.getText());
+    	PageLoader.getInstance().buildPage(Page.SCHEDULED_LESSONS, event, course);
     }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	
+	public void setBean(Object course) {
+		this.course = (CourseBean) course;
+		setPage();
+	}
+	
+	public void setPage() {
 		
-		Date date = new Date(System.currentTimeMillis());
-		Time time = new Time(System.currentTimeMillis());
+		courseController = new CourseController();
 		
-		Lesson lesson;
-		LessonCard lessonCard;
 		try {
-			lesson = LessonDAO.getNextLesson(date, time);
-			System.out.println(lesson.getDate().toLocalDate() + "  :  " + LocalDate.now());
-			if (lesson.getDate().toLocalDate().isEqual(LocalDate.now())) {
-				lessonCard = new LessonCard("Today", lesson.getClassroom().getName(), SQLConverter.time(lesson.getTime()));
+			LessonBean lessonBean = courseController.getNextLesson(course); 
+			LessonCard lessonCard = new LessonCard(lessonBean);
+			anchorNextLesson.getChildren().add(lessonCard); 
+			
+			List<ProfessorBean> professors = courseController.getCourseProfessors(course);
+			labelProfessor.setText("");
+			for (ProfessorBean professor : professors) {
+				labelProfessor.setText(labelProfessor.getText()+"/"+professor.getName() + " " + professor.getSurname());
 			}
-			else {
-				lessonCard = new LessonCard(SQLConverter.date(lesson.getDate()), lesson.getClassroom().getName(), SQLConverter.time(lesson.getTime()));
-			}
-			anchorNextLesson.getChildren().add(lessonCard);
 			
 		} catch (NullPointerException e) {
-			
+			// Nothing
+			System.out.println("NullPointer");
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -110,40 +99,13 @@ public class CoursePageView implements Initializable{
 			e.printStackTrace();
 		}
 		
-		
-		for (int i=0; i<5; i++) {
-			try {
-				WeeklyLessonCard weeklyLessonCard = new WeeklyLessonCard("Monday", "A3", "10:00");
-				vboxScroll.getChildren().add(weeklyLessonCard);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}	
-		
-		//carica dettagli corso
-		labelYear.setText("3");
-		labelCourse.setText("ISPW");
-		labelCredits.setText("12");
-		labelGoal.setText("Diventare dei falliti");
-		labelReception.setText("At the end of the lesson outside the classroom");
-		labelPrerequisites.setText("Algorithms and data structures");
-		labelProfessor.setText("Gulyx");
-		labelSemester.setText("II");
-	}
-	
-	public void setPage(CourseBean courseBean) throws SQLException {
-		labelCourse.setText(courseBean.getAbbrevation());
-		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbrevation());
-		labelProfessor.setText("");
-		for (Professor professor : professors) {
-			labelProfessor.setText(labelProfessor.getText()+"/"+professor.getName() + " " + professor.getSurname());
-		}
-		
-		labelYear.setText(courseBean.getYear());
-		labelCredits.setText(courseBean.getCredits());
-		labelGoal.setText(courseBean.getGoal());
-		labelReception.setText(courseBean.getReception());
-		labelPrerequisites.setText(courseBean.getPrerequisites());
-		labelSemester.setText(courseBean.getSemester());
+		labelCourse.setText(course.getAbbrevation());
+
+		labelYear.setText(course.getYear());
+		labelCredits.setText(course.getCredits());
+		labelGoal.setText(course.getGoal());
+		labelReception.setText(course.getReception());
+		labelPrerequisites.setText(course.getPrerequisites());
+		labelSemester.setText(course.getSemester());
 	}
 }

@@ -1,9 +1,7 @@
 package logic.view.page;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,11 +18,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import logic.Session;
-import logic.model.Lesson;
-import logic.model.User;
-import logic.model.dao.LessonDAO;
+import logic.bean.LessonBean;
+import logic.controller.ViewNextLessonController;
 import logic.utilities.Role;
-import logic.utilities.SQLConverter;
 import logic.utilities.Weather;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.ProfessorStatCard;
@@ -48,12 +44,14 @@ public class HomepageView implements Initializable {
 	@FXML
 	private AnchorPane anchorNextLesson;
 	
+	
+	private ViewNextLessonController viewNextLessonController;
+	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		User user = Session.getSession().getUserLogged();
-		
-		labelUsername.setText("Hello " + user.getName() + "!");
+		setUserName(Session.getSession().getUserLogged().getName());
 		
 		// User is a Student
 		if (Session.getSession().getType() == Role.STUDENT) {
@@ -81,55 +79,50 @@ public class HomepageView implements Initializable {
 		}
 
 		addWeatherCards();
-		
-		Date date = new Date(System.currentTimeMillis());
-		Time time = new Time(System.currentTimeMillis());
-		addLessonCards(date, time, Session.getSession().getUserLogged().getUsername());
-
-		webMap.getEngine().load(getClass().getResource("/res/html/map.html").toString());
+		addLessonCards();
+		addWebMap();
 	}
 	
+	// Set name
+	private void setUserName(String name) {
+		labelUsername.setText("Hello " + name + "!");
+	}
+	
+	
+	
 	// Add Lesson cards to the scene
-	private void addLessonCards(Date date, Time time, String username) {
+	private void addLessonCards() {
 		try {
 			
-			List<Lesson> lessons;
-			if (Session.getSession().getType() == Role.STUDENT) {
-				lessons = LessonDAO.getNextLessonsStudent(date, time, username);
-			}
-			else if (Session.getSession().getType() == Role.PROFESSOR) {
-				lessons = LessonDAO.getNextLessonsProfessor(date, time, username);
-			}
-			else {
-				return;
-			}
-			
-			Label label = new Label("There are no future lessons today");
-			if (lessons == null) {
-				vboxScroll.getChildren().add(label);
-				return;
-			}
+			viewNextLessonController = new ViewNextLessonController();
+			List<LessonBean> lessons = viewNextLessonController.getTodayLessons();
 			
 			if (lessons.size() == 1) {
-				vboxScroll.getChildren().add(label);
+				vboxScroll.getChildren().add(new Label("There are no future lessons today"));
 			}
-			
-			Boolean i = true;
-			for (Lesson lesson : lessons) {
-				try {
-					LessonCard lessonCard = new LessonCard(lesson.getCourse().getAbbrevation(), lesson.getClassroom().getName(), SQLConverter.time(lesson.getTime()));
-					if (i) {
-						anchorNextLesson.getChildren().add(lessonCard);
-						i = false;
-					}
-					else {
-						vboxScroll.getChildren().add(lessonCard);
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
+			for (LessonBean lessonBean : lessons) {
+				LessonCard lessonCard = new LessonCard(lessonBean);
+				
+				// AnchorPane case
+				if (lessonBean == lessons.get(0)) {
+					anchorNextLesson.getChildren().add(lessonCard);
+				}
+				
+				// ScrollPane case
+				else {
+					vboxScroll.getChildren().add(lessonCard);
 				}
 			}
+		
+		} catch (NullPointerException e) {
+			vboxScroll.getChildren().add(new Label("There are no future lessons today"));
+			return;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -167,5 +160,10 @@ public class HomepageView implements Initializable {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	// Add map
+	private void addWebMap() {
+		webMap.getEngine().load(getClass().getResource("/res/html/map.html").toString());
 	}
 }

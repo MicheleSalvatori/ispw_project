@@ -45,3 +45,21 @@
 	-fx-font-family: "Roboto";
 	-fx-font-size: 22px;
 }
+
+.button {
+	-fx-background-color: transparent;
+	
+	-fx-text-fill: #0C0B0B;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 16.0px;
+	-fx-underline: true;
+}
+
+.button:hover {
+	-fx-cursor: hand;
+	-fx-background-color: transparent;
+}
+
+.button:pressed {
+	-fx-background-color: transparent;
+}

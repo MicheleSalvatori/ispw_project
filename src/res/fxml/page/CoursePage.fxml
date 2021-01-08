@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../../style/page/CoursePage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.CoursePageView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../../style/page/CoursePage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       
       <AnchorPane layoutX="307.0" layoutY="255.0" prefHeight="118.0" prefWidth="620.0" styleClass="anchor-pane" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -24,7 +24,7 @@
       
       <AnchorPane fx:id="anchorNextLesson" layoutY="142.0" prefHeight="80.0" prefWidth="620.0" styleClass="anchor-pane" AnchorPane.leftAnchor="0.0">
          <children>
-            <Label alignment="CENTER" layoutX="242.0" layoutY="32.0" styleClass="label-secondtitle" text="There are no future lessons today." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Label alignment="CENTER" layoutX="242.0" layoutY="32.0" styleClass="label-secondtitle" text="There are no future lessons." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children></AnchorPane>
       
       <Label layoutY="250.0" styleClass="label-secondtitle" text="Weekly Schedule" AnchorPane.leftAnchor="0.0" />

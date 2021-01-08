@@ -53,7 +53,7 @@ public class RequestDAO {
 		return request;
 	}
 	
-	public static List<Request> getRequestsByProfessor(String professor) throws SQLException, RecordNotFoundException {
+	public static List<Request> getRequestsByProfessor(String professor) throws SQLException {
 		
 		Statement stmt = null;
 		Connection conn = null;

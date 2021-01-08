@@ -83,7 +83,8 @@ public class ExamDAO {
 					Time t = rs.getTime("time");
 					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
 					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
-					Exam exam = new Exam(d, t, c, cl);
+					String n = rs.getString("note");
+					Exam exam = new Exam(d, t, c, cl, n);
 					exams.add(exam);
 				} while (rs.next());
 			}
@@ -122,7 +123,85 @@ public class ExamDAO {
 					Time t = rs.getTime("time");
 					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
 					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
-					Exam exam = new Exam(d, t, c, cl);
+					String n = rs.getString("note");
+					Exam exam = new Exam(d, t, c, cl, n);
+					exams.add(exam);
+				} while (rs.next());
+			}
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return exams;
+	}
+	
+	public static List<Exam> getNextExamsStudent(Date date, String student) throws SQLException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		List<Exam> exams;
+
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.selectNextExamsByStudent(stmt, date, student);
+
+			if (!rs.first()) {
+				exams = null;
+			} else {
+				exams = new ArrayList<>();
+				rs.first();
+				do {
+					Date d = rs.getDate("date");
+					Time t = rs.getTime("time");
+					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
+					String n = rs.getString("note");
+					Exam exam = new Exam(d, t, c, cl, n);
+					exams.add(exam);
+				} while (rs.next());
+			}
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return exams;
+	}
+	
+	
+	public static List<Exam> getNextExamsProfessor(Date date, String professor) throws SQLException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		List<Exam> exams;
+
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.selectNextExamsByProfessor(stmt, date, professor);
+
+			if (!rs.first()) {
+				exams = null;
+			} else {
+				exams = new ArrayList<>();
+				rs.first();
+				do {
+					Date d = rs.getDate("date");
+					Time t = rs.getTime("time");
+					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
+					String n = rs.getString("note");
+					Exam exam = new Exam(d, t, c, cl, n);
 					exams.add(exam);
 				} while (rs.next());
 			}

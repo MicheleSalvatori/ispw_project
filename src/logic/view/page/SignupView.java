@@ -24,8 +24,10 @@ public class SignupView implements Initializable {
 	
 	@FXML
 	private TextField textUsername, textName, textSurname, textEmail;
+	
 	@FXML
 	private PasswordField textPassword, textConfirmPassword;
+	
 	@FXML
 	private Button btnSignup, btnLogin, btnFacebook, btnGoogle;
 	
@@ -58,6 +60,7 @@ public class SignupView implements Initializable {
 			userBean.setSurname(surname);
 			userBean.setEmail(email);
 			userBean.setPassword(password);
+			
 			System.out.println("SIGNUP DATA:\n\tuser: " + userBean.getUsername() + "\n\tpass: " + userBean.getPassword());
 			signupController = new SignupController();
 			try {
@@ -69,11 +72,12 @@ public class SignupView implements Initializable {
 				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
 				
 			} catch (DuplicatedRecordException e) {
-				AlertController.buildInfoAlert("A user already exists with this email!\nTry to login.", "Registration Failed", event);
+				AlertController.buildInfoAlert(e.getMessage(), "Registration Failed", event);
 			}
 		}
 	}
 
+	
 	private boolean chekdInput(ActionEvent event) {
 		
 		String email = textEmail.getText(); 
@@ -95,9 +99,8 @@ public class SignupView implements Initializable {
 			AlertController.buildInfoAlert("Invalid email", "Error", event);
 			return false;
 		}
-		
-		
 	}
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -128,6 +131,5 @@ public class SignupView implements Initializable {
 		textConfirmPassword.setOnAction(eventHandler);
 		textName.setOnAction(eventHandler);
 		textSurname.setOnAction(eventHandler);
-
 	}
 }

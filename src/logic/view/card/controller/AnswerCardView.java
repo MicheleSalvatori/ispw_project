@@ -3,6 +3,8 @@ package logic.view.card.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import logic.bean.AnswerBean;
+import logic.utilities.SQLConverter;
 
 public class AnswerCardView {
 
@@ -14,10 +16,15 @@ public class AnswerCardView {
 
     @FXML
     private Label labelDate;
-
-    public void setLabel(String student, String date, String text) {
-		labelStudent.setText(student);
-		labelDate.setText(date);
-		textAnswer.setText(text);
-	}
+    
+    // TODO 
+    private AnswerBean answer;
+    
+    public void setCard(AnswerBean answer) {
+    	this.answer = answer;
+    	
+    	labelStudent.setText(answer.getStudent().getName() + " " + answer.getStudent().getSurname());
+		labelDate.setText(SQLConverter.date(answer.getDate()));
+		textAnswer.setText(answer.getText());
+    }
 }

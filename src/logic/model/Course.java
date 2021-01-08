@@ -26,16 +26,6 @@ public class Course {
 		this.reception = reception;
 	}
 	
-	public Course(String name, String abbrevation) {
-		this.name = name;
-		this.abbrevation = abbrevation;
-
-	}
-  
-	public Course(String abbrevation) {
-		this.abbrevation = abbrevation;
-	}
-	
 	public Course() {
 		
 	}
