@@ -74,6 +74,12 @@ public class Queries {
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}
+	
+	public static ResultSet getQuestionsProfessorCourse(Statement stmt, String username) throws SQLException{
+		String query = "SELECT * FROM question where course in (SELECT course FROM teach WHERE professor = '"+username+"') ORDER BY id DESC;";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
 
 	public static ResultSet findCourseOfStudent(Statement stmt, String username) throws SQLException {
 		String sql = "SELECT course from follow where student ='"+username+"';";
@@ -134,6 +140,11 @@ public class Queries {
 
 	public static ResultSet countCourses(Statement stmt, String username) throws SQLException {
 		String sql  = "SELECT count(distinct course) from follow where student ='"+username+"';"; 
+		return stmt.executeQuery(sql);
+	}
+	
+	public static ResultSet countCoursesProf(Statement stmt, String username) throws SQLException {
+		String sql  = "SELECT count(distinct course) from teach where professor ='"+username+"';"; 
 		return stmt.executeQuery(sql);
 	}
 
@@ -325,5 +336,12 @@ public class Queries {
 		System.out.println(query);
 		return stmt.executeUpdate(query);
 	}
+
+	public static int setQuestionSolved(Statement stmt, int questionID) throws SQLException {
+		String sql = String.format("UPDATE question SET solved = true WHERE id = '%d';", questionID);
+		System.out.println(sql);
+		return stmt.executeUpdate(sql);
+	}
+
 }
 

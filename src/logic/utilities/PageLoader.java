@@ -72,6 +72,22 @@ public class PageLoader {
 		}
 	}
 
+	public void buildPage(Page page, ActionEvent event) throws IOException {
+		PageLoader.page = page;
+		switch (page) {
+		case SIGNUP:
+		case LOGIN:
+			loadPage(event, null);
+			Scene scene = new Scene(loader.load());
+			primaryStage.setScene(scene);
+			primaryStage.setTitle(page.getStageTitle());
+			primaryStage.show();
+			break;
+		default:
+			break;
+		}
+	}
+
 	private void loadPage(ActionEvent ae, Object obj) throws IOException {
 		Node source = (Node) ae.getSource();
 		primaryStage = (Stage) source.getScene().getWindow();

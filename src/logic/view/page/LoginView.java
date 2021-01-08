@@ -23,7 +23,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import logic.bean.UserBean;
@@ -32,6 +31,7 @@ import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.utilities.Role;
 
 public class LoginView implements Initializable {
 
@@ -44,9 +44,8 @@ public class LoginView implements Initializable {
 	@FXML
 	private ToggleGroup radioGroup;
 	
-	private RadioButton radioSelected;
 	private LoginController loginController;
-	private String type;
+	private Role role;
 
 	@FXML
 	void loginUser(ActionEvent event) throws IOException {
@@ -65,7 +64,7 @@ public class LoginView implements Initializable {
 		userBean.setUsername(username);
 		loginController = new LoginController();
 		try {
-			type = loginController.getTypeUser(userBean);
+			role = loginController.getTypeUser(userBean);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,8 +74,8 @@ public class LoginView implements Initializable {
 		}
 		
 		// switch for type user login
-		switch (type) {
-		case "student":
+		switch (role) {
+		case STUDENT:
 			try {
 				loginController.loginAsStudent(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event, null);
@@ -86,7 +85,7 @@ public class LoginView implements Initializable {
 				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
 			}
 			break;
-		case "professor":
+		case PROFESSOR:
 			try {
 				loginController.loginAsProfessor(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event, null);
@@ -98,7 +97,7 @@ public class LoginView implements Initializable {
 				AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
 			}
 			break;
-		case "admin":
+		case ADMIN:
 			try {
 				loginController.loginAsAdmin(userBean);
 				PageLoader.getInstance().buildPage(Page.HOMEPAGE, event, null);

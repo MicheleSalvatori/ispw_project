@@ -18,10 +18,9 @@ import logic.view.menu.element.NavigationBar;
 
 public class LoginController {
 	
-	public String getTypeUser(UserBean userBean) throws SQLException, RecordNotFoundException {
+	public Role getTypeUser(UserBean userBean) throws SQLException, RecordNotFoundException {
 		String username = userBean.getUsername();
-		String type = RoleDAO.findType(username);
-		System.out.println("FINE: "+ type);
+		Role type = RoleDAO.findType(username);
 		return type;
 	}
 

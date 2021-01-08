@@ -8,9 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.Session;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Answer;
 import logic.utilities.Queries;
+import logic.utilities.Role;
 import logic.utilities.SingletonDB;
 
 public class AnswerDAO {
@@ -19,6 +21,7 @@ public class AnswerDAO {
 		Statement stmt = null;
 		Connection conn = null;
 		List<Answer> answers;
+		Role answerUserRole = null;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -38,8 +41,19 @@ public class AnswerDAO {
 					Answer a = new Answer();
 					a.setDate(rs.getDate("date"));
 					a.setText(rs.getString("text"));
-					a.setStudent(StudentDAO.findStudentByUsername(rs.getString("username")));
 					a.setId(rs.getInt("id"));
+					String username = rs.getString("username");
+					answerUserRole = RoleDAO.findType(username);
+					switch (answerUserRole) {
+					case PROFESSOR:
+						a.setUser(ProfessorDAO.findProfessor(username));
+						break;
+					case STUDENT:
+						a.setUser(StudentDAO.findStudentByUsername(username));
+						break;
+					default:
+						break;
+					}
 					answers.add(a);
 				} while (rs.next());
 			}
@@ -54,11 +68,11 @@ public class AnswerDAO {
 	public static void saveAnswer(Answer answer) throws SQLException {
 		Connection conn = null;
 
-			conn = SingletonDB.getDbInstance().getConnection();
-			int id = answer.getId();
-			String text = answer.getText();
-			String username = answer.getStudent().getUsername();
-			Date date = answer.getDate();
-			Queries.saveAnswer(conn, id, username, text, date);
+		conn = SingletonDB.getDbInstance().getConnection();
+		int id = answer.getId();
+		String text = answer.getText();
+		String username = answer.getUser().getUsername();
+		Date date = answer.getDate();
+		Queries.saveAnswer(conn, id, username, text, date);
 	}
 }
