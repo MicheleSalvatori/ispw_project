@@ -37,7 +37,9 @@ public class ClassroomDAO {
 			} else {
 				rs.first();
 				String className = rs.getString("name");
-				classroom = new Classroom(className);
+				int row = rs.getInt("seatRow");
+				int col = rs.getInt("seatColumn");
+				classroom = new Classroom(className, row, col);
 			}
 			rs.close();
 		} finally {
