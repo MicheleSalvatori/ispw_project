@@ -3,20 +3,21 @@ package logic.bean;
 import java.sql.Date;
 
 import logic.model.Student;
+import logic.model.User;
 
 public class AnswerBean {
 	private int id;
 	private String text;
-	private Student student;
+	private User user;
 	private Date date;
 
 	public AnswerBean() {
 	}
 	
-	public AnswerBean(int id, String text, Student student, Date date) {
+	public AnswerBean(int id, String text, User user, Date date) {
 		this.id = id;
 		this.text = text;
-		this.student = student;
+		this.user = user;
 		this.date = date;
 	}
 
@@ -36,12 +37,12 @@ public class AnswerBean {
 		this.text = text;
 	}
 
-	public Student getStudent() {
-		return student;
+	public User getUser() {
+		return user;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Date getDate() {

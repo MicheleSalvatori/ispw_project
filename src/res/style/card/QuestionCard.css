@@ -61,15 +61,21 @@
 	-fx-font-weight: bold;
 	-fx-font-size: 13;
 	
-	-width: 60;
-	-height: 32;
-	-fx-min-width: -width;
-	-fx-min-height: -height;
-	-fx-pref-width: -width;
-	-fx-pref-height: -height;
-	-fx-max-width: -width;
-	-fx-max-height: -height;	
 }
+
+.button-label {
+ 	-fx-font-family: "Roboto";
+    -fx-font-size: 13px;
+ 	-fx-font-weight: bold;
+ 	-fx-text-fill: black;
+ 	-fx-background-color: transparent;
+ 	-fx-underline: true;
+ }
+ 
+ .button-label:disabled{
+ 	  -fx-opacity: 1;
+ 	  -fx-underline: false;
+ }
 
 .button:hover {
 	-fx-cursor: hand;

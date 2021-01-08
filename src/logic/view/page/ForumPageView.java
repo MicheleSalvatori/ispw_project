@@ -20,6 +20,7 @@ import logic.controller.AllQuestionController;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.utilities.Role;
 import logic.view.card.element.QuestionCard;
 
 public class ForumPageView implements Initializable {
@@ -108,16 +109,36 @@ public class ForumPageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		allQuestionController = new AllQuestionController();
+		int nCourses;
 		try {
-			if (allQuestionController.getNumberCourses() == 0) {
+			nCourses = allQuestionController.getNumberCourses();
+		} catch (SQLException e) {
+			nCourses = 0;
+		}
+		
+		Role roleLogged = Session.getSession().getType();
+		switch (roleLogged) {
+		case PROFESSOR:
+			btnNewQuestion.setVisible(false);
+			btnMyQuestions.setVisible(false);
+			btnAllQuestions.setVisible(false);
+			if (nCourses== 0) {
+				labelLoading.setText("You are not assigned to any course at the moment.");
+				return;
+			}
+			break;
+		case STUDENT:
+			if (nCourses == 0) {
 				btnNewQuestion.setDisable(true);
 				btnMyQuestions.setDisable(true);
 				labelLoading.setText("You are not enrolled in any course, you cannot ask questions.");
 				return;
 			}
-		} catch (SQLException e) {
-			//Sollevata da CourseDAO.getCourseNumberOf(username)
+			break;
+		default:
+			break;
 		}
+		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -125,5 +146,9 @@ public class ForumPageView implements Initializable {
 				setAllQuestions();
 			}
 		});
+	}
+
+	public boolean setSolved(int questionID) {
+		return allQuestionController.setSolved(questionID);
 	}
 }

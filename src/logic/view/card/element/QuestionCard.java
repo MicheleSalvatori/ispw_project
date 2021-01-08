@@ -19,8 +19,6 @@ public class QuestionCard extends AnchorPane {
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(questionCardView);
 		this.getChildren().add(loader.load());
-		
 		questionCardView.setLabel(question);
-		
 	}
 }

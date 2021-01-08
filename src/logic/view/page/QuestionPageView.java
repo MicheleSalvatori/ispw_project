@@ -27,9 +27,7 @@ import logic.Session;
 import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
 import logic.controller.InsertAnswerController;
-import logic.model.Student;
 import logic.utilities.AlertController;
-
 import logic.view.card.element.AnswerCard;
 
 public class QuestionPageView implements Initializable {
@@ -76,7 +74,7 @@ public class QuestionPageView implements Initializable {
 		for (AnswerBean a : answers) {
 			AnswerCard answerCard;
 			try {
-				String student = a.getStudent().getName() + " " + a.getStudent().getSurname();
+				String student = a.getUser().getName() + " " + a.getUser().getSurname();
 				answerCard = new AnswerCard(student, a.getDate().toString(), a.getText());
 				vboxAnswer.getChildren().add(answerCard);
 			} catch (IOException e) {
@@ -126,16 +124,16 @@ public class QuestionPageView implements Initializable {
 	private void setupEvent() {
 		this.addAnswerEvent = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				saveQuestion(textAnswer.getText());
+				saveAnswer(textAnswer.getText());
 			}
 		};
 	}
 
-	private void saveQuestion(String text) {
+	private void saveAnswer(String text) {
 		InsertAnswerController controller = new InsertAnswerController();
 		AnswerBean answer = new AnswerBean();
 		answer.setId(bean.getId());
-		answer.setStudent((Student) Session.getSession().getUserLogged());
+		answer.setUser(Session.getSession().getUserLogged());
 		answer.setText(text);
 		long millis = System.currentTimeMillis();
 		Date date = new Date(millis);

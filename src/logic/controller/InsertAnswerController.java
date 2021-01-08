@@ -12,7 +12,7 @@ public class InsertAnswerController {
 		Answer answer = new Answer();
 		answer.setDate(answerBean.getDate());
 		answer.setId(answerBean.getId());
-		answer.setStudent(answerBean.getStudent());
+		answer.setUser(answerBean.getUser());
 		answer.setText(answerBean.getText());
 		AnswerDAO.saveAnswer(answer);	
 	}
