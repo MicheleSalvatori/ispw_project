@@ -24,18 +24,17 @@ public class InsertQuestionController {
 		List<CourseBean> courseBeans;
 		try {
 			courses = CourseDAO.getStudentCourses(usernameString);
-			if (courses == null) {
-				courseBeans = null;
-			} else {
-				courseBeans = new ArrayList<>();
-				for (Course c : courses) {
-					CourseBean cb = new CourseBean(c.getName(), c.getAbbrevation());
-					courseBeans.add(cb);
-				}
+
+			courseBeans = new ArrayList<>();
+			for (Course c : courses) {
+				CourseBean cb = new CourseBean(c.getName(), c.getAbbrevation());
+				courseBeans.add(cb);
 			}
+			
 		} catch (SQLException e) {
 			courseBeans = null;
 		}
+		
 		return courseBeans;
 	}
 

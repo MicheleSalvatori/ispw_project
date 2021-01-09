@@ -7,10 +7,12 @@ import java.util.List;
 import logic.Session;
 import logic.bean.AssignmentBean;
 import logic.bean.CourseBean;
+import logic.bean.ProfessorBean;
 import logic.exceptions.NullException;
 import logic.model.Assignment;
 import logic.model.Course;
 import logic.model.dao.AssignmentDAO;
+import logic.model.dao.CourseDAO;
 import logic.utilities.Role;
 
 public class AddAssignmentController {
@@ -58,5 +60,34 @@ public class AddAssignmentController {
 		}
 		
 		return assignmentsBean;
+	}
+	
+	public List<CourseBean> getCoursesOfProfessor(ProfessorBean professorBean) throws NullException {
+		List<Course> courses = new ArrayList<>();
+		List<CourseBean> courseBeans;
+		
+		try {
+			courses = CourseDAO.getProfessorCourses(professorBean.getUsername());
+			courseBeans = new ArrayList<>();
+			for (Course c : courses) {
+				CourseBean cb = new CourseBean(c.getName(), c.getAbbrevation());
+				courseBeans.add(cb);
+			}
+			
+		} catch (SQLException e) {
+			courseBeans = null;
+		}
+		
+		return courseBeans;
+	}
+	
+	public boolean saveAssignment(AssignmentBean assignmentBean) throws SQLException {
+
+		Course course = new Course();
+		course.setAbbrevation(assignmentBean.getCourse().getAbbrevation());
+		
+		Assignment assignment = new Assignment(course, assignmentBean.getTitle(), assignmentBean.getDate(), assignmentBean.getText());
+
+		return AssignmentDAO.saveAssignment(assignment);
 	}
 }

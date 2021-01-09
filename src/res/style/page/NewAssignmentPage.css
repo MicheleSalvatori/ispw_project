@@ -1,13 +1,31 @@
 /* Baloo Bhai font */
 @font-face {
-	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+	src: url("../../font/BalooBhai/BalooBhai-Regular.ttf");
 }
 
-/* Roboto font */
+/*Roboto font */
 @font-face {
- 	src: url("../font/Roboto/Roboto-Regular.ttf");
+ 	src: url("../../font/Roboto/Roboto-Regular.ttf");
+}
+ 
+@font-face {
+ 	src: url("../../font/Roboto/Roboto-Bold.ttf");
+}
+ 
+@font-face {
+ 	src: url("../../font/Roboto/Roboto-Light.ttf");
 }
 
+.root {
+	-fx-background-color: transparent;
+}
+
+.label {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24;
+	-fx-text-fill: #0C0B0B;
+}
+ 
 .button {
 	-fx-background-color: #E5E5EB;
 	-fx-background-radius: 14.0px;
@@ -36,13 +54,35 @@
 	-fx-background-color: #FF00FF;
 }
 
+.date-picker {
+	-fx-border-width: 2px;
+	-fx-border-color: black;
+	-fx-border-radius: 5px;
+	
+	-fx-pref-width: 400;
+	-fx-pref-height: 40;
+}
+
+.date-picker .arrow-button {
+	-fx-background-color: transparent;
+}
+
+.date-picker .text-field {
+	-fx-font-family: "Roboto";
+	-fx-font-size: 18px;
+	-fx-text-fill: #0C0B0B;
+	-fx-font-weight: bold;
+	
+	-fx-border-radius: 5px;
+}
+
 .text-area {
-	-fx-padding: 3.0px;
+	-fx-padding: 3px;
     -fx-background-color: transparent;
     -fx-border-color: #0C0B0B;
     -fx-background-radius: 14.0px;
     -fx-border-radius: 14.0px;
-    -fx-border-width: 2.0px;
+    -fx-border-width: 2px;
     -fx-font-size: 18.0;
     -fx-font-family: "Roboto";
     -width: 1124.0;
@@ -68,7 +108,7 @@
 }
 
 .text-area .scroll-pane .viewport {
-	-fx-background-radius: 14.0px;
+	-fx-background-radius: 14px;
    	-fx-background-color: transparent;
 }
 
@@ -86,7 +126,7 @@
 .text-area .scroll-bar:vertical .track{
     -fx-background-color: #E5E5EB;
     -fx-border-color: transparent;
-    -fx-background-radius: 10.0px;
+    -fx-background-radius: 10px;
 }
 
 .text-area .scroll-bar:vertical:hover .thumb {
@@ -100,15 +140,51 @@
 .text-area .scroll-bar:horizontal .thumb,
 .text-area .scroll-bar:vertical .thumb {
     -fx-background-color: #0C0B0B;
-    -fx-background-radius: 5.0em;
+    -fx-background-radius: 5em;
 }
 
 .text-area .scroll-pane .corner {
     -fx-background-color: transparent;
 }
 
-.label {
-	-fx-font-family: "Baloo Bhai";
-	-fx-font-size: 24;
-	-fx-text-fill: #0C0B0B;
+.text-field-title {
+ 	-fx-border-color: #0C0B0B;
+ 	-fx-border-radius: 10.0px;
+    -fx-background-radius: 10.0px;
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 2px;
+    -fx-pref-height: 40.0;
+    -fx-pref-width: 400.0;
+ 	
+ 	-fx-font-family: "Roboto";
+ 	-fx-font-size: 18.0px;
+ 	-fx-font-weight: bold;
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: 0.4;
+}
+
+.combo-box-base {
+    -fx-background-color: #E5E5EB;
+    -fx-background-radius: 5px;
+    
+    -fx-font-family: "Baloo Bhai";
+    -fx-font-size: 18px;
+    -fx-text-fill: #0C0B0B;
+}
+
+.combo-box-base:hover {
+    -fx-cursor: hand;
+	-fx-background-color: #CFCFCF;
+}
+
+.combo-box-base:showing {
+    -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:focused {
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #0C0B0B;
 }

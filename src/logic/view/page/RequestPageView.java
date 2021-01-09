@@ -15,6 +15,7 @@ import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.controller.AcceptRequestController;
 import logic.exceptions.NullException;
+import logic.utilities.AlertController;
 import logic.view.card.element.CourseFilterCard;
 import logic.view.card.element.RequestCard;
 
@@ -114,6 +115,22 @@ public class RequestPageView implements Initializable {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	public void acceptRequest(RequestBean requestBean) {
+		acceptRequestController = new AcceptRequestController();
+		if (acceptRequestController.acceptRequest(requestBean)) {
+			AlertController.buildInfoAlert("Request accepted.\nThe student will be notified", "request", vboxCourse);
+			updateRequests();
+		}
+	}
+	
+	public void declineRequest(RequestBean requestBean) {
+		acceptRequestController = new AcceptRequestController();
+		if (acceptRequestController.declineRequest(requestBean)) {
+			AlertController.buildInfoAlert("Request declined.\nThe student will be notified", "request", vboxCourse);
+			updateRequests();
 		}
 	}
 }

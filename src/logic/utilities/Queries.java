@@ -204,13 +204,13 @@ public class Queries {
 	}
 	
 	public static ResultSet selectTodayNextLessonsByProfessor(Statement stmt, Date date, Time time, String professor) throws SQLException {
-		String query = "SELECT date, time, course, classroom, topic, professor FROM lesson WHERE date >= '" + date + "' AND time >= '" + time + "' AND professor = '" + professor + "';";
+		String query = "SELECT date, time, course, classroom, topic, professor FROM lesson WHERE date = '" + date + "' AND time >= '" + time + "' AND professor = '" + professor + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query); 
 	}
 	
 	public static ResultSet selectTodayNextLessonsByStudent(Statement stmt, Date date, Time time, String student) throws SQLException {
-		String query = "SELECT date, time, lesson.course, classroom, topic, professor FROM lesson JOIN follow ON lesson.course = follow.course WHERE date >= '" + date + "' AND time >= '" + time + "' AND student = '" + student + "';";
+		String query = "SELECT date, time, lesson.course, classroom, topic, professor FROM lesson JOIN follow ON lesson.course = follow.course WHERE date = '" + date + "' AND time >= '" + time + "' AND student = '" + student + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query); 
 	}
@@ -311,6 +311,13 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
+	public static ResultSet selectNotVerbalizedCourses(Statement stmt, String student) throws SQLException {
+		String query = "SELECT * FROM course WHERE course.abbrevation NOT IN (SELECT course FROM verbalized WHERE student = '" + student + "');";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
+	
 	// Classroom queries
 	public static ResultSet selectClassroom(Statement stmt, String name) throws SQLException {
 		String query = "SELECT * FROM classroom WHERE name = '" + name + "';";
@@ -375,27 +382,53 @@ public class Queries {
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}
+	
+	public static int insertVerbalizedExam(Statement stmt, String student, String course, int grade, Date date) throws SQLException {
+		String query = String.format("INSERT INTO verbalized VALUES('%s', '%s', '%s', '%s');", student, course, grade, date);
+		System.out.println(query);
+		return stmt.executeUpdate(query);
+	}
+	
+	public static int deleteVerbalizedExam(Statement stmt, String student, String course) throws SQLException {
+		String query = String.format("DELETE FROM verbalized WHERE student = '%s' AND course = '%s';", student, course);
+		System.out.println(query);
+		return stmt.executeUpdate(query);
+	}
 
 
+	
+	
 	public static int setQuestionSolved(Statement stmt, int questionID) throws SQLException {
 		String sql = String.format("UPDATE question SET solved = true WHERE id = '%d';", questionID);
 		System.out.println(sql);
 		return stmt.executeUpdate(sql);
 	}
+	
+	
 
 
 	
 	// Assignment queries
 	public static ResultSet selectAssignmentsByProfessor(Statement stmt, String professor) throws SQLException {
-		String query = "SELECT id, assignment.course, title, text, date FROM assignment JOIN teach ON assignment.course = teach.course WHERE professor = '" + professor + "';";
+		String query = "SELECT id, assignment.course, title, text, date FROM assignment JOIN teach ON assignment.course = teach.course WHERE professor = '" + professor + "' ORDER BY id;";
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}
 	
 	public static ResultSet selectAssignmentsByStudent(Statement stmt, String student) throws SQLException {
-		String query = "SELECT id, assignment.course, title, text, date FROM assignment JOIN follow ON assignment.course = follow.course WHERE student = '" + student + "';";
+		String query = "SELECT id, assignment.course, title, text, date FROM assignment JOIN follow ON assignment.course = follow.course WHERE student = '" + student + "' ORDER BY id;";
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}
+
+	public static int saveAssignment(Statement stmt, String title, String text, String course, Date date) throws SQLException {
+		String query = String.format("INSERT INTO assignment (course, title, text, date) VALUES('%s', '%s', '%s', '%s');", course, title, text, date);
+		System.out.println(query);
+		return stmt.executeUpdate(query);
+	}
+
+	
+
+	
 
 }

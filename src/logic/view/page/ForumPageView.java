@@ -30,7 +30,7 @@ import logic.view.card.element.QuestionCard;
 public class ForumPageView implements Initializable {
 
 	@FXML
-	private Button btnMyQuestions, btnNewQuestion, btnAllQuestions;
+	private Button btnMyQuestions, btnNewQuestion, btnAllQuestions, btnNewAssignment;
 	
 	@FXML
 	private Label labelLoading;
@@ -45,7 +45,7 @@ public class ForumPageView implements Initializable {
 	private List<AssignmentBean> assignments;
 
 	@FXML
-	private void myQuestion(ActionEvent ae) throws IOException {
+	private void myQuestion(ActionEvent event) throws IOException {
 		vboxQuestion.getChildren().clear();
 		
 		if (myQuestions == null) {
@@ -75,15 +75,20 @@ public class ForumPageView implements Initializable {
 	}
 
 	@FXML
-	private void allQuestions(ActionEvent ae) {
+	private void allQuestions(ActionEvent event) {
 		setAllQuestions();
 		btnAllQuestions.setDisable(true);
 		btnMyQuestions.setDisable(false);
 	}
 
 	@FXML
-	private void newQuestion(ActionEvent ae) throws IOException {
-		PageLoader.getInstance().buildPage(Page.NEWQUESTION, ae, null);
+	private void newQuestion(ActionEvent event) throws IOException {
+		PageLoader.getInstance().buildPage(Page.NEWQUESTION, event);
+	}
+	
+	@FXML
+	private void newAssignment(ActionEvent event) throws IOException {
+		PageLoader.getInstance().buildPage(Page.NEWASSIGNMENT, event);
 	}
 
 	private void getAllQuestions() {
@@ -137,6 +142,8 @@ public class ForumPageView implements Initializable {
 			btnNewQuestion.setVisible(false);
 			btnMyQuestions.setVisible(false);
 			btnAllQuestions.setVisible(false);
+			
+			btnNewAssignment.setVisible(true);
 			if (nCourses== 0) {
 				labelLoading.setText("You are not assigned to any course at the moment.");
 				return;

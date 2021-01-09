@@ -143,7 +143,7 @@ public class QuestionPageView implements Initializable{
 		Scene scene = new Scene(box);
 		scene.setFill(Color.TRANSPARENT);
 		labelAuthor.getScene().getRoot().setEffect(adj);
-		scene.getStylesheets().add(QuestionPageView.class.getResource("/res/style/InsertAnswer.css").toExternalForm());
+		scene.getStylesheets().add(QuestionPageView.class.getResource("/res/style/dialog/InsertAnswer.css").toExternalForm());
 		dialogStage.setScene(scene);
 		dialogStage.setTitle("App - Insert Answer");
 		dialogStage.setResizable(false);

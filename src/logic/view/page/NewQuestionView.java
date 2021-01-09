@@ -37,6 +37,7 @@ public class NewQuestionView implements Initializable {
 
 	@FXML
 	private ComboBox<String> courseComboBox;
+	
 	private String questionText, questionSubject;
 	private QuestionBean questionBean;
 	private InsertQuestionController controller;
@@ -63,7 +64,7 @@ public class NewQuestionView implements Initializable {
 	}
 
 	@FXML
-	private void saveQuestion(ActionEvent ae) {
+	private void saveQuestion(ActionEvent event) {
 		questionBean = new QuestionBean();
 		this.questionSubject = textSubject.getText();
 		this.questionText = textQuestion.getText();
@@ -75,12 +76,13 @@ public class NewQuestionView implements Initializable {
 
 		try {
 			controller.save(questionBean);
-			AlertController.buildInfoAlert("Your question has been correctly entered", "", ae);
+			AlertController.buildInfoAlert("Your question has been correctly entered", "", event);
 		} catch (SQLException e) {
-			AlertController.buildInfoAlert("Something happened, your question was not acquired..", "Bad news..", ae);
+			AlertController.buildInfoAlert("Something happened, your question was not acquired..", "Bad news..", event);
 		} finally {
 			try {
-				PageLoader.getInstance().buildPage(Page.FORUM, ae, null);
+				PageLoader.getInstance().buildPage(Page.FORUM, event);
+				
 			} catch (IOException e) {
 				// errore caricamento fxml capire come gestirla. Conviene gestirla nel
 				// pageLoader

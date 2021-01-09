@@ -33,7 +33,6 @@ public class AssignmentCardView {
 	
 	@FXML
 	private void viewAssignment(ActionEvent event) throws IOException {
-		// TODO
 		PageLoader.getInstance().buildPage(Page.ASSIGNMENT, event, assignment);
 	}
 	

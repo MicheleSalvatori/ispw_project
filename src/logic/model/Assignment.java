@@ -18,6 +18,13 @@ public class Assignment {
 		this.text = text;
 	}
 	
+	public Assignment(Course course, String title, Date date, String text) {
+		this.course = course;
+		this.title = title;
+		this.date = date;
+		this.text = text;
+	}
+	
 	public int getId() {
 		return id;
 	}

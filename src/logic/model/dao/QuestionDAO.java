@@ -31,7 +31,7 @@ public class QuestionDAO {
 		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet rs = null;
 		switch (role) {
-		case PROFESSOR:
+		case PROFESSOR:	// TODO DIOASDOIASDI
 			rs = Queries.getQuestionsProfessorCourse(stmt, username);
 			break;
 		case STUDENT:

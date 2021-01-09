@@ -10,8 +10,6 @@ import javafx.scene.control.Label;
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.bean.StudentBean;
-import logic.controller.AcceptRequestController; // TODO Eliminare controller da qua passare sulla PageView
-import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.page.RequestPageView;
@@ -28,24 +26,14 @@ public class RequestCardView {
 	
 	@FXML
 	private void acceptRequest(ActionEvent event) throws SQLException, IOException {
-		AcceptRequestController acceptRequestController = new AcceptRequestController();
-		if (acceptRequestController.acceptRequest(request)) {
-			AlertController.buildInfoAlert("Request accepted.\nThe student will be notified", "request", event);
-			
-			RequestPageView requestPageView = (RequestPageView) PageLoader.getInstance().getController();
-			requestPageView.updateRequests();
-		}
+		RequestPageView requestPageView = (RequestPageView) PageLoader.getInstance().getController();
+		requestPageView.acceptRequest(request);
 	}
 	
 	@FXML
 	private void declineRequest(ActionEvent event) throws SQLException, IOException {
-		AcceptRequestController acceptRequestController = new AcceptRequestController();
-		if (acceptRequestController.declineRequest(request)) {
-			AlertController.buildInfoAlert("Request declined.\nThe student will be notified", "request", event);
-			
-			RequestPageView requestPageView = (RequestPageView) PageLoader.getInstance().getController();
-			requestPageView.updateRequests();
-		}
+		RequestPageView requestPageView = (RequestPageView) PageLoader.getInstance().getController();
+		requestPageView.declineRequest(request);
 	}
 	
 	@FXML

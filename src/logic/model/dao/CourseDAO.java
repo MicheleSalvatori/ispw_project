@@ -182,6 +182,50 @@ public class CourseDAO {
 		}
 		return courses;
 	}
+	
+	public static List<Course> getNotVerbalizedCourses(String student) throws SQLException, NullException {
+
+		Statement stmt = null;
+		Connection conn = null;
+		List<Course> courses;
+
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			ResultSet rs = Queries.selectNotVerbalizedCourses(stmt, student);
+
+			if (!rs.first()) {
+				throw new NullException("No course found");
+				
+			} else {
+				courses = new ArrayList<>();
+				rs.first();
+				do {
+					String n = rs.getString("name");
+					String a = rs.getString("abbrevation");
+					String y = rs.getString("year");
+					String s = rs.getString("semester");
+					String c = rs.getString("credits");
+					String p = rs.getString("prerequisites");
+					String g = rs.getString("goal");
+					String r = rs.getString("reception");
+					Course course = new Course(n, a, y, s, c, p, g, r);
+					courses.add(course);
+				} while (rs.next());
+			}
+			rs.close();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return courses;
+	}
 
 	public static List<Course> getStudentCourses(String student) throws SQLException, NullException {
 

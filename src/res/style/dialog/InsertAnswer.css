@@ -1,0 +1,114 @@
+/* Baloo Bhai font */
+@font-face {
+	src: url("../../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
+/* Roboto font */
+@font-face {
+ 	src: url("../../font/Roboto/Roboto-Regular.ttf");
+}
+
+.button {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14.0px;
+	
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-weight: bold;
+	-fx-font-size: 24.0;
+	
+	-width: 230.0;
+	-height: 55.0;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;
+}
+
+.button:hover {
+	-fx-cursor: hand;
+	-fx-background-color: #CFCFCF;
+}
+
+.button:pressed {
+	-fx-background-color: #FF00FF;
+}
+
+.text-area {
+	-fx-padding: 3.0px;
+    -fx-background-color: transparent;
+    -fx-border-color: #0C0B0B;
+    -fx-background-radius: 14.0px;
+    -fx-border-radius: 14.0px;
+    -fx-border-width: 2.0px;
+    -fx-font-size: 18.0;
+    -fx-font-family: "Roboto";
+    -width: 1124.0;
+	-height: 207.0;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;
+}
+
+.text-area .content {
+    -fx-background-color: transparent, white, transparent, white;   
+}
+
+.text-area:focused .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent; 
+}
+
+.text-area .scroll-pane .viewport {
+	-fx-background-radius: 14.0px;
+   	-fx-background-color: transparent;
+}
+
+.text-area .scroll-bar:horizontal, .text-area .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.text-area .increment-button, .text-area .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-color: white;
+}
+
+.text-area .scroll-bar:horizontal .track,
+.text-area .scroll-bar:vertical .track{
+    -fx-background-color: #E5E5EB;
+    -fx-border-color: transparent;
+    -fx-background-radius: 10.0px;
+}
+
+.text-area .scroll-bar:vertical:hover .thumb {
+	-fx-background-color: red;
+}
+
+.text-area .scroll-bar:vertical:pressed .thumb {
+	-fx-background-color: purple;
+}
+
+.text-area .scroll-bar:horizontal .thumb,
+.text-area .scroll-bar:vertical .thumb {
+    -fx-background-color: #0C0B0B;
+    -fx-background-radius: 5.0em;
+}
+
+.text-area .scroll-pane .corner {
+    -fx-background-color: transparent;
+}
+
+.label {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24;
+	-fx-text-fill: #0C0B0B;
+}

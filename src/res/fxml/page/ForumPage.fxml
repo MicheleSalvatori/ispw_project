@@ -40,5 +40,7 @@
       
       <Button fx:id="btnAllQuestions" disable="true" layoutX="926.0" layoutY="214.0" maxHeight="97.0" minWidth="198.0" mnemonicParsing="false" onAction="#allQuestions" prefHeight="97.0" prefWidth="198.0" styleClass="small-button" text="All Questions" />
       
+      <Button fx:id="btnNewAssignment" layoutX="711.0" layoutY="100.0" mnemonicParsing="false" onAction="#newAssignment" styleClass="big-button" text="Insert New Assignment" visible="false" AnchorPane.rightAnchor="80.0" />
+      
    </children>
 </AnchorPane>

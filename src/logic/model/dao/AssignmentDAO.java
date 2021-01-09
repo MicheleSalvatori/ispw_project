@@ -99,4 +99,30 @@ public class AssignmentDAO {
 		}
 		return assignments;
 	}
+	
+	public static boolean saveAssignment(Assignment assignment) throws SQLException {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			String title = assignment.getTitle();
+			String text = assignment.getText();
+			String course = assignment.getCourse().getAbbrevation();
+			Date date = assignment.getDate();
+		
+			Queries.saveAssignment(stmt, title, text, course, date);
+			
+		} catch (SQLException e) {
+			return false;
+		}
+		
+		return true;
+	}
 }

@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import logic.view.menu.element.NavigationBar;
 import logic.view.menu.element.StatusBar;
+import logic.view.page.AssignmentPageView;
 import logic.view.page.CoursePageView;
 import logic.view.page.LessonPageView;
 import logic.view.page.QuestionPageView;
@@ -95,6 +96,14 @@ public class PageLoader {
 			configPage(loader.load());
 			questionPageView.setBean(obj);
 			break;
+			
+		case ASSIGNMENT:
+			loadPage(event);
+			AssignmentPageView assignmentPageView = new AssignmentPageView();
+			loader.setController(assignmentPageView);
+			configPage(loader.load());
+			assignmentPageView.setBean(obj);
+			break;
 
 		default:
 			loadPage(event);
@@ -107,6 +116,7 @@ public class PageLoader {
 	public void buildPage(Page page, ActionEvent event) throws IOException {
 		PageLoader.page = page;
 		switch (page) {
+		
 		case SIGNUP:
 			loadPageNoNavBar(event);
 			break;
@@ -114,6 +124,7 @@ public class PageLoader {
 		case LOGIN:
 			loadPageNoNavBar(event);
 			break;
+			
 		default:
 			loadPage(event);
 			configPage(loader.load());

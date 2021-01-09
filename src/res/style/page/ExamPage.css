@@ -23,6 +23,7 @@
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 24px;
 }
+
 .label-number {
 	
 	-fx-text-fill: black;
@@ -30,8 +31,17 @@
 	-fx-font-size: 22px;
 }
 
-
 .button:hover{
 	-fx-cursor: hand;
 	-fx-background-color: #CFCFCF;
+}
+
+.button-add {
+	-fx-pref-height: 43;
+	-fx-pref-width: 253;
+	
+	-fx-background-color: #F0F0F2;
+	-fx-background-radius: 14px;
+	
+	-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 10, 0, 0, 1);
 }

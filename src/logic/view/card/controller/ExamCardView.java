@@ -11,6 +11,7 @@ import logic.bean.VerbalizedBean;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
+import logic.view.page.ExamPageView;
 
 public class ExamCardView {
 
@@ -37,5 +38,11 @@ public class ExamCardView {
 	private void course(ActionEvent event) throws IOException {
     	CourseBean courseBean = verb.getCourse();
     	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
+	}
+	
+	@FXML
+	private void deleteExam(ActionEvent event) throws IOException {
+		ExamPageView examPageView = (ExamPageView) PageLoader.getInstance().getController();
+		examPageView.deleteVerbalizedExam(verb);
 	}
 }

@@ -15,6 +15,7 @@ import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Student;
 import logic.model.Verbalized;
+import logic.model.dao.CourseDAO;
 import logic.model.dao.VerbalizedDAO;
 
 public class ViewVerbalizedExamsController {
@@ -92,5 +93,54 @@ public class ViewVerbalizedExamsController {
 		BigDecimal bd = BigDecimal.valueOf(value);
 		bd = bd.setScale(2, RoundingMode.HALF_UP);
 		return bd.doubleValue();
+	}
+
+	public List<CourseBean> getCourses() throws SQLException, NullException {
+		
+		List<Course> courses = CourseDAO.getNotVerbalizedCourses(Session.getSession().getUsername());
+		List<CourseBean> coursesBean = new ArrayList<>();
+		
+		for (Course course : courses) {
+
+			CourseBean courseBean = new CourseBean();
+			courseBean.setAbbrevation(course.getAbbrevation());
+			courseBean.setCredits(course.getCredits());
+			courseBean.setGoal(course.getGoal());
+			courseBean.setName(course.getName());
+			courseBean.setPrerequisites(course.getPrerequisites());
+			courseBean.setReception(course.getReception());
+			courseBean.setSemester(course.getSemester());
+			courseBean.setYear(course.getYear());
+			
+			coursesBean.add(courseBean);
+		}
+			
+		return coursesBean;
+	}
+	
+	public boolean saveVerbalizedExam(VerbalizedBean verb) {
+		Student student = new Student();
+		student.setUsername(verb.getStudent().getUsername());
+		
+		Course course = new Course();
+		course.setAbbrevation(verb.getCourse().getAbbrevation());
+		
+		Verbalized verbExam = new Verbalized(student, course, verb.getGrade(), verb.getDate());
+		
+		return VerbalizedDAO.insert(verbExam);
+	}
+
+	public boolean deleteVerbalizedExam(VerbalizedBean verb) {
+		Student student = new Student();
+		student.setUsername(verb.getStudent().getUsername());
+		
+		Course course = new Course();
+		course.setAbbrevation(verb.getCourse().getAbbrevation());
+		
+		Verbalized verbExam = new Verbalized();
+		verbExam.setCourse(course);
+		verbExam.setStudent(student);
+		
+		return VerbalizedDAO.delete(verbExam);
 	}
 }
