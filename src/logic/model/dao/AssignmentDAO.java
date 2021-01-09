@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exceptions.NullException;
 import logic.model.Assignment;
 import logic.model.Course;
 import logic.utilities.Queries;
@@ -19,7 +20,7 @@ public class AssignmentDAO {
 		
 	}
 
-	public static List<Assignment> getAssignmentsByStudent(String student) throws SQLException {
+	public static List<Assignment> getAssignmentsByStudent(String student) throws SQLException, NullException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -35,7 +36,8 @@ public class AssignmentDAO {
 			ResultSet rs = Queries.selectAssignmentsByStudent(stmt, student);
 
 			if (!rs.first()) {
-				assignments = null;
+				throw new NullException("No assignment found");
+				
 			} else {
 				assignments = new ArrayList<>();
 				rs.first();
@@ -58,7 +60,7 @@ public class AssignmentDAO {
 		return assignments;
 	}
 	
-	public static List<Assignment> getAssignmentsByProfessor(String professor) throws SQLException {
+	public static List<Assignment> getAssignmentsByProfessor(String professor) throws SQLException, NullException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -74,7 +76,8 @@ public class AssignmentDAO {
 			ResultSet rs = Queries.selectAssignmentsByProfessor(stmt, professor);
 
 			if (!rs.first()) {
-				assignments = null;
+				throw new NullException("No assignment found");
+				
 			} else {
 				assignments = new ArrayList<>();
 				rs.first();

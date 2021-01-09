@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import logic.bean.CourseBean;
 import logic.bean.ExamBean;
-import logic.model.Course;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
@@ -26,18 +25,7 @@ public class ScheduledExamCardView {
 	
 	@FXML
 	private void course(ActionEvent event) throws SQLException, IOException {
-    	Course course = exam.getCourse();
-    	
-    	CourseBean courseBean = new CourseBean();
-    	courseBean.setAbbrevation(course.getAbbrevation());
-    	courseBean.setName(course.getName());
-    	courseBean.setYear(course.getYear());
-    	courseBean.setCredits(course.getCredits());
-    	courseBean.setSemester(course.getSemester());
-    	courseBean.setPrerequisites(course.getPrerequisites());
-    	courseBean.setGoal(course.getGoal());
-    	courseBean.setReception(course.getReception());;
-
+    	CourseBean courseBean = exam.getCourse();
     	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
 	}
 	

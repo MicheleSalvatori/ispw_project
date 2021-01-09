@@ -1,0 +1,96 @@
+package logic.controller;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import logic.Session;
+import logic.bean.CourseBean;
+import logic.bean.StudentBean;
+import logic.bean.VerbalizedBean;
+import logic.exceptions.NullException;
+import logic.exceptions.RecordNotFoundException;
+import logic.model.Course;
+import logic.model.Student;
+import logic.model.Verbalized;
+import logic.model.dao.VerbalizedDAO;
+
+public class ViewVerbalizedExamsController {
+
+	public ViewVerbalizedExamsController() {
+		
+	}
+	
+	public List<VerbalizedBean> getVerbalizedExams() throws SQLException, RecordNotFoundException, NullException {
+		
+		List<Verbalized> verbs = VerbalizedDAO.getVerbalizedExams(Session.getSession().getUsername());
+		List<VerbalizedBean> verbsBean = new ArrayList<>();
+		
+		for (Verbalized verb : verbs) {
+			
+			Course course = verb.getCourse();
+			CourseBean courseBean = new CourseBean();
+			courseBean.setAbbrevation(course.getAbbrevation());
+			courseBean.setCredits(course.getCredits());
+			courseBean.setGoal(course.getGoal());
+			courseBean.setName(course.getName());
+			courseBean.setPrerequisites(course.getPrerequisites());
+			courseBean.setReception(course.getReception());
+			courseBean.setSemester(course.getSemester());
+			courseBean.setYear(course.getYear());
+			
+			Student student = verb.getStudent();
+			StudentBean studentBean = new StudentBean();
+			studentBean.setEmail(student.getEmail());
+			studentBean.setName(student.getName());
+			studentBean.setPassword(student.getPassword());
+			studentBean.setSurname(student.getSurname());
+			studentBean.setUsername(student.getUsername());
+
+			VerbalizedBean verbBean = new VerbalizedBean();
+			verbBean.setCourse(courseBean);
+			verbBean.setDate(verb.getDate());
+			verbBean.setGrade(verb.getGrade());
+			verbBean.setStudent(studentBean);
+			
+			verbsBean.add(verbBean);
+		}
+		
+		if (verbsBean.isEmpty()) {
+			throw new NullException("Empty array");
+		}
+		
+		return verbsBean;
+	}
+	
+	// Calculate GPA
+	public double GPA(List<VerbalizedBean> verbs) {
+		double tot = 0;
+		for (VerbalizedBean verbBean : verbs) {
+			tot += verbBean.getGrade();
+		}
+
+		return tot / verbs.size();
+	}
+
+	// Calculate WPA
+	public double WPA(List<VerbalizedBean> verbs) {
+		double tot = 0;
+		int credits = 0;
+		for (VerbalizedBean verbBean : verbs) {
+			tot += verbBean.getGrade() * Integer.parseInt(verbBean.getCourse().getCredits());
+			credits += Integer.parseInt(verbBean.getCourse().getCredits());
+		}
+
+		return round(tot / credits);
+	}
+
+	// Round double by 2 decimal places
+	private double round(double value) {
+		BigDecimal bd = BigDecimal.valueOf(value);
+		bd = bd.setScale(2, RoundingMode.HALF_UP);
+		return bd.doubleValue();
+	}
+}

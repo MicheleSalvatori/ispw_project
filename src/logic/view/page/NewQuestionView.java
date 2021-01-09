@@ -18,6 +18,7 @@ import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
 import logic.controller.InsertQuestionController;
+import logic.exceptions.NullException;
 import logic.model.Student;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
@@ -48,9 +49,16 @@ public class NewQuestionView implements Initializable {
 		controller = new InsertQuestionController();
 		btnSubmit.disableProperty().bind(Bindings.isEmpty(textQuestion.textProperty())
 				.or(Bindings.isEmpty(textSubject.textProperty())).or((courseComboBox.valueProperty().isNull())));
-		courses = controller.getCoursesOfStudent(Session.getSession().getUserLogged().getUsername());
-		for (CourseBean c : courses) {
-			courseComboBox.getItems().add(c.getAbbrevation());
+		
+		try {
+			courses = controller.getCoursesOfStudent(Session.getSession().getUserLogged().getUsername());
+			for (CourseBean c : courses) {
+				courseComboBox.getItems().add(c.getAbbrevation());
+			}
+			
+		} catch (NullException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

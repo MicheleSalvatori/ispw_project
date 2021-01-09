@@ -15,6 +15,7 @@ import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
 import logic.controller.ScheduledController;
+import logic.exceptions.NullException;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.CourseFilterCard;
@@ -67,6 +68,10 @@ public class ScheduledPageView implements Initializable {
 			return;
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} catch (NullException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -7,17 +7,21 @@ import java.util.List;
 import logic.Session;
 import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
+import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Answer;
 import logic.model.Question;
+import logic.model.User;
 import logic.model.dao.CourseDAO;
 import logic.model.dao.QuestionDAO;
 import logic.utilities.Role;
 
 public class AllQuestionController {
+	
 	private List<Question> questionList;
 
 	public AllQuestionController() {
+		
 	}
 
 	public int getNumberCourses() throws SQLException {
@@ -43,8 +47,22 @@ public class AllQuestionController {
 				bean.setDate(q.getDate());
 				List<Answer> answers = q.getAnswers();
 				if (answers != null) {
-					for (Answer a : answers) {
-						AnswerBean answerBean = new AnswerBean(a.getId(), a.getText(), a.getUser(), a.getDate());
+					for (Answer answer : answers) {
+						
+						User user = answer.getUser();
+						UserBean userBean = new UserBean();
+						userBean.setEmail(user.getEmail());
+						userBean.setName(user.getName());
+						userBean.setPassword(user.getPassword());
+						userBean.setSurname(user.getSurname());
+						userBean.setUsername(user.getUsername());
+						
+						AnswerBean answerBean = new AnswerBean();
+						answerBean.setDate(answer.getDate());
+						answerBean.setId(answer.getId());
+						answerBean.setText(answer.getText());
+						answerBean.setUser(userBean);
+						
 						bean.addAnswers(answerBean);
 					}
 				}

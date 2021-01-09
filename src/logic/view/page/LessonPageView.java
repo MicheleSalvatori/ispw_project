@@ -26,7 +26,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.model.Course;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
@@ -76,20 +75,10 @@ public class LessonPageView implements Initializable {
 
 	@FXML
 	private void course(ActionEvent event) throws IOException, SQLException {
-		Course course = lesson.getCourse();
-
-		CourseBean courseBean = new CourseBean();
-		courseBean.setAbbrevation(course.getAbbrevation());
-		courseBean.setName(course.getName());
-		courseBean.setYear(course.getYear());
-		courseBean.setCredits(course.getCredits());
-		courseBean.setSemester(course.getSemester());
-		courseBean.setPrerequisites(course.getPrerequisites());
-		courseBean.setGoal(course.getGoal());
-		courseBean.setReception(course.getReception());
-
+		CourseBean courseBean= lesson.getCourse();
 		PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
 	}
+	
 	private void setupEvent() {
 		seatEvent = new EventHandler<ActionEvent>() {
 			@Override
@@ -99,6 +88,7 @@ public class LessonPageView implements Initializable {
 			}
 		};
 	}
+	
 	private void setupRoom() {
 		int numRow = lesson.getClassroom().getSeatRow();
 		int seatPerRow = lesson.getClassroom().getSeatColumn();
@@ -142,6 +132,7 @@ public class LessonPageView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
 	}
 
 	private void setWeatherCard(Time time) {
@@ -176,5 +167,4 @@ public class LessonPageView implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
 }

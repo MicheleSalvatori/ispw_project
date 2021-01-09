@@ -2,13 +2,10 @@ package logic.bean;
 
 import java.sql.Date;
 
-import logic.model.Course;
-import logic.model.Student;
-
 public class VerbalizedBean {
 	
-	private Student student;
-	private Course course;
+	private StudentBean student;
+	private CourseBean course;
 	private int grade;
 	private Date date;
 	
@@ -16,19 +13,19 @@ public class VerbalizedBean {
 		
 	}
 	
-	public Student getStudent() {
+	public StudentBean getStudent() {
 		return student;
 	}
 	
-	public void setStudent(Student student) {
+	public void setStudent(StudentBean student) {
 		this.student = student;
 	}
 	
-	public Course getCourse() {
+	public CourseBean getCourse() {
 		return course;
 	}
 	
-	public void setCourse(Course course) {
+	public void setCourse(CourseBean course) {
 		this.course = course;
 	}
 	

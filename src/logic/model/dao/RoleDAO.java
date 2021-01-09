@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import logic.exceptions.RecordNotFoundException;
+import logic.model.User;
 import logic.utilities.Queries;
 import logic.utilities.Role;
 import logic.utilities.SingletonDB;
@@ -64,11 +65,11 @@ public class RoleDAO {
 		return role;
 	}
 	
-	public static String getPasswordByEmail(String email) throws SQLException, RecordNotFoundException {
+	public static User getPasswordByEmail(String email) throws SQLException, RecordNotFoundException {
 		
 		Connection conn = null;
 		Statement stmt = null;
-		String password = null;
+		User user = null;
 		ResultSet resultSet = null;
 		
 		try {
@@ -80,13 +81,15 @@ public class RoleDAO {
 			resultSet = Queries.selectUserByEmail(stmt, email);
 			
 			if (!resultSet.first()) {
-				password = null;
+				user = null;
 			}else {
 				resultSet.first();				// mi riposiziono alla prima riga 
-				password = resultSet.getString("password");
+				String password = resultSet.getString("password");
+				user = new User();
+				user.setPassword(password);
 			}
 			
-			if (password == null) {
+			if (user == null) {
 				RecordNotFoundException e = new RecordNotFoundException("No User found matching with email: '" + email + "'.");
             	throw e;
 			}
@@ -97,6 +100,6 @@ public class RoleDAO {
 				stmt.close();
 		}
 		
-		return password;
+		return user;
 	}
 }

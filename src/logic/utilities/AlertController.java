@@ -33,9 +33,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import logic.exceptions.NullException;
 
 public class AlertController {
 //	TODO riorganizzare metodi utilizzando costruttori diversi per node e event 
@@ -58,7 +60,8 @@ public class AlertController {
 		alert.setHeaderText(null);
 		alert.setGraphic(null);
 		alert.setContentText(message);
-		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
+		alert.getDialogPane().getScene().setFill(Color.TRANSPARENT);
+		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		centerButtons(alert.getDialogPane());
 		alert.initStyle(StageStyle.TRANSPARENT);
 		
@@ -84,7 +87,8 @@ public class AlertController {
 		alert.setHeaderText(null);
 		alert.setGraphic(null);
 		alert.setContentText(message);
-		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
+		alert.getDialogPane().getScene().setFill(Color.TRANSPARENT);
+		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		centerButtons(alert.getDialogPane());
 		alert.initStyle(StageStyle.TRANSPARENT);
 		
@@ -108,7 +112,8 @@ public class AlertController {
 		alert.setHeaderText(null);
 		alert.setGraphic(null);
 		alert.setContentText(message);
-		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
+		alert.getDialogPane().getScene().setFill(Color.TRANSPARENT);
+		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		centerButtons(alert.getDialogPane());
 		alert.initStyle(StageStyle.TRANSPARENT);
 		
@@ -131,7 +136,8 @@ public class AlertController {
 	 	alert.setTitle("Confirmation");
 	 	alert.setHeaderText(null);
 		alert.setGraphic(null);
-		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
+		alert.getDialogPane().getScene().setFill(Color.TRANSPARENT);
+		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		centerButtons(alert.getDialogPane());
 		alert.initStyle(StageStyle.TRANSPARENT);
 		
@@ -156,7 +162,8 @@ public class AlertController {
 	 	alert.setTitle("Confirmation");
 	 	alert.setHeaderText(null);
 		alert.setGraphic(null);
-		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
+		alert.getDialogPane().getScene().setFill(Color.TRANSPARENT);
+		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		centerButtons(alert.getDialogPane());
 		alert.initStyle(StageStyle.TRANSPARENT);
 		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
@@ -174,10 +181,11 @@ public class AlertController {
 		return alert.getResult() == ButtonType.YES;
 	}
 		
-	public static String changePassword(ActionEvent event) {
+	public static String changePassword(ActionEvent event) throws NullException {
 		Dialog<String> dialog = new Dialog<>();
 		dialog.setHeaderText("Insert a new password");
 		dialog.setGraphic(null);
+		dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
 		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 		centerButtons(dialog.getDialogPane());
@@ -221,13 +229,15 @@ public class AlertController {
 		if (result.isPresent()) {
 	    	return result.get();
 	    }
-	    return null;
+	    
+		throw new NullException("Cancel button pressed");
 	}
 	
-	public static String emailInput(ActionEvent event) {
+	public static String emailInput(ActionEvent event) throws NullException {
 		Dialog<String> dialog = new Dialog<>();
 		dialog.setHeaderText("Insert your email");
 		dialog.setGraphic(null);
+		dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
 		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 		centerButtons(dialog.getDialogPane());
@@ -243,8 +253,7 @@ public class AlertController {
 	    
 	    
 	    // Disable OK button until all text fields aren't empty
-	    dialog.getDialogPane().lookupButton(ButtonType.OK).disableProperty()
-	    						.bind(Bindings.isEmpty(text.textProperty()));
+	    dialog.getDialogPane().lookupButton(ButtonType.OK).disableProperty().bind(Bindings.isEmpty(text.textProperty()));
 	    
 	    dialog.getDialogPane().setContent(content);
 	    
@@ -271,7 +280,8 @@ public class AlertController {
 		if (result.isPresent()) {
 	    	return result.get();
 	    }
-	    return null;
+		
+	    throw new NullException("Button cancel pressed");
 	}
 	
 	public static int courseRequest(ActionEvent event, List<String> courses) {
@@ -285,6 +295,7 @@ public class AlertController {
 		choiceDialog.setTitle("Select a course");
 		choiceDialog.setHeaderText("Select a course");
 		choiceDialog.setGraphic(null);
+		choiceDialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
 		choiceDialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		centerButtons(choiceDialog.getDialogPane());
 		choiceDialog.initStyle(StageStyle.TRANSPARENT);
@@ -363,6 +374,7 @@ public class AlertController {
 	        return null;
 	    });
 
+	    dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
 	    dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 	    dialog.initStyle(StageStyle.TRANSPARENT);
 	    centerButtons(dialog.getDialogPane());

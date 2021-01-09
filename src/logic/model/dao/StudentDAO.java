@@ -8,6 +8,7 @@ import java.sql.Statement;
 import logic.exceptions.DuplicatedRecordException;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Student;
+import logic.model.User;
 import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
@@ -32,13 +33,13 @@ public class StudentDAO {
 			if (!resultSet.first()) {
 				studentLogged = null;
 			}else {
-				resultSet.first();				// mi riposiziono alla prima riga 
-				studentLogged = new Student();
-				studentLogged.setUsername(resultSet.getString("username"));
-				studentLogged.setName(resultSet.getString("name"));
-				studentLogged.setSurname(resultSet.getString("surname"));
-				studentLogged.setEmail(resultSet.getString("email"));
-				studentLogged.setPassword(resultSet.getString("password"));
+				resultSet.first();				// mi riposiziono alla prima riga
+				String u = resultSet.getString("username");
+				String n = resultSet.getString("name");
+				String s = resultSet.getString("surname");
+				String e = resultSet.getString("email");
+				String p = resultSet.getString("password");
+				studentLogged = new Student(u, p, n, s, e);
 			}
 			
 			if (studentLogged == null) {
@@ -55,7 +56,7 @@ public class StudentDAO {
 		return studentLogged;
 	}
 
-	public static void addStudent(String username, String password, String name, String surname, String email) throws SQLException, DuplicatedRecordException {
+	public static void addStudent(User user) throws SQLException, DuplicatedRecordException {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -70,28 +71,28 @@ public class StudentDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			rs = Queries.selectStudentByUsername(stmt, username);
+			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
 			if (!rs.first()) {
 				userRegistered = null;
 			} else {
 				// Raise duplicate entry exception
-				DuplicatedRecordException e = new DuplicatedRecordException("Duplicated Instance Username. Username '" + username + "' already in use.");
+				DuplicatedRecordException e = new DuplicatedRecordException("Duplicated Instance Username. Username '" + user.getUsername() + "' already in use.");
             	throw e;   
 			}
 			
-			rs = Queries.selectUserByEmail(stmt, email);
+			rs = Queries.selectUserByEmail(stmt, user.getEmail());
 			if (!rs.first()) {
 				userRegistered = null;
 			}
 			else {
 				// Raise duplicate entry exception
-				DuplicatedRecordException e = new DuplicatedRecordException("Duplicated Instance Email. Email '" + email + "' already in use.");
+				DuplicatedRecordException e = new DuplicatedRecordException("Duplicated Instance Email. Email '" + user.getEmail() + "' already in use.");
             	throw e;
 			}
 			
 			if (userRegistered == null) {
 				// If there are no entry then insert a new User
-				result = Queries.insertRole(stmt, username);
+				result = Queries.insertRole(stmt, user.getUsername());
 				if (result == 0) {
 					System.out.println("Insert role error");
 					return;
@@ -100,7 +101,7 @@ public class StudentDAO {
 					System.out.println("Insert role done");
 				}
 				
-				result = Queries.insertStudent(stmt, username, password, name, surname, email);
+				result = Queries.insertStudent(stmt, user.getUsername(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail());
 				
 				if (result == 0) {
 					System.out.println("Insert studenterror");
@@ -118,11 +119,11 @@ public class StudentDAO {
 				stmt.close();
 		}
 		
-		System.out.println("StudentDAO: new student entry created with username = " + username + "\n");
+		System.out.println("StudentDAO: new student entry created with username = " + user.getUsername() + "\n");
 	}
 	
 	
-	public static void changePassword(String username, String password) throws SQLException {
+	public static void changePassword(User user) throws SQLException {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -135,7 +136,7 @@ public class StudentDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			rs = Queries.selectStudentByUsername(stmt, username);
+			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
 			if (!rs.first()) {
 				System.out.println("No user found");
 			} else {
@@ -143,7 +144,7 @@ public class StudentDAO {
 				System.out.println("User found");
 			}
 			
-			Queries.updateStudentPassword(stmt, username, password);
+			Queries.updateStudentPassword(stmt, user.getUsername(), user.getPassword());
 			
 			rs.close();
 			
@@ -171,13 +172,13 @@ public class StudentDAO {
             	
 			}else {
 				resultSet.first();				// mi riposiziono alla prima riga 
-				student = new Student();
 				System.out.println("findStudentByUsername("+resultSet.getString("username")+")");
-				student.setUsername(resultSet.getString("username"));
-				student.setName(resultSet.getString("name"));
-				student.setSurname(resultSet.getString("surname"));
-				student.setEmail(resultSet.getString("email"));
-				student.setPassword(resultSet.getString("password"));
+				String u = resultSet.getString("username");
+				String n = resultSet.getString("name");
+				String s = resultSet.getString("surname");
+				String e = resultSet.getString("email");
+				String p = resultSet.getString("password");
+				student = new Student(u, p, n, s, e);
 			}
 			
 			resultSet.close();

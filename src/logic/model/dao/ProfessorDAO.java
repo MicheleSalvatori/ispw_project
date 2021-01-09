@@ -9,6 +9,7 @@ import java.util.List;
 
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Professor;
+import logic.model.User;
 import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
@@ -116,11 +117,11 @@ public class ProfessorDAO {
 				resultSet.first();				// mi riposiziono alla prima riga 
 				do {
 					String u = resultSet.getString("username");
+					String p = resultSet.getString("password");
 					String n = resultSet.getString("name");
 					String s = resultSet.getString("surname");
 					String e = resultSet.getString("email");
-					
-					Professor prof = new Professor(u, n, s, e);
+					Professor prof = new Professor(u, p, n, s, e);
 					professors.add(prof);
 				} while(resultSet.next());
 			}
@@ -132,7 +133,7 @@ public class ProfessorDAO {
 		return professors;
 	}
 	
-	public static void changePassword(String username, String password) throws SQLException {
+	public static void changePassword(User user) throws SQLException {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -145,14 +146,14 @@ public class ProfessorDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			rs = Queries.selectProfessorByUsername(stmt, username);
+			rs = Queries.selectProfessorByUsername(stmt, user.getUsername());
 			if (!rs.first()) {
 				System.out.println("No user found");
 			} else {
 				System.out.println("User found");
 			}
 			
-			Queries.updateProfessorPassword(stmt, username, password);
+			Queries.updateProfessorPassword(stmt, user.getUsername(), user.getPassword());
 			
 			rs.close();
 			

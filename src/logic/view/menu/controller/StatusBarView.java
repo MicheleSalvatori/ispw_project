@@ -19,13 +19,15 @@ import logic.utilities.PageLoader;
 public class StatusBarView implements Initializable {
 	
 	@FXML
-	private Button btnNotifications;
-	@FXML
-	private Button btnLogout;
+	private Button btnNotifications, btnLogout;
+	
 	@FXML
 	private ImageView ivProfile;
+	
 	@FXML
 	private Label labelName;
+	
+	private LoginController loginController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -36,9 +38,9 @@ public class StatusBarView implements Initializable {
 	public void logout(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
 		System.out.println("Logout");
 		
-		LoginController loginController = new LoginController();
+		loginController = new LoginController();
 		loginController.logout();
-		PageLoader.getInstance().buildPage(Page.LOGIN, event, null);
+		PageLoader.getInstance().buildPage(Page.LOGIN, event);
 	}
 	
 	@FXML

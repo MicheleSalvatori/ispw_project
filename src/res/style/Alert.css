@@ -18,8 +18,7 @@
 .dialog-pane {
 	-fx-background-color: white;
 	-fx-pref-width: 500;
-	-fx-border-radius: 100px;
-	-fx-background-radius: 100px;
+	-fx-background-radius: 15px;
 }
 
 .dialog-pane > .button-bar {
@@ -35,6 +34,10 @@
 	-fx-text-alignment: CENTER;
 	-fx-text-fill: #0C0B0B;
 	-fx-alignment: CENTER;
+}
+
+.dialog-pane > .header-panel {
+	-fx-background-radius: 15 15 0 0;
 }
 
 .dialog-pane > .header-panel > .label {

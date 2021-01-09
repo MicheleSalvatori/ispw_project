@@ -17,9 +17,9 @@ import javafx.scene.layout.VBox;
 import logic.Session;
 import logic.bean.AssignmentBean;
 import logic.bean.QuestionBean;
+import logic.controller.AddAssignmentController;
 import logic.controller.AllQuestionController;
-import logic.model.Assignment;
-import logic.model.dao.AssignmentDAO;
+import logic.exceptions.NullException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -39,11 +39,10 @@ public class ForumPageView implements Initializable {
 	private VBox vboxQuestion, vboxAssignment;
 	
 	private AllQuestionController allQuestionController;
-	private List<QuestionBean> allQuestions, myQuestions;
-	//private List<AssignmentBean> assignments;
+	private AddAssignmentController addAssignmentController;
 	
-	//TODO eliminare
-	private List<Assignment> assignments;
+	private List<QuestionBean> allQuestions, myQuestions;
+	private List<AssignmentBean> assignments;
 
 	@FXML
 	private void myQuestion(ActionEvent ae) throws IOException {
@@ -165,30 +164,19 @@ public class ForumPageView implements Initializable {
 		
 		try {
 			
-			// TODO Controller
-			if (Session.getSession().getType() == Role.STUDENT) {
-				assignments = AssignmentDAO.getAssignmentsByStudent(Session.getSession().getUsername());
-			}
-			else {
-				assignments = AssignmentDAO.getAssignmentsByProfessor(Session.getSession().getUsername());
-			}
+			addAssignmentController = new AddAssignmentController();
 			
-			for (Assignment assignment : assignments) {
-				AssignmentBean assignmentBean = new AssignmentBean();
-				assignmentBean.setCourse(assignment.getCourse());
-				assignmentBean.setDate(assignment.getDate());
-				assignmentBean.setId(assignment.getId());
-				assignmentBean.setText(assignment.getText());
-				assignmentBean.setTitle(assignment.getTitle());
-				
+			assignments = addAssignmentController.getAssignments();
+			
+			for (AssignmentBean assignmentBean : assignments) {
 				AssignmentCard assignmentCard = new AssignmentCard(assignmentBean);
 				vboxAssignment.getChildren().add(assignmentCard);
 			}
 			
-		} catch (NullPointerException e) {
+		} catch (NullException e) {
 			vboxAssignment.getChildren().add(new Label("No assignment found"));
 			return;
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

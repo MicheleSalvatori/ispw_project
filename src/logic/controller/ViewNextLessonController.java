@@ -7,8 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.Session;
+import logic.bean.ClassroomBean;
+import logic.bean.CourseBean;
 import logic.bean.LessonBean;
+import logic.bean.ProfessorBean;
+import logic.model.Classroom;
+import logic.model.Course;
 import logic.model.Lesson;
+import logic.model.Professor;
 import logic.model.dao.LessonDAO;
 import logic.utilities.Role;
 
@@ -40,11 +46,35 @@ public class ViewNextLessonController {
 		}
 		
 		for (Lesson lesson : lessons) {
+			
+			Course course = lesson.getCourse();
+			CourseBean courseBean = new CourseBean();
+			courseBean.setAbbrevation(course.getAbbrevation());
+			courseBean.setCredits(course.getCredits());
+			courseBean.setGoal(course.getGoal());
+			courseBean.setName(course.getName());
+			courseBean.setPrerequisites(course.getPrerequisites());
+			courseBean.setReception(course.getReception());
+			courseBean.setSemester(course.getSemester());
+			courseBean.setYear(course.getYear());
+			
+			Classroom classroom = lesson.getClassroom();
+			ClassroomBean classroomBean = new ClassroomBean();
+			classroomBean.setName(classroom.getName());
+			
+			Professor professor = lesson.getProfessor();
+			ProfessorBean professorBean = new ProfessorBean();
+			professorBean.setEmail(professor.getEmail());
+			professorBean.setName(professor.getName());
+			professorBean.setPassword(professor.getPassword());
+			professorBean.setSurname(professor.getSurname());
+			professorBean.setUsername(professor.getUsername());
+			
 			LessonBean lessonBean = new LessonBean();
-			lessonBean.setClassroom(lesson.getClassroom());
-			lessonBean.setCourse(lesson.getCourse());
+			lessonBean.setClassroom(classroomBean);
+			lessonBean.setCourse(courseBean);
 			lessonBean.setDate(lesson.getDate());
-			lessonBean.setProfessor(lesson.getProfessor());
+			lessonBean.setProfessor(professorBean);
 			lessonBean.setTime(lesson.getTime());
 			lessonBean.setTopic(lesson.getTopic());
 			

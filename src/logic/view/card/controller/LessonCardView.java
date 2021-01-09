@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.shape.Line;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.model.Course;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
@@ -68,18 +67,7 @@ public class LessonCardView {
 	
 	@FXML
 	public void course(ActionEvent event) throws IOException, SQLException {
-    	Course course = lesson.getCourse();
-	
-    	CourseBean courseBean = new CourseBean();
-    	courseBean.setAbbrevation(course.getAbbrevation());
-    	courseBean.setName(course.getName());
-    	courseBean.setYear(course.getYear());
-    	courseBean.setCredits(course.getCredits());
-    	courseBean.setSemester(course.getSemester());
-    	courseBean.setPrerequisites(course.getPrerequisites());
-    	courseBean.setGoal(course.getGoal());
-    	courseBean.setReception(course.getReception());
-
+    	CourseBean courseBean = lesson.getCourse();
     	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
 	}
 	

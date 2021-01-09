@@ -1,9 +1,10 @@
 package logic.model;
 
 public class Classroom {
+	
+	private String name;
 	private int seatRow;
 	private int seatColumn;
-	private String name;
 
 	public Classroom(String name) {
 		this.name = name;

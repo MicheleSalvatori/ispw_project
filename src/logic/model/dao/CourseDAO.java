@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exceptions.NullException;
 import logic.model.Course;
 import logic.utilities.Queries;
 import logic.utilities.Role;
@@ -182,7 +183,7 @@ public class CourseDAO {
 		return courses;
 	}
 
-	public static List<Course> getStudentCourses(String student) throws SQLException {
+	public static List<Course> getStudentCourses(String student) throws SQLException, NullException {
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -198,7 +199,8 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectCoursesByStudent(stmt, student);
 
 			if (!rs.first()) {
-				courses = null;
+				throw new NullException("No courses found");
+				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();
@@ -308,7 +310,7 @@ public class CourseDAO {
 		return courses;
 	}
 
-	public static List<Course> getStudentCoursesByRequest(String student) throws SQLException {
+	public static List<Course> getStudentCoursesByRequest(String student) throws SQLException, NullException {
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -325,7 +327,8 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectCoursesRequestedByStudent(stmt, student);
 
 			if (!rs.first()) {
-				courses = null;
+				throw new NullException("No course request found");
+				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();

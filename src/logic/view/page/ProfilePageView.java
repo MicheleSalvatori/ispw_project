@@ -18,14 +18,14 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import logic.Session;
 import logic.bean.CourseBean;
+import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
+import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.JoinCourseController;
 import logic.controller.LoginController;
 import logic.controller.SignupController;
-import logic.model.Course;
-import logic.model.Student;
-import logic.model.dao.CourseDAO;
+import logic.exceptions.NullException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -53,23 +53,46 @@ public class ProfilePageView implements Initializable {
 	private SignupController signupController;
 	private JoinCourseController joinCourseController;
 	
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		labelUsername.setText(Session.getSession().getUserLogged().getUsername());
+		labelName.setText(Session.getSession().getUserLogged().getName());
+		labelSurname.setText(Session.getSession().getUserLogged().getSurname());
+		labelEmail.setText(Session.getSession().getUserLogged().getEmail());
+		labelPassword.setText("**********");
+		
+		if (Session.getSession().getType() == Role.PROFESSOR) {
+			btnAdd.setVisible(false);
+			btnRemove.setVisible(false);
+		}
+		
+		setAvatar("/res/png/avatar.png");
+		
+		loadCourses();
+	}
+	
 	@FXML
 	private void changePass(ActionEvent event) throws SQLException, ClassNotFoundException, IOException {
 		String password;
 		
 		while (true) {
-			password = AlertController.changePassword(event);
 			
-			if (password == null) {
+			try {
+				password = AlertController.changePassword(event);
+	
+				if (password.compareTo(Session.getSession().getPassword()) == 0) {
+					AlertController.buildInfoAlert("You have inserted same password.\nInsert another password.", "password", event);
+				}
+				
+				else {
+					break;
+				}
+				
+			} catch (NullException e) {
+				System.out.println(e.getMessage());
 				return;
-			}
-			
-			else if (password.compareTo(Session.getSession().getPassword()) == 0) {
-				AlertController.buildInfoAlert("You have inserted same password.\nInsert another password.", "password", event);
-			}
-			
-			else {
-				break;
 			}
 		}
 		
@@ -91,31 +114,45 @@ public class ProfilePageView implements Initializable {
 		
 		UserBean userBean = new UserBean();
 		userBean.setUsername(Session.getSession().getUsername());
-		
-		List<CourseBean> courses = joinCourseController.getStudentCourses(userBean);
-		
-		if (courses == null) {
+
+		try {
+			List<CourseBean> courses = joinCourseController.getStudentCourses(userBean);
+			
+			List<String> names = new ArrayList<>();
+			for (CourseBean course : courses) {
+				names.add(course.getName());
+			}
+			
+			int index = AlertController.courseRequest(event, names);
+			if (index != -1) {
+				
+				CourseBean courseBean = courses.get(index);
+				
+				StudentBean studentBean = new StudentBean();
+				studentBean.setEmail(Session.getSession().getUserLogged().getEmail());
+				studentBean.setName(Session.getSession().getUserLogged().getName());
+				studentBean.setPassword(Session.getSession().getPassword());
+				studentBean.setSurname(Session.getSession().getUserLogged().getSurname());
+				studentBean.setUsername(Session.getSession().getUsername());
+				
+				RequestBean requestBean = new RequestBean();
+				requestBean.setStudent(studentBean);
+				requestBean.setCourse(courseBean);
+				
+				joinCourseController.removeCourse(requestBean);
+				
+				AlertController.buildInfoAlert("Course " + courseBean.getAbbrevation() + " removed.", "delete", event);
+				loadCourses();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (NullException e) {
+			System.out.println(e.getMessage());
 			AlertController.buildInfoAlert("You don't have any courses available.", "delete", event);
 			return;
-		}
-		
-		List<String> names = new ArrayList<>();
-		for (CourseBean course : courses) {
-			names.add(course.getName());
-		}
-		
-		int index = AlertController.courseRequest(event, names);
-		if (index != -1) {
-			CourseBean course = courses.get(index);
-			RequestBean requestBean = new RequestBean();
-			requestBean.setStudent((Student) Session.getSession().getUserLogged());
-			requestBean.setCourse(new Course(course.getName(), course.getAbbrevation(), course.getYear(), course.getSemester(),
-									course.getCredits(), course.getPrerequisites(), course.getGoal(), course.getReception()));
-			
-			joinCourseController.removeCourse(requestBean);
-			
-			AlertController.buildInfoAlert("Course " + course.getAbbrevation() + " removed.", "delete", event);
-			loadCourses();
 		}
 	}
 	
@@ -141,11 +178,19 @@ public class ProfilePageView implements Initializable {
 		
 		int index = AlertController.courseRequest(event, names);
 		if (index != -1) {
-			CourseBean course = courses.get(index);
+			
+			CourseBean courseBean = courses.get(index);
+			
+			StudentBean studentBean = new StudentBean();
+			studentBean.setEmail(Session.getSession().getUserLogged().getEmail());
+			studentBean.setName(Session.getSession().getUserLogged().getName());
+			studentBean.setPassword(Session.getSession().getPassword());
+			studentBean.setSurname(Session.getSession().getUserLogged().getSurname());
+			studentBean.setUsername(Session.getSession().getUsername());
+			
 			RequestBean requestBean = new RequestBean();
-			requestBean.setStudent((Student) Session.getSession().getUserLogged());
-			requestBean.setCourse(new Course(course.getName(), course.getAbbrevation(), course.getYear(), course.getSemester(),
-									course.getCredits(), course.getPrerequisites(), course.getGoal(), course.getReception()));
+			requestBean.setStudent(studentBean);
+			requestBean.setCourse(courseBean);
 
 			joinCourseController.sendRequest(requestBean);
 			
@@ -163,31 +208,13 @@ public class ProfilePageView implements Initializable {
 			btnShowPass.getStyleClass().add("button-no-show");
 			show = true;
 		}
+		
 		else {
 			labelPassword.setText("**********");
 			btnShowPass.getStyleClass().remove("button-no-show");
 			btnShowPass.getStyleClass().add("button-show");
 			show = false;
 		}
-	}
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
-		labelUsername.setText(Session.getSession().getUserLogged().getUsername());
-		labelName.setText(Session.getSession().getUserLogged().getName());
-		labelSurname.setText(Session.getSession().getUserLogged().getSurname());
-		labelEmail.setText(Session.getSession().getUserLogged().getEmail());
-		labelPassword.setText("**********");
-		
-		if (Session.getSession().getType() == Role.PROFESSOR) {
-			btnAdd.setVisible(false);
-			btnRemove.setVisible(false);
-		}
-		
-		setAvatar("/res/png/avatar.png");
-		
-		loadCourses();
 	}
 	
 	private void setAvatar(String res) {
@@ -198,81 +225,51 @@ public class ProfilePageView implements Initializable {
 	public void loadCourses() {
 		vboxScroll.getChildren().clear();
 		
-		try {
-			List<Course> c1;
-			List<Course> c2;
-			List<Course> courses;
+		joinCourseController = new JoinCourseController();
+
+		List<CourseBean> courses;
+		List<CourseBean> requests;
+		List<ProfessorBean> professors;
 			
-			if (Session.getSession().getType() == Role.STUDENT) {
-				c1 = CourseDAO.getStudentCourses(Session.getSession().getUsername());
-				c2 = CourseDAO.getStudentCoursesByRequest(Session.getSession().getUsername());
+		if (Session.getSession().getType() == Role.STUDENT) {
 				
-				courses = new ArrayList<>();
+			try {
+				courses = joinCourseController.getCourses();
+				requests = joinCourseController.getRequestedCourses();
 				
-				if (c1 != null) {
-					courses.addAll(c1);
+				for (CourseBean courseBean : courses) {
+					professors = joinCourseController.getCourseProfessors(courseBean);
+					CourseCard courseCard = new CourseCard(courseBean, professors, Type.FOLLOW);
+					vboxScroll.getChildren().add(courseCard);
+				}
+
+				for (CourseBean courseBean : requests) {
+					professors = joinCourseController.getCourseProfessors(courseBean);
+					CourseCard courseCard = new CourseCard(courseBean, professors, Type.REQUEST);
+					vboxScroll.getChildren().add(courseCard);
 				}
 				
-				if (c2 != null) {
-					//courses.addAll(c2);
-					for (Course course : c2) {
-						CourseBean courseBean = new CourseBean();
-						
-						courseBean.setAbbrevation(course.getAbbrevation());
-						courseBean.setName(course.getName());
-						courseBean.setCredits(course.getCredits());
-						courseBean.setGoal(course.getGoal());
-						courseBean.setPrerequisites(course.getPrerequisites());
-						courseBean.setReception(course.getReception());
-						courseBean.setSemester(course.getSemester());
-						courseBean.setYear(course.getYear());
-						
-						CourseCard courseCard = new CourseCard(courseBean, Type.REQUEST);
-						vboxScroll.getChildren().add(courseCard);
-					}
-				}
+			} catch (NullException e) {
+				System.out.println(e.getMessage());
 				
-				if (courses.isEmpty()) {
-					throw new NullPointerException();
-				}	
-			}
-			
-			else if (Session.getSession().getType() == Role.PROFESSOR) {
-				courses = CourseDAO.getProfessorCourses(Session.getSession().getUserLogged().getUsername());
-			}
-			
-			else {
-				return;
-			}
-			
-			for (Course course : courses) {
-				CourseBean courseBean = new CourseBean();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 				
-				courseBean.setAbbrevation(course.getAbbrevation());
-				courseBean.setName(course.getName());
-				courseBean.setCredits(course.getCredits());
-				courseBean.setGoal(course.getGoal());
-				courseBean.setPrerequisites(course.getPrerequisites());
-				courseBean.setReception(course.getReception());
-				courseBean.setSemester(course.getSemester());
-				courseBean.setYear(course.getYear());
-				
-				CourseCard courseCard = new CourseCard(courseBean, Type.FOLLOW);
-				vboxScroll.getChildren().add(courseCard);
-			}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+		}
+	}
+	
+	public void deleteRequest(RequestBean requestBean) {
+		if (AlertController.confirmation_2("Do you want to cancel this request?", rect)) { // TODO
+			joinCourseController = new JoinCourseController();
+			joinCourseController.deleteRequest(requestBean);
 			
-		} catch (NullPointerException e) {
-			Label label = new Label("No course available");
-			vboxScroll.getChildren().add(label);
-			return;
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.buildInfoAlert("Request of course '" + requestBean.getCourse().getAbbrevation() + "' deleted.", "request", rect);
+			loadCourses();
 		}
 	}
 	

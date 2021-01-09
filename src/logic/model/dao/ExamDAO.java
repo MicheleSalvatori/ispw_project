@@ -9,7 +9,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.bean.ExamBean;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Exam;
@@ -214,7 +213,7 @@ public class ExamDAO {
 	}
 	
 	
-	public static boolean insertExam(ExamBean examBean) {
+	public static boolean insertExam(Exam exam) {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -226,11 +225,11 @@ public class ExamDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			Date date = examBean.getDate();
-			Time time = examBean.getTime();
-			Course course = examBean.getCourse();
-			Classroom classroom = examBean.getClassroom();
-			String note = examBean.getNote();
+			Date date = exam.getDate();
+			Time time = exam.getTime();
+			Course course = exam.getCourse();
+			Classroom classroom = exam.getClassroom();
+			String note = exam.getNote();
 			
 			Queries.insertExam(stmt, date, time, course.getAbbrevation(), classroom.getName(), note);
 			

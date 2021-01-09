@@ -39,6 +39,7 @@ import javafx.util.Duration;
 import logic.Session;
 import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
+import logic.bean.UserBean;
 import logic.controller.InsertAnswerController;
 import logic.utilities.AlertController;
 import logic.utilities.SQLConverter;
@@ -179,9 +180,17 @@ public class QuestionPageView implements Initializable{
 
 	private void saveAnswer(String text) {
 		InsertAnswerController controller = new InsertAnswerController();
+		
+		UserBean userBean = new UserBean();
+		userBean.setEmail(Session.getSession().getUserLogged().getEmail());
+		userBean.setName(Session.getSession().getUserLogged().getName());
+		userBean.setPassword(Session.getSession().getPassword());
+		userBean.setSurname(Session.getSession().getUserLogged().getSurname());
+		userBean.setUsername(Session.getSession().getUsername());
+		
 		AnswerBean answer = new AnswerBean();
 		answer.setId(question.getId());
-		answer.setUser(Session.getSession().getUserLogged());
+		answer.setUser(userBean);
 		answer.setText(text);
 		answer.setDate(new Date(System.currentTimeMillis()));
 		

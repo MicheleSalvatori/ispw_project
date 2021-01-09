@@ -9,7 +9,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.bean.LessonBean;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Lesson;
@@ -284,7 +283,7 @@ public class LessonDAO {
 		return lessons;
 	}
 	
-	public static boolean insertLesson(LessonBean lessonBean) {
+	public static boolean insertLesson(Lesson lesson) {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -296,12 +295,12 @@ public class LessonDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			Date date = lessonBean.getDate();
-			Time time = lessonBean.getTime();
-			Course course = lessonBean.getCourse();
-			Classroom classroom = lessonBean.getClassroom();
-			String topic = lessonBean.getTopic();
-			Professor professor = lessonBean.getProfessor();
+			Date date = lesson.getDate();
+			Time time = lesson.getTime();
+			Course course = lesson.getCourse();
+			Classroom classroom = lesson.getClassroom();
+			String topic = lesson.getTopic();
+			Professor professor = lesson.getProfessor();
 			
 			Queries.insertLesson(stmt, date, time, course.getAbbrevation(), classroom.getName(), topic, professor.getUsername());
 			

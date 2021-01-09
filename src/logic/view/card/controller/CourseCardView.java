@@ -11,14 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.shape.Line;
 import logic.Session;
 import logic.bean.CourseBean;
+import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
-import logic.controller.JoinCourseController;
+import logic.bean.StudentBean;
 import logic.exceptions.RecordNotFoundException;
-import logic.model.Professor;
-import logic.model.Request;
-import logic.model.dao.ProfessorDAO;
-import logic.model.dao.RequestDAO;
-import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.CourseCard.Type;
@@ -49,27 +45,25 @@ public class CourseCardView {
 	
 	@FXML
 	private void deleteRequest(ActionEvent event) throws SQLException, RecordNotFoundException {
-		if (AlertController.confirmation("Do you want to cancel this request?", event)) {
-			Request request = RequestDAO.getRequest(Session.getSession().getUsername(), courseBean.getAbbrevation());
-			
-			RequestBean requestBean = new RequestBean();
-			requestBean.setStudent(request.getStudent());
-			requestBean.setCourse(request.getCourse());
-			
-			JoinCourseController joinCourseController = new JoinCourseController();
-			joinCourseController.deleteRequest(requestBean);
-			
-			AlertController.buildInfoAlert("Request of course '" + request.getCourse().getAbbrevation() + "' deleted.", "request", event);
-			
-			ProfilePageView profilePageView = (ProfilePageView) PageLoader.getInstance().getController();
-			profilePageView.loadCourses();
-		}
+		ProfilePageView profilePageView = (ProfilePageView) PageLoader.getInstance().getController();
+		
+		StudentBean studentBean = new StudentBean();
+		studentBean.setEmail(Session.getSession().getUserLogged().getEmail());
+		studentBean.setName(Session.getSession().getUserLogged().getName());
+		studentBean.setPassword(Session.getSession().getPassword());
+		studentBean.setSurname(Session.getSession().getUserLogged().getSurname());
+		studentBean.setUsername(Session.getSession().getUsername());
+		
+		RequestBean requestBean = new RequestBean();
+		requestBean.setStudent(studentBean);
+		requestBean.setCourse(courseBean);
+		
+		profilePageView.deleteRequest(requestBean);
 	}
 	
-	public void setCourse(CourseBean courseBean, Type type) throws SQLException {
+	public void setCourse(CourseBean courseBean, List<ProfessorBean> professors, Type type) throws SQLException {
 		this.courseBean = courseBean;
 		
-		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbrevation());
 		btnCourse.setText(courseBean.getAbbrevation());
 		btnProfessor.setText(professors.get(0).getName() + " " + professors.get(0).getSurname());
 		
