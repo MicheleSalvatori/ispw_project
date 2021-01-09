@@ -88,7 +88,7 @@ public class ScheduledController {
 		return lessonsBean;
 	}
 	
-	public List<ExamBean> getExams() throws SQLException {
+	public List<ExamBean> getExams() throws SQLException, NullException {
 		
 		// Get current date
 		Date date = new Date(System.currentTimeMillis());
@@ -171,7 +171,7 @@ public class ScheduledController {
 	    	
 	    	coursesBean.add(courseBean);
 		}
-		
+
 		return coursesBean;
 	}
 }

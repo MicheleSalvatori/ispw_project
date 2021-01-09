@@ -15,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import logic.Session;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.exceptions.NullException;
@@ -116,10 +115,9 @@ public class LoginView implements Initializable {
 		} catch (RecordNotFoundException e) {
 			AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
 			return;
-			
-		} finally {
-			PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
 		}
+			
+		PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
 	}
 
 	@FXML
@@ -127,11 +125,11 @@ public class LoginView implements Initializable {
 		
 		loginController = new LoginController();
 		
-		UserBean userBean = new UserBean();
-		userBean.setEmail(Session.getSession().getUserLogged().getEmail());
-
 		try {
 			String email = AlertController.emailInput(event);
+			UserBean userBean = new UserBean();
+			userBean.setEmail(email);
+			
 			String password = loginController.getUserByEmail(userBean).getPassword();
 			Email.password(email, password);
 
@@ -158,6 +156,6 @@ public class LoginView implements Initializable {
 	@FXML
 	void gotoSignup(ActionEvent event) throws IOException {
 		// load Signup Page
-		PageLoader.getInstance().buildPage(Page.SIGNUP, event, null);
+		PageLoader.getInstance().buildPage(Page.SIGNUP, event);
 	}
 }

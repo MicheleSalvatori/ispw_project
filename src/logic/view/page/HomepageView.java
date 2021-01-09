@@ -88,8 +88,6 @@ public class HomepageView implements Initializable {
 		labelUsername.setText("Hello " + name + "!");
 	}
 	
-	
-	
 	// Add Lesson cards to the scene
 	private void addLessonCards() {
 		try {

@@ -7,6 +7,7 @@ import java.util.List;
 import logic.Session;
 import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
+import logic.exceptions.NullException;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.dao.ClassroomDAO;
@@ -29,7 +30,7 @@ public class ScheduleController {
 		return classroomsBean;
 	}
 	
-	public List<CourseBean> getCourses() throws SQLException {
+	public List<CourseBean> getCourses() throws SQLException, NullException {
 		
 		List<Course> courses = CourseDAO.getProfessorCourses(Session.getSession().getUsername());
 		List<CourseBean> coursesBean = new ArrayList<>();

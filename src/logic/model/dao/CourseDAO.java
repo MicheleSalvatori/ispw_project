@@ -226,7 +226,7 @@ public class CourseDAO {
 		return courses;
 	}
 
-	public static List<Course> getProfessorCourses(String professor) throws SQLException {
+	public static List<Course> getProfessorCourses(String professor) throws SQLException, NullException {
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -242,7 +242,8 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectCoursesByProfessor(stmt, professor);
 
 			if (!rs.first()) {
-				courses = null;
+				throw new NullException("No courses found");
+				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();

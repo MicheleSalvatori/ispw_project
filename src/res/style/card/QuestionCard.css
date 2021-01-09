@@ -70,13 +70,18 @@
  	-fx-text-fill: black;
  	-fx-background-color: transparent;
  	-fx-underline: true;
- }
+}
  
- .button-label:disabled{
- 	  -fx-opacity: 1;
- 	  -fx-underline: false;
- }
+.button-label:disabled{
+	  -fx-opacity: 1;
+	  -fx-underline: false;
+}
 
 .button:hover {
 	-fx-cursor: hand;
+	-fx-background-color: #0C0B0B;
+}
+
+.button:pressed {
+	-fx-background-color: #0C0B0B;
 }

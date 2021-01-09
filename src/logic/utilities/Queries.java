@@ -46,7 +46,7 @@ public class Queries {
 	}
 	
 	public static ResultSet selectProfessorsByCourse(Statement stmt, String course) throws SQLException {
-		String query = "SELECT username, name, surname, email FROM teach JOIN professor on teach.professor = professor.username WHERE teach.course = '" + course + "';";
+		String query = "SELECT username, name, surname, email, password FROM teach JOIN professor on teach.professor = professor.username WHERE teach.course = '" + course + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}

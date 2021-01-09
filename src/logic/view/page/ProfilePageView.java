@@ -230,36 +230,49 @@ public class ProfilePageView implements Initializable {
 		List<CourseBean> courses;
 		List<CourseBean> requests;
 		List<ProfessorBean> professors;
+	
+		try {
 			
-		if (Session.getSession().getType() == Role.STUDENT) {
+			courses = joinCourseController.getCourses();
+			for (CourseBean courseBean : courses) {
+				professors = joinCourseController.getCourseProfessors(courseBean);
+				CourseCard courseCard = new CourseCard(courseBean, professors, Type.FOLLOW);
+				vboxScroll.getChildren().add(courseCard);
+			}
 				
-			try {
-				courses = joinCourseController.getCourses();
+		} catch (NullException e) {
+			System.out.println(e.getMessage());
+				
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+				
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			if (Session.getSession().getType() == Role.STUDENT) {
 				requests = joinCourseController.getRequestedCourses();
-				
-				for (CourseBean courseBean : courses) {
-					professors = joinCourseController.getCourseProfessors(courseBean);
-					CourseCard courseCard = new CourseCard(courseBean, professors, Type.FOLLOW);
-					vboxScroll.getChildren().add(courseCard);
-				}
-
 				for (CourseBean courseBean : requests) {
 					professors = joinCourseController.getCourseProfessors(courseBean);
 					CourseCard courseCard = new CourseCard(courseBean, professors, Type.REQUEST);
 					vboxScroll.getChildren().add(courseCard);
 				}
+			}
+	
+		} catch (NullException e) {
+			System.out.println(e.getMessage());
 				
-			} catch (NullException e) {
-				System.out.println(e.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -278,6 +291,6 @@ public class ProfilePageView implements Initializable {
 		
 		loginController = new LoginController();
 		loginController.logout();
-		PageLoader.getInstance().buildPage(Page.LOGIN, event, null);
+		PageLoader.getInstance().buildPage(Page.LOGIN, event);
 	}
 }

@@ -27,6 +27,7 @@ import logic.bean.ProfessorBean;
 import logic.controller.ScheduleController;
 import logic.controller.ScheduleExamController;
 import logic.controller.ScheduleLessonController;
+import logic.exceptions.NullException;
 import logic.utilities.AlertController;
 
 public class SchedulePageView implements Initializable {
@@ -85,7 +86,7 @@ public class SchedulePageView implements Initializable {
 				comboCourseExam.getItems().add(course.getAbbrevation());
 			}
 			
-		} catch (NullPointerException e) {
+		} catch (NullException e) {
 			System.out.println("No course available");
 			return;
 			

@@ -130,7 +130,7 @@ public class QuestionPageView implements Initializable{
 		HBox hbox = new HBox(btnCancel, btnSubmit);
 		hbox.setSpacing(20d);
 		hbox.setAlignment(Pos.CENTER_RIGHT);
-		box.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		box.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(15d), Insets.EMPTY)));
 		box.getChildren().addAll(label, textAnswer, hbox);
 		VBox.setMargin(textAnswer, new Insets(10d));
 		VBox.setMargin(hbox, new Insets(10d));
@@ -141,6 +141,7 @@ public class QuestionPageView implements Initializable{
 	    adj.setInput(blur);
 	    
 		Scene scene = new Scene(box);
+		scene.setFill(Color.TRANSPARENT);
 		labelAuthor.getScene().getRoot().setEffect(adj);
 		scene.getStylesheets().add(QuestionPageView.class.getResource("/res/style/InsertAnswer.css").toExternalForm());
 		dialogStage.setScene(scene);

@@ -156,7 +156,7 @@ public class LessonPageView implements Initializable {
 
 		WeatherCard a;
 		try {
-			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "Â°C", image,
+			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "°C", image,
 					h + ":00");
 			weatherCard.getChildren().add(a);
 		} catch (JSONException e) {

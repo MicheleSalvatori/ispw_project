@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exceptions.NullException;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Request;
@@ -52,7 +53,7 @@ public class RequestDAO {
 		return request;
 	}
 	
-	public static List<Request> getRequestsByProfessor(String professor) throws SQLException {
+	public static List<Request> getRequestsByProfessor(String professor) throws SQLException, NullException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -68,7 +69,8 @@ public class RequestDAO {
 			ResultSet rs = Queries.selectRequestsByProfessor(stmt, professor);
 
 			if (!rs.first()) {
-				requests = null;
+				throw new NullException("No request found");
+
 			} else {
 				requests = new ArrayList<>();
 				rs.first();

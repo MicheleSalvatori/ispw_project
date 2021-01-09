@@ -13,12 +13,12 @@ import logic.utilities.Role;
 public class SignupController {
 	
 	public void signup(UserBean userBean) throws SQLException, DuplicatedRecordException {
-		User user = new User(userBean.getUsername(), userBean.getName(), userBean.getSurname(), userBean.getEmail(), userBean.getPassword());
+		User user = new User(userBean.getUsername(), userBean.getPassword(), userBean.getName(), userBean.getSurname(), userBean.getEmail());
 		StudentDAO.addStudent(user);
 	}
 	
 	public void changePassword(UserBean userBean) throws SQLException {
-		User user = new User(userBean.getUsername(), userBean.getName(), userBean.getSurname(), userBean.getEmail(), userBean.getPassword());
+		User user = new User(userBean.getUsername(), userBean.getPassword(), userBean.getName(), userBean.getSurname(), userBean.getEmail());
 		
 		// User is a student
 		if (Session.getSession().getType() == Role.STUDENT) {

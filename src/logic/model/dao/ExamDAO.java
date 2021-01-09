@@ -9,6 +9,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exceptions.NullException;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Exam;
@@ -135,7 +136,7 @@ public class ExamDAO {
 		return exams;
 	}
 	
-	public static List<Exam> getNextExamsStudent(Date date, String student) throws SQLException {
+	public static List<Exam> getNextExamsStudent(Date date, String student) throws SQLException, NullException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -151,7 +152,8 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectNextExamsByStudent(stmt, date, student);
 
 			if (!rs.first()) {
-				exams = null;
+				throw new NullException("No exam found");
+				
 			} else {
 				exams = new ArrayList<>();
 				rs.first();
@@ -174,7 +176,7 @@ public class ExamDAO {
 	}
 	
 	
-	public static List<Exam> getNextExamsProfessor(Date date, String professor) throws SQLException {
+	public static List<Exam> getNextExamsProfessor(Date date, String professor) throws SQLException, NullException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -190,7 +192,8 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectNextExamsByProfessor(stmt, date, professor);
 
 			if (!rs.first()) {
-				exams = null;
+				throw new NullException("No exam found");
+
 			} else {
 				exams = new ArrayList<>();
 				rs.first();

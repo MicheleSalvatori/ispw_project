@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.controller.AcceptRequestController;
+import logic.exceptions.NullException;
 import logic.view.card.element.CourseFilterCard;
 import logic.view.card.element.RequestCard;
 
@@ -42,8 +43,8 @@ public class RequestPageView implements Initializable {
 			}
 			
 			updateRequests();
-				
-		} catch (NullPointerException e) {
+			
+		} catch (NullException e) {
 			vboxCourse.getChildren().add(new Label("No course found"));
 			return;
 			
@@ -69,7 +70,7 @@ public class RequestPageView implements Initializable {
 				vboxRequest.getChildren().add(requestCard);
 			}
 			
-		} catch (NullPointerException e) {
+		} catch (NullException e) {
 			vboxRequest.getChildren().add(new Label("No request found"));
 			return;
 			
@@ -94,6 +95,7 @@ public class RequestPageView implements Initializable {
 
 		try {
 			vboxRequest.getChildren().clear();
+			
 			for (RequestBean requestBean : requests) {
 				if (filteredCourses.contains(requestBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
 					RequestCard requestCard = new RequestCard(requestBean);
@@ -104,6 +106,10 @@ public class RequestPageView implements Initializable {
 			if (vboxRequest.getChildren().isEmpty()) {
 				vboxRequest.getChildren().add(new Label("No request found."));
 			}
+			
+		} catch (NullPointerException e) {
+			vboxRequest.getChildren().add(new Label("No request found"));
+			return;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
