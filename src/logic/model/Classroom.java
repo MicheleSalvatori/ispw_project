@@ -1,9 +1,12 @@
 package logic.model;
 
+import java.util.List;
+
 public class Classroom {
 	private int seatRow;
 	private int seatColumn;
 	private String name;
+	private List<Seat> seats;
 
 	public Classroom(String name) {
 		this.name = name;
@@ -13,6 +16,25 @@ public class Classroom {
 		this.name = name;
 		this.seatColumn = seatColumn;
 		this.seatRow = seatRow;
+	}
+
+	public Classroom(String name, int seatRow, int seatColumn, List<Seat> seats) {
+		this.name = name;
+		this.seatColumn = seatColumn;
+		this.seatRow = seatRow;
+		this.seats = seats;
+	}
+
+	public void setSeats(List<Seat> seats) {
+		this.seats = seats;
+	}
+
+	public List<Seat> getSeats() {
+		return this.seats;
+	}
+
+	public int getNumberOfSeats() {
+		return seatRow * seatColumn;
 	}
 
 	public String getName() {
