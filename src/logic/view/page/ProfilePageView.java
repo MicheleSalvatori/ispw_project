@@ -25,8 +25,10 @@ import logic.bean.UserBean;
 import logic.controller.JoinCourseController;
 import logic.controller.LoginController;
 import logic.controller.SignupController;
-import logic.exceptions.NullException;
+import logic.exceptions.CancelException;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
+import logic.utilities.AppProperties;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.Role;
@@ -63,34 +65,35 @@ public class ProfilePageView implements Initializable {
 		labelEmail.setText(Session.getSession().getUserLogged().getEmail());
 		labelPassword.setText("**********");
 		
-		if (Session.getSession().getType() == Role.PROFESSOR) {
+		if (Session.getSession().getRole() == Role.PROFESSOR) {
 			btnAdd.setVisible(false);
 			btnRemove.setVisible(false);
 		}
 		
-		setAvatar("/res/png/avatar.png");
+		String img = "/res/png/avatar/" + AppProperties.getInstance().getProperty("avatar").toString() + ".png";
+		setAvatar(img);
 		
 		loadCourses();
 	}
 	
 	@FXML
-	private void changePass(ActionEvent event) throws SQLException, ClassNotFoundException, IOException {
+	private void changePass(ActionEvent event) throws ClassNotFoundException, IOException {
 		String password;
 		
 		while (true) {
 			
 			try {
-				password = AlertController.changePassword(event);
+				password = AlertController.changePassword();
 	
 				if (password.compareTo(Session.getSession().getPassword()) == 0) {
-					AlertController.buildInfoAlert("You have inserted same password.\nInsert another password.", "password", event);
+					AlertController.infoAlert("You have inserted same password.\nInsert another password.");
 				}
 				
 				else {
 					break;
 				}
 				
-			} catch (NullException e) {
+			} catch (CancelException e) {
 				System.out.println(e.getMessage());
 				return;
 			}
@@ -100,10 +103,21 @@ public class ProfilePageView implements Initializable {
 		userBean.setUsername(Session.getSession().getUsername());
 		userBean.setPassword(password);
 		
-		if (AlertController.confirmation("Do you want to change your password?\nYou will be logged out.", event)) {
+		if (AlertController.confirmationAlert("Do you want to change your password?\nYou will be logged out.")) {
 			signupController = new SignupController();
-			signupController.changePassword(userBean);
-			logout(event);
+			
+			try {
+				signupController.changePassword(userBean);
+				logout(event);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+			} catch (RecordNotFoundException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -123,7 +137,7 @@ public class ProfilePageView implements Initializable {
 				names.add(course.getName());
 			}
 			
-			int index = AlertController.courseRequest(event, names);
+			int index = AlertController.courseRequest(names);
 			if (index != -1) {
 				
 				CourseBean courseBean = courses.get(index);
@@ -141,7 +155,7 @@ public class ProfilePageView implements Initializable {
 				
 				joinCourseController.removeCourse(requestBean);
 				
-				AlertController.buildInfoAlert("Course " + courseBean.getAbbrevation() + " removed.", "delete", event);
+				AlertController.infoAlert("Course " + courseBean.getAbbrevation() + " removed.");
 				loadCourses();
 			}
 			
@@ -149,9 +163,9 @@ public class ProfilePageView implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			System.out.println(e.getMessage());
-			AlertController.buildInfoAlert("You don't have any courses available.", "delete", event);
+			AlertController.infoAlert("You don't have any courses available.");
 			return;
 		}
 	}
@@ -164,10 +178,16 @@ public class ProfilePageView implements Initializable {
 		UserBean userBean = new UserBean();
 		userBean.setUsername(Session.getSession().getUsername());
 		
-		List<CourseBean> courses = joinCourseController.getAvailableCourses(userBean);
-		
-		if (courses == null) {
-			AlertController.buildInfoAlert("You don't have any courses to add.", "delete", event);
+		List<CourseBean> courses = null;
+		try {
+			courses = joinCourseController.getAvailableCourses(userBean);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (RecordNotFoundException e) {
+			AlertController.infoAlert("You don't have any courses to add.");
 			return;
 		}
 		
@@ -176,7 +196,7 @@ public class ProfilePageView implements Initializable {
 			names.add(course.getName());
 		}
 		
-		int index = AlertController.courseRequest(event, names);
+		int index = AlertController.courseRequest(names);
 		if (index != -1) {
 			
 			CourseBean courseBean = courses.get(index);
@@ -194,7 +214,7 @@ public class ProfilePageView implements Initializable {
 
 			joinCourseController.sendRequest(requestBean);
 			
-			AlertController.buildInfoAlert("Request sended to course's professor.\nYou will receive a notification when the request will be approved", "request", event);
+			AlertController.infoAlert("Request sended to course's professor.\nYou will receive a notification when the request will be approved");
 			loadCourses();
 		}	
 	}
@@ -240,7 +260,7 @@ public class ProfilePageView implements Initializable {
 				vboxScroll.getChildren().add(courseCard);
 			}
 				
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			System.out.println(e.getMessage());
 				
 		} catch (IOException e) {
@@ -254,7 +274,8 @@ public class ProfilePageView implements Initializable {
 		
 		
 		try {
-			if (Session.getSession().getType() == Role.STUDENT) {
+			
+			if (Session.getSession().getRole() == Role.STUDENT) {
 				requests = joinCourseController.getRequestedCourses();
 				for (CourseBean courseBean : requests) {
 					professors = joinCourseController.getCourseProfessors(courseBean);
@@ -263,7 +284,7 @@ public class ProfilePageView implements Initializable {
 				}
 			}
 	
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			System.out.println(e.getMessage());
 				
 		} catch (IOException e) {
@@ -277,11 +298,11 @@ public class ProfilePageView implements Initializable {
 	}
 	
 	public void deleteRequest(RequestBean requestBean) {
-		if (AlertController.confirmation_2("Do you want to cancel this request?", rect)) { // TODO
+		if (AlertController.confirmationAlert("Do you want to cancel this request?")) {
 			joinCourseController = new JoinCourseController();
 			joinCourseController.deleteRequest(requestBean);
 			
-			AlertController.buildInfoAlert("Request of course '" + requestBean.getCourse().getAbbrevation() + "' deleted.", "request", rect);
+			AlertController.infoAlert("Request of course '" + requestBean.getCourse().getAbbrevation() + "' deleted.");
 			loadCourses();
 		}
 	}

@@ -10,9 +10,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import logic.Session;
 import logic.controller.LoginController;
+import logic.utilities.AppProperties;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
@@ -27,11 +31,17 @@ public class StatusBarView implements Initializable {
 	@FXML
 	private Label labelName;
 	
+	@FXML
+	private Rectangle rectAvatar;
+	
 	private LoginController loginController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		labelName.setText(Session.getSession().getUserLogged().getName());
+		
+		String img = "/res/png/avatar/" + AppProperties.getInstance().getProperty("avatar").toString() + ".png";
+		setAvatar(img);
 	}
 	
 	@FXML
@@ -44,12 +54,20 @@ public class StatusBarView implements Initializable {
 	}
 	
 	@FXML
-	public void notification(ActionEvent e) throws IOException {
+	public void notification(ActionEvent event) throws IOException {
 		System.out.println("Notifications");
 	}
 	
 	@FXML
-	public void profile(javafx.scene.input.MouseEvent e) throws IOException {
+	public void profile(ActionEvent event) throws IOException {
 		System.out.println("Profile");
+		PageLoader.getInstance().buildPage(Page.PROFILE, event);
+		
+		
+	}
+	
+	private void setAvatar(String res) {
+		ImagePattern pattern = new ImagePattern(new Image(res, 200, 200, false, false));
+		rectAvatar.setFill(pattern);
 	}
 }

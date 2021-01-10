@@ -18,7 +18,7 @@ import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
 import logic.controller.InsertQuestionController;
-import logic.exceptions.NullException;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Student;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
@@ -57,7 +57,7 @@ public class NewQuestionView implements Initializable {
 				courseComboBox.getItems().add(c.getAbbrevation());
 			}
 			
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -76,9 +76,9 @@ public class NewQuestionView implements Initializable {
 
 		try {
 			controller.save(questionBean);
-			AlertController.buildInfoAlert("Your question has been correctly entered", "", event);
+			AlertController.infoAlert("Your question has been correctly entered");
 		} catch (SQLException e) {
-			AlertController.buildInfoAlert("Something happened, your question was not acquired..", "Bad news..", event);
+			AlertController.infoAlert("Something happened, your question was not acquired..");
 		} finally {
 			try {
 				PageLoader.getInstance().buildPage(Page.FORUM, event);

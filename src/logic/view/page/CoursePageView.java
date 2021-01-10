@@ -17,6 +17,7 @@ import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.ProfessorBean;
 import logic.controller.CourseController;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.LessonCard;
@@ -85,11 +86,7 @@ public class CoursePageView implements Initializable{
 			for (ProfessorBean professor : professors) {
 				labelProfessor.setText(labelProfessor.getText()+"/"+professor.getName() + " " + professor.getSurname());
 			}
-			
-		} catch (NullPointerException e) {
-			// Nothing
-			System.out.println("NullPointer");
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,6 +94,10 @@ public class CoursePageView implements Initializable{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+		} catch (RecordNotFoundException e) {
+			// Nothing
+			System.out.println(e.getMessage());
 		}
 		
 		labelCourse.setText(course.getAbbrevation());

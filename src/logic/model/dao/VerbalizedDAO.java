@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.exceptions.NullException;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Student;
@@ -22,7 +21,7 @@ public class VerbalizedDAO {
 		
 	}
 
-	public static List<Verbalized> getVerbalizedExams(String student) throws SQLException, RecordNotFoundException, NullException {
+	public static List<Verbalized> getVerbalizedExams(String student) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -38,7 +37,7 @@ public class VerbalizedDAO {
 			ResultSet rs = Queries.selectVerbalizedExamsByStudent(stmt, student);
 
 			if (!rs.first()) {
-				throw new NullException("No verbalized exam found");
+				throw new RecordNotFoundException("No verbalized exam found");
 
 			} else {
 				verbs = new ArrayList<>();
@@ -53,11 +52,13 @@ public class VerbalizedDAO {
 				} while (rs.next());
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return verbs;
 	}
 

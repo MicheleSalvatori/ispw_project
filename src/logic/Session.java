@@ -7,14 +7,11 @@ public class Session {
 	
 	private static Session instance = null;
 	private User userLogged;
-	private Role type;
+	private Role role;
 	
-	public static final int STUDENT_ROLE = 1;
-	public static final int PROFESSOR_ROLE = 2;
-	public static final int ADMIN_ROLE = 3;
-	
-	
-	private Session() {}
+	private Session() {
+		
+	}
 
 	public static Session getSession() {
 		if (Session.instance == null) {
@@ -31,12 +28,12 @@ public class Session {
 		this.userLogged = userLogged;
 	}
 
-	public Role getType() {
-		return type;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setType(Role type) {
-		this.type = type;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	
 	public String getUsername() {

@@ -17,7 +17,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
-import logic.exceptions.NullException;
+import logic.exceptions.CancelException;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.Email;
@@ -88,7 +88,7 @@ public class LoginView implements Initializable {
 			e.printStackTrace();
 
 		} catch (RecordNotFoundException e) {
-			AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
+			AlertController.infoAlert("User not found: incorrect username or password.\nTry again or signup!");
 			return;
 		}
 
@@ -109,11 +109,11 @@ public class LoginView implements Initializable {
 			}
 			
 		} catch (SQLException e) {
-			AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+			AlertController.infoAlert("Connection failed!");
 			return;
 			
 		} catch (RecordNotFoundException e) {
-			AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!", "Login failed", event);
+			AlertController.infoAlert("User not found: incorrect username or password.\nTry again or signup!");
 			return;
 		}
 			
@@ -126,31 +126,31 @@ public class LoginView implements Initializable {
 		loginController = new LoginController();
 		
 		try {
-			String email = AlertController.emailInput(event);
+			String email = AlertController.emailInput();
 			UserBean userBean = new UserBean();
 			userBean.setEmail(email);
 			
 			String password = loginController.getUserByEmail(userBean).getPassword();
 			Email.password(email, password);
 
-		} catch (NullException e) {
-			System.out.println(e.getMessage());
-			return;
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		} catch (RecordNotFoundException e) {
-			AlertController.buildInfoAlert(e.getMessage(), "error", event);
+			AlertController.infoAlert(e.getMessage());
 			return;
 
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+		} catch (CancelException e) {
+			System.out.println(e.getMessage());
+			return;
 		}
 
-		AlertController.buildInfoAlert("Your password will be sended to your e-mail.", "password", event);
+		AlertController.infoAlert("Your password will be sended to your e-mail.");
 	}
 
 	@FXML

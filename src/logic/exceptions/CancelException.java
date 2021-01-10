@@ -1,11 +1,10 @@
 package logic.exceptions;
 
-public class NullException extends Exception {
-
+public class CancelException extends Exception {
+	
 	private static final long serialVersionUID = 3L;
 
-	public NullException(String message) {
+	public CancelException(String message) {
 		super(message);
 	}
-	
 }

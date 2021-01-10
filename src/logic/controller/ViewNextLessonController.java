@@ -11,6 +11,7 @@ import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.ProfessorBean;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Lesson;
@@ -24,7 +25,7 @@ public class ViewNextLessonController {
 		
 	}
 	
-	public List<LessonBean> getTodayLessons() throws SQLException, NullPointerException {
+	public List<LessonBean> getTodayLessons() throws SQLException, RecordNotFoundException {
 		
 		List<Lesson> lessons;
 		List<LessonBean> lessonsBean = new ArrayList<>();
@@ -33,11 +34,11 @@ public class ViewNextLessonController {
 		Date date = new Date(System.currentTimeMillis());
 		Time time = new Time(System.currentTimeMillis());
 		
-		if (Session.getSession().getType() == Role.STUDENT) {
+		if (Session.getSession().getRole() == Role.STUDENT) {
 			lessons = LessonDAO.getTodayNextLessonsStudent(date, time, Session.getSession().getUsername());
 		}
 		
-		else if (Session.getSession().getType() == Role.PROFESSOR) {
+		else if (Session.getSession().getRole() == Role.PROFESSOR) {
 			lessons = LessonDAO.getTodayNextLessonsProfessor(date, time, Session.getSession().getUsername());
 		}
 		

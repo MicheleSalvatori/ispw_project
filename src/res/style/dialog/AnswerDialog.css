@@ -8,6 +8,11 @@
  	src: url("../../font/Roboto/Roboto-Regular.ttf");
 }
 
+.root {
+	-fx-background-color: white;
+	-fx-background-radius: 15px;
+}
+
 .button {
 	-fx-background-color: #E5E5EB;
 	-fx-background-radius: 14.0px;

@@ -15,7 +15,7 @@ import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
 import logic.controller.ScheduledController;
-import logic.exceptions.NullException;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.CourseFilterCard;
@@ -60,7 +60,7 @@ public class ScheduledPageView implements Initializable {
 				exams = scheduledController.getExams();
 			}
 
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			vboxScroll.getChildren().add(new Label(e.getMessage()));
 			
 		} catch (SQLException e) {
@@ -72,7 +72,7 @@ public class ScheduledPageView implements Initializable {
 			// Get user courses
 			courses = scheduledController.getCourses();
 			
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			vboxCourse.getChildren().add(new Label(e.getMessage()));
 			return;
 			

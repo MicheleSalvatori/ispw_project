@@ -18,7 +18,7 @@
       <AnchorPane layoutY="83.0" prefHeight="465.0" prefWidth="345.0" styleClass="anchor-pane">
          <children>
             
-            <Rectangle fx:id="rect" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="200.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="200.0" AnchorPane.leftAnchor="71.5" AnchorPane.rightAnchor="71.5" AnchorPane.topAnchor="29.0" />
+            <Rectangle fx:id="rect" arcHeight="200.0" arcWidth="200.0" fill="WHITE" height="200.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="200.0" AnchorPane.leftAnchor="71.5" AnchorPane.rightAnchor="71.5" AnchorPane.topAnchor="29.0" />
             
             <Label layoutX="23.0" layoutY="231.0" text="Username:" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="245.0" />
             

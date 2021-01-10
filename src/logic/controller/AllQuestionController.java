@@ -25,17 +25,37 @@ public class AllQuestionController {
 	}
 
 	public int getNumberCourses() throws SQLException {
-		Role role = Session.getSession().getType();
 		int courses;
-		courses = CourseDAO.getCourseNumberOf(Session.getSession().getUserLogged().getUsername(), role);
+		
+		// User is a student
+		if (Session.getSession().getRole() == Role.STUDENT) {
+			courses = CourseDAO.getStudentCourseNumberOf(Session.getSession().getUsername());
+		}
+		
+		// User is a professor
+		else {
+			courses = CourseDAO.getProfessorCourseNumberOf(Session.getSession().getUsername());
+		}
+		
 		return courses;
 	}
 
 	public List<QuestionBean> getAllQuestions() throws SQLException {
+		
 		List<QuestionBean> questionBeans = new ArrayList<>();
-		Role role = Session.getSession().getType();
+		
 		try {
-			questionList = QuestionDAO.getCoursesQuestions(Session.getSession().getUserLogged().getUsername(), role);
+			
+			// User is a student
+			if (Session.getSession().getRole() == Role.STUDENT) {
+				questionList = QuestionDAO.getStudentCoursesQuestions(Session.getSession().getUsername());
+			}
+			
+			// User is a professor
+			else {
+				questionList = QuestionDAO.getProfessorCoursesQuestions(Session.getSession().getUsername());
+			}
+
 			for (Question q : questionList) {
 				QuestionBean bean = new QuestionBean();
 				bean.setId(q.getId());
@@ -68,21 +88,26 @@ public class AllQuestionController {
 				}
 				questionBeans.add(bean);
 			}
+			
 		} catch (RecordNotFoundException e) {
 			throw new SQLException();
+			
 		} catch (NullPointerException e) {
 			questionBeans = null;
 		}
+		
 		return questionBeans;
 	}
 
 	public boolean setSolved(int questionID) {
 		try {
 			QuestionDAO.setSolved(questionID);
+			
 		} catch (SQLException e) {
-//			AlertControl
+			// AlertControl
 			return false;
 		}
+		
 		return true;
 	}
 }

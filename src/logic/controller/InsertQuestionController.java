@@ -7,7 +7,7 @@ import java.util.List;
 
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
-import logic.exceptions.NullException;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Question;
 import logic.model.dao.CourseDAO;
@@ -19,7 +19,7 @@ public class InsertQuestionController {
 		
 	}
 
-	public List<CourseBean> getCoursesOfStudent(String usernameString) throws NullException {
+	public List<CourseBean> getCoursesOfStudent(String usernameString) throws RecordNotFoundException {
 		List<Course> courses = new ArrayList<>();
 		List<CourseBean> courseBeans;
 		try {

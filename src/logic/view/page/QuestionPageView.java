@@ -1,5 +1,6 @@
 package logic.view.page;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -10,15 +11,14 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,10 +26,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -63,9 +59,9 @@ public class QuestionPageView implements Initializable{
 	private VBox vboxAnswer;
 	
 	private QuestionBean question;
+	
 	private Stage dialogStage;
 	private EventHandler<ActionEvent> addAnswerEvent, cancAddAnswerEvent;
-	private Label label;
 	private TextArea textAnswer;
 	private Button btnSubmit, btnCancel;
 
@@ -116,40 +112,37 @@ public class QuestionPageView implements Initializable{
 
 	private void setupAnswerDialog() throws IOException {
 		dialogStage = new Stage();
-		VBox box = new VBox();
+		
+		URL url = new File("src/res/fxml/dialog/AnswerDialog.fxml").toURI().toURL();
+		Parent root = FXMLLoader.load(url);
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(QuestionPageView.class.getResource("/res/style/dialog/AnswerDialog.css").toExternalForm());
+		scene.setFill(Color.TRANSPARENT);
+		
+		dialogStage.setScene(scene);
 		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		dialogStage.initStyle(StageStyle.TRANSPARENT); 
-		label = new Label("Answer:");
-		textAnswer = new TextArea();
-		btnSubmit = new Button("Submit");
-		btnCancel = new Button("Cancel");
-		btnSubmit.disableProperty().bind(Bindings.isEmpty(textAnswer.textProperty()));
-		setupEvent();
-		btnSubmit.setOnAction(addAnswerEvent);
-		btnCancel.setOnAction(cancAddAnswerEvent);
-		HBox hbox = new HBox(btnCancel, btnSubmit);
-		hbox.setSpacing(20d);
-		hbox.setAlignment(Pos.CENTER_RIGHT);
-		box.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(15d), Insets.EMPTY)));
-		box.getChildren().addAll(label, textAnswer, hbox);
-		VBox.setMargin(textAnswer, new Insets(10d));
-		VBox.setMargin(hbox, new Insets(10d));
-		VBox.setMargin(label, new Insets(10d));
+		dialogStage.initStyle(StageStyle.TRANSPARENT);
+		dialogStage.setResizable(false);
+		dialogStage.setTitle("App - Insert Answer");
 		
 		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
 	    GaussianBlur blur = new GaussianBlur(55);
 	    adj.setInput(blur);
 	    
-		Scene scene = new Scene(box);
-		scene.setFill(Color.TRANSPARENT);
-		labelAuthor.getScene().getRoot().setEffect(adj);
-		scene.getStylesheets().add(QuestionPageView.class.getResource("/res/style/dialog/InsertAnswer.css").toExternalForm());
-		dialogStage.setScene(scene);
-		dialogStage.setTitle("App - Insert Answer");
-		dialogStage.setResizable(false);
-		
+	    labelAuthor.getScene().getRoot().setEffect(adj);
 		dialogStage.show();
 		animation(dialogStage);
+		
+		btnSubmit = (Button) scene.lookup("#btnSubmit");
+		btnCancel = (Button) scene.lookup("#btnCancel");
+		
+		textAnswer = (TextArea) scene.lookup("#textAnswer");
+		
+		btnSubmit.disableProperty().bind(textAnswer.textProperty().isEmpty());
+		
+		setupEvent();
+		btnSubmit.setOnAction(addAnswerEvent);
+		btnCancel.setOnAction(cancAddAnswerEvent);
 	}
 	
 	private void animation(Stage stage) {
@@ -198,13 +191,13 @@ public class QuestionPageView implements Initializable{
 		try {
 			controller.save(answer);
 			closeStage(dialogStage);
-			AlertController.buildInfoAlert("The answer has been entered correctly!", "", scrollAnswers);
+			AlertController.infoAlert("The answer has been entered correctly!");
 			this.question.addAnswers(answer);
 			loadAnswer();
 			
 		} catch (SQLException e) {
 			closeStage(dialogStage);
-			AlertController.buildInfoAlert("Something happened, the answer was not acquired..", "Bad news..", scrollAnswers);
+			AlertController.infoAlert("Something happened, the answer was not acquired..");
 		}
 	}
 

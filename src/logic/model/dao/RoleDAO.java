@@ -31,15 +31,11 @@ public class RoleDAO {
 			resultSet = Queries.selectRole(stmt, username);
 			
 			if (!resultSet.first()) {
-				typeUser = null;
-			}else {
+				throw new RecordNotFoundException("No Username Found matching with name: " + username);
+				
+			} else {
 				resultSet.first();				// mi riposiziono alla prima riga 
 				typeUser = resultSet.getString("type");
-			}
-			
-			if (typeUser == null) {
-				RecordNotFoundException e = new RecordNotFoundException("No Username Found matching with name: " + username);
-            	throw e;
 			}
 			
 			switch (typeUser) {
@@ -70,7 +66,7 @@ public class RoleDAO {
 		Connection conn = null;
 		Statement stmt = null;
 		User user = null;
-		ResultSet resultSet = null;
+		ResultSet rs = null;
 		
 		try {
 			conn = (SingletonDB.getDbInstance()).getConnection();
@@ -78,23 +74,19 @@ public class RoleDAO {
 				throw new SQLException();
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			resultSet = Queries.selectUserByEmail(stmt, email);
+			rs = Queries.selectUserByEmail(stmt, email);
 			
-			if (!resultSet.first()) {
-				user = null;
+			if (!rs.first()) {
+				throw new RecordNotFoundException("No User found matching with email: '" + email + "'.");
+				
 			}else {
-				resultSet.first();				// mi riposiziono alla prima riga 
-				String password = resultSet.getString("password");
+				rs.first();				// mi riposiziono alla prima riga 
+				String password = rs.getString("password");
 				user = new User();
 				user.setPassword(password);
 			}
 			
-			if (user == null) {
-				RecordNotFoundException e = new RecordNotFoundException("No User found matching with email: '" + email + "'.");
-            	throw e;
-			}
-			
-			resultSet.close();
+			rs.close();
 		} finally {
 			if(stmt != null)
 				stmt.close();

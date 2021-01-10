@@ -7,7 +7,7 @@ import java.util.List;
 import logic.Session;
 import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
-import logic.exceptions.NullException;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.dao.ClassroomDAO;
@@ -15,7 +15,7 @@ import logic.model.dao.CourseDAO;
 
 public class ScheduleController {
 
-	public List<ClassroomBean> getClassrooms() throws SQLException {
+	public List<ClassroomBean> getClassrooms() throws SQLException, RecordNotFoundException {
 		
 		List<Classroom> classrooms = ClassroomDAO.getAllClassrooms();
 		List<ClassroomBean> classroomsBean = new ArrayList<>();
@@ -30,7 +30,7 @@ public class ScheduleController {
 		return classroomsBean;
 	}
 	
-	public List<CourseBean> getCourses() throws SQLException, NullException {
+	public List<CourseBean> getCourses() throws SQLException, RecordNotFoundException {
 		
 		List<Course> courses = CourseDAO.getProfessorCourses(Session.getSession().getUsername());
 		List<CourseBean> coursesBean = new ArrayList<>();

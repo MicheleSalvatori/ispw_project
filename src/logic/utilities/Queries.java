@@ -1,20 +1,28 @@
 package logic.utilities;
 
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
-import com.mysql.jdbc.PreparedStatement;
 
 public class Queries {
 	
+/******************************************************************************************************************/	
+
 	// User queries
 	public static ResultSet selectUserByEmail(Statement stmt, String email) throws SQLException {
 		String query = "SELECT username, password, email FROM role NATURAL JOIN admin WHERE email = '" + email + "' "
 				+ "UNION SELECT username, password, email FROM role NATURAL JOIN professor WHERE email = '" + email + "' "
 				+ "UNION SELECT username, password, email FROM role NATURAL JOIN student WHERE email = '" + email + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
+	public static ResultSet selectUser(Statement stmt, String username) throws SQLException {
+		String query = "SELECT * FROM role NATURAL JOIN admin "
+						+ "UNION SELECT * FROM role NATURAL JOIN professor "
+						+ "UNION SELECT * FROM role NATURAL JOIN student;";
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}
@@ -31,8 +39,9 @@ public class Queries {
 		return stmt.executeUpdate(query);
 	}
 	
+/******************************************************************************************************************/
 	
-	// Porfessor queries
+	// Professor queries
 	public static ResultSet selectProfessor(Statement stmt, String username, String password) throws SQLException {
 		String query = "SELECT * FROM professor WHERE username = '" +  username + "' AND password = '" + password + "';";
 		System.out.println(query);
@@ -57,6 +66,7 @@ public class Queries {
 		return stmt.executeUpdate(query);
 	}
 	
+/******************************************************************************************************************/
 	
 	// Student queries
 	public static ResultSet selectStudent(Statement stmt, String username, String password) throws SQLException {
@@ -111,6 +121,7 @@ public class Queries {
 		return stmt.executeUpdate(query);
 	}
 
+/******************************************************************************************************************/
 	
 	// Question queries
 	public static ResultSet selectQuestionsOfCourse(Statement stmt, String abbrevation) throws SQLException {
@@ -135,54 +146,35 @@ public class Queries {
 		String sql = "SELECT * from question where username = '"+username+"';";
 		return stmt.executeQuery(sql);
 	}
-
-	public static void saveQuestion(Connection conn, String subject, String text, String username, String course, Date date, boolean solved) throws SQLException {
-		String sql = "INSERT INTO question VALUES (?, ?, ?, ?, ?, ?, ?)";
-		PreparedStatement stmt = (PreparedStatement) conn.prepareStatement(sql);
-		stmt.setNull(1, java.sql.Types.INTEGER);
-		stmt.setString(2, subject);
-		stmt.setString(3, text);
-		stmt.setString(4, username);
-		stmt.setString(5, course);
-		stmt.setBoolean(6, solved);
-		stmt.setDate(7, date);
-		
-		stmt.executeUpdate();	
-		if (stmt != null) {
-			stmt.close();
-		}
+	
+	public static int setQuestionSolved(Statement stmt, int questionID) throws SQLException {
+		String sql = String.format("UPDATE question SET solved = true WHERE id = '%d';", questionID);
+		System.out.println(sql);
+		return stmt.executeUpdate(sql);
 	}
 
+	public static int saveQuestion(Statement stmt, String title, String text, String username, String course, Date date, boolean solved) throws SQLException {
+		String sql = String.format("INSERT INTO question (title, text, username, course, solved, date) VALUES ('%s', '%s', '%s', '%s', %s, '%s')", title, text, username, course, solved, date);
+		System.out.println(sql);
+		return stmt.executeUpdate(sql);
+	}
+
+/******************************************************************************************************************/
 	
 	// Answer queries
 	public static ResultSet findAnswerByIDQuestion(Statement stmt, int id) throws SQLException {
-		String sql = "SELECT * from answer where id = '"+id+"';";
+		String sql = "SELECT * from answer where id = '" + id + "';";
 		System.out.println(sql);
 		return stmt.executeQuery(sql);
 	}
 	
-	public static void saveAnswer(Connection conn, int id, String username, String text, Date date) throws SQLException {
-		String sql = "INSERT INTO answer VALUES (?, ?, ?, ?)";
-		PreparedStatement stmt = (PreparedStatement) conn.prepareStatement(sql);
-		stmt.setInt(1, id);
-		stmt.setString(2, username);
-		stmt.setString(3, text);
-		stmt.setDate(4, date);
-		stmt.executeUpdate();	
-		if (stmt != null) {
-			stmt.close();
-		}
+	public static int saveAnswer(Statement stmt, int id, String username, String text, Date date) throws SQLException {
+		String sql = String.format("INSERT INTO answer VALUES (%i, '%s', '%s', '%s')", id, username, text, date);
+		System.out.println(sql);
+		return stmt.executeUpdate(sql);
 	}
 
-	public static ResultSet countCourses(Statement stmt, String username) throws SQLException {
-		String sql  = "SELECT count(distinct course) from follow where student ='"+username+"';"; 
-		return stmt.executeQuery(sql);
-	}
-	
-	public static ResultSet countCoursesProf(Statement stmt, String username) throws SQLException {
-		String sql  = "SELECT count(distinct course) from teach where professor ='"+username+"';"; 
-		return stmt.executeQuery(sql);
-	}
+/******************************************************************************************************************/
 
 	// Lesson queries
 	public static ResultSet selectLesson(Statement stmt, Date date, Time time) throws SQLException {
@@ -233,6 +225,7 @@ public class Queries {
 		return stmt.executeUpdate(query); 
 	}
 	
+/******************************************************************************************************************/
 	
 	// Exam queries
 	public static ResultSet selectExam(Statement stmt, Date date, Time time) throws SQLException {
@@ -271,6 +264,7 @@ public class Queries {
 		return stmt.executeUpdate(query); 
 	}
 	
+/******************************************************************************************************************/
 	
 	// Course queries
 	public static ResultSet selectCourse(Statement stmt, String abbr) throws SQLException {
@@ -317,6 +311,17 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
+	public static ResultSet countCourses(Statement stmt, String username) throws SQLException {
+		String sql  = "SELECT count(distinct course) from follow where student ='"+username+"';"; 
+		return stmt.executeQuery(sql);
+	}
+	
+	public static ResultSet countCoursesProf(Statement stmt, String username) throws SQLException {
+		String sql  = "SELECT count(distinct course) from teach where professor ='"+username+"';"; 
+		return stmt.executeQuery(sql);
+	}
+	
+/******************************************************************************************************************/
 	
 	// Classroom queries
 	public static ResultSet selectClassroom(Statement stmt, String name) throws SQLException {
@@ -331,6 +336,7 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
+/******************************************************************************************************************/
 	
 	// Request queries
 	public static ResultSet selectRequest(Statement stmt, String student, String course) throws SQLException {
@@ -375,6 +381,7 @@ public class Queries {
 		return stmt.executeUpdate(query);
 	}
 	
+/******************************************************************************************************************/
 	
 	// Verbalized queries
 	public static ResultSet selectVerbalizedExamsByStudent(Statement stmt, String student) throws SQLException {
@@ -395,18 +402,7 @@ public class Queries {
 		return stmt.executeUpdate(query);
 	}
 
-
-	
-	
-	public static int setQuestionSolved(Statement stmt, int questionID) throws SQLException {
-		String sql = String.format("UPDATE question SET solved = true WHERE id = '%d';", questionID);
-		System.out.println(sql);
-		return stmt.executeUpdate(sql);
-	}
-	
-	
-
-
+/******************************************************************************************************************/
 	
 	// Assignment queries
 	public static ResultSet selectAssignmentsByProfessor(Statement stmt, String professor) throws SQLException {
@@ -426,9 +422,4 @@ public class Queries {
 		System.out.println(query);
 		return stmt.executeUpdate(query);
 	}
-
-	
-
-	
-
 }

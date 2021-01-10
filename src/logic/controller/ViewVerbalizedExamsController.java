@@ -10,7 +10,6 @@ import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.StudentBean;
 import logic.bean.VerbalizedBean;
-import logic.exceptions.NullException;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Student;
@@ -24,7 +23,7 @@ public class ViewVerbalizedExamsController {
 		
 	}
 	
-	public List<VerbalizedBean> getVerbalizedExams() throws SQLException, RecordNotFoundException, NullException {
+	public List<VerbalizedBean> getVerbalizedExams() throws SQLException, RecordNotFoundException {
 		
 		List<Verbalized> verbs = VerbalizedDAO.getVerbalizedExams(Session.getSession().getUsername());
 		List<VerbalizedBean> verbsBean = new ArrayList<>();
@@ -59,10 +58,6 @@ public class ViewVerbalizedExamsController {
 			verbsBean.add(verbBean);
 		}
 		
-		if (verbsBean.isEmpty()) {
-			throw new NullException("Empty array");
-		}
-		
 		return verbsBean;
 	}
 	
@@ -95,7 +90,7 @@ public class ViewVerbalizedExamsController {
 		return bd.doubleValue();
 	}
 
-	public List<CourseBean> getCourses() throws SQLException, NullException {
+	public List<CourseBean> getCourses() throws SQLException, RecordNotFoundException {
 		
 		List<Course> courses = CourseDAO.getNotVerbalizedCourses(Session.getSession().getUsername());
 		List<CourseBean> coursesBean = new ArrayList<>();

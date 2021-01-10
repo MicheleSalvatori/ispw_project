@@ -27,7 +27,7 @@ import logic.bean.ProfessorBean;
 import logic.controller.ScheduleController;
 import logic.controller.ScheduleExamController;
 import logic.controller.ScheduleLessonController;
-import logic.exceptions.NullException;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 
 public class SchedulePageView implements Initializable {
@@ -86,7 +86,7 @@ public class SchedulePageView implements Initializable {
 				comboCourseExam.getItems().add(course.getAbbrevation());
 			}
 			
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			System.out.println("No course available");
 			return;
 			
@@ -126,10 +126,10 @@ public class SchedulePageView implements Initializable {
 		
 		scheduleLessonController = new ScheduleLessonController();
 		if (!scheduleLessonController.scheduleLesson(lessonBean)) {
-			AlertController.buildInfoAlert("Lesson doesn't added.\nTry later.", "Add lesson", event);
+			AlertController.infoAlert("Lesson doesn't added.\nTry later.");
 		}
 		
-		AlertController.buildInfoAlert("Lesson succesfully added", "Add lesson", event);
+		AlertController.infoAlert("Lesson succesfully added");
 		resetLessonView();
 	}
 	
@@ -156,16 +156,16 @@ public class SchedulePageView implements Initializable {
 		
 		scheduleExamController = new ScheduleExamController();
 		if (!scheduleExamController.scheduleExam(examBean)) {
-			AlertController.buildInfoAlert("Exam doesn't added.\nTry later.", "Add exam", event);
+			AlertController.infoAlert("Exam doesn't added.\nTry later.");
 		}
 		
-		AlertController.buildInfoAlert("Exam succesfully added", "Add exam", event);
+		AlertController.infoAlert("Exam succesfully added");
 		resetExamView();
 	}
 	
 	@FXML
 	public void time(ActionEvent event) {
-		Pair<String, String> result = AlertController.time(event);
+		Pair<String, String> result = AlertController.timeSelector();
 		
 		switch (((Node) event.getSource()).getId()) {
 			
@@ -183,6 +183,7 @@ public class SchedulePageView implements Initializable {
 		}
 	}
 	
+	// Clear lesson views
 	private void resetLessonView() {
 		textTimeLesson.setText(null);
 		textTopic.setText(null);
@@ -193,6 +194,7 @@ public class SchedulePageView implements Initializable {
 		dateLesson.setValue(null);
 	}
 	
+	// Clear exam views
 	private void resetExamView() {
 		textTimeExam.setText(null);
 		textNote.setText(null);

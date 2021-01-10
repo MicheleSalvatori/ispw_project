@@ -42,7 +42,6 @@ import logic.bean.CourseBean;
 import logic.bean.StudentBean;
 import logic.bean.VerbalizedBean;
 import logic.controller.ViewVerbalizedExamsController;
-import logic.exceptions.NullException;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.view.card.element.ExamCard;
@@ -81,19 +80,15 @@ public class ExamPageView implements Initializable {
 				ExamCard examCard = new ExamCard(verbBean, verbs.indexOf(verbBean) + 1);
 				vboxExam.getChildren().add(examCard);
 			}
-			
-		} catch (NullException e) {
-			verbs = new ArrayList<>();
-			vboxExam.getChildren().add(new Label("No exam found"));
-			return;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			verbs = new ArrayList<>();
+			vboxExam.getChildren().add(new Label("No exam found"));
+			return;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -117,7 +112,7 @@ public class ExamPageView implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			courses = new ArrayList<>();
 		}
 		
@@ -233,7 +228,7 @@ public class ExamPageView implements Initializable {
 		try {
 			controller.saveVerbalizedExam(verb);
 			dialogStage.close();
-			AlertController.buildInfoAlert("The exam has been entered correctly!", "", labelVE);
+			AlertController.infoAlert("The exam has been entered correctly!");
 			verbs.add(verb);
 			updateVerbalizedExams();
 			

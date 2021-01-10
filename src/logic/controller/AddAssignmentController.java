@@ -8,7 +8,7 @@ import logic.Session;
 import logic.bean.AssignmentBean;
 import logic.bean.CourseBean;
 import logic.bean.ProfessorBean;
-import logic.exceptions.NullException;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Assignment;
 import logic.model.Course;
 import logic.model.dao.AssignmentDAO;
@@ -21,13 +21,13 @@ public class AddAssignmentController {
 		
 	}
 	
-	public List<AssignmentBean> getAssignments() throws SQLException, NullException {
+	public List<AssignmentBean> getAssignments() throws SQLException, RecordNotFoundException {
 		
 		List<Assignment> assignments;
 		List<AssignmentBean> assignmentsBean = new ArrayList<>();
 		
 		// User is a student
-		if (Session.getSession().getType() == Role.STUDENT) {
+		if (Session.getSession().getRole() == Role.STUDENT) {
 			assignments = AssignmentDAO.getAssignmentsByStudent(Session.getSession().getUsername());
 		}
 		
@@ -62,7 +62,7 @@ public class AddAssignmentController {
 		return assignmentsBean;
 	}
 	
-	public List<CourseBean> getCoursesOfProfessor(ProfessorBean professorBean) throws NullException {
+	public List<CourseBean> getCoursesOfProfessor(ProfessorBean professorBean) throws RecordNotFoundException {
 		List<Course> courses = new ArrayList<>();
 		List<CourseBean> courseBeans;
 		

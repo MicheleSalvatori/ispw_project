@@ -20,6 +20,7 @@ import javafx.scene.web.WebView;
 import logic.Session;
 import logic.bean.LessonBean;
 import logic.controller.ViewNextLessonController;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Role;
 import logic.utilities.Weather;
 import logic.view.card.element.LessonCard;
@@ -54,7 +55,7 @@ public class HomepageView implements Initializable {
 		setUserName(Session.getSession().getUserLogged().getName());
 		
 		// User is a Student
-		if (Session.getSession().getType() == Role.STUDENT) {
+		if (Session.getSession().getRole() == Role.STUDENT) {
 			for (int i=0; i<2; i++) {
 				StudentStatCard studentCard;
 				try {
@@ -68,7 +69,7 @@ public class HomepageView implements Initializable {
 		}
 		
 		// User is a Professor
-		else if (Session.getSession().getType() == Role.PROFESSOR) {
+		else if (Session.getSession().getRole() == Role.PROFESSOR) {
 			try {
 				ProfessorStatCard professorCard = new ProfessorStatCard(10);
 				hboxStats.getChildren().add(professorCard);
@@ -113,7 +114,7 @@ public class HomepageView implements Initializable {
 				}
 			}
 		
-		} catch (NullPointerException e) {
+		} catch (RecordNotFoundException e) {
 			vboxScroll.getChildren().add(new Label("There are no future lessons today"));
 			return;
 			

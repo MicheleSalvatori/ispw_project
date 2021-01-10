@@ -6,18 +6,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import logic.exceptions.RecordNotFoundException;
-import logic.model.Admin;
+import logic.model.User;
 import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
-public class AdminDAO {
+public class UserDAO {
+
+	private UserDAO() {
+		
+	}
 	
-	private AdminDAO() {}
-	
-	public static Admin findAdmin(String username, String password) throws SQLException, RecordNotFoundException {
+	public static User findUser(String username) throws SQLException, RecordNotFoundException {
+		
 		Connection conn = null;
 		Statement stmt = null;
-		Admin adminLogged = null;
+		User user = null;
 		ResultSet resultSet = null;
 		
 		try {
@@ -25,29 +28,30 @@ public class AdminDAO {
 			if (conn == null) {
 				throw new SQLException();
 			}
+			
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			resultSet = Queries.selectProfessor(stmt, username, password);
+			resultSet = Queries.selectUser(stmt, username);
 			
 			if (!resultSet.first()) {
 				throw new RecordNotFoundException("No Username Found matching with name: " + username);
 				
 			}else {
 				resultSet.first();				// mi riposiziono alla prima riga 
-				adminLogged = new Admin();
-				adminLogged.setUsername(resultSet.getString("username"));
-				adminLogged.setName(resultSet.getString("name"));
-				adminLogged.setSurname(resultSet.getString("surname"));
-				adminLogged.setEmail(resultSet.getString("email"));
-				adminLogged.setPassword(resultSet.getString("password"));
+				user = new User();
+				user.setUsername(resultSet.getString("username"));
+				user.setName(resultSet.getString("name"));
+				user.setSurname(resultSet.getString("surname"));
+				user.setEmail(resultSet.getString("email"));
+				user.setPassword(resultSet.getString("password"));
 			}
 			
 			resultSet.close();
+			
 		} finally {
 			if(stmt != null)
 				stmt.close();
 		}
 		
-		System.out.println("AdminDAO -> username = " + adminLogged.getUsername());
-		return adminLogged;
+		return user;
 	}
 }

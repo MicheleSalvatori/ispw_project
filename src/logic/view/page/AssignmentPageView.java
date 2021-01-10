@@ -60,7 +60,7 @@ public class AssignmentPageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		if (Session.getSession().getType() == Role.PROFESSOR) {
+		if (Session.getSession().getRole() == Role.PROFESSOR) {
 			anchorDeliver.setVisible(false);
 			btnAdd.setVisible(false);
 			btnRemove.setVisible(false);

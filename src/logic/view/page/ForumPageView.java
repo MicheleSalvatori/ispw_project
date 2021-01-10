@@ -19,7 +19,7 @@ import logic.bean.AssignmentBean;
 import logic.bean.QuestionBean;
 import logic.controller.AddAssignmentController;
 import logic.controller.AllQuestionController;
-import logic.exceptions.NullException;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -94,10 +94,12 @@ public class ForumPageView implements Initializable {
 	private void getAllQuestions() {
 		try {
 			allQuestions = allQuestionController.getAllQuestions();
+			
 		} catch (SQLException e) {
-			AlertController.buildInfoAlert(e.getMessage(), "Bad news..", btnMyQuestions);
+			AlertController.infoAlert(e.getMessage());
 			btnMyQuestions.setDisable(true);
 			btnAllQuestions.setDisable(true);
+			
 		}
 	}
 
@@ -105,6 +107,7 @@ public class ForumPageView implements Initializable {
 		if (vboxQuestion.getChildren() != null) {
 			vboxQuestion.getChildren().clear();
 		}
+		
 		if (allQuestions == null) {
 			labelLoading.setText("No one seems to have any questions to ask in your courses. Be the first!");
 			btnMyQuestions.setDisable(true);
@@ -136,8 +139,9 @@ public class ForumPageView implements Initializable {
 			nCourses = 0;
 		}
 		
-		Role roleLogged = Session.getSession().getType();
+		Role roleLogged = Session.getSession().getRole();
 		switch (roleLogged) {
+		
 		case PROFESSOR:
 			btnNewQuestion.setVisible(false);
 			btnMyQuestions.setVisible(false);
@@ -149,6 +153,7 @@ public class ForumPageView implements Initializable {
 				return;
 			}
 			break;
+			
 		case STUDENT:
 			if (nCourses == 0) {
 				btnNewQuestion.setDisable(true);
@@ -157,6 +162,7 @@ public class ForumPageView implements Initializable {
 				return;
 			}
 			break;
+			
 		default:
 			break;
 		}
@@ -180,7 +186,7 @@ public class ForumPageView implements Initializable {
 				vboxAssignment.getChildren().add(assignmentCard);
 			}
 			
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			vboxAssignment.getChildren().add(new Label("No assignment found"));
 			return;
 

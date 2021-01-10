@@ -53,7 +53,7 @@ public class SignupView implements Initializable {
     		return;
     	}
 	
-    	if (chekdInput(event) && AlertController.confirmation("Are your data correct?\nYour username will be:\n" + username, event)){
+    	if (chekdInput(event) && AlertController.confirmationAlert("Are your data correct?\nYour username will be:\n" + username)){
 			UserBean userBean = new UserBean();
 			userBean.setUsername(username);
 			userBean.setName(name);
@@ -65,14 +65,14 @@ public class SignupView implements Initializable {
 			signupController = new SignupController();
 			try {
 				signupController.signup(userBean);
-				AlertController.buildInfoAlert("Registration completed!\nYou will'be redirect to the login page.", "Welcome", event);
+				AlertController.infoAlert("Registration completed!\nYou will'be redirect to the login page.");
 				PageLoader.getInstance().buildPage(Page.LOGIN, event);
 				
 			} catch (SQLException e) {
-				AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+				AlertController.infoAlert("Connection failed!");
 				
 			} catch (DuplicatedRecordException e) {
-				AlertController.buildInfoAlert(e.getMessage(), "Registration Failed", event);
+				AlertController.infoAlert(e.getMessage());
 			}
 		}
 	}
@@ -90,12 +90,12 @@ public class SignupView implements Initializable {
 				return true;
 			}
 			else {
-				AlertController.buildInfoAlert("Different password", "Error", event);
+				AlertController.infoAlert("Different password");
 				return false;
 			}
 		}
 		else {
-			AlertController.buildInfoAlert("Invalid email", "Error", event);
+			AlertController.infoAlert("Invalid email");
 			return false;
 		}
 	}

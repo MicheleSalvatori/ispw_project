@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import logic.utilities.AlertController;
 import logic.utilities.AppProperties;
 
 public class MainStandalone extends Application{
@@ -22,6 +23,8 @@ public class MainStandalone extends Application{
 		primaryStage.setTitle(AppProperties.getInstance().getProperty("title"));
 		URL url = new File("src/res/fxml/page/LoginPage.fxml").toURI().toURL();
 		Parent root = FXMLLoader.load(url);
+		AlertController.setStage(primaryStage); // Set stage for alert controller
+		
 		Scene scene = new Scene(root, 1440, 900);
 		primaryStage.setScene(scene);
 		primaryStage.setMaximized(false);

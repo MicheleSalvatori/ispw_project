@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.exceptions.NullException;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Request;
@@ -37,7 +36,8 @@ public class RequestDAO {
 			ResultSet rs = Queries.selectRequest(stmt, student, course);
 
 			if (!rs.first()) {
-				request = null;
+				throw new RecordNotFoundException("No request found");
+				
 			} else {
 				rs.first();
 				Student s = StudentDAO.findStudentByUsername(rs.getString("student"));
@@ -45,15 +45,17 @@ public class RequestDAO {
 				request = new Request(s, c);
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return request;
 	}
 	
-	public static List<Request> getRequestsByProfessor(String professor) throws SQLException, NullException {
+	public static List<Request> getRequestsByProfessor(String professor) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -69,7 +71,7 @@ public class RequestDAO {
 			ResultSet rs = Queries.selectRequestsByProfessor(stmt, professor);
 
 			if (!rs.first()) {
-				throw new NullException("No request found");
+				throw new RecordNotFoundException("No request found");
 
 			} else {
 				requests = new ArrayList<>();
@@ -82,11 +84,13 @@ public class RequestDAO {
 				} while (rs.next());
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return requests;
 	}
 	
@@ -106,7 +110,8 @@ public class RequestDAO {
 			ResultSet rs = Queries.selectRequestsByProfessorAndCourse(stmt, professor, course);
 
 			if (!rs.first()) {
-				requests = null;
+				throw new RecordNotFoundException("No request found");
+				
 			} else {
 				requests = new ArrayList<>();
 				rs.first();
@@ -118,11 +123,13 @@ public class RequestDAO {
 				} while (rs.next());
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return requests;
 	}
 	

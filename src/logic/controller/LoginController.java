@@ -41,7 +41,7 @@ public class LoginController {
 		
 		//Gestione Sessione
 		Session.getSession().setUserLogged(professor);
-		Session.getSession().setType(Role.PROFESSOR);
+		Session.getSession().setRole(Role.PROFESSOR);
 	}
 	
 	public void loginAsStudent(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -54,7 +54,7 @@ public class LoginController {
 			
 		//Gestione Sessione
 		Session.getSession().setUserLogged(student);
-		Session.getSession().setType(Role.STUDENT);
+		Session.getSession().setRole(Role.STUDENT);
 	}
 	
 	public void loginAsAdmin(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -66,7 +66,7 @@ public class LoginController {
 			
 		//Gestione Sessione
 		Session.getSession().setUserLogged(admin);
-		Session.getSession().setType(Role.ADMIN);
+		Session.getSession().setRole(Role.ADMIN);
 		
 	}
 	

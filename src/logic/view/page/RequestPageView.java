@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.controller.AcceptRequestController;
-import logic.exceptions.NullException;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.view.card.element.CourseFilterCard;
 import logic.view.card.element.RequestCard;
@@ -45,9 +45,8 @@ public class RequestPageView implements Initializable {
 			
 			updateRequests();
 			
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			vboxCourse.getChildren().add(new Label("No course found"));
-			return;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -71,9 +70,8 @@ public class RequestPageView implements Initializable {
 				vboxRequest.getChildren().add(requestCard);
 			}
 			
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			vboxRequest.getChildren().add(new Label("No request found"));
-			return;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -121,7 +119,7 @@ public class RequestPageView implements Initializable {
 	public void acceptRequest(RequestBean requestBean) {
 		acceptRequestController = new AcceptRequestController();
 		if (acceptRequestController.acceptRequest(requestBean)) {
-			AlertController.buildInfoAlert("Request accepted.\nThe student will be notified", "request", vboxCourse);
+			AlertController.infoAlert("Request accepted.\nThe student will be notified");
 			updateRequests();
 		}
 	}
@@ -129,7 +127,7 @@ public class RequestPageView implements Initializable {
 	public void declineRequest(RequestBean requestBean) {
 		acceptRequestController = new AcceptRequestController();
 		if (acceptRequestController.declineRequest(requestBean)) {
-			AlertController.buildInfoAlert("Request declined.\nThe student will be notified", "request", vboxCourse);
+			AlertController.infoAlert("Request declined.\nThe student will be notified");
 			updateRequests();
 		}
 	}

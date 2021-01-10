@@ -9,7 +9,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.exceptions.NullException;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Exam;
@@ -22,7 +22,7 @@ public class ExamDAO {
 		
 	}
 	
-	public static Exam getExamByDateAndTime(Date date, Time time) throws SQLException {
+	public static Exam getExamByDateAndTime(Date date, Time time) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -38,7 +38,8 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectExam(stmt, date, time);
 
 			if (!rs.first()) {
-				exam = null;
+				throw new RecordNotFoundException("No exam found");
+				
 			} else {
 				rs.first();
 				Date d = rs.getDate("date");
@@ -49,16 +50,18 @@ public class ExamDAO {
 				exam = new Exam(d, t, c, cl, note);
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return exam;
 	}
 	
 	
-	public static List<Exam> getExamsByCourse(Date date, Time time, String course) throws SQLException {
+	public static List<Exam> getExamsByCourse(Date date, Time time, String course) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -74,7 +77,8 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectExamsByCourse(stmt, date, time, course);
 
 			if (!rs.first()) {
-				exams = null;
+				throw new RecordNotFoundException("No exam found");
+				
 			} else {
 				exams = new ArrayList<>();
 				rs.first();
@@ -89,16 +93,18 @@ public class ExamDAO {
 				} while (rs.next());
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return exams;
 	}
 	
 	
-	public static List<Exam> getNextExams(Date date, Time time) throws SQLException {
+	public static List<Exam> getNextExams(Date date, Time time) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -114,7 +120,8 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectNextExams(stmt, date, time);
 
 			if (!rs.first()) {
-				exams = null;
+				throw new RecordNotFoundException("No exam found");
+				
 			} else {
 				exams = new ArrayList<>();
 				rs.first();
@@ -136,7 +143,7 @@ public class ExamDAO {
 		return exams;
 	}
 	
-	public static List<Exam> getNextExamsStudent(Date date, String student) throws SQLException, NullException {
+	public static List<Exam> getNextExamsStudent(Date date, String student) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -152,7 +159,7 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectNextExamsByStudent(stmt, date, student);
 
 			if (!rs.first()) {
-				throw new NullException("No exam found");
+				throw new RecordNotFoundException("No exam found");
 				
 			} else {
 				exams = new ArrayList<>();
@@ -176,7 +183,7 @@ public class ExamDAO {
 	}
 	
 	
-	public static List<Exam> getNextExamsProfessor(Date date, String professor) throws SQLException, NullException {
+	public static List<Exam> getNextExamsProfessor(Date date, String professor) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -192,7 +199,7 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectNextExamsByProfessor(stmt, date, professor);
 
 			if (!rs.first()) {
-				throw new NullException("No exam found");
+				throw new RecordNotFoundException("No exam found");
 
 			} else {
 				exams = new ArrayList<>();
@@ -239,6 +246,7 @@ public class ExamDAO {
 		} catch (SQLException e) {
 			return false;
 		}
+		
 		return true;
 	}
 }

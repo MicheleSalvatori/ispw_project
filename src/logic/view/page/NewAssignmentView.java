@@ -20,7 +20,7 @@ import logic.bean.AssignmentBean;
 import logic.bean.CourseBean;
 import logic.bean.ProfessorBean;
 import logic.controller.AddAssignmentController;
-import logic.exceptions.NullException;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -67,7 +67,7 @@ public class NewAssignmentView implements Initializable {
 			}
 			
 			
-		} catch (NullException e) {
+		} catch (RecordNotFoundException e) {
 			comboCourse.getItems().add(e.getMessage());
 		}
 		
@@ -83,10 +83,10 @@ public class NewAssignmentView implements Initializable {
 	
 		addAssignmentController = new AddAssignmentController();
 		if (addAssignmentController.saveAssignment(assignmentBean)) {
-			AlertController.buildInfoAlert("Assignment Added Correctly", "added", event);
+			AlertController.infoAlert("Assignment Added Correctly");
 		}
 		else {
-			AlertController.buildInfoAlert("Can't add assignment", "no added", event);
+			AlertController.infoAlert("Can't add assignment");
 		}
 		
 		PageLoader.getInstance().buildPage(Page.FORUM, event);

@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
 import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
@@ -17,7 +18,7 @@ public class ClassroomDAO {
 		
 	}
 	
-	public static Classroom getClassroomByName(String name) throws SQLException {
+	public static Classroom getClassroomByName(String name) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -33,7 +34,8 @@ public class ClassroomDAO {
 			ResultSet rs = Queries.selectClassroom(stmt, name);
 
 			if (!rs.first()) {
-				classroom = null;
+				throw new RecordNotFoundException("No classroom found.");
+				
 			} else {
 				rs.first();
 				String className = rs.getString("name");
@@ -42,16 +44,18 @@ public class ClassroomDAO {
 				classroom = new Classroom(className, row, col);
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return classroom;
 	}
 	
 	
-	public static List<Classroom> getAllClassrooms() throws SQLException {
+	public static List<Classroom> getAllClassrooms() throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -67,7 +71,8 @@ public class ClassroomDAO {
 			ResultSet rs = Queries.selectAllClassrooms(stmt);
 
 			if (!rs.first()) {
-				classrooms = null;
+				throw new RecordNotFoundException("No classroom found.");
+				
 			} else {
 				classrooms = new ArrayList<>();
 				rs.first();
@@ -78,11 +83,13 @@ public class ClassroomDAO {
 				} while (rs.next());
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return classrooms;
 	}
 }

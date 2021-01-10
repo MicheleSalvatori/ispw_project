@@ -31,7 +31,8 @@ public class StudentDAO {
 			resultSet = Queries.selectStudent(stmt, username, password);
 			
 			if (!resultSet.first()) {
-				studentLogged = null;
+				throw new RecordNotFoundException("No Username Found matching with name: " + username);
+				
 			}else {
 				resultSet.first();				// mi riposiziono alla prima riga
 				String u = resultSet.getString("username");
@@ -42,16 +43,13 @@ public class StudentDAO {
 				studentLogged = new Student(u, p, n, s, e);
 			}
 			
-			if (studentLogged == null) {
-				RecordNotFoundException e = new RecordNotFoundException("No Username Found matching with name: " + username);
-            	throw e;
-			}
-			
 			resultSet.close();
+			
 		} finally {
 			if(stmt != null)
 				stmt.close();
 		}
+		
 		System.out.println("StudentDAO -> username = " + studentLogged.getUsername());
 		return studentLogged;
 	}
@@ -94,21 +92,15 @@ public class StudentDAO {
 				// If there are no entry then insert a new User
 				result = Queries.insertRole(stmt, user.getUsername());
 				if (result == 0) {
-					System.out.println("Insert role error");
+					System.out.println("Insert role error");	// TODO EXCEPTION
 					return;
-				}
-				else {
-					System.out.println("Insert role done");
 				}
 				
 				result = Queries.insertStudent(stmt, user.getUsername(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail());
 				
 				if (result == 0) {
-					System.out.println("Insert studenterror");
+					System.out.println("Insert studenterror");	// TODO EXCEPTION
 					return;
-				}
-				else {
-					System.out.println("Insert student done");
 				}
 			}
 			
@@ -123,7 +115,7 @@ public class StudentDAO {
 	}
 	
 	
-	public static void changePassword(User user) throws SQLException {
+	public static void changePassword(User user) throws SQLException, RecordNotFoundException {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -138,11 +130,8 @@ public class StudentDAO {
 			
 			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
 			if (!rs.first()) {
-				System.out.println("No user found");
-			} else {
-				// Raise duplicate entry exception
-				System.out.println("User found");
-			}
+				throw new RecordNotFoundException("No Username Found matching with name: " + user.getUsername());	
+			} 
 			
 			Queries.updateStudentPassword(stmt, user.getUsername(), user.getPassword());
 			
@@ -153,7 +142,7 @@ public class StudentDAO {
 		}
 	}
 	
-	public static Student findStudentByUsername(String username) throws SQLException {
+	public static Student findStudentByUsername(String username) throws SQLException, RecordNotFoundException {
 		Connection conn = null;
 		Statement stmt = null;
 		Student student = null;
@@ -168,7 +157,7 @@ public class StudentDAO {
 			resultSet = Queries.selectStudentByUsername(stmt, username);
 			
 			if (!resultSet.first()) {
-				student = null;
+				throw new RecordNotFoundException("No student found.");
             	
 			}else {
 				resultSet.first();				// mi riposiziono alla prima riga 
@@ -182,10 +171,12 @@ public class StudentDAO {
 			}
 			
 			resultSet.close();
+			
 		} finally {
 			if(stmt != null)
 				stmt.close();
 		}
+		
 		return student;
 	}
 
