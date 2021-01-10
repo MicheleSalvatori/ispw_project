@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import logic.Session;
 import logic.controller.LoginController;
@@ -29,6 +30,8 @@ public class StatusBarView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		btnLogout.setTooltip(new Tooltip("Logout"));
+		btnNotifications.setTooltip(new Tooltip("Notifications"));
 		labelName.setText(Session.getSession().getUserLogged().getName());
 	}
 	

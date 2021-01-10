@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import logic.Session;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -44,6 +45,23 @@ public class NavigationBarView implements Initializable {
 		else if (Session.getSession().getType() == Role.PROFESSOR){
 			btnExams.setVisible(false);
 		}
+		// User logged as Professor
+		else if (Session.getSession().getType() == Role.ADMIN){
+			btnExams.setVisible(false);
+			btnForum.setVisible(false);
+			btnRequest.setVisible(false);
+			btnSchedule.setVisible(false);
+		}
+		// add tooltips on bar buttons
+		btnHome.setTooltip(new Tooltip("Home"));
+		btnExams.setTooltip(new Tooltip("Exams"));
+		btnProfile.setTooltip(new Tooltip("Profile"));
+		btnForum.setTooltip(new Tooltip("Forum"));
+		btnNews.setTooltip(new Tooltip("News"));
+		btnBack.setTooltip(new Tooltip("Back"));
+		btnRequest.setTooltip(new Tooltip("Request"));
+		btnSchedule.setTooltip(new Tooltip("Schedule"));
+		
 	}
 
 	@FXML
