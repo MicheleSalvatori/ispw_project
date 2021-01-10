@@ -22,6 +22,7 @@ import logic.bean.LessonBean;
 import logic.controller.ViewNextLessonController;
 import logic.utilities.Role;
 import logic.utilities.Weather;
+import logic.view.card.element.AdminStatCard;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.ProfessorStatCard;
 import logic.view.card.element.StudentStatCard;
@@ -52,6 +53,44 @@ public class HomepageView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		setUserName(Session.getSession().getUserLogged().getName());
+		
+		switch (Session.getSession().getType()) {
+		case STUDENT:
+			for (int i=0; i<2; i++) {
+				StudentStatCard studentCard;
+				try {
+					studentCard = new StudentStatCard(22, "Verbalized", "Grades");
+					hboxStats.getChildren().add(studentCard);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			break;
+		case PROFESSOR:
+			try {
+				ProfessorStatCard professorCard = new ProfessorStatCard(10);
+				hboxStats.getChildren().add(professorCard);
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			
+			break;
+		case ADMIN:
+			try {
+				AdminStatCard adminCard = new AdminStatCard(10);
+				hboxStats.getChildren().add(adminCard);
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			
+			break;
+
+		default:
+			break;
+		}
 		
 		// User is a Student
 		if (Session.getSession().getType() == Role.STUDENT) {

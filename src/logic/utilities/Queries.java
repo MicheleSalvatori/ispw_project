@@ -31,6 +31,13 @@ public class Queries {
 		return stmt.executeUpdate(query);
 	}
 	
+	// Admin queries
+	public static ResultSet selectAdmin(Statement stmt, String username, String password) throws SQLException {
+		String query = "SELECT * FROM admin WHERE username = '" +  username + "' AND password = '" + password + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
 	
 	// Porfessor queries
 	public static ResultSet selectProfessor(Statement stmt, String username, String password) throws SQLException {
