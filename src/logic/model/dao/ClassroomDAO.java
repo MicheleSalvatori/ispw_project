@@ -9,6 +9,7 @@ import java.util.List;
 
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
+import logic.model.Seat;
 import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
@@ -41,6 +42,7 @@ public class ClassroomDAO {
 				String className = rs.getString("name");
 				int row = rs.getInt("seatRow");
 				int col = rs.getInt("seatColumn");
+//				List<Seat> seatsOf = SeatDAO.getSeatOfClassroom(className);
 				classroom = new Classroom(className, row, col);
 			}
 			rs.close();
