@@ -3,19 +3,43 @@
 	src: url("../../font/BalooBhai/BalooBhai-Regular.ttf");
 }
 
-.root {
-	-fx-background-color: white;
-}
-
-.anchor-pane {
-	-fx-background-color: transparent;
-	-fx-border-color: #0C0B0B;
-	-fx-border-radius: 14px;
-	-fx-border-width: 2px;
-}
-
 .label {
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 24;
 	-fx-text-fill: #0C0B0B;
+}
+ 
+.big-button {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14px;
+	
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-weight: bold;
+	-fx-font-size: 36;
+	
+	-width: 431;
+	-height: 96.33;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;
+}
+
+.small-button {
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 14px;
+	
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-weight: bold;
+	-fx-font-size: 18;
+	
+}
+
+.button:hover{
+	-fx-cursor: hand;
+	-fx-background-color: #CFCFCF;
 }
