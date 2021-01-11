@@ -40,7 +40,7 @@ public class StatusBarView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		labelName.setText(Session.getSession().getUserLogged().getName());
 		
-		String img = "/res/png/avatar/" + AppProperties.getInstance().getProperty("avatar").toString() + ".png";
+		String img = "/res/png/avatar/status/" + AppProperties.getInstance().getProperty("avatar").toString() + ".png";
 		setAvatar(img);
 	}
 	

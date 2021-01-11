@@ -39,7 +39,7 @@ public class RequestCardView {
 	@FXML
 	private void course(ActionEvent event) throws SQLException, IOException {
     	CourseBean courseBean = request.getCourse();
-    	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
+    	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
 	public void setCard(RequestBean request) {

@@ -37,7 +37,7 @@ public class ExamCardView {
 	@FXML
 	private void course(ActionEvent event) throws IOException {
     	CourseBean courseBean = verb.getCourse();
-    	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
+    	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
 	@FXML

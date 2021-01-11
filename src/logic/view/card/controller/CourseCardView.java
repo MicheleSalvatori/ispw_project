@@ -35,12 +35,12 @@ public class CourseCardView {
 	
 	@FXML
 	private void course(ActionEvent event) throws SQLException, IOException {
-		PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
+		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
 	@FXML
 	private void professor(ActionEvent event) throws IOException {
-		PageLoader.getInstance().buildPage(Page.PROFESSOR, event, null);
+		PageLoader.getInstance().buildPage(Page.PROFESSOR);
 	}
 	
 	@FXML

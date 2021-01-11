@@ -41,7 +41,7 @@ public class ProfilePageView implements Initializable {
 	private VBox vboxScroll;
 	
 	@FXML
-	private Button btnAdd, btnRemove, btnShowPass, btnChangePass;
+	private Button btnAdd, btnRemove, btnShowPass, btnChangePass, btnAvatar;
 	
 	@FXML
 	private Rectangle rect;
@@ -70,7 +70,7 @@ public class ProfilePageView implements Initializable {
 			btnRemove.setVisible(false);
 		}
 		
-		String img = "/res/png/avatar/" + AppProperties.getInstance().getProperty("avatar").toString() + ".png";
+		String img = "/res/png/avatar/profile/" + AppProperties.getInstance().getProperty("avatar").toString() + ".png";
 		setAvatar(img);
 		
 		loadCourses();
@@ -83,16 +83,20 @@ public class ProfilePageView implements Initializable {
 		while (true) {
 			
 			try {
+				// Open alert and insert new password
 				password = AlertController.changePassword();
 	
+				// Password inserted is the same to current password
 				if (password.compareTo(Session.getSession().getPassword()) == 0) {
 					AlertController.infoAlert("You have inserted same password.\nInsert another password.");
 				}
 				
+				// Inserted new password
 				else {
 					break;
 				}
 				
+			// Clicked Cancel Button
 			} catch (CancelException e) {
 				System.out.println(e.getMessage());
 				return;
@@ -237,6 +241,12 @@ public class ProfilePageView implements Initializable {
 		}
 	}
 	
+	@FXML
+	private void changeAvatar(ActionEvent event) throws IOException {
+		AppProperties.getInstance().setProperty("avatar", "avatar10");
+		PageLoader.getInstance().buildPage(Page.PROFILE);
+	}
+	
 	private void setAvatar(String res) {
 		ImagePattern pattern = new ImagePattern(new Image(res, 200, 200, false, false));
 		rect.setFill(pattern);
@@ -312,6 +322,6 @@ public class ProfilePageView implements Initializable {
 		
 		loginController = new LoginController();
 		loginController.logout();
-		PageLoader.getInstance().buildPage(Page.LOGIN, event);
+		PageLoader.getInstance().buildPage(Page.LOGIN);
 	}
 }

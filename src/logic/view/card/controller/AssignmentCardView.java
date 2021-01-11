@@ -33,12 +33,12 @@ public class AssignmentCardView {
 	
 	@FXML
 	private void viewAssignment(ActionEvent event) throws IOException {
-		PageLoader.getInstance().buildPage(Page.ASSIGNMENT, event, assignment);
+		PageLoader.getInstance().buildPage(Page.ASSIGNMENT, assignment);
 	}
 	
 	@FXML
 	private void course(ActionEvent event) throws IOException {
     	CourseBean courseBean = assignment.getCourse();
-    	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
+    	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 }

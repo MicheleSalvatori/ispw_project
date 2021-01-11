@@ -117,7 +117,7 @@ public class LoginView implements Initializable {
 			return;
 		}
 			
-		PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+		PageLoader.getInstance().buildPage(Page.HOMEPAGE);
 	}
 
 	@FXML
@@ -156,6 +156,6 @@ public class LoginView implements Initializable {
 	@FXML
 	void gotoSignup(ActionEvent event) throws IOException {
 		// load Signup Page
-		PageLoader.getInstance().buildPage(Page.SIGNUP, event);
+		PageLoader.getInstance().buildPage(Page.SIGNUP);
 	}
 }

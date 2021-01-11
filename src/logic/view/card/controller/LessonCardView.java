@@ -68,11 +68,11 @@ public class LessonCardView {
 	@FXML
 	public void course(ActionEvent event) throws IOException, SQLException {
     	CourseBean courseBean = lesson.getCourse();
-    	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
+    	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
 	@FXML
 	public void viewLesson(ActionEvent event) throws IOException, SQLException {
-		PageLoader.getInstance().buildPage(Page.LESSON, event, lesson);
+		PageLoader.getInstance().buildPage(Page.LESSON, lesson);
 	}
 }

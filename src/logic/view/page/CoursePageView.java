@@ -58,12 +58,12 @@ public class CoursePageView implements Initializable{
 
     @FXML
     void viewScheduledExams(ActionEvent event) throws IOException {
-    	PageLoader.getInstance().buildPage(Page.SCHEDULED_EXAMS, event, course);
+    	PageLoader.getInstance().buildPage(Page.SCHEDULED_EXAMS, course);
     }
 
     @FXML
     void viewScheduledLessons(ActionEvent event) throws IOException {
-    	PageLoader.getInstance().buildPage(Page.SCHEDULED_LESSONS, event, course);
+    	PageLoader.getInstance().buildPage(Page.SCHEDULED_LESSONS, course);
     }
 
 	

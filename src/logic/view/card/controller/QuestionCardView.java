@@ -51,8 +51,8 @@ public class QuestionCardView {
 	}
 
 	@FXML
-	private void viewQuestion(ActionEvent ae) throws IOException {
-		PageLoader.getInstance().buildPage(Page.QUESTION, ae, question);
+	private void viewQuestion(ActionEvent event) throws IOException {
+		PageLoader.getInstance().buildPage(Page.QUESTION, question);
 	}
 
 	@FXML
@@ -67,6 +67,6 @@ public class QuestionCardView {
 	@FXML
 	private void course(ActionEvent event) throws IOException {
     	CourseBean courseBean = question.getCourse();
-    	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
+    	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 }

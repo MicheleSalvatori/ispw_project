@@ -45,6 +45,10 @@
 	-fx-cursor: hand;
 }
 
+.button-avatar {
+	-fx-background-color: transparent;
+}
+
 .button-show {
 	-fx-background-color: #0C0B0B;
 	

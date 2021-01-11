@@ -26,7 +26,7 @@ public class ScheduledExamCardView {
 	@FXML
 	private void course(ActionEvent event) throws SQLException, IOException {
     	CourseBean courseBean = exam.getCourse();
-    	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
+    	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
 	public void setCard(ExamBean exam) {
