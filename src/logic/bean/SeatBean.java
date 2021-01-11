@@ -1,11 +1,8 @@
 package logic.bean;
 
-import logic.model.Classroom;
-
 public class SeatBean {
 	private boolean free;
 	private int id;
-//	private Classroom classroom;		//Forse nelle bean possiamo passare anche delle Entity?
 	private String classroomName;
 
 	public String getClassroomName() {
@@ -23,14 +20,6 @@ public class SeatBean {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-//	public Classroom getClassroom() {
-//		return classroom;
-//	}
-//
-//	public void setClassroom(Classroom classroom) {
-//		this.classroom = classroom;
-//	}
 
 	public void setFree(boolean free) {
 		this.free = free;

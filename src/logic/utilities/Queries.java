@@ -448,4 +448,10 @@ public class Queries {
 		return stmt.executeQuery(sql);
 	}
 
+	public static ResultSet getOccupateSeats(Statement stmt, String course, String date, String time) throws SQLException {
+		String sql = String.format("SELECT seat FROM occupant WHERE lessonDate = '%s' and lessonTime = '%s' and course = '%s';", date, time, course);
+		System.out.println(sql);
+		return stmt.executeQuery(sql);
+	}
+
 }

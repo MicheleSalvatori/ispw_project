@@ -7,8 +7,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.bean.LessonBean;
 import logic.model.Seat;
 import logic.utilities.Queries;
+import logic.utilities.SQLConverter;
 import logic.utilities.SingletonDB;
 
 public class SeatDAO {
@@ -79,10 +81,43 @@ public class SeatDAO {
 			}
 			rs.close();
 		} finally {
-			if (stmt!=null) {
+			if (stmt != null) {
 				stmt.close();
 			}
 		}
 		return seats;
+	}
+
+	public static List<Seat> getOccupiedSeat(LessonBean lesson) throws SQLException {
+		Connection conn = null;
+		Statement stmt = null;
+		List<Seat> occupiedSeats;
+
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			String dateLesson = SQLConverter.date(lesson.getDate());
+			String timeLesson = SQLConverter.time(lesson.getTime());
+			ResultSet rs = Queries.getOccupateSeats(stmt, lesson.getCourse().getAbbrevation(), dateLesson, timeLesson);
+
+			if (!rs.first()) {
+				occupiedSeats = null;
+			} else {
+				rs.first();
+				occupiedSeats = new ArrayList<>();
+				do {
+					int id = rs.getInt("seat");
+					occupiedSeats.add(new Seat(id, false));
+				} while (rs.next());
+			}
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return occupiedSeats;
 	}
 }

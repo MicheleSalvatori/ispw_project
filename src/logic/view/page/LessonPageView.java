@@ -13,7 +13,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -22,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.SeatBean;
@@ -55,13 +55,14 @@ public class LessonPageView {
 	private AnchorPane weatherCard;
 
 	private LessonBean lesson;
-	private Classroom classroom;
+	private ClassroomBean classroom;
 	private EventHandler<ActionEvent> seatEvent;
 	private BookSeatController controlSeat;
 
 	public void setBean(Object lesson) {
+		controlSeat = new BookSeatController();
 		this.lesson = (LessonBean) lesson;
-		this.classroom = this.lesson.getClassroom();
+		this.classroom = this.lesson.getClassroomBean();
 		setPage();
 	}
 
@@ -103,7 +104,6 @@ public class LessonPageView {
 				int row = GridPane.getRowIndex(btnSeat) * classroom.getSeatColumn();
 				int col = GridPane.getColumnIndex(btnSeat) + 1;
 				int seatId = row + col;
-				controlSeat = new BookSeatController();
 				SeatBean seat = new SeatBean();
 				seat.setId(seatId);
 				seat.setClassroomName(classroom.getName());
@@ -168,8 +168,8 @@ public class LessonPageView {
 		System.out.println("INDEX: "+seatID);
 		
 		if (!classroom.getSeats().get(seatID-1).getState()) {
-//			buttonSeat.getStyleClass().add("bookead-seat");
-			buttonSeat.setStyle("-fx-background-color: #DD2D2D;");
+			buttonSeat.getStyleClass().remove("button");
+			buttonSeat.getStyleClass().add("bookead-seat");
 			buttonSeat.setDisable(true);
 		}
 	}
