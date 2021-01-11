@@ -20,22 +20,23 @@
       
       <Label fx:id="labelQuestionDate" layoutX="111.0" layoutY="41.0" styleClass="label-date" text="Data" />
       
-      <Label fx:id="labelName" layoutX="369.0" layoutY="26.0" styleClass="label-author" text="Nome" />
+      <Label fx:id="labelName" layoutX="348.0" layoutY="26.0" styleClass="label-author" text="Nome" />
       
-      <Label fx:id="labelSurname" layoutX="369.0" layoutY="41.0" styleClass="label-author" text="Cognome" />
+      <Label fx:id="labelSurname" layoutX="348.0" layoutY="41.0" styleClass="label-author" text="Cognome" />
       
-      <Label fx:id="labelCourse" layoutX="491.0" layoutY="26.0" styleClass="label-course" text="Corso" />
-      
-      <Button fx:id="btnView" layoutX="560.0" layoutY="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewQuestion" prefHeight="32.0" prefWidth="60.0" text="View" />
+      <Button fx:id="btnView" layoutX="550.0" layoutY="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewQuestion" prefHeight="32.0" prefWidth="60.0" styleClass="button-view" text="View" />
       
       <Label fx:id="labelNumber" layoutX="70.0" layoutY="23.0" styleClass="label-number" text="?" />
       
       <Line endY="54.0" layoutX="102.0" layoutY="12.0" />
       
-      <Line endY="54.0" layoutX="351.0" layoutY="14.0" />
+      <Line endY="54.0" layoutX="330.0" layoutY="14.0" />
       
-      <Line endY="54.0" layoutX="482.0" layoutY="14.0" />
+      <Line endY="54.0" layoutX="461.0" layoutY="14.0" />
+      
       <Button fx:id="btnSolved" disable="true" layoutX="102.0" layoutY="55.0" mnemonicParsing="false" onAction="#setSolved" styleClass="button-label" text="Solved" />
+      
+      <Button fx:id="btnCourse" layoutX="461.0" layoutY="24.0" mnemonicParsing="false" onAction="#course" prefHeight="40.0" prefWidth="89.0" styleClass="button-label-course" text="Course" AnchorPane.bottomAnchor="20.0" AnchorPane.topAnchor="20.0" />
    
    </children>
 </AnchorPane>

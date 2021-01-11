@@ -16,6 +16,10 @@ public class Verbalized {
 		this.date = date;
 	}
 	
+	public Verbalized() {
+
+	}
+
 	public Student getStudent() {
 		return student;
 	}

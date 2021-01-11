@@ -14,6 +14,8 @@ import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.controller.AcceptRequestController;
+import logic.exceptions.RecordNotFoundException;
+import logic.utilities.AlertController;
 import logic.view.card.element.CourseFilterCard;
 import logic.view.card.element.RequestCard;
 
@@ -42,10 +44,9 @@ public class RequestPageView implements Initializable {
 			}
 			
 			updateRequests();
-				
-		} catch (NullPointerException e) {
+			
+		} catch (RecordNotFoundException e) {
 			vboxCourse.getChildren().add(new Label("No course found"));
-			return;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -69,9 +70,8 @@ public class RequestPageView implements Initializable {
 				vboxRequest.getChildren().add(requestCard);
 			}
 			
-		} catch (NullPointerException e) {
+		} catch (RecordNotFoundException e) {
 			vboxRequest.getChildren().add(new Label("No request found"));
-			return;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -94,6 +94,7 @@ public class RequestPageView implements Initializable {
 
 		try {
 			vboxRequest.getChildren().clear();
+			
 			for (RequestBean requestBean : requests) {
 				if (filteredCourses.contains(requestBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
 					RequestCard requestCard = new RequestCard(requestBean);
@@ -105,9 +106,29 @@ public class RequestPageView implements Initializable {
 				vboxRequest.getChildren().add(new Label("No request found."));
 			}
 			
+		} catch (NullPointerException e) {
+			vboxRequest.getChildren().add(new Label("No request found"));
+			return;
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	public void acceptRequest(RequestBean requestBean) {
+		acceptRequestController = new AcceptRequestController();
+		if (acceptRequestController.acceptRequest(requestBean)) {
+			AlertController.infoAlert("Request accepted.\nThe student will be notified");
+			updateRequests();
+		}
+	}
+	
+	public void declineRequest(RequestBean requestBean) {
+		acceptRequestController = new AcceptRequestController();
+		if (acceptRequestController.declineRequest(requestBean)) {
+			AlertController.infoAlert("Request declined.\nThe student will be notified");
+			updateRequests();
 		}
 	}
 }

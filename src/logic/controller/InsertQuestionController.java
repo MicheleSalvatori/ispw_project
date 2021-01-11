@@ -7,6 +7,7 @@ import java.util.List;
 
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Question;
 import logic.model.dao.CourseDAO;
@@ -15,25 +16,25 @@ import logic.model.dao.QuestionDAO;
 public class InsertQuestionController {
 
 	public InsertQuestionController() {
+		
 	}
 
-	public List<CourseBean> getCoursesOfStudent(String usernameString) {
+	public List<CourseBean> getCoursesOfStudent(String usernameString) throws RecordNotFoundException {
 		List<Course> courses = new ArrayList<>();
 		List<CourseBean> courseBeans;
 		try {
 			courses = CourseDAO.getStudentCourses(usernameString);
-			if (courses == null) {
-				courseBeans = null;
-			} else {
-				courseBeans = new ArrayList<>();
-				for (Course c : courses) {
-					CourseBean cb = new CourseBean(c.getName(), c.getAbbrevation());
-					courseBeans.add(cb);
-				}
+
+			courseBeans = new ArrayList<>();
+			for (Course c : courses) {
+				CourseBean cb = new CourseBean(c.getName(), c.getAbbrevation());
+				courseBeans.add(cb);
 			}
+			
 		} catch (SQLException e) {
 			courseBeans = null;
 		}
+		
 		return courseBeans;
 	}
 

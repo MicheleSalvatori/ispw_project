@@ -7,6 +7,7 @@ public enum Page {
 	SIGNUP("src/res/fxml/page/SignupPage.fxml", "App - Signup"), 
 	FORUM("src/res/fxml/page/ForumPage.fxml", "App - Forum"), 
 	NEWQUESTION("src/res/fxml/page/NewQuestionPage.fxml", "App - Insert new question"),
+	NEWASSIGNMENT("src/res/fxml/page/NewAssignmentPage.fxml", "App - Insert new assignment"),
 	QUESTION("src/res/fxml/page/QuestionPage.fxml", "App - Question"),
 	ANSWER_QUESTION("src/res/fxml/page/AnswerPage.fxml", "App - Answer a Question"),
 	NEWS("src/res/fxml/page/NewsPage.fxml", "App - News"),

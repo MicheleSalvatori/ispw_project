@@ -10,6 +10,10 @@ public class Request {
 		this.course = course;
 	}
 	
+	public Request() {
+		
+	}
+	
 	public Student getStudent() {
 		return student;
 	}

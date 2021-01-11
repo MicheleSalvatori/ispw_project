@@ -3,17 +3,13 @@ package logic.bean;
 import java.sql.Date;
 import java.sql.Time;
 
-import logic.model.Classroom;
-import logic.model.Course;
-import logic.model.Professor;
-
 public class LessonBean {
 
 	private Date date;
 	private Time time;
-	private Course course;
-	private Classroom classroom;
-	private Professor professor;
+	private CourseBean course;
+	private ClassroomBean classroom;
+	private ProfessorBean professor;
 	private String topic;
 	
 	public LessonBean() {
@@ -36,19 +32,19 @@ public class LessonBean {
 		this.time = time;
 	}
 	
-	public Course getCourse() {
+	public CourseBean getCourse() {
 		return course;
 	}
 	
-	public void setCourse(Course course) {
+	public void setCourse(CourseBean course) {
 		this.course = course;
 	}
 	
-	public Classroom getClassroom() {
+	public ClassroomBean getClassroom() {
 		return classroom;
 	}
 	
-	public void setClassroom(Classroom classroom) {
+	public void setClassroom(ClassroomBean classroom) {
 		this.classroom = classroom;
 	}
 
@@ -60,11 +56,11 @@ public class LessonBean {
 		this.topic = topic;
 	}
 
-	public Professor getProfessor() {
+	public ProfessorBean getProfessor() {
 		return professor;
 	}
 
-	public void setProfessor(Professor professor) {
+	public void setProfessor(ProfessorBean professor) {
 		this.professor = professor;
 	}
 }

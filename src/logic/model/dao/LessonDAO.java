@@ -9,7 +9,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.bean.LessonBean;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Lesson;
@@ -23,7 +23,7 @@ public class LessonDAO {
 		
 	}
 	
-	public static Lesson getLessonByDateAndTime(Date date, Time time) throws SQLException {
+	public static Lesson getLessonByDateAndTime(Date date, Time time) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
 		Lesson lesson;
@@ -38,7 +38,8 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectLesson(stmt, date, time);
 
 			if (!rs.first()) {
-				lesson = null;
+				throw new RecordNotFoundException("No lesson found");
+				
 			} else {
 				rs.first();
 				Date d = rs.getDate("date");
@@ -50,15 +51,17 @@ public class LessonDAO {
 				lesson = new Lesson(d, t, c, cl, to, p);
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return lesson;
 	}
 	
-	public static List<Lesson> getLessonsByCourse(Date date, Time time, String course) throws SQLException {
+	public static List<Lesson> getLessonsByCourse(Date date, Time time, String course) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
 		List<Lesson> lessons;
@@ -73,7 +76,8 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectLessonsByCourse(stmt, date, time, course);
 
 			if (!rs.first()) {
-				lessons = null;
+				throw new RecordNotFoundException("No lesson found");
+				
 			} else {
 				lessons = new ArrayList<>();
 				rs.first();
@@ -89,15 +93,17 @@ public class LessonDAO {
 				} while (rs.next());
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return lessons;
 	}
 	
-	public static Lesson getNextLessonByCourse(Date date, Time time, String course) throws SQLException {
+	public static Lesson getNextLessonByCourse(Date date, Time time, String course) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
 		Lesson lesson;
@@ -112,7 +118,8 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectNextLessonByCourse(stmt, date, time, course);
 
 			if (!rs.first()) {
-				lesson = null;
+				throw new RecordNotFoundException("No lesson found");
+				
 			} else {
 				rs.first();
 				Date d = rs.getDate("date");
@@ -124,6 +131,7 @@ public class LessonDAO {
 				lesson = new Lesson(d, t, c, cl, to, p);
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -132,7 +140,7 @@ public class LessonDAO {
 		return lesson;
 	}
 	
-	public static List<Lesson> getNextLessonsProfessor(Date date, String professor) throws SQLException {
+	public static List<Lesson> getNextLessonsProfessor(Date date, String professor) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
 		List<Lesson> lessons;
@@ -147,7 +155,8 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectNextLessonsByProfessor(stmt, date, professor);
 
 			if (!rs.first()) {
-				lessons = null;
+				throw new RecordNotFoundException("No lesson found");
+				
 			} else {
 				lessons = new ArrayList<>();
 				rs.first();
@@ -162,15 +171,17 @@ public class LessonDAO {
 					lessons.add(lesson);
 				} while (rs.next());
 			}
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return lessons;
 	}
 	
-	public static List<Lesson> getTodayNextLessonsProfessor(Date date, Time time, String professor) throws SQLException {
+	public static List<Lesson> getTodayNextLessonsProfessor(Date date, Time time, String professor) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
 		List<Lesson> lessons;
@@ -185,7 +196,8 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectTodayNextLessonsByProfessor(stmt, date, time, professor);
 
 			if (!rs.first()) {
-				lessons = null;
+				throw new RecordNotFoundException("No lesson found");
+				
 			} else {
 				lessons = new ArrayList<>();
 				rs.first();
@@ -208,7 +220,7 @@ public class LessonDAO {
 		return lessons;
 	}
 	
-	public static List<Lesson> getNextLessonsStudent(Date date, String student) throws SQLException {
+	public static List<Lesson> getNextLessonsStudent(Date date, String student) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
 		List<Lesson> lessons;
@@ -223,7 +235,8 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectNextLessonsByStudent(stmt, date, student);
 
 			if (!rs.first()) {
-				lessons = null;
+				throw new RecordNotFoundException("No lesson found");
+				
 			} else {
 				lessons = new ArrayList<>();
 				rs.first();
@@ -238,15 +251,17 @@ public class LessonDAO {
 					lessons.add(lesson);
 				} while (rs.next());
 			}
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return lessons;
 	}
 	
-	public static List<Lesson> getTodayNextLessonsStudent(Date date, Time time, String student) throws SQLException {
+	public static List<Lesson> getTodayNextLessonsStudent(Date date, Time time, String student) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
 		List<Lesson> lessons;
@@ -261,7 +276,8 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectTodayNextLessonsByStudent(stmt, date, time, student);
 
 			if (!rs.first()) {
-				lessons = null;
+				throw new RecordNotFoundException("No lesson found");
+				
 			} else {
 				lessons = new ArrayList<>();
 				rs.first();
@@ -276,15 +292,17 @@ public class LessonDAO {
 					lessons.add(lesson);
 				} while (rs.next());
 			}
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return lessons;
 	}
 	
-	public static boolean insertLesson(LessonBean lessonBean) {
+	public static boolean insertLesson(Lesson lesson) {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -294,14 +312,15 @@ public class LessonDAO {
 			if (conn == null) {
 				throw new SQLException();
 			}
+			
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			Date date = lessonBean.getDate();
-			Time time = lessonBean.getTime();
-			Course course = lessonBean.getCourse();
-			Classroom classroom = lessonBean.getClassroom();
-			String topic = lessonBean.getTopic();
-			Professor professor = lessonBean.getProfessor();
+			Date date = lesson.getDate();
+			Time time = lesson.getTime();
+			Course course = lesson.getCourse();
+			Classroom classroom = lesson.getClassroom();
+			String topic = lesson.getTopic();
+			Professor professor = lesson.getProfessor();
 			
 			Queries.insertLesson(stmt, date, time, course.getAbbrevation(), classroom.getName(), topic, professor.getUsername());
 			

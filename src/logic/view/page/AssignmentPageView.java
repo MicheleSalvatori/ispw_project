@@ -1,5 +1,6 @@
 package logic.view.page;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -12,17 +13,30 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
+import logic.Session;
+import logic.bean.AssignmentBean;
+import logic.bean.CourseBean;
+import logic.utilities.Page;
+import logic.utilities.PageLoader;
+import logic.utilities.Role;
+import logic.utilities.SQLConverter;
 
 public class AssignmentPageView implements Initializable {
 
 	@FXML
-	private Label labelCourse, labelDeadline, labelTitle;
+	private Label labelDeadline, labelTitle;
 	
 	@FXML
 	private TextArea textDesc;
 	
 	@FXML
-	private Button btnAdd, btnRemove;
+	private Button btnCourse, btnAdd, btnRemove;
+	
+	@FXML
+	private AnchorPane anchorDeliver;
+	
+	private AssignmentBean assignment;
 	
 	@FXML
 	private void addFile(ActionEvent event) {
@@ -37,8 +51,31 @@ public class AssignmentPageView implements Initializable {
 		}
 	}
 	
+	@FXML
+	private void course(ActionEvent event) throws IOException {
+		CourseBean courseBean = assignment.getCourse();
+    	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		
+		if (Session.getSession().getRole() == Role.PROFESSOR) {
+			anchorDeliver.setVisible(false);
+			btnAdd.setVisible(false);
+			btnRemove.setVisible(false);
+		}
+	}
+	
+	public void setBean(Object obj) {
+		this.assignment = (AssignmentBean) obj;
+		setPage();
+	}
+	
+	private void setPage() {
+		btnCourse.setText(assignment.getCourse().getAbbrevation());
+		labelDeadline.setText(SQLConverter.date(assignment.getDate()));
+		labelTitle.setText(assignment.getTitle());
+		textDesc.setText(assignment.getText());
 	}
 }

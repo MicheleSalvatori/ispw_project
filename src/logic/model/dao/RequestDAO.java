@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.bean.RequestBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Request;
@@ -37,7 +36,8 @@ public class RequestDAO {
 			ResultSet rs = Queries.selectRequest(stmt, student, course);
 
 			if (!rs.first()) {
-				request = null;
+				throw new RecordNotFoundException("No request found");
+				
 			} else {
 				rs.first();
 				Student s = StudentDAO.findStudentByUsername(rs.getString("student"));
@@ -45,15 +45,17 @@ public class RequestDAO {
 				request = new Request(s, c);
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return request;
 	}
 	
-	public static List<Request> getRequestsByProfessor(String professor) throws SQLException {
+	public static List<Request> getRequestsByProfessor(String professor) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -69,7 +71,8 @@ public class RequestDAO {
 			ResultSet rs = Queries.selectRequestsByProfessor(stmt, professor);
 
 			if (!rs.first()) {
-				requests = null;
+				throw new RecordNotFoundException("No request found");
+
 			} else {
 				requests = new ArrayList<>();
 				rs.first();
@@ -81,11 +84,13 @@ public class RequestDAO {
 				} while (rs.next());
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return requests;
 	}
 	
@@ -105,7 +110,8 @@ public class RequestDAO {
 			ResultSet rs = Queries.selectRequestsByProfessorAndCourse(stmt, professor, course);
 
 			if (!rs.first()) {
-				requests = null;
+				throw new RecordNotFoundException("No request found");
+				
 			} else {
 				requests = new ArrayList<>();
 				rs.first();
@@ -117,15 +123,17 @@ public class RequestDAO {
 				} while (rs.next());
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return requests;
 	}
 	
-	public static boolean insertRequest(RequestBean requestBean) {
+	public static boolean insertRequest(Request request) {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -137,8 +145,8 @@ public class RequestDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			Student student = requestBean.getStudent();
-			Course course = requestBean.getCourse();
+			Student student = request.getStudent();
+			Course course = request.getCourse();
 			
 			Queries.insertRequest(stmt, student.getUsername(), course.getAbbrevation());
 			
@@ -148,7 +156,7 @@ public class RequestDAO {
 		return true;
 	}
 	
-	public static boolean deleteRequest(RequestBean requestBean) {
+	public static boolean deleteRequest(Request request) {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -160,8 +168,8 @@ public class RequestDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			Student student = requestBean.getStudent();
-			Course course = requestBean.getCourse();
+			Student student = request.getStudent();
+			Course course = request.getCourse();
 			
 			Queries.deleteRequest(stmt, student.getUsername(), course.getAbbrevation());
 			
@@ -171,7 +179,7 @@ public class RequestDAO {
 		return true;
 	}
 	
-	public static boolean insertFollow(RequestBean requestBean) {
+	public static boolean insertFollow(Request request) {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -183,8 +191,8 @@ public class RequestDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			Student student = requestBean.getStudent();
-			Course course = requestBean.getCourse();
+			Student student = request.getStudent();
+			Course course = request.getCourse();
 			
 			Queries.insertFollow(stmt, student.getUsername(), course.getAbbrevation());
 			
@@ -194,7 +202,7 @@ public class RequestDAO {
 		return true;
 	}
 	
-	public static boolean deleteFollow(RequestBean requestBean) {
+	public static boolean deleteFollow(Request request) {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -206,8 +214,8 @@ public class RequestDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			Student student = requestBean.getStudent();
-			Course course = requestBean.getCourse();
+			Student student = request.getStudent();
+			Course course = request.getCourse();
 			
 			Queries.deleteFollow(stmt, student.getUsername(), course.getAbbrevation());
 			

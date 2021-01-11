@@ -37,7 +37,8 @@ public class VerbalizedDAO {
 			ResultSet rs = Queries.selectVerbalizedExamsByStudent(stmt, student);
 
 			if (!rs.first()) {
-				verbs = null;
+				throw new RecordNotFoundException("No verbalized exam found");
+
 			} else {
 				verbs = new ArrayList<>();
 				rs.first();
@@ -51,11 +52,62 @@ public class VerbalizedDAO {
 				} while (rs.next());
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return verbs;
+	}
+
+	public static boolean insert(Verbalized verb) {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			Date date = verb.getDate();
+			Course course = verb.getCourse();
+			int grade = verb.getGrade();
+			Student student = verb.getStudent();
+			
+			Queries.insertVerbalizedExam(stmt, student.getUsername(), course.getAbbrevation(), grade, date);
+			
+		} catch (SQLException e) {
+			return false;
+		}
+		
+		return true;
+	}
+
+	public static boolean delete(Verbalized verb) {
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			Course course = verb.getCourse();
+			Student student = verb.getStudent();
+			
+			Queries.deleteVerbalizedExam(stmt, student.getUsername(), course.getAbbrevation());
+			
+		} catch (SQLException e) {
+			return false;
+		}
+		
+		return true;
 	}
 }

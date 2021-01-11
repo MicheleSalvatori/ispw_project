@@ -33,27 +33,27 @@ public class Weather {
 			switch (weather) {
 			
 			case "Clear":
-				file = new File("src/res/png/Weather/Moon.png");
+				file = new File("src/res/png/weather/Moon.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Clouds":
-				file = new File("src/res/png/Weather/CloudMoon.png");
+				file = new File("src/res/png/weather/CloudMoon.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Rain":
-				file = new File("src/res/png/Weather/Rain.png");
+				file = new File("src/res/png/weather/Rain.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Thunderstorm":
-				file = new File("src/res/png/Weather/Thunderstorm.png");
+				file = new File("src/res/png/weather/Thunderstorm.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			default:
-				file = new File("src/res/png/Weather/Cloud.png");
+				file = new File("src/res/png/weather/Cloud.png");
 				image = new Image(file.toURI().toString());
 				break;
 			
@@ -65,27 +65,27 @@ public class Weather {
 			switch (weather) {
 			
 			case "Clear":
-				file = new File("src/res/png/Weather/Sun.png");
+				file = new File("src/res/png/weather/Sun.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Clouds":
-				file = new File("src/res/png/Weather/CloudSun.png");
+				file = new File("src/res/png/weather/CloudSun.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Rain":
-				file = new File("src/res/png/Weather/Rain.png");
+				file = new File("src/res/png/weather/Rain.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Thunderstorm":
-				file = new File("src/res/png/Weather/Thunderstorm.png");
+				file = new File("src/res/png/weather/Thunderstorm.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			default:
-				file = new File("src/res/png/Weather/Cloud.png");
+				file = new File("src/res/png/weather/Cloud.png");
 				image = new Image(file.toURI().toString());
 				break;
 			
@@ -119,10 +119,8 @@ public class Weather {
 	public static JSONArray getInfo() {
 
 		String API_KEY = "a4f22e032f9d48ee8fd3a2dfe5101878";
-		//String LOCATION = "Rome, IT";
 		String LAT = "41.89";
 		String LON = "12.48";
-		//String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + LOCATION + "&appid=" + API_KEY + "&units=imperial";
 		String urlString = "https://api.openweathermap.org/data/2.5/onecall?lat=" + LAT + "&lon=" + LON +"&exclude=daily,minutely,current,alerts&appid=" + API_KEY;
 
 		JSONObject json;

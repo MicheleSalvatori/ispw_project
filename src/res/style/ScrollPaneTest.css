@@ -1,14 +1,18 @@
 .scroll-pane {
 	-fx-background-color: transparent;
 	-fx-vbar-policy: always;
+	-fx-border-color: #0C0B0B;
+    -fx-border-radius: 14px;
+    -fx-border-width: 2px;
+    -fx-fit-to-width: true;
 }
 
 .scroll-pane > .viewport {
    	-fx-background-color: transparent;
     -fx-background-radius: 14px;
-    -fx-border-color: #0C0B0B;
+    /*-fx-border-color: #0C0B0B; // Non riesco a sistemare
     -fx-border-radius: 14px;
-    -fx-border-width: 2px;
+    -fx-border-width: 2px;*/
 }
 
 .scroll-bar:horizontal, .scroll-bar:vertical{
@@ -29,11 +33,11 @@
 }
 
 .scroll-bar:vertical:hover .thumb {
-    -fx-background-color: red;
+    -fx-background-color: grey;
 }
 
 .scroll-bar:vertical:pressed .thumb {
-	-fx-background-color: purple;
+	-fx-background-color: black;
 }
 
 .scroll-bar:horizontal .thumb,

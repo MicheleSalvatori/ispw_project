@@ -15,6 +15,7 @@ import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
 import logic.controller.ScheduledController;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.CourseFilterCard;
@@ -58,15 +59,25 @@ public class ScheduledPageView implements Initializable {
 				// Get user exams
 				exams = scheduledController.getExams();
 			}
+
+		} catch (RecordNotFoundException e) {
+			vboxScroll.getChildren().add(new Label(e.getMessage()));
 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		try {
 			// Get user courses
 			courses = scheduledController.getCourses();
-
-		} catch (NullPointerException e) {
-			vboxCourse.getChildren().add(new Label("No course found"));
+			
+		} catch (RecordNotFoundException e) {
+			vboxCourse.getChildren().add(new Label(e.getMessage()));
 			return;
 			
 		} catch (SQLException e) {
+		// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -84,9 +95,9 @@ public class ScheduledPageView implements Initializable {
 	}
 	
 	public void setFilters(CourseBean course) throws IOException {
-		for (CourseBean c : courses) {	
-			CourseFilterCard courseFilterCard = new CourseFilterCard(c);
-			if (c.getAbbrevation().compareTo(course.getAbbrevation()) == 0) {
+		for (CourseBean courseBean : courses) {	
+			CourseFilterCard courseFilterCard = new CourseFilterCard(courseBean);
+			if (courseBean.getAbbrevation().compareTo(course.getAbbrevation()) == 0) {
 				courseFilterCard.getController().getButton().setSelected(true);
 			}
 			vboxCourse.getChildren().add(courseFilterCard);

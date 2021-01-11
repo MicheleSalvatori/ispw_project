@@ -18,6 +18,7 @@ import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
 import logic.controller.InsertQuestionController;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Student;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
@@ -36,6 +37,7 @@ public class NewQuestionView implements Initializable {
 
 	@FXML
 	private ComboBox<String> courseComboBox;
+	
 	private String questionText, questionSubject;
 	private QuestionBean questionBean;
 	private InsertQuestionController controller;
@@ -48,14 +50,21 @@ public class NewQuestionView implements Initializable {
 		controller = new InsertQuestionController();
 		btnSubmit.disableProperty().bind(Bindings.isEmpty(textQuestion.textProperty())
 				.or(Bindings.isEmpty(textSubject.textProperty())).or((courseComboBox.valueProperty().isNull())));
-		courses = controller.getCoursesOfStudent(Session.getSession().getUserLogged().getUsername());
-		for (CourseBean c : courses) {
-			courseComboBox.getItems().add(c.getAbbrevation());
+		
+		try {
+			courses = controller.getCoursesOfStudent(Session.getSession().getUserLogged().getUsername());
+			for (CourseBean c : courses) {
+				courseComboBox.getItems().add(c.getAbbrevation());
+			}
+			
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	@FXML
-	private void saveQuestion(ActionEvent ae) {
+	private void saveQuestion(ActionEvent event) {
 		questionBean = new QuestionBean();
 		this.questionSubject = textSubject.getText();
 		this.questionText = textQuestion.getText();
@@ -67,12 +76,13 @@ public class NewQuestionView implements Initializable {
 
 		try {
 			controller.save(questionBean);
-			AlertController.buildInfoAlert("Your question has been correctly entered", "", ae);
+			AlertController.infoAlert("Your question has been correctly entered");
 		} catch (SQLException e) {
-			AlertController.buildInfoAlert("Something happened, your question was not acquired..", "Bad news..", ae);
+			AlertController.infoAlert("Something happened, your question was not acquired..");
 		} finally {
 			try {
-				PageLoader.getInstance().buildPage(Page.FORUM, ae, null);
+				PageLoader.getInstance().buildPage(Page.FORUM, event);
+				
 			} catch (IOException e) {
 				// errore caricamento fxml capire come gestirla. Conviene gestirla nel
 				// pageLoader

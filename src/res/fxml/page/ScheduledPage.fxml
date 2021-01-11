@@ -22,9 +22,9 @@
    	
    	  <ScrollPane layoutX="728.0" layoutY="41.0" prefHeight="732.0" prefWidth="409.0" stylesheets="@../../style/ScrollPaneTest.css">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="392.0">
                <children>
-                  <VBox fx:id="vboxCourse" prefWidth="100.0" spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                  <VBox fx:id="vboxCourse" alignment="CENTER" prefWidth="100.0" spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
          </content>

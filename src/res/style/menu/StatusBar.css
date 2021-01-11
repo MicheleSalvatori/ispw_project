@@ -32,6 +32,8 @@
 }
 
 .profile-button {
+	-fx-background-color: transparent;
+	
 	-size: 40;
 	-fx-min-height: -size;
     -fx-min-width: -size;

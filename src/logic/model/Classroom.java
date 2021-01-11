@@ -3,11 +3,12 @@ package logic.model;
 import java.util.List;
 
 public class Classroom {
+	
+	private String name;
 	private int seatRow;
 	private int seatColumn;
 	private String name; 
 	private List<Seat> seats;
-
 
 	public Classroom(String name) {
 		this.name = name;

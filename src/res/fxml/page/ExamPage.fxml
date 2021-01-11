@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../../style/page/ExamPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.ExamPageView">
@@ -10,9 +14,9 @@
       
       <ScrollPane layoutY="40.0" prefHeight="576.0" prefWidth="1135.0" stylesheets="@../../style/ScrollPaneTest.css">
          <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="1118.0" styleClass="scroll-pane">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="1118.0">
                <children>
-                  <VBox fx:id="vboxExam" prefWidth="100.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                  <VBox fx:id="vboxExam" alignment="CENTER" prefWidth="100.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                </children>
           </AnchorPane>
          </content>
@@ -26,11 +30,29 @@
       
       <Label layoutY="704.0" text="Weighted point average:" />
       
-      <Label fx:id="labelVE" layoutX="359.0" layoutY="635.0" styleClass="label-number" text="?" />
+      <Label fx:id="labelVE" layoutX="359.0" layoutY="635.0" styleClass="label-number" text="0" />
       
-      <Label fx:id="labelGPA" layoutX="359.0" layoutY="673.0" styleClass="label-number" text="?" />
+      <Label fx:id="labelGPA" layoutX="359.0" layoutY="673.0" styleClass="label-number" text="0.0" />
       
-      <Label fx:id="labelWPA" layoutX="359.0" layoutY="711.0" styleClass="label-number" text="?" />
+      <Label fx:id="labelWPA" layoutX="359.0" layoutY="711.0" styleClass="label-number" text="0.0" />
+      
+      <Button fx:id="btnAddExam" layoutX="882.0" layoutY="642.0" mnemonicParsing="false" onAction="#addExam" styleClass="button-add">
+      	<graphic>
+      		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true" spacing="10.0">
+      			<children>
+      				
+            				<ImageView fitHeight="28.0" fitWidth="28.0">
+            			<image>
+            				<Image url="@../../png/button/Plus.png" />
+            			</image>
+            		</ImageView>
+      			
+            				<Label text="Add Exam" />
+            		
+            			</children>
+      		</HBox>
+      	</graphic>
+      </Button>
       
    </children>
 </AnchorPane>

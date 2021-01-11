@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import logic.exceptions.RecordNotFoundException;
+import logic.model.User;
 import logic.utilities.Queries;
 import logic.utilities.Role;
 import logic.utilities.SingletonDB;
@@ -30,15 +31,11 @@ public class RoleDAO {
 			resultSet = Queries.selectRole(stmt, username);
 			
 			if (!resultSet.first()) {
-				typeUser = null;
-			}else {
+				throw new RecordNotFoundException("No Username Found matching with name: " + username);
+				
+			} else {
 				resultSet.first();				// mi riposiziono alla prima riga 
 				typeUser = resultSet.getString("type");
-			}
-			
-			if (typeUser == null) {
-				RecordNotFoundException e = new RecordNotFoundException("No Username Found matching with name: " + username);
-            	throw e;
 			}
 			
 			switch (typeUser) {
@@ -64,12 +61,12 @@ public class RoleDAO {
 		return role;
 	}
 	
-	public static String getPasswordByEmail(String email) throws SQLException, RecordNotFoundException {
+	public static User getPasswordByEmail(String email) throws SQLException, RecordNotFoundException {
 		
 		Connection conn = null;
 		Statement stmt = null;
-		String password = null;
-		ResultSet resultSet = null;
+		User user = null;
+		ResultSet rs = null;
 		
 		try {
 			conn = (SingletonDB.getDbInstance()).getConnection();
@@ -77,26 +74,24 @@ public class RoleDAO {
 				throw new SQLException();
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			resultSet = Queries.selectUserByEmail(stmt, email);
+			rs = Queries.selectUserByEmail(stmt, email);
 			
-			if (!resultSet.first()) {
-				password = null;
+			if (!rs.first()) {
+				throw new RecordNotFoundException("No User found matching with email: '" + email + "'.");
+				
 			}else {
-				resultSet.first();				// mi riposiziono alla prima riga 
-				password = resultSet.getString("password");
+				rs.first();				// mi riposiziono alla prima riga 
+				String password = rs.getString("password");
+				user = new User();
+				user.setPassword(password);
 			}
 			
-			if (password == null) {
-				RecordNotFoundException e = new RecordNotFoundException("No User found matching with email: '" + email + "'.");
-            	throw e;
-			}
-			
-			resultSet.close();
+			rs.close();
 		} finally {
 			if(stmt != null)
 				stmt.close();
 		}
 		
-		return password;
+		return user;
 	}
 }

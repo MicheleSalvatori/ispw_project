@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Assignment;
 import logic.model.Course;
 import logic.utilities.Queries;
@@ -19,7 +20,7 @@ public class AssignmentDAO {
 		
 	}
 
-	public static List<Assignment> getAssignmentsByStudent(String student) throws SQLException {
+	public static List<Assignment> getAssignmentsByStudent(String student) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -35,7 +36,8 @@ public class AssignmentDAO {
 			ResultSet rs = Queries.selectAssignmentsByStudent(stmt, student);
 
 			if (!rs.first()) {
-				assignments = null;
+				throw new RecordNotFoundException("No assignment found");
+				
 			} else {
 				assignments = new ArrayList<>();
 				rs.first();
@@ -58,7 +60,7 @@ public class AssignmentDAO {
 		return assignments;
 	}
 	
-	public static List<Assignment> getAssignmentsByProfessor(String professor) throws SQLException {
+	public static List<Assignment> getAssignmentsByProfessor(String professor) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -74,7 +76,8 @@ public class AssignmentDAO {
 			ResultSet rs = Queries.selectAssignmentsByProfessor(stmt, professor);
 
 			if (!rs.first()) {
-				assignments = null;
+				throw new RecordNotFoundException("No assignment found");
+				
 			} else {
 				assignments = new ArrayList<>();
 				rs.first();
@@ -95,5 +98,31 @@ public class AssignmentDAO {
 			}
 		}
 		return assignments;
+	}
+	
+	public static boolean saveAssignment(Assignment assignment) throws SQLException {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			String title = assignment.getTitle();
+			String text = assignment.getText();
+			String course = assignment.getCourse().getAbbrevation();
+			Date date = assignment.getDate();
+		
+			Queries.saveAssignment(stmt, title, text, course, date);
+			
+		} catch (SQLException e) {
+			return false;
+		}
+		
+		return true;
 	}
 }

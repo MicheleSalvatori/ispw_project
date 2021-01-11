@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import logic.view.card.element.CommunicationCard;
 import logic.view.card.element.NewsCard;
@@ -14,6 +15,9 @@ public class NewsPageView implements Initializable {
 
 	@FXML
 	private VBox vboxComm, vboxNews;
+	
+	@FXML
+	private ScrollPane scroll;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

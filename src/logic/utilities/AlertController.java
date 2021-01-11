@@ -11,11 +11,9 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.ColorAdjust;
@@ -33,151 +31,53 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import logic.exceptions.CancelException;
 
 public class AlertController {
-//	TODO riorganizzare metodi utilizzando costruttori diversi per node e event 
-//	private static Node node;
-//	private static ActionEvent event;
-//	TODO unire confirmation 1 e 2
-	private AlertController() {}
 	
-//	public AlertController(Node node) {
-//		this.node = node;
-//	}
-//	
-//	public AlertController(ActionEvent event) {
-//		this.event = event;
-//	}
+	private static Stage stage;
 	
-	public static void buildInfoAlert(String message, String titleAlert, ActionEvent event) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle(titleAlert);
-		alert.setHeaderText(null);
-		alert.setGraphic(null);
-		alert.setContentText(message);
-		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
-		centerButtons(alert.getDialogPane());
-		alert.initStyle(StageStyle.TRANSPARENT);
+	private static ColorAdjust adj;
+    private static GaussianBlur blur;
+	
+	private AlertController() {
 		
-		Node source = (Node) event.getSource();
-		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55);
-	    adj.setInput(blur);
-		source.getScene().getRoot().setEffect(adj);
-		
-		alert.show();
-		animation(alert);
-		alert.close();
-		
-		alert.showAndWait();
-		source.getScene().getRoot().setEffect(null);
-		alert.close();
 	}
 	
-
-	public static void buildInfoAlert(String message, String titleAlert, Scene scene) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle(titleAlert);
-		alert.setHeaderText(null);
-		alert.setGraphic(null);
-		alert.setContentText(message);
-		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
-		centerButtons(alert.getDialogPane());
-		alert.initStyle(StageStyle.TRANSPARENT);
-		
-		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55);
-	    adj.setInput(blur);
-		scene.getRoot().setEffect(adj);
-		
-		alert.show();
-		animation(alert);
-		alert.close();
-		
-		alert.showAndWait();
-		scene.getRoot().setEffect(null);
-		alert.close();
+	public static void setStage(Stage stage) {
+		adj = new ColorAdjust(0, -0.9, -0.5, 0);
+		blur = new GaussianBlur(55);
+		adj.setInput(blur);
+		AlertController.stage = stage;
 	}
-  
-  public static void buildInfoAlert(String message, String titleAlert, Node source) {
+	
+	public static void infoAlert(String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle(titleAlert);
-		alert.setHeaderText(null);
-		alert.setGraphic(null);
+		setAlert(alert);
 		alert.setContentText(message);
-		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
-		centerButtons(alert.getDialogPane());
-		alert.initStyle(StageStyle.TRANSPARENT);
-		
-		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55);
-	    adj.setInput(blur);
-		source.getScene().getRoot().setEffect(adj);
-		
-		alert.show();
-		animation(alert);
-		alert.close();
-		
-		alert.showAndWait();
-		source.getScene().getRoot().setEffect(null);
-		alert.close();
+	   
+		show(alert);
 	}
 
-	public static boolean confirmation(String message, ActionEvent event) {
+	public static boolean confirmationAlert(String message) {
 	 	Alert alert = new Alert(AlertType.CONFIRMATION, message, ButtonType.YES, ButtonType.NO);
-	 	alert.setTitle("Confirmation");
-	 	alert.setHeaderText(null);
-		alert.setGraphic(null);
-		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
-		centerButtons(alert.getDialogPane());
-		alert.initStyle(StageStyle.TRANSPARENT);
+	 	setAlert(alert);
 		
-		Node source = (Node) event.getSource();
-		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55);
-	    adj.setInput(blur);
-		source.getScene().getRoot().setEffect(adj);
-		
-		alert.show();
-		animation(alert);
-		alert.close();
-		
-		alert.showAndWait();
-		source.getScene().getRoot().setEffect(null);
-		
-		return alert.getResult() == ButtonType.YES;
-	}
-	
-	public static boolean confirmation_2(String message, Node source) {
-	 	Alert alert = new Alert(AlertType.CONFIRMATION, message, ButtonType.YES, ButtonType.NO);
-	 	alert.setTitle("Confirmation");
-	 	alert.setHeaderText(null);
-		alert.setGraphic(null);
-		alert.getDialogPane().getStylesheets().add(AlertController.class.getResource("../../res/style/Alert.css").toExternalForm());
-		centerButtons(alert.getDialogPane());
-		alert.initStyle(StageStyle.TRANSPARENT);
-		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55);
-	    adj.setInput(blur);
-		source.getScene().getRoot().setEffect(adj);
-		
-		alert.show();
-		animation(alert);
-		alert.close();
-		
-		alert.showAndWait();
-		source.getScene().getRoot().setEffect(null);
+	    show(alert);
 		
 		return alert.getResult() == ButtonType.YES;
 	}
 		
-	public static String changePassword(ActionEvent event) {
+	public static String changePassword() throws CancelException {
 		Dialog<String> dialog = new Dialog<>();
 		dialog.setHeaderText("Insert a new password");
 		dialog.setGraphic(null);
+		dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
 		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 		centerButtons(dialog.getDialogPane());
@@ -188,7 +88,6 @@ public class AlertController {
 		HBox content = new HBox();
 	    content.setAlignment(Pos.CENTER);
 	    HBox.setHgrow(pwd, Priority.ALWAYS);
-	    //pwd.setMinWidth(dialog.getDialogPane().getWidth());
 	    content.getChildren().add(pwd);
 	    
 	    
@@ -205,29 +104,27 @@ public class AlertController {
 	        return null;
 	    });
 	    
-		Node source = (Node) event.getSource();
-		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55);
-	    adj.setInput(blur);
-		source.getScene().getRoot().setEffect(adj);
+		stage.getScene().getRoot().setEffect(adj);
 		
 		dialog.show();
 		animation(dialog);
 		dialog.close();
 		
 		Optional<String> result = dialog.showAndWait();
-		source.getScene().getRoot().setEffect(null);
+		stage.getScene().getRoot().setEffect(null);
 		
 		if (result.isPresent()) {
 	    	return result.get();
 	    }
-	    return null;
+	    
+		throw new CancelException("Cancel button pressed");
 	}
 	
-	public static String emailInput(ActionEvent event) {
+	public static String emailInput() throws CancelException {
 		Dialog<String> dialog = new Dialog<>();
 		dialog.setHeaderText("Insert your email");
 		dialog.setGraphic(null);
+		dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
 		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 		centerButtons(dialog.getDialogPane());
@@ -238,13 +135,11 @@ public class AlertController {
 		HBox content = new HBox();
 	    content.setAlignment(Pos.CENTER);
 	    HBox.setHgrow(text, Priority.ALWAYS);
-	    //pwd.setMinWidth(dialog.getDialogPane().getWidth());
 	    content.getChildren().add(text);
 	    
 	    
 	    // Disable OK button until all text fields aren't empty
-	    dialog.getDialogPane().lookupButton(ButtonType.OK).disableProperty()
-	    						.bind(Bindings.isEmpty(text.textProperty()));
+	    dialog.getDialogPane().lookupButton(ButtonType.OK).disableProperty().bind(Bindings.isEmpty(text.textProperty()));
 	    
 	    dialog.getDialogPane().setContent(content);
 	    
@@ -255,26 +150,23 @@ public class AlertController {
 	        return null;
 	    });
 	    
-		Node source = (Node) event.getSource();
-		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55);
-	    adj.setInput(blur);
-		source.getScene().getRoot().setEffect(adj);
+		stage.getScene().getRoot().setEffect(adj);
 		
 		dialog.show();
 		animation(dialog);
 		dialog.close();
 		
 		Optional<String> result = dialog.showAndWait();
-		source.getScene().getRoot().setEffect(null);
+		stage.getScene().getRoot().setEffect(null);
 		
 		if (result.isPresent()) {
 	    	return result.get();
 	    }
-	    return null;
+		
+	    throw new CancelException("Button cancel pressed");
 	}
 	
-	public static int courseRequest(ActionEvent event, List<String> courses) {
+	public static int courseRequest(List<String> courses) {
 		ChoiceDialog<String> choiceDialog = new ChoiceDialog<>();
 		
 		ObservableList<String> list = choiceDialog.getItems();
@@ -285,22 +177,19 @@ public class AlertController {
 		choiceDialog.setTitle("Select a course");
 		choiceDialog.setHeaderText("Select a course");
 		choiceDialog.setGraphic(null);
+		choiceDialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
 		choiceDialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 		centerButtons(choiceDialog.getDialogPane());
 		choiceDialog.initStyle(StageStyle.TRANSPARENT);
 		
-		Node source = (Node) event.getSource();
-		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55);
-	    adj.setInput(blur);
-		source.getScene().getRoot().setEffect(adj);
+		stage.getScene().getRoot().setEffect(adj);
 		
 		choiceDialog.show();
 		animation(choiceDialog);
 		choiceDialog.close();
 		
 		choiceDialog.showAndWait();
-		source.getScene().getRoot().setEffect(null);
+		stage.getScene().getRoot().setEffect(null);
 		
 		Node comboBox = choiceDialog.getDialogPane().lookup(".combo-box");
 		int index = ((ComboBox<?>) comboBox).getSelectionModel().getSelectedIndex();
@@ -308,7 +197,7 @@ public class AlertController {
 		return index;
 	}
 	
-	public static Pair<String, String> time(ActionEvent event) {
+	public static Pair<String, String> timeSelector() {
 		// Create the custom dialog.
 	    Dialog<Pair<String, String>> dialog = new Dialog<>();
 	    dialog.setHeaderText("Insert time");
@@ -363,22 +252,19 @@ public class AlertController {
 	        return null;
 	    });
 
+	    dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
 	    dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
 	    dialog.initStyle(StageStyle.TRANSPARENT);
 	    centerButtons(dialog.getDialogPane());
 	    
-	    Node source = (Node) event.getSource();
-		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55);
-	    adj.setInput(blur);
-		source.getScene().getRoot().setEffect(adj);
+		stage.getScene().getRoot().setEffect(adj);
 		
 		dialog.show();
 		animation(dialog);
 		dialog.close();
 	    
 	    Optional<Pair<String, String>> result = dialog.showAndWait();
-	    source.getScene().getRoot().setEffect(null);
+	    stage.getScene().getRoot().setEffect(null);
 	    
 	    if (result.isPresent()) {
 	    	return result.get();
@@ -386,6 +272,7 @@ public class AlertController {
 	    return null;
 	}
 	
+	// Center buttons in DialogPane
 	private static void centerButtons(DialogPane dialogPane) {
 		Region spacer = new Region();
 		ButtonBar.setButtonData(spacer, ButtonBar.ButtonData.BIG_GAP);	
@@ -395,45 +282,41 @@ public class AlertController {
 		hboxDialogPane.getChildren().add(spacer);
 	}
 	
-	// Animation for ChoiceDialog type
-	private static void animation(ChoiceDialog<String> alert) {
-		double yIni = -alert.getHeight();
-		double yEnd = alert.getY();
-		alert.setY(yIni+500);
-			
-		DoubleProperty yProperty = new SimpleDoubleProperty(yIni);
-		yProperty.addListener((ob,n,n1)->alert.setY(n1.doubleValue()));
-			
-		Timeline timeIn = new Timeline();
-		timeIn.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(yProperty, yEnd, Interpolator.EASE_BOTH)));
-		timeIn.play();
-	}
-	
-	// Animation for Dialog type
-	private static void animation(Dialog<?> alert) {
-		double yIni = -alert.getHeight();
-		double yEnd = alert.getY();
-		alert.setY(yIni+500);
+	// Animation for dialog
+	private static void animation(Dialog<?> dialog) {
+		double yIni = -dialog.getHeight();
+		double yEnd = dialog.getY();
+		dialog.setY(yIni+500);
 		
 		DoubleProperty yProperty = new SimpleDoubleProperty(yIni);
-		yProperty.addListener((ob,n,n1)->alert.setY(n1.doubleValue()));
+		yProperty.addListener((ob,n,n1)->dialog.setY(n1.doubleValue()));
 		
 		Timeline timeIn = new Timeline();
 		timeIn.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(yProperty, yEnd, Interpolator.EASE_BOTH)));
 		timeIn.play();
 	}
 	
-	// Animation for Alert type
-	private static void animation(Alert alert) {
-		double yIni = -alert.getHeight();
-		double yEnd = alert.getY();
-		alert.setY(yIni+500);
+	private static void show(Dialog<?> dialog) {
+		// Add effect to the scene
+		stage.getScene().getRoot().setEffect(adj);
 		
-		DoubleProperty yProperty = new SimpleDoubleProperty(yIni);
-		yProperty.addListener((ob,n,n1)->alert.setY(n1.doubleValue()));
+		// Show animation of dialog
+		dialog.show();
+		animation(dialog);
+		dialog.close();
 		
-		Timeline timeIn = new Timeline();
-		timeIn.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(yProperty, yEnd, Interpolator.EASE_BOTH)));
-		timeIn.play();
+		// Wait for an input by the user
+		dialog.showAndWait();
+		stage.getScene().getRoot().setEffect(null);
+		dialog.close();
+	}
+	
+	private static void setAlert(Dialog<?> dialog) {
+		dialog.setHeaderText(null);
+		dialog.setGraphic(null);
+		dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
+		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
+		centerButtons(dialog.getDialogPane());
+		dialog.initStyle(StageStyle.TRANSPARENT);
 	}
 }

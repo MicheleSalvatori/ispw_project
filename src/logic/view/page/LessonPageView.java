@@ -81,19 +81,8 @@ public class LessonPageView {
 
 	@FXML
 	private void course(ActionEvent event) throws IOException, SQLException {
-		Course course = lesson.getCourse();
-
-		CourseBean courseBean = new CourseBean();
-		courseBean.setAbbrevation(course.getAbbrevation());
-		courseBean.setName(course.getName());
-		courseBean.setYear(course.getYear());
-		courseBean.setCredits(course.getCredits());
-		courseBean.setSemester(course.getSemester());
-		courseBean.setPrerequisites(course.getPrerequisites());
-		courseBean.setGoal(course.getGoal());
-		courseBean.setReception(course.getReception());
-
-		PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
+		CourseBean courseBean= lesson.getCourse();
+		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 
 	private void setupEvent() {
@@ -111,6 +100,7 @@ public class LessonPageView {
 			}
 		};
 	}
+
 	private void bookSeat(SeatBean seat, Button btn) {
 		try {
 			controlSeat.occupateSeat(seat);
@@ -122,6 +112,7 @@ public class LessonPageView {
 		}
 		
 	}
+
 	private void setupRoom() {
 		int numRow = classroom.getSeatRow();
 		int seatPerRow = classroom.getSeatColumn();
@@ -172,7 +163,6 @@ public class LessonPageView {
 			buttonSeat.getStyleClass().add("bookead-seat");
 			buttonSeat.setDisable(true);
 		}
-	}
 
 	private void setWeatherCard(Time time) {
 
@@ -195,7 +185,8 @@ public class LessonPageView {
 
 		WeatherCard a;
 		try {
-			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "°C", image,
+			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + String.valueOf(248) + "C", image,
+
 					h + ":00");
 			weatherCard.getChildren().add(a);
 		} catch (JSONException e) {
@@ -206,5 +197,4 @@ public class LessonPageView {
 			e.printStackTrace();
 		}
 	}
-
 }

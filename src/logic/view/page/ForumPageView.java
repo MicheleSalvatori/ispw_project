@@ -17,9 +17,9 @@ import javafx.scene.layout.VBox;
 import logic.Session;
 import logic.bean.AssignmentBean;
 import logic.bean.QuestionBean;
+import logic.controller.AddAssignmentController;
 import logic.controller.AllQuestionController;
-import logic.model.Assignment;
-import logic.model.dao.AssignmentDAO;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -30,7 +30,7 @@ import logic.view.card.element.QuestionCard;
 public class ForumPageView implements Initializable {
 
 	@FXML
-	private Button btnMyQuestions, btnNewQuestion, btnAllQuestions;
+	private Button btnMyQuestions, btnNewQuestion, btnAllQuestions, btnNewAssignment;
 	
 	@FXML
 	private Label labelLoading;
@@ -39,14 +39,13 @@ public class ForumPageView implements Initializable {
 	private VBox vboxQuestion, vboxAssignment;
 	
 	private AllQuestionController allQuestionController;
-	private List<QuestionBean> allQuestions, myQuestions;
-	//private List<AssignmentBean> assignments;
+	private AddAssignmentController addAssignmentController;
 	
-	//TODO eliminare
-	private List<Assignment> assignments;
+	private List<QuestionBean> allQuestions, myQuestions;
+	private List<AssignmentBean> assignments;
 
 	@FXML
-	private void myQuestion(ActionEvent ae) throws IOException {
+	private void myQuestion(ActionEvent event) throws IOException {
 		vboxQuestion.getChildren().clear();
 		
 		if (myQuestions == null) {
@@ -76,24 +75,31 @@ public class ForumPageView implements Initializable {
 	}
 
 	@FXML
-	private void allQuestions(ActionEvent ae) {
+	private void allQuestions(ActionEvent event) {
 		setAllQuestions();
 		btnAllQuestions.setDisable(true);
 		btnMyQuestions.setDisable(false);
 	}
 
 	@FXML
-	private void newQuestion(ActionEvent ae) throws IOException {
-		PageLoader.getInstance().buildPage(Page.NEWQUESTION, ae, null);
+	private void newQuestion(ActionEvent event) throws IOException {
+		PageLoader.getInstance().buildPage(Page.NEWQUESTION, event);
+	}
+	
+	@FXML
+	private void newAssignment(ActionEvent event) throws IOException {
+		PageLoader.getInstance().buildPage(Page.NEWASSIGNMENT, event);
 	}
 
 	private void getAllQuestions() {
 		try {
 			allQuestions = allQuestionController.getAllQuestions();
+			
 		} catch (SQLException e) {
-			AlertController.buildInfoAlert(e.getMessage(), "Bad news..", btnMyQuestions);
+			AlertController.infoAlert(e.getMessage());
 			btnMyQuestions.setDisable(true);
 			btnAllQuestions.setDisable(true);
+			
 		}
 	}
 
@@ -101,6 +107,7 @@ public class ForumPageView implements Initializable {
 		if (vboxQuestion.getChildren() != null) {
 			vboxQuestion.getChildren().clear();
 		}
+		
 		if (allQuestions == null) {
 			labelLoading.setText("No one seems to have any questions to ask in your courses. Be the first!");
 			btnMyQuestions.setDisable(true);
@@ -132,17 +139,21 @@ public class ForumPageView implements Initializable {
 			nCourses = 0;
 		}
 		
-		Role roleLogged = Session.getSession().getType();
+		Role roleLogged = Session.getSession().getRole();
 		switch (roleLogged) {
+		
 		case PROFESSOR:
 			btnNewQuestion.setVisible(false);
 			btnMyQuestions.setVisible(false);
 			btnAllQuestions.setVisible(false);
+			
+			btnNewAssignment.setVisible(true);
 			if (nCourses== 0) {
 				labelLoading.setText("You are not assigned to any course at the moment.");
 				return;
 			}
 			break;
+			
 		case STUDENT:
 			if (nCourses == 0) {
 				btnNewQuestion.setDisable(true);
@@ -151,6 +162,7 @@ public class ForumPageView implements Initializable {
 				return;
 			}
 			break;
+			
 		default:
 			break;
 		}
@@ -165,30 +177,19 @@ public class ForumPageView implements Initializable {
 		
 		try {
 			
-			// TODO Controller
-			if (Session.getSession().getType() == Role.STUDENT) {
-				assignments = AssignmentDAO.getAssignmentsByStudent(Session.getSession().getUsername());
-			}
-			else {
-				assignments = AssignmentDAO.getAssignmentsByProfessor(Session.getSession().getUsername());
-			}
+			addAssignmentController = new AddAssignmentController();
 			
-			for (Assignment assignment : assignments) {
-				AssignmentBean assignmentBean = new AssignmentBean();
-				assignmentBean.setCourse(assignment.getCourse());
-				assignmentBean.setDate(assignment.getDate());
-				assignmentBean.setId(assignment.getId());
-				assignmentBean.setText(assignment.getText());
-				assignmentBean.setTitle(assignment.getTitle());
-				
+			assignments = addAssignmentController.getAssignments();
+			
+			for (AssignmentBean assignmentBean : assignments) {
 				AssignmentCard assignmentCard = new AssignmentCard(assignmentBean);
 				vboxAssignment.getChildren().add(assignmentCard);
 			}
 			
-		} catch (NullPointerException e) {
+		} catch (RecordNotFoundException e) {
 			vboxAssignment.getChildren().add(new Label("No assignment found"));
 			return;
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

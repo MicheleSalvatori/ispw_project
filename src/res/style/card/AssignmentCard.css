@@ -92,3 +92,15 @@
 .button:hover {
 	-fx-cursor: hand;
 }
+
+.button-label:hover {
+	-fx-background-color: transparent;
+}
+
+.button-view:hover {
+	-fx-background-color: #0C0B0B;
+}
+
+.button-view:pressed {
+	-fx-background-color: #0C0B0B;
+}

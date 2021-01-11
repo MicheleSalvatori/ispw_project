@@ -2,22 +2,15 @@ package logic.bean;
 
 import java.sql.Date;
 
-import logic.model.User;
-
 public class AnswerBean {
+	
 	private int id;
 	private String text;
-	private User user;
+	private UserBean user;
 	private Date date;
 
 	public AnswerBean() {
-	}
-	
-	public AnswerBean(int id, String text, User user, Date date) {
-		this.id = id;
-		this.text = text;
-		this.user = user;
-		this.date = date;
+		
 	}
 
 	public int getId() {
@@ -36,11 +29,11 @@ public class AnswerBean {
 		this.text = text;
 	}
 
-	public User getUser() {
+	public UserBean getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserBean user) {
 		this.user = user;
 	}
 

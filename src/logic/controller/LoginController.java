@@ -9,6 +9,7 @@ import logic.exceptions.RecordNotFoundException;
 import logic.model.Admin;
 import logic.model.Professor;
 import logic.model.Student;
+import logic.model.User;
 import logic.model.dao.AdminDAO;
 import logic.model.dao.ProfessorDAO;
 import logic.model.dao.RoleDAO;
@@ -18,10 +19,16 @@ import logic.view.menu.element.NavigationBar;
 
 public class LoginController {
 	
-	public Role getTypeUser(UserBean userBean) throws SQLException, RecordNotFoundException {
+	public Role getUserRole(UserBean userBean) throws SQLException, RecordNotFoundException {
 		String username = userBean.getUsername();
-		Role type = RoleDAO.findType(username);
-		return type;
+		Role role = RoleDAO.findType(username);
+		return role;
+	}
+	
+	public UserBean getUserByEmail(UserBean userBean) throws SQLException, RecordNotFoundException {
+		User user = RoleDAO.getPasswordByEmail(userBean.getEmail());
+		userBean.setPassword(user.getPassword());
+		return userBean;
 	}
 
 	public void loginAsProfessor(UserBean userBean) throws SQLException, RecordNotFoundException, ConnectException {
@@ -34,7 +41,7 @@ public class LoginController {
 		
 		//Gestione Sessione
 		Session.getSession().setUserLogged(professor);
-		Session.getSession().setType(Role.PROFESSOR);
+		Session.getSession().setRole(Role.PROFESSOR);
 	}
 	
 	public void loginAsStudent(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -47,7 +54,7 @@ public class LoginController {
 			
 		//Gestione Sessione
 		Session.getSession().setUserLogged(student);
-		Session.getSession().setType(Role.STUDENT);
+		Session.getSession().setRole(Role.STUDENT);
 	}
 	
 	public void loginAsAdmin(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -59,7 +66,7 @@ public class LoginController {
 			
 		//Gestione Sessione
 		Session.getSession().setUserLogged(admin);
-		Session.getSession().setType(Role.ADMIN);
+		Session.getSession().setRole(Role.ADMIN);
 		
 	}
 	

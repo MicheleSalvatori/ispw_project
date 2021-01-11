@@ -17,8 +17,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
+import logic.exceptions.CancelException;
 import logic.exceptions.RecordNotFoundException;
-import logic.model.dao.RoleDAO;
 import logic.utilities.AlertController;
 import logic.utilities.Email;
 import logic.utilities.Page;
@@ -38,6 +38,31 @@ public class LoginView implements Initializable {
 
 	private LoginController loginController;
 	private Role role;
+	
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+
+		btnLogin.disableProperty()
+				.bind(Bindings.isEmpty(textUsername.textProperty()).or(Bindings.isEmpty(textPassword.textProperty())));
+
+		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					loginUser(event);
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+
+		// Se premi invio quando sei sul campo username o password fa il login
+		textUsername.setOnAction(eventHandler);
+		textPassword.setOnAction(eventHandler);
+	}
 
 	@FXML
 	void loginUser(ActionEvent event) throws IOException {
@@ -56,93 +81,81 @@ public class LoginView implements Initializable {
 		userBean.setUsername(username);
 		loginController = new LoginController();
 		try {
-			role = loginController.getTypeUser(userBean);
+			role = loginController.getUserRole(userBean);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		} catch (RecordNotFoundException e) {
-			AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!",
-					"Login failed", event);
+			AlertController.infoAlert("User not found: incorrect username or password.\nTry again or signup!");
 			return;
 		}
 
 		// switch for type user login
 		try {
 			switch (role) {
+			
 			case STUDENT:
 				loginController.loginAsStudent(userBean);
 				break;
+				
 			case PROFESSOR:
 				loginController.loginAsProfessor(userBean);
 				break;
+				
 			case ADMIN:
 				loginController.loginAsAdmin(userBean);
 			}
+			
 		} catch (SQLException e) {
-			AlertController.buildInfoAlert("Connection failed!", "Warning", event);
+			AlertController.infoAlert("Connection failed!");
+			return;
+			
 		} catch (RecordNotFoundException e) {
-			AlertController.buildInfoAlert("User not found: incorrect username or password.\nTry again or signup!",
-					"Login failed", event);
-		}finally {
-			PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+			AlertController.infoAlert("User not found: incorrect username or password.\nTry again or signup!");
+			return;
 		}
+			
+		PageLoader.getInstance().buildPage(Page.HOMEPAGE);
 	}
 
 	@FXML
 	private void forgotPassword(ActionEvent event) {
-
-		String email = AlertController.emailInput(event);
-
+		
+		loginController = new LoginController();
+		
 		try {
-			String password = RoleDAO.getPasswordByEmail(email);
+			String email = AlertController.emailInput();
+			UserBean userBean = new UserBean();
+			userBean.setEmail(email);
+			
+			String password = loginController.getUserByEmail(userBean).getPassword();
 			Email.password(email, password);
-
-		} catch (NullPointerException e) {
-			System.out.println("NULL");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		} catch (RecordNotFoundException e) {
-			AlertController.buildInfoAlert(e.getMessage(), "error", event);
+			AlertController.infoAlert(e.getMessage());
 			return;
 
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+		} catch (CancelException e) {
+			System.out.println(e.getMessage());
+			return;
 		}
 
-		AlertController.buildInfoAlert("Your password will be sended to your e-mail.", "password", event);
+		AlertController.infoAlert("Your password will be sended to your e-mail.");
 	}
 
 	@FXML
 	void gotoSignup(ActionEvent event) throws IOException {
 		// load Signup Page
-		PageLoader.getInstance().buildPage(Page.SIGNUP, event, null);
-	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-
-		btnLogin.disableProperty()
-				.bind(Bindings.isEmpty(textUsername.textProperty()).or(Bindings.isEmpty(textPassword.textProperty())));
-
-		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				try {
-					loginUser(event);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		};
-
-		// Se premi invio quando sei sul campo username o password fa il login
-		textUsername.setOnAction(eventHandler);
-		textPassword.setOnAction(eventHandler);
+		PageLoader.getInstance().buildPage(Page.SIGNUP);
 	}
 }

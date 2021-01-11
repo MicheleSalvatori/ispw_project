@@ -29,7 +29,8 @@ public class AdminDAO {
 			resultSet = Queries.selectProfessor(stmt, username, password);
 			
 			if (!resultSet.first()) {
-				adminLogged = null;
+				throw new RecordNotFoundException("No Username Found matching with name: " + username);
+				
 			}else {
 				resultSet.first();				// mi riposiziono alla prima riga 
 				adminLogged = new Admin();
@@ -40,16 +41,12 @@ public class AdminDAO {
 				adminLogged.setPassword(resultSet.getString("password"));
 			}
 			
-			if (adminLogged == null) {
-				RecordNotFoundException e = new RecordNotFoundException("No Username Found matching with name: " + username);
-            	throw e;
-			}
-			
 			resultSet.close();
 		} finally {
 			if(stmt != null)
 				stmt.close();
 		}
+		
 		System.out.println("AdminDAO -> username = " + adminLogged.getUsername());
 		return adminLogged;
 	}
