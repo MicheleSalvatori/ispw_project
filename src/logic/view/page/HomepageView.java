@@ -151,7 +151,7 @@ public class HomepageView implements Initializable {
 					h = Integer.toString(hour+i);
 				}
 				
-				WeatherCard weatherCard = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour+i).getDouble("temp")) + "°C", image, h + ":00");
+				WeatherCard weatherCard = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour+i).getDouble("temp")) + String.valueOf(248) + "C", image, h + ":00");
 				hboxWeather.getChildren().add(weatherCard);
 				
 			} catch (IOException e) {
