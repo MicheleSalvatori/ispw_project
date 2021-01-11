@@ -7,23 +7,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.model.Classroom;
 import logic.model.Seat;
 import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
-public class ClassroomDAO {
+public class SeatDAO {
 
-	private ClassroomDAO() {
-		
-	}
-	
-	public static Classroom getClassroomByName(String name) throws SQLException {
-		
+	public static void occupateSeat(String nameClassRoom, int seatID) throws SQLException {
 		Statement stmt = null;
 		Connection conn = null;
-		Classroom classroom;
-		
+
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			if (conn == null) {
@@ -31,34 +24,18 @@ public class ClassroomDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = Queries.selectClassroom(stmt, name);
-
-			if (!rs.first()) {
-				classroom = null;
-			} else {
-				rs.first();
-				String className = rs.getString("name");
-				int row = rs.getInt("seatRow");
-				int col = rs.getInt("seatColumn");
-				List<Seat> seatsOf = SeatDAO.getSeatOfClassroom(className);
-				classroom = new Classroom(className, row, col, seatsOf);
-			}
-			rs.close();
+			Queries.occupateSeat(stmt, seatID, nameClassRoom);
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
-		return classroom;
 	}
-	
-	
-	public static List<Classroom> getAllClassrooms() throws SQLException {
-		
+
+	public static void freeSeat(String nameClassRoom, int seatID) throws SQLException {
 		Statement stmt = null;
 		Connection conn = null;
-		List<Classroom> classrooms;
-		
+
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			if (conn == null) {
@@ -66,25 +43,46 @@ public class ClassroomDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = Queries.selectAllClassrooms(stmt);
+			Queries.freeSeat(stmt, seatID, nameClassRoom);
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+	}
+
+	public static List<Seat> getSeatOfClassroom(String nameClassroom) throws SQLException {
+		Statement stmt = null;
+		Connection conn = null;
+		List<Seat> seats;
+
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.findSeatOfClassroom(stmt, nameClassroom);
 
 			if (!rs.first()) {
-				classrooms = null;
+				seats = null;
 			} else {
-				classrooms = new ArrayList<>();
 				rs.first();
+				seats = new ArrayList<>();
 				do {
-					String className = rs.getString("name");
-					Classroom c = new Classroom(className);
-					classrooms.add(c);
+					int id = rs.getInt("id");
+					boolean status = rs.getBoolean("free");
+					Seat s = new Seat(id, status);
+					seats.add(s);
 				} while (rs.next());
 			}
 			rs.close();
 		} finally {
-			if (stmt != null) {
+			if (stmt!=null) {
 				stmt.close();
 			}
 		}
-		return classrooms;
+		return seats;
 	}
 }

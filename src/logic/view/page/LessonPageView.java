@@ -1,10 +1,8 @@
 package logic.view.page;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.util.ResourceBundle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,9 +11,9 @@ import org.json.JSONObject;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -26,6 +24,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
+import logic.bean.SeatBean;
+import logic.controller.BookSeatController;
+import logic.model.Classroom;
 import logic.model.Course;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -33,7 +34,7 @@ import logic.utilities.SQLConverter;
 import logic.utilities.Weather;
 import logic.view.card.element.WeatherCard;
 
-public class LessonPageView implements Initializable {
+public class LessonPageView {
 
 	@FXML
 	private Button btnCourse;
@@ -54,10 +55,13 @@ public class LessonPageView implements Initializable {
 	private AnchorPane weatherCard;
 
 	private LessonBean lesson;
+	private Classroom classroom;
 	private EventHandler<ActionEvent> seatEvent;
+	private BookSeatController controlSeat;
 
 	public void setBean(Object lesson) {
 		this.lesson = (LessonBean) lesson;
+		this.classroom = this.lesson.getClassroom();
 		setPage();
 	}
 
@@ -68,7 +72,7 @@ public class LessonPageView implements Initializable {
 		labelDate.setText(SQLConverter.date(lesson.getDate()));
 		labelProfessor.setText(lesson.getProfessor().getName() + " " + lesson.getProfessor().getSurname());
 		textTopic.setText(lesson.getTopic());
-		
+
 		setupEvent();
 		setWeatherCard(lesson.getTime());
 		setupRoom();
@@ -90,27 +94,44 @@ public class LessonPageView implements Initializable {
 
 		PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
 	}
+
 	private void setupEvent() {
 		seatEvent = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Button btn = (Button) event.getSource();
-				System.out.println("occupa posto: "+ btn.getText());
+				Button btnSeat = (Button) event.getSource();
+				int row = GridPane.getRowIndex(btnSeat) * classroom.getSeatColumn();
+				int col = GridPane.getColumnIndex(btnSeat) + 1;
+				int seatId = row + col;
+				controlSeat = new BookSeatController();
+				SeatBean seat = new SeatBean();
+				seat.setId(seatId);
+				seat.setClassroomName(classroom.getName());
+				bookSeat(seat, btnSeat);
 			}
 		};
 	}
+	private void bookSeat(SeatBean seat, Button btn) {
+		try {
+			controlSeat.occupateSeat(seat);
+			classroom.getSeats().get(seat.getId()-1).occupateSeat();
+			btn.setStyle("-fx-background-color: #3899D0;");
+//			AlertConfirmation
+		} catch (SQLException e) {
+//			AlerControl nuova
+		}
+		
+	}
 	private void setupRoom() {
-		int numRow = lesson.getClassroom().getSeatRow();
-		int seatPerRow = lesson.getClassroom().getSeatColumn();
+		int numRow = classroom.getSeatRow();
+		int seatPerRow = classroom.getSeatColumn();
 		System.out.println(numRow + " " + seatPerRow);
 		GridPane gridSeat = new GridPane();
 		paneSeat.getChildren().add(gridSeat);
 		AnchorPane.setTopAnchor(gridSeat, 0d);
 		AnchorPane.setLeftAnchor(gridSeat, 0d);
 		AnchorPane.setRightAnchor(gridSeat, 0d);
-		// AnchorPane.setBottomAnchor(gridSeat, 5d);
 
-		// scrollPane.setFitToHeight(true);
 		scrollPane.setFitToWidth(true);
 
 		gridSeat.setVgap(10);
@@ -121,7 +142,7 @@ public class LessonPageView implements Initializable {
 
 			for (int j = 0; j < seatPerRow; j++) {
 
-				Button btn = new Button((j+1)+(i*seatPerRow) + "");
+				Button btn = new Button(j + 1 + "");
 				btn.getStylesheets().add("/res/style/SeatButton.css");
 				btn.setMaxWidth(1);
 				btn.setOnAction(seatEvent);
@@ -131,6 +152,7 @@ public class LessonPageView implements Initializable {
 				GridPane.setHgrow(btn, Priority.ALWAYS);
 				GridPane.setVgrow(btn, Priority.ALWAYS);
 				GridPane.setHalignment(btn, HPos.CENTER);
+				setupSeatStatus(btn);
 			}
 		}
 
@@ -140,8 +162,16 @@ public class LessonPageView implements Initializable {
 		}
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	private void setupSeatStatus(Button buttonSeat) {
+		int seatID = (GridPane.getColumnIndex(buttonSeat) + 1)
+				+ (GridPane.getRowIndex(buttonSeat) * classroom.getSeatColumn());
+		System.out.println("INDEX: "+seatID);
+		
+		if (!classroom.getSeats().get(seatID-1).getState()) {
+//			buttonSeat.getStyleClass().add("bookead-seat");
+			buttonSeat.setStyle("-fx-background-color: #DD2D2D;");
+			buttonSeat.setDisable(true);
+		}
 	}
 
 	private void setWeatherCard(Time time) {
@@ -165,7 +195,7 @@ public class LessonPageView implements Initializable {
 
 		WeatherCard a;
 		try {
-			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "Â°C", image,
+			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "°C", image,
 					h + ":00");
 			weatherCard.getChildren().add(a);
 		} catch (JSONException e) {
