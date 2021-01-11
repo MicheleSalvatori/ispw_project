@@ -3,16 +3,19 @@ package logic.view.page;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.Observable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -58,12 +61,18 @@ public class LessonPageView {
 	private ClassroomBean classroom;
 	private EventHandler<ActionEvent> seatEvent;
 	private BookSeatController controlSeat;
+	private GridPane gridSeat;
 
 	public void setBean(Object lesson) {
 		controlSeat = new BookSeatController();
 		this.lesson = (LessonBean) lesson;
-		this.classroom = this.lesson.getClassroomBean();
-		setPage();
+		try {
+			this.classroom = controlSeat.getOccupateSeatOf(this.lesson); // mettiamo nella classroom solo i posti
+																			// occupati
+			setPage();
+		} catch (SQLException e) {
+			System.out.println("CATCH");
+		}
 	}
 
 	public void setPage() {
@@ -81,7 +90,7 @@ public class LessonPageView {
 
 	@FXML
 	private void course(ActionEvent event) throws IOException, SQLException {
-		CourseBean courseBean= lesson.getCourse();
+		CourseBean courseBean = lesson.getCourse();
 		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 
@@ -104,20 +113,20 @@ public class LessonPageView {
 	private void bookSeat(SeatBean seat, Button btn) {
 		try {
 			controlSeat.occupateSeat(seat);
-			classroom.getSeats().get(seat.getId()-1).occupateSeat();
+			classroom.getSeats().get(seat.getId() - 1).occupateSeat();
 			btn.setStyle("-fx-background-color: #3899D0;");
 //			AlertConfirmation
 		} catch (SQLException e) {
 //			AlerControl nuova
 		}
-		
+
 	}
 
 	private void setupRoom() {
 		int numRow = classroom.getSeatRow();
 		int seatPerRow = classroom.getSeatColumn();
 		System.out.println(numRow + " " + seatPerRow);
-		GridPane gridSeat = new GridPane();
+		gridSeat = new GridPane();
 		paneSeat.getChildren().add(gridSeat);
 		AnchorPane.setTopAnchor(gridSeat, 0d);
 		AnchorPane.setLeftAnchor(gridSeat, 0d);
@@ -143,7 +152,6 @@ public class LessonPageView {
 				GridPane.setHgrow(btn, Priority.ALWAYS);
 				GridPane.setVgrow(btn, Priority.ALWAYS);
 				GridPane.setHalignment(btn, HPos.CENTER);
-				setupSeatStatus(btn);
 			}
 		}
 
@@ -151,18 +159,19 @@ public class LessonPageView {
 			Label label = new Label(String.valueOf((char) (65 + j)));
 			gridSeat.add(label, seatPerRow, j);
 		}
+		setupSeatStatus();
 	}
 
-	private void setupSeatStatus(Button buttonSeat) {
-		int seatID = (GridPane.getColumnIndex(buttonSeat) + 1)
-				+ (GridPane.getRowIndex(buttonSeat) * classroom.getSeatColumn());
-		System.out.println("INDEX: "+seatID);
-		
-		if (!classroom.getSeats().get(seatID-1).getState()) {
+	private void setupSeatStatus() {
+		ObservableList<Node> seatButtons = gridSeat.getChildren();
+		for (SeatBean s : classroom.getSeat()) {
+			int row = s.getId() % classroom.getSeatColumn() - 1;
+			//TODO come prendo la colonna porcamadonna e l'algebra 
 			buttonSeat.getStyleClass().remove("button");
 			buttonSeat.getStyleClass().add("bookead-seat");
 			buttonSeat.setDisable(true);
 		}
+	}
 
 	private void setWeatherCard(Time time) {
 
@@ -185,7 +194,9 @@ public class LessonPageView {
 
 		WeatherCard a;
 		try {
-			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + String.valueOf(248) + "C", image,
+			a = new WeatherCard(
+					Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + String.valueOf(248) + "C",
+					image,
 
 					h + ":00");
 			weatherCard.getChildren().add(a);

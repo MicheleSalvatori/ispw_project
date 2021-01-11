@@ -1,13 +1,25 @@
 package logic.bean;
 
+import java.util.List;
+
 public class ClassroomBean {
 	
 	private String name;
 	private int seatRow;
 	private int seatColumn;
+	private List<SeatBean> seat;
 	
+
 	public ClassroomBean() {
 	
+	}
+
+	public List<SeatBean> getSeat() {
+		return seat;
+	}
+
+	public void setSeat(List<SeatBean> seat) {
+		this.seat = seat;
 	}
 
 	public String getName() {

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.bean.ClassroomBean;
 import logic.bean.LessonBean;
 import logic.bean.SeatBean;
 import logic.model.Seat;
@@ -19,9 +20,10 @@ public class BookSeatController {
 		SeatDAO.freeSeat(seat.getClassroomName(), seat.getId());
 	}
 
-	public List<SeatBean> getOccupateSeatOf(LessonBean lessonBean) throws SQLException {
+	public ClassroomBean getOccupateSeatOf(LessonBean lessonBean) throws SQLException {
 		List<Seat> seats = SeatDAO.getOccupiedSeat(lessonBean);
 		List<SeatBean> seatsBean = new ArrayList<>();
+		ClassroomBean classroom = lessonBean.getClassroom();
 
 		if (seats == null) {		//TODO gestire con eccezzione
 			return null;
@@ -33,7 +35,8 @@ public class BookSeatController {
 			sBean.setFree(s.getState());
 			seatsBean.add(sBean);
 		}
-
-		return seatsBean;
+		
+		classroom.setSeat(seatsBean);
+		return classroom;
 	}
 }

@@ -7,7 +7,6 @@ public class Classroom {
 	private String name;
 	private int seatRow;
 	private int seatColumn;
-	private String name; 
 	private List<Seat> seats;
 
 	public Classroom(String name) {
