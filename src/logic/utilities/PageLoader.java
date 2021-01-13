@@ -108,7 +108,7 @@ public class PageLoader {
 		PageLoader.setPage(page);
 		PageLoader.setObject(obj);
 		
-		switch (page) {
+		switch (page) {		// TODO high coupling (cast dal pageloader)
 
 		case COURSE:
 			loadPage();

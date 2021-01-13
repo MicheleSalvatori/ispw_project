@@ -9,7 +9,6 @@ import java.util.List;
 
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
-import logic.model.Seat;
 import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 

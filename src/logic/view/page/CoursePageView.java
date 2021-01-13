@@ -1,14 +1,10 @@
 package logic.view.page;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +12,7 @@ import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.ProfessorBean;
+import logic.bean.WeeklyLessonBean;
 import logic.controller.CourseController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Page;
@@ -23,7 +20,7 @@ import logic.utilities.PageLoader;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.WeeklyLessonCard;
 
-public class CoursePageView implements Initializable{
+public class CoursePageView {
 
     @FXML
     private Label labelCourse, labelProfessor, labelPrerequisites, labelGoal, labelReception, labelYear, labelSemester,labelCredits;
@@ -32,29 +29,12 @@ public class CoursePageView implements Initializable{
     private AnchorPane anchorNextLesson;
 
     @FXML
-    private Button btnViewLessons, tnViewExams;
+    private Button btnViewLessons, btnViewExams;
     
     @FXML
     private VBox vboxScroll;
-
-    private CourseController courseController;
     
     private CourseBean course;
-    
-    
-    @Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
-		// TODO weeklyLesson DB
-		for (int i=0; i<5; i++) {
-			try {
-				WeeklyLessonCard weeklyLessonCard = new WeeklyLessonCard("Monday", "A3", "10:00");
-				vboxScroll.getChildren().add(weeklyLessonCard);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}	
-	}
 
     @FXML
     void viewScheduledExams(ActionEvent event) throws IOException {
@@ -74,7 +54,7 @@ public class CoursePageView implements Initializable{
 	
 	public void setPage() {
 		
-		courseController = new CourseController();
+		CourseController courseController = new CourseController();
 		
 		try {
 			LessonBean lessonBean = courseController.getNextLesson(course); 
@@ -85,7 +65,7 @@ public class CoursePageView implements Initializable{
 			labelProfessor.setText("");
 			for (ProfessorBean professor : professors) {
 				labelProfessor.setText(labelProfessor.getText()+"/"+professor.getName() + " " + professor.getSurname());
-			}
+			}	
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -100,8 +80,28 @@ public class CoursePageView implements Initializable{
 			System.out.println(e.getMessage());
 		}
 		
-		labelCourse.setText(course.getAbbrevation());
+		
+		try {
+			List<WeeklyLessonBean> weeklyLessons = courseController.getWeeklyLessons(course);
+			for (WeeklyLessonBean lesson : weeklyLessons) {
+				WeeklyLessonCard weeklyLessonCard = new WeeklyLessonCard(lesson);
+				vboxScroll.getChildren().add(weeklyLessonCard);
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (RecordNotFoundException e) {
+			// Nothing
+			vboxScroll.getChildren().add(new Label(e.getMessage()));
+		}
 
+		labelCourse.setText(course.getAbbrevation());
 		labelYear.setText(course.getYear());
 		labelCredits.setText(course.getCredits());
 		labelGoal.setText(course.getGoal());

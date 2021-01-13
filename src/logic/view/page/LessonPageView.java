@@ -25,8 +25,6 @@ import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.SeatBean;
 import logic.controller.BookSeatController;
-import logic.model.Classroom;
-import logic.model.Course;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
@@ -65,12 +63,11 @@ public class LessonPageView {
 	private LessonBean lesson;
 	private ClassroomBean classroom;
 	private EventHandler<ActionEvent> seatEvent;
-	private BookSeatController controlSeat;
-
+	
 	public void setBean(Object lesson) {
-		controlSeat = new BookSeatController();
+		new BookSeatController();
 		this.lesson = (LessonBean) lesson;
-		this.classroom = this.lesson.getClassroomBean();
+		this.classroom = this.lesson.getClassroom();
 		setPage();
 	}
 
@@ -110,14 +107,7 @@ public class LessonPageView {
 	}
 
 	private void bookSeat(SeatBean seat, Button btn) {
-		try {
-			controlSeat.occupateSeat(seat);
-			classroom.getSeats().get(seat.getId()-1).occupateSeat();
-			btn.setStyle("-fx-background-color: #3899D0;");
-//			AlertConfirmation
-		} catch (SQLException e) {
-//			AlerControl nuova
-		}
+
 		
 	}
 
@@ -165,12 +155,8 @@ public class LessonPageView {
 		int seatID = (GridPane.getColumnIndex(buttonSeat) + 1)
 				+ (GridPane.getRowIndex(buttonSeat) * classroom.getSeatColumn());
 		System.out.println("INDEX: "+seatID);
-		
-		if (!classroom.getSeats().get(seatID-1).getState()) {
-			buttonSeat.getStyleClass().remove("button");
-			buttonSeat.getStyleClass().add("bookead-seat");
-			buttonSeat.setDisable(true);
-		}
+
+	}
 
 	private void setWeatherCard(Time time) {
 

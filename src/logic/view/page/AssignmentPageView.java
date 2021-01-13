@@ -67,8 +67,13 @@ public class AssignmentPageView implements Initializable {
 		}
 	}
 	
+	
+	//TODO
+	// public void setBean(AssignmentBean bean) {  (il cast lo fai dal pageloader
+	
+	
 	public void setBean(Object obj) {
-		this.assignment = (AssignmentBean) obj;
+		this.assignment = (AssignmentBean) obj;		// TODO Forse high coupling
 		setPage();
 	}
 	

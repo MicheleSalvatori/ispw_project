@@ -10,18 +10,17 @@ import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.ProfessorBean;
+import logic.bean.WeeklyLessonBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
 import logic.model.Lesson;
 import logic.model.Professor;
+import logic.model.WeeklyLesson;
 import logic.model.dao.LessonDAO;
 import logic.model.dao.ProfessorDAO;
+import logic.model.dao.WeeklyLessonDAO;
 
 public class CourseController {
-
-	public CourseController() {
-		
-	}
 	
 	public LessonBean getNextLesson(CourseBean courseBean) throws SQLException, RecordNotFoundException {
 		
@@ -69,5 +68,29 @@ public class CourseController {
 		}
 		
 		return professorsBean;
+	}
+	
+	public List<WeeklyLessonBean> getWeeklyLessons(CourseBean courseBean) throws SQLException, RecordNotFoundException {
+		
+		List<WeeklyLesson> lessons = WeeklyLessonDAO.getCourseWeeklyLessons(courseBean.getAbbrevation());
+		List<WeeklyLessonBean> lessonsBean = new ArrayList<>();
+		
+		for (WeeklyLesson lesson : lessons) {
+			
+			ClassroomBean classroomBean = new ClassroomBean();
+			classroomBean.setName(lesson.getClassroom().getName());
+			classroomBean.setSeatColumn(lesson.getClassroom().getSeatColumn());
+			classroomBean.setSeatRow(lesson.getClassroom().getSeatRow());
+			
+			WeeklyLessonBean lessonBean = new WeeklyLessonBean();
+			lessonBean.setDay(lesson.getDay());
+			lessonBean.setTime(lesson.getTime());
+			lessonBean.setClassroom(classroomBean);
+			lessonBean.setCourse(courseBean);
+			
+			lessonsBean.add(lessonBean);
+		}
+		
+		return lessonsBean;
 	}
 }

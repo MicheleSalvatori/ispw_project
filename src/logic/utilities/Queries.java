@@ -469,6 +469,8 @@ public class Queries {
 		System.out.println(query);
 		return stmt.executeUpdate(query);
 	}
+	
+/******************************************************************************************************************/
 
 	// Seat Queries
 	public static void occupateSeat(Statement stmt, int id, String classroom) throws SQLException {
@@ -491,6 +493,15 @@ public class Queries {
 
 	public static ResultSet getOccupateSeats(Statement stmt, String course, String date, String time) throws SQLException {
 		String sql = String.format("SELECT seat FROM occupant WHERE lessonDate = '%s' and lessonTime = '%s' and course = '%s';", date, time, course);
+		System.out.println(sql);
+		return stmt.executeQuery(sql);
+	}
+	
+/******************************************************************************************************************/
+
+	// WeeklyLesson Queries
+	public static ResultSet selectWeeklyLessonsByCourse(Statement stmt, String course) throws SQLException {
+		String sql = String.format("SELECT * FROM weekly_lesson WHERE course = '%s';", course);
 		System.out.println(sql);
 		return stmt.executeQuery(sql);
 	}

@@ -24,16 +24,16 @@
 	-fx-background-radius: 14px;
 }
 
+.label{
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24px;
+}
+
 .label-title{
 	-fx-text-fill: black;
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 36px;
-}
-
-.label-secondtitle{
-	-fx-text-fill: black;
-	-fx-font-family: "Baloo Bhai";
-	-fx-font-size: 24px;
 }
 
 .label-detail{
@@ -49,7 +49,6 @@
 	-fx-font-size: 24px;
 	-fx-alignment: CENTER-RIGHT;
 }
-
 
 .button-scheduled {
 	-fx-background-color: #E5E5EB;
