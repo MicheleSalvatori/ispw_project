@@ -16,7 +16,19 @@ import logic.view.page.ExamPageView;
 public class ExamCardView {
 
 	@FXML
-	private Label labelName, labelDate, labelVote, labelCFU, labelNumber;
+	private Label labelName;
+	
+	@FXML
+	private Label labelDate;
+	
+	@FXML
+	private Label labelVote;
+	
+	@FXML
+	private Label labelCFU;
+	
+	@FXML
+	private Label labelNumber;
 	
 	@FXML
 	private Button btnCourse;

@@ -49,10 +49,6 @@ public class SchedulePageView implements Initializable {
 	
 	private List<ClassroomBean> classrooms;
 	private List<CourseBean> courses;
-	
-	private ScheduleLessonController scheduleLessonController;
-	private ScheduleExamController scheduleExamController;
-	private ScheduleController scheduleController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -72,7 +68,7 @@ public class SchedulePageView implements Initializable {
 			.or(textNote.textProperty().isEmpty()));
 		
 		
-		scheduleController = new ScheduleController();
+		ScheduleController scheduleController = new ScheduleController();
 		try {
 			classrooms = scheduleController.getClassrooms();
 			for (ClassroomBean classroom : classrooms) {
@@ -88,7 +84,6 @@ public class SchedulePageView implements Initializable {
 			
 		} catch (RecordNotFoundException e) {
 			System.out.println("No course available");
-			return;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -97,7 +92,7 @@ public class SchedulePageView implements Initializable {
 	}
 	
 	@FXML
-	private void addLesson(ActionEvent event) throws SQLException {
+	private void addLesson(ActionEvent event) {
 		LessonBean lessonBean = new LessonBean();
 		
 		String topic = textTopic.getText();
@@ -124,7 +119,7 @@ public class SchedulePageView implements Initializable {
 		professor.setUsername(Session.getSession().getUsername());
 		lessonBean.setProfessor(professor);
 		
-		scheduleLessonController = new ScheduleLessonController();
+		ScheduleLessonController scheduleLessonController = new ScheduleLessonController();
 		if (!scheduleLessonController.scheduleLesson(lessonBean)) {
 			AlertController.infoAlert("Lesson doesn't added.\nTry later.");
 		}
@@ -134,7 +129,7 @@ public class SchedulePageView implements Initializable {
 	}
 	
 	@FXML
-	private void addExam(ActionEvent event) throws SQLException {
+	private void addExam(ActionEvent event) {
 		ExamBean examBean = new ExamBean();
 		
 		String note = textNote.getText();
@@ -154,7 +149,7 @@ public class SchedulePageView implements Initializable {
 		ClassroomBean classroom = classrooms.get(comboClassExam.getSelectionModel().getSelectedIndex());
 		examBean.setClassroom(classroom);
 		
-		scheduleExamController = new ScheduleExamController();
+		ScheduleExamController scheduleExamController = new ScheduleExamController();
 		if (!scheduleExamController.scheduleExam(examBean)) {
 			AlertController.infoAlert("Exam doesn't added.\nTry later.");
 		}
@@ -167,19 +162,12 @@ public class SchedulePageView implements Initializable {
 	public void time(ActionEvent event) {
 		Pair<String, String> result = AlertController.timeSelector();
 		
-		switch (((Node) event.getSource()).getId()) {
-			
-		case "btnTimeLesson":
-			if (result != null) {	
-				textTimeLesson.setText(result.getKey() + ":" + result.getValue());
-			}
-			break;
-			
-		case "btnTimeExam":
-			if (result != null) {	
-				textTimeExam.setText(result.getKey() + ":" + result.getValue());
-			}
-			break;
+		if (((Node) event.getSource()).getId().equals("btnTimeLesson") && result != null) {	
+			textTimeLesson.setText(result.getKey() + ":" + result.getValue());
+		}
+		
+		else if (((Node) event.getSource()).getId().equals("btnTimeExam") && result != null) {	
+			textTimeExam.setText(result.getKey() + ":" + result.getValue());
 		}
 	}
 	

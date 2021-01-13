@@ -1,7 +1,6 @@
 package logic.view.card.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,24 +19,30 @@ public class RequestCardView {
 	private Label labelName;
 	
 	@FXML
-	private Button btnCourse, btnDecline, btnAccept;
+	private Button btnCourse;
+	
+	@FXML
+	private Button btnDecline;
+	
+	@FXML
+	private Button btnAccept;
 	
 	private RequestBean request;
 	
 	@FXML
-	private void acceptRequest(ActionEvent event) throws SQLException, IOException {
+	private void acceptRequest(ActionEvent event) {
 		RequestPageView requestPageView = (RequestPageView) PageLoader.getInstance().getController();
 		requestPageView.acceptRequest(request);
 	}
 	
 	@FXML
-	private void declineRequest(ActionEvent event) throws SQLException, IOException {
+	private void declineRequest(ActionEvent event) {
 		RequestPageView requestPageView = (RequestPageView) PageLoader.getInstance().getController();
 		requestPageView.declineRequest(request);
 	}
 	
 	@FXML
-	private void course(ActionEvent event) throws SQLException, IOException {
+	private void course(ActionEvent event) throws IOException {
     	CourseBean courseBean = request.getCourse();
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}

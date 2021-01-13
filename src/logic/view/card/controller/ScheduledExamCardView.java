@@ -1,8 +1,6 @@
 package logic.view.card.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,7 +14,13 @@ import logic.utilities.SQLConverter;
 public class ScheduledExamCardView {
 	
 	@FXML
-	private Label labelClass, labelTime, labelDay;
+	private Label labelClass;
+	
+	@FXML
+	private Label labelTime;
+	
+	@FXML
+	private Label labelDay;
 	
 	@FXML
 	private Button btnCourse;
@@ -24,7 +28,7 @@ public class ScheduledExamCardView {
 	private ExamBean exam;
 	
 	@FXML
-	private void course(ActionEvent event) throws SQLException, IOException {
+	private void course(ActionEvent event) throws IOException {
     	CourseBean courseBean = exam.getCourse();
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}

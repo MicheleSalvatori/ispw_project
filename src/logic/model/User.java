@@ -1,13 +1,12 @@
 package logic.model;
 
-//TODO email come primary key insieme ad username??
 public class User {
 	
-	protected String username;
-	protected String password;
-	protected String name;
-	protected String surname;
-	protected String email;
+	private String username;
+	private String password;
+	private String name;
+	private String surname;
+	private String email;
 	
 	public User(String username, String password, String name, String surname, String email) {
 		this.username = username;

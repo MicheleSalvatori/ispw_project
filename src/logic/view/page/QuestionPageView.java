@@ -91,7 +91,7 @@ public class QuestionPageView implements Initializable{
 			try {
 				
 				answerCard = new AnswerCard(answer);
-				vboxAnswer.getChildren().add(answerCard);
+				vboxAnswer.getChildren().add(answerCard.getPane());
 				
 			} catch (IOException e) {
 				e.printStackTrace();

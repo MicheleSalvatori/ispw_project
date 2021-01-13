@@ -51,7 +51,7 @@
       
       <Label layoutX="406.0" layoutY="42.0" text="My Courses" />
       
-      <ScrollPane layoutX="406.0" layoutY="82.0" prefHeight="466.0" prefWidth="732.0" stylesheets="@../../style/ScrollPaneTest.css">
+      <ScrollPane layoutX="406.0" layoutY="82.0" prefHeight="466.0" prefWidth="732.0" stylesheets="@../../style/ScrollPaneBorder.css">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="715.0">
                <children>

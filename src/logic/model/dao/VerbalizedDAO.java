@@ -61,6 +61,39 @@ public class VerbalizedDAO {
 		
 		return verbs;
 	}
+	
+	public static int countVerbalizedExams(String student) throws SQLException, RecordNotFoundException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		int tot;
+		
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.countVerbalizedExamsByStudent(stmt, student);
+
+			if (!rs.first()) {
+				throw new RecordNotFoundException("No verbalized exam found");
+
+			} else {
+				rs.first();
+				tot = rs.getInt(1);
+			}
+			rs.close();
+			
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		
+		return tot;
+	}
 
 	public static boolean insert(Verbalized verb) {
 		

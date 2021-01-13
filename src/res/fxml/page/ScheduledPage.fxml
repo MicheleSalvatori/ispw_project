@@ -8,7 +8,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" styleClass="root" stylesheets="@../../style/page/ScheduledPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       
-      <ScrollPane layoutX="72.0" layoutY="97.0" prefHeight="734.0" prefWidth="657.0" stylesheets="@../../style/ScrollPaneTest.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+      <ScrollPane layoutX="72.0" layoutY="97.0" prefHeight="734.0" prefWidth="657.0" stylesheets="@../../style/ScrollPaneBorder.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0">
                <children>
@@ -20,7 +20,7 @@
       
       <Label fx:id="labelPage" layoutX="6.0" layoutY="6.0" text="Lessons" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
    	
-   	  <ScrollPane layoutX="728.0" layoutY="41.0" prefHeight="732.0" prefWidth="409.0" stylesheets="@../../style/ScrollPaneTest.css">
+   	  <ScrollPane layoutX="728.0" layoutY="41.0" prefHeight="732.0" prefWidth="409.0" stylesheets="@../../style/ScrollPaneBorder.css">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="392.0">
                <children>
@@ -29,6 +29,7 @@
             </AnchorPane>
          </content>
       </ScrollPane>
+      
       <Label layoutX="728.0" text="Courses" AnchorPane.topAnchor="0.0" />	
    	
    </children>

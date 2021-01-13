@@ -9,9 +9,11 @@ import javafx.scene.layout.VBox;
 import logic.view.menu.controller.NavigationBarView;
 
 public class NavigationBar extends VBox {
+	
 	private static NavigationBar instance = null;
 	
 	private NavigationBar() {
+		
 	}
 	
 	public static NavigationBar getInstance() throws IOException  {

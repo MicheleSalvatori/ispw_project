@@ -3,7 +3,8 @@ package logic.utilities;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-
+import java.util.ArrayDeque;
+import java.util.Deque;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import logic.view.menu.element.NavigationBar;
 import logic.view.menu.element.StatusBar;
 import logic.view.page.AssignmentPageView;
@@ -28,11 +30,11 @@ public class PageLoader {
 
 	private static PageLoader instance = null;
 	private static Stage stage;
-	private static Page page;
+	private static Page page = null;
+	private static Object obj = null;
+	private static Deque<Pair<Page, Object>> stack = new ArrayDeque<>();
 	
 	private FXMLLoader loader;
-	private HBox mainLayoutHBox;
-	private Scene scene;
 
 	private Background background = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 
@@ -51,13 +53,61 @@ public class PageLoader {
 		return page;
 	}
 	
+	public static void setPage(Page page) {
+		PageLoader.page = page;
+	}
+	
+	public static Object getObject() {
+		return obj;
+	}
+	
+	public static void setObject(Object obj) {
+		PageLoader.obj = obj;
+	}
+	
 	public static void setStage(Stage stage) {
 		PageLoader.stage = stage;
+	}
+	
+	public static void addFirst(Pair<Page, Object> pair) {
+		stack.addFirst(pair);
+	}
+	
+	public static Pair<Page, Object> getFirst() {
+		return stack.removeFirst();
+	}
+	
+	public void goBack() throws IOException {
+		
+		if (stack.peek().getKey() == null || stack.isEmpty()) {
+			System.out.println("usa logout");
+			return;
+		}
+		
+		Pair<Page, Object> last = getFirst();
+		
+		if (last.getValue() == null) {
+			buildPage(last.getKey());
+		}
+		
+		else {
+			buildPage(last.getKey(), last.getValue());
+			
+		}
+		
+		if (!stack.isEmpty()) {
+			getFirst();
+		}
 	}
 
 	// BuildPage and pass a bean to the page controller
 	public void buildPage(Page page, Object obj) throws IOException {
-		PageLoader.page = page;
+		
+		addFirst(new Pair<>(PageLoader.getPage(), PageLoader.getObject()));
+		
+		PageLoader.setPage(page);
+		PageLoader.setObject(obj);
+		
 		switch (page) {
 
 		case COURSE:
@@ -117,7 +167,12 @@ public class PageLoader {
 
 	// Build a page without pass a bean
 	public void buildPage(Page page) throws IOException {
-		PageLoader.page = page;
+		
+		addFirst(new Pair<>(PageLoader.getPage(), PageLoader.getObject()));
+		
+		PageLoader.setPage(page);
+		PageLoader.setObject(null);
+		
 		switch (page) {
 		
 		case SIGNUP:
@@ -137,8 +192,7 @@ public class PageLoader {
 
 	private void loadPage() throws IOException {
 		URL url = new File(page.getRes()).toURI().toURL();
-		FXMLLoader loader = new FXMLLoader(url);
-		this.loader = loader;
+		loader = new FXMLLoader(url);
 	}
 
 	private NavigationBar configNavBar() throws IOException {
@@ -157,11 +211,11 @@ public class PageLoader {
 	private void configPage(Parent pageView) throws IOException {
 		VBox vBox = new VBox();
 		vBox.getChildren().addAll(configStatusBar(), pageView);
-		mainLayoutHBox = new HBox(configNavBar(), vBox);
+		HBox mainLayoutHBox = new HBox(configNavBar(), vBox);
 		HBox.setMargin(NavigationBar.getInstance(), new Insets(24.0, 72.0, 24.0, 32.0));
 		mainLayoutHBox.setBackground(background); // Set white color to the scene
 
-		scene = new Scene(mainLayoutHBox);
+		Scene scene = new Scene(mainLayoutHBox);
 		stage.setScene(scene);
 		stage.setTitle(page.getStageTitle());
 		stage.show();

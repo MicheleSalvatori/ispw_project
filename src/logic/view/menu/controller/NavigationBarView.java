@@ -17,18 +17,25 @@ public class NavigationBarView implements Initializable {
 
 	@FXML
 	private Button btnHome;
+	
 	@FXML
 	private Button btnExams;
+	
 	@FXML
 	private Button btnProfile;
+	
 	@FXML
 	private Button btnForum;
+	
 	@FXML
 	private Button btnNews;
+	
 	@FXML
 	private Button btnBack;
+	
 	@FXML
 	private Button btnRequest;
+	
 	@FXML
 	private Button btnSchedule;
 	
@@ -78,6 +85,7 @@ public class NavigationBarView implements Initializable {
 	@FXML
 	public void backButton(ActionEvent event) throws IOException {
 		System.out.println("Back");
+		PageLoader.getInstance().goBack();
 	}
 	
 	@FXML

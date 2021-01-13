@@ -61,6 +61,10 @@ public class ViewVerbalizedExamsController {
 		return verbsBean;
 	}
 	
+	public int countVerbalizedExams() throws SQLException, RecordNotFoundException {
+		return VerbalizedDAO.countVerbalizedExams(Session.getSession().getUsername());
+	}
+	
 	// Calculate GPA
 	public double GPA(List<VerbalizedBean> verbs) {
 		double tot = 0;

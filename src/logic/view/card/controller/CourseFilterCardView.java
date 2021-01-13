@@ -1,7 +1,5 @@
 package logic.view.card.controller;
 
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
@@ -19,7 +17,7 @@ public class CourseFilterCardView {
 	private CourseBean course;
 	
 	@FXML
-	private void filter(ActionEvent event) throws IOException {
+	private void filter(ActionEvent event) {
 
 		if (PageLoader.getPage() == Page.REQUEST) {
 			RequestPageView requestPageView = (RequestPageView) PageLoader.getInstance().getController();

@@ -58,7 +58,6 @@ public class StudentDAO {
 		
 		Connection conn = null;
 		Statement stmt = null;
-		Student userRegistered = null;
 		ResultSet rs = null;
 		int result;
 		
@@ -70,38 +69,28 @@ public class StudentDAO {
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
 			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
-			if (!rs.first()) {
-				userRegistered = null;
-			} else {
+			if (rs.first()) {
 				// Raise duplicate entry exception
-				DuplicatedRecordException e = new DuplicatedRecordException("Duplicated Instance Username. Username '" + user.getUsername() + "' already in use.");
-            	throw e;   
+				throw new DuplicatedRecordException("Duplicated Instance Username. Username '" + user.getUsername() + "' already in use.");   
 			}
 			
 			rs = Queries.selectUserByEmail(stmt, user.getEmail());
-			if (!rs.first()) {
-				userRegistered = null;
-			}
-			else {
+			if (rs.first()) {
 				// Raise duplicate entry exception
-				DuplicatedRecordException e = new DuplicatedRecordException("Duplicated Instance Email. Email '" + user.getEmail() + "' already in use.");
-            	throw e;
+				throw new DuplicatedRecordException("Duplicated Instance Email. Email '" + user.getEmail() + "' already in use.");
 			}
 			
-			if (userRegistered == null) {
-				// If there are no entry then insert a new User
-				result = Queries.insertRole(stmt, user.getUsername());
-				if (result == 0) {
-					System.out.println("Insert role error");	// TODO EXCEPTION
-					return;
-				}
+			// If there are no entry then insert a new User
+			result = Queries.insertRole(stmt, user.getUsername());
+			if (result == 0) {
+				System.out.println("Insert role error");	// TODO EXCEPTION
+				return;
+			}
 				
-				result = Queries.insertStudent(stmt, user.getUsername(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail());
-				
-				if (result == 0) {
-					System.out.println("Insert studenterror");	// TODO EXCEPTION
-					return;
-				}
+			result = Queries.insertStudent(stmt, user.getUsername(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail());
+			if (result == 0) {
+				System.out.println("Insert studenterror");	// TODO EXCEPTION
+				return;
 			}
 			
 			rs.close();

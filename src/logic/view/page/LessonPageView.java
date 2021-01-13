@@ -1,7 +1,6 @@
 package logic.view.page;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.sql.Time;
 
 import org.json.JSONArray;
@@ -40,7 +39,16 @@ public class LessonPageView {
 	private Button btnCourse;
 
 	@FXML
-	private Label labelProfessor, labelClassroom, labelTime, labelDate;
+	private Label labelProfessor;
+	
+	@FXML
+	private Label labelClassroom;
+	
+	@FXML
+	private Label labelTime;
+	
+	@FXML
+	private Label labelDate;
 
 	@FXML
 	private TextArea textTopic;
@@ -80,7 +88,7 @@ public class LessonPageView {
 	}
 
 	@FXML
-	private void course(ActionEvent event) throws IOException, SQLException {
+	private void course(ActionEvent event) throws IOException {
 		CourseBean courseBean= lesson.getCourse();
 		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
@@ -185,10 +193,7 @@ public class LessonPageView {
 
 		WeatherCard a;
 		try {
-			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + String.valueOf(248) + "C", image,
-
-					h + ":00");
-			weatherCard.getChildren().add(a);
+			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + String.valueOf(248) + "C", image, h + ":00");			weatherCard.getChildren().add(a);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -15,10 +15,19 @@ import logic.utilities.SQLConverter;
 public class AssignmentCardView {
 
 	@FXML
-	private Label labelNumber, labelTitle, labelDate;
+	private Label labelNumber;
 	
 	@FXML
-	private Button btnView, btnCourse;
+	private Label labelTitle;
+	
+	@FXML
+	private Label labelDate;
+	
+	@FXML
+	private Button btnView;
+	
+	@FXML
+	private Button btnCourse;
 	
 	private AssignmentBean assignment;
 

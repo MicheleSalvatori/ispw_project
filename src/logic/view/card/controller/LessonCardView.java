@@ -1,7 +1,6 @@
 package logic.view.card.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
@@ -18,13 +17,25 @@ import logic.utilities.SQLConverter;
 public class LessonCardView {
 	
 	@FXML
-	private Label labelLesson, labelClass, labelTime;
+	private Label labelLesson;
 	
 	@FXML
-	private Line line1, line2;
+	private Label labelClass;
 	
 	@FXML
-	private Button btnView, btnCourse;
+	private Label labelTime;
+	
+	@FXML
+	private Line line1;
+	
+	@FXML
+	private Line line2;
+	
+	@FXML
+	private Button btnView;
+	
+	@FXML
+	private Button btnCourse;
 	
 	private LessonBean lesson;
 	
@@ -66,13 +77,13 @@ public class LessonCardView {
 	}
 	
 	@FXML
-	public void course(ActionEvent event) throws IOException, SQLException {
+	public void course(ActionEvent event) throws IOException {
     	CourseBean courseBean = lesson.getCourse();
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
 	@FXML
-	public void viewLesson(ActionEvent event) throws IOException, SQLException {
+	public void viewLesson(ActionEvent event) throws IOException {
 		PageLoader.getInstance().buildPage(Page.LESSON, lesson);
 	}
 }

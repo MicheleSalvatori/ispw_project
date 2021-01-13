@@ -17,6 +17,10 @@ import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
 public class QuestionDAO {
+	
+	private QuestionDAO() {
+		
+	}
 
 	public static List<Question> getStudentCoursesQuestions(String username) throws SQLException, RecordNotFoundException {
 		Connection conn;
@@ -25,7 +29,7 @@ public class QuestionDAO {
 
 		conn = (SingletonDB.getDbInstance()).getConnection();
 		if (conn == null) {
-			questions = null;
+			throw new SQLException();
 		}
 		
 		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -66,7 +70,7 @@ public class QuestionDAO {
 
 		conn = (SingletonDB.getDbInstance()).getConnection();
 		if (conn == null) {
-			questions = null;
+			throw new SQLException();
 		}
 		
 		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -144,5 +148,38 @@ public class QuestionDAO {
 		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		
 		Queries.setQuestionSolved(stmt, questionID);
+	}
+
+	public static int countQuestionsByProfessor(String professor) throws SQLException, RecordNotFoundException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		int tot;
+		
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.countQuestionsByProfessor(stmt, professor);
+
+			if (!rs.first()) {
+				throw new RecordNotFoundException("No verbalized exam found");
+
+			} else {
+				rs.first();
+				tot = rs.getInt(1);
+			}
+			rs.close();
+			
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		
+		return tot;
 	}
 }

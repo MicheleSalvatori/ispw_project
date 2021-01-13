@@ -1,13 +1,9 @@
 package logic.view.card.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
-public class ProfessorStatCardView implements Initializable {
+public class ProfessorStatCardView {
 	
 	@FXML
 	private Label labelNumber;
@@ -15,11 +11,4 @@ public class ProfessorStatCardView implements Initializable {
 	public void setCard(int num) {
 		labelNumber.setText(Integer.toString(num));
 	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

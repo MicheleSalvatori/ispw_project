@@ -12,7 +12,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../../style/page/ExamPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.ExamPageView">
    <children>
       
-      <ScrollPane layoutY="40.0" prefHeight="576.0" prefWidth="1135.0" stylesheets="@../../style/ScrollPaneTest.css">
+      <ScrollPane layoutY="40.0" prefHeight="576.0" prefWidth="1135.0" stylesheets="@../../style/ScrollPaneBorder.css">
          <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="1118.0">
                <children>
@@ -40,16 +40,14 @@
       	<graphic>
       		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true" spacing="10.0">
       			<children>
-      				
-            				<ImageView fitHeight="28.0" fitWidth="28.0">
+            		<ImageView fitHeight="28.0" fitWidth="28.0">
             			<image>
             				<Image url="@../../png/button/Plus.png" />
             			</image>
             		</ImageView>
-      			
-            				<Label text="Add Exam" />
             		
-            			</children>
+            		<Label text="Add Exam" />	
+            	</children>
       		</HBox>
       	</graphic>
       </Button>

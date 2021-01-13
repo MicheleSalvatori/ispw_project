@@ -1,7 +1,6 @@
 package logic.view.card.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javafx.event.ActionEvent;
@@ -14,7 +13,6 @@ import logic.bean.CourseBean;
 import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
 import logic.bean.StudentBean;
-import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.CourseCard.Type;
@@ -23,18 +21,30 @@ import logic.view.page.ProfilePageView;
 public class CourseCardView {
 
 	@FXML
-	private Button btnCourse, btnProfessor, btnDelete;
+	private Button btnCourse;
 	
 	@FXML
-	private Line line1, line2;
+	private Button btnProfessor;
 	
 	@FXML
-	private Label labelYear, labelSemester;
+	private Button btnDelete;
+	
+	@FXML
+	private Line line1;
+	
+	@FXML
+	private Line line2;
+	
+	@FXML
+	private Label labelYear;
+		
+	@FXML
+	private Label labelSemester;
 	
 	private CourseBean courseBean;
 	
 	@FXML
-	private void course(ActionEvent event) throws SQLException, IOException {
+	private void course(ActionEvent event) throws IOException {
 		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
@@ -44,7 +54,7 @@ public class CourseCardView {
 	}
 	
 	@FXML
-	private void deleteRequest(ActionEvent event) throws SQLException, RecordNotFoundException {
+	private void deleteRequest(ActionEvent event) {
 		ProfilePageView profilePageView = (ProfilePageView) PageLoader.getInstance().getController();
 		
 		StudentBean studentBean = new StudentBean();
@@ -61,7 +71,7 @@ public class CourseCardView {
 		profilePageView.deleteRequest(requestBean);
 	}
 	
-	public void setCourse(CourseBean courseBean, List<ProfessorBean> professors, Type type) throws SQLException {
+	public void setCourse(CourseBean courseBean, List<ProfessorBean> professors, Type type) {
 		this.courseBean = courseBean;
 		
 		btnCourse.setText(courseBean.getAbbrevation());

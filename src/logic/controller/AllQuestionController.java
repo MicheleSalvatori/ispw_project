@@ -98,6 +98,10 @@ public class AllQuestionController {
 		
 		return questionBeans;
 	}
+	
+	public int countQuestions() throws SQLException, RecordNotFoundException {
+		return QuestionDAO.countQuestionsByProfessor(Session.getSession().getUsername());
+	}
 
 	public boolean setSolved(int questionID) {
 		try {

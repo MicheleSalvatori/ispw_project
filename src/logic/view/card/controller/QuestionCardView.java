@@ -17,10 +17,28 @@ import logic.view.page.ForumPageView;
 public class QuestionCardView {
 
 	@FXML
-	private Label labelName, labelSurname, labelNumber, labelQuestionObject, labelQuestionDate;
+	private Label labelName;
 	
 	@FXML
-	private Button btnCourse, btnView, btnSolved;
+	private Label labelSurname;
+	
+	@FXML
+	private Label labelNumber;
+	
+	@FXML
+	private Label labelQuestionObject;
+	
+	@FXML
+	private Label labelQuestionDate;
+	
+	@FXML
+	private Button btnCourse;
+	
+	@FXML
+	private Button btnView;
+	
+	@FXML
+	private Button btnSolved;
 	
 	private QuestionBean question;
 
