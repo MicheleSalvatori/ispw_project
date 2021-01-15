@@ -2,7 +2,7 @@ package logic.view.graphic;
 
 import javafx.scene.layout.AnchorPane;
 
-public abstract class GraphicElement {
+public class GraphicElement {
 	
 	private AnchorPane pane = new AnchorPane();
 	

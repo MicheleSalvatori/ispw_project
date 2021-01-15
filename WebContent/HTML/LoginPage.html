@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+	<link rel="stylesheet" href="../RES/style/LoginPage.css" >
+	<meta charset="utf-8">
+	<title>LoginPage</title>
+</head>
+
+<body>
+	<form action="../JSP/Login.jsp" method="get" >
+	<div class="content">
+		<table class="table">
+		  <tbody>
+			  
+			<tr>
+			  <th colspan="2" style="padding-bottom: 50px;">
+				<img class="logo" src="../RES/img/Logo.png" alt="Logo">
+			  </th>  
+			</tr>
+			  
+			<tr>
+			  	<td align="right" style="padding-right: 20px; padding-bottom: 18px;">
+				  <input class="input" type="text" name="username" placeholder="Username">
+				</td>
+				
+			  	<td align="left" style="padding-left: 20px; padding-bottom: 18px;">
+					<input class="input" type="password" name="password" placeholder="Password">
+				</td>
+			</tr>
+			  
+			<tr>
+				<td colspan="2" align="center" style="padding-bottom: 18px; padding-left: 7px;">
+					<button class="login" type="button" name="login">
+						LOG IN
+					</button>
+					
+					<button class="button" type="button" name="facebook">
+						<svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M26 0C11.6415 0 0 11.7015 0 26.1339C0 39.2357 9.60267 50.0552 22.113 51.9456V33.0594H15.6802V26.1906H22.113V21.6193C22.113 14.0513 25.7812 10.7302 32.0385 10.7302C35.035 10.7302 36.621 10.9545 37.3707 11.0547V17.0502H33.1023C30.446 17.0502 29.5187 19.583 29.5187 22.436V26.1906H37.3035L36.2483 33.0594H29.5187V52C42.2088 50.2708 52 39.3642 52 26.1339C52 11.7015 40.3585 0 26 0Z" fill="#3B5998"/>
+						</svg>
+					</button>
+					
+					<button class="button" type="button" name="google">
+						<svg width="54" height="52" viewBox="0 0 54 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M50.1919 22.6232H48.4467V22.5333H28.9467V31.2H41.1916C39.4052 36.2451 34.6049 39.8667 28.9467 39.8667C21.7674 39.8667 15.9467 34.0459 15.9467 26.8667C15.9467 19.6874 21.7674 13.8667 28.9467 13.8667C32.2606 13.8667 35.2755 15.1168 37.5711 17.1589L43.6995 11.0305C39.8299 7.42408 34.6537 5.2 28.9467 5.2C16.9813 5.2 7.28003 14.9012 7.28003 26.8667C7.28003 38.8321 16.9813 48.5333 28.9467 48.5333C40.9121 48.5333 50.6134 38.8321 50.6134 26.8667C50.6134 25.4139 50.4639 23.9958 50.1919 22.6232Z" fill="#FBC02D"/>
+							<path d="M9.35999 17.8219L16.4786 23.0425C18.4047 18.2737 23.0696 14.9067 28.5285 14.9067C31.8424 14.9067 34.8573 16.1568 37.1529 18.1989L43.2813 12.0705C39.4117 8.46408 34.2355 6.24 28.5285 6.24C20.2063 6.24 12.9892 10.9384 9.35999 17.8219Z" fill="#E53935"/>
+							<path d="M28.6487 46.3948C34.2452 46.3948 39.3304 44.2531 43.1752 40.7702L36.4693 35.0957C34.294 36.7434 31.59 37.7282 28.6487 37.7282C23.0132 37.7282 18.2282 34.1348 16.4255 29.12L9.35999 34.5637C12.9458 41.5805 20.228 46.3948 28.6487 46.3948Z" fill="#4CAF50"/>
+							<path d="M47.2452 21.9299L47.2279 21.84H45.5H26V30.5067H38.2449C37.3869 32.9301 35.828 35.0198 33.8173 36.5419C33.8184 36.5408 33.8195 36.5408 33.8206 36.5397L40.5264 42.2142C40.0519 42.6454 47.6667 37.0067 47.6667 26.1733C47.6667 24.7206 47.5172 23.3025 47.2452 21.9299Z" fill="#1565C0"/>
+							<path d="M27.04 0C12.6817 0 1.04004 11.6416 1.04004 26C1.04004 40.3584 12.6817 52 27.04 52C41.3984 52 53.04 40.3584 53.04 26C53.04 11.6416 41.3984 0 27.04 0ZM27.4274 45.5C16.6507 45.5 7.92739 36.7767 7.92739 26C7.92739 15.2233 16.6507 6.5 27.4274 6.5C32.6858 6.5 37.0951 8.42082 40.4858 11.5992L35.1955 16.6984C33.7417 15.3082 31.216 13.6898 27.4274 13.6898C20.7629 13.6898 15.34 19.2029 15.34 26C15.34 32.7971 20.7735 38.3102 27.4274 38.3102C35.1478 38.3102 38.0396 32.7653 38.4853 29.9H27.4274V23.2196H45.8396C46.0041 24.1959 46.1421 25.1722 46.1421 26.451C46.1527 37.5886 38.687 45.5 27.4274 45.5Z" fill="#0C0B0B"/>
+						</svg>
+					</button>
+				</td>			
+			</tr>
+			  
+			<tr>
+				<td colspan="2" style="padding-bottom: 18px;" align="center">
+					<a class="signup" href="SignupPage.html"> 
+						<button class="signup" type="button">
+							Sign Up
+						</button>
+					</a>
+				</td>  
+			</tr>
+			  
+			<tr>
+				<td colspan="3" align="center">
+					<button class="label" type="button">Forgot your password?</button>
+				</td>  
+			</tr>
+		  </tbody>
+		</table>
+	</div>
+	</form>
+</body>
+</html>
