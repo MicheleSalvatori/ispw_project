@@ -22,9 +22,9 @@ public class Queries {
 	}
 	
 	public static ResultSet selectUser(Statement stmt, String username) throws SQLException {
-		String query = "SELECT * FROM role NATURAL JOIN admin "
-						+ "UNION SELECT * FROM role NATURAL JOIN professor "
-						+ "UNION SELECT * FROM role NATURAL JOIN student;";
+		String query = "SELECT * FROM role NATURAL JOIN admin WHERE username = '" + username + "' "
+						+ "UNION SELECT * FROM role NATURAL JOIN professor WHERE username = '" + username + "' "
+						+ "UNION SELECT * FROM role NATURAL JOIN student WHERE username = '" + username + "';";
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}

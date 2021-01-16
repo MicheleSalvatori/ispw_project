@@ -23,7 +23,6 @@ import logic.utilities.AlertController;
 import logic.utilities.Email;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
-import logic.utilities.Role;
 
 public class LoginView implements Initializable {
 
@@ -37,7 +36,6 @@ public class LoginView implements Initializable {
 	private PasswordField textPassword;
 
 	private LoginController loginController;
-	private Role role;
 	
 	
 	@Override
@@ -80,33 +78,9 @@ public class LoginView implements Initializable {
 		userBean.setPassword(password);
 		userBean.setUsername(username);
 		loginController = new LoginController();
+		
 		try {
-			role = loginController.getUserRole(userBean);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		} catch (RecordNotFoundException e) {
-			AlertController.infoAlert("User not found: incorrect username or password.\nTry again or signup!");
-			return;
-		}
-
-		// switch for type user login
-		try {
-			switch (role) {
-			
-			case STUDENT:
-				loginController.loginAsStudent(userBean);
-				break;
-				
-			case PROFESSOR:
-				loginController.loginAsProfessor(userBean);
-				break;
-				
-			case ADMIN:
-				loginController.loginAsAdmin(userBean);
-			}
+			loginController.login(userBean);
 			
 		} catch (SQLException e) {
 			AlertController.infoAlert("Connection failed!");

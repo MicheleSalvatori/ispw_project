@@ -1,0 +1,26 @@
+@font-face {
+	font-family: 'Baloo Bhai';
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+	font-weight: normal;
+}
+
+.status-label {
+	font-family: "Baloo Bhai";
+    font-weight: normal;
+    font-size: 24px;
+    color: #0C0B0B;
+}
+
+.status-avatar {
+	height: 40px;
+	width: 40px;
+}
+
+.status-button {
+	background-color: transparent;
+	border: none;
+}
+
+.status-button:hover {
+	cursor: pointer;
+}
