@@ -10,11 +10,10 @@
 <head>
 	<link rel="stylesheet" href="RES/style/LoginPage.css" >
 	<meta charset="utf-8">
-	<title>LoginPage</title>
+	<title>App - Login</title>
 	
 	<%String message = (String)request.getAttribute("alertMsg");
-    if(message != null){%>
-
+    if(message != null){ %>
         <script type="text/javascript">
             var msg = "<%=message%>";
             alert(msg);
@@ -53,11 +52,11 @@
 					</button>
 					
 					<button class="button" type="button" name="facebook">
-						<img src="RES/img/Facebook.png" alt="Facebook">
+						<img src="res/img/Facebook.png" alt="Facebook">
 					</button>
 					
 					<button class="button" type="button" name="google">
-						<img src="RES/img/Google.png" alt="Google">
+						<img src="res/img/Google.png" alt="Google">
 					</button>
 				</td>			
 			</tr>
