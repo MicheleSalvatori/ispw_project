@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.Session;
 import logic.bean.AssignmentBean;
 import logic.bean.CourseBean;
 import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Assignment;
 import logic.model.Course;
@@ -16,24 +16,20 @@ import logic.model.dao.CourseDAO;
 import logic.utilities.Role;
 
 public class AddAssignmentController {
-
-	public AddAssignmentController() {
-		
-	}
 	
-	public List<AssignmentBean> getAssignments() throws SQLException, RecordNotFoundException {
+	public List<AssignmentBean> getAssignments(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
 		List<Assignment> assignments;
 		List<AssignmentBean> assignmentsBean = new ArrayList<>();
 		
 		// User is a student
-		if (Session.getSession().getRole() == Role.STUDENT) {
-			assignments = AssignmentDAO.getAssignmentsByStudent(Session.getSession().getUsername());
+		if (userBean.getRole() == Role.STUDENT) {
+			assignments = AssignmentDAO.getAssignmentsByStudent(userBean.getUsername());
 		}
 		
 		// User is a professor
 		else {
-			assignments = AssignmentDAO.getAssignmentsByProfessor(Session.getSession().getUsername());
+			assignments = AssignmentDAO.getAssignmentsByProfessor(userBean.getUsername());
 		}
 		
 		for (Assignment assignment : assignments) {

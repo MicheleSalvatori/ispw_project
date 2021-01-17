@@ -2,7 +2,6 @@ package logic.view.menu.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -13,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import logic.Session;
+import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.utilities.AppProperties;
 import logic.utilities.Page;
@@ -35,14 +34,14 @@ public class StatusBarView implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		labelName.setText(Session.getSession().getUserLogged().getName());
+		labelName.setText(UserBean.getInstance().getName());
 		
 		String img = "/res/png/avatar/status/" + AppProperties.getInstance().getProperty("avatar") + ".png";
 		setAvatar(img);
 	}
 	
 	@FXML
-	public void logout(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
+	public void logout(ActionEvent event) throws IOException {
 		System.out.println("Logout");
 		
 		LoginController loginController = new LoginController();

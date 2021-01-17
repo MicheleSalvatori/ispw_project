@@ -14,9 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
-import logic.Session;
 import logic.bean.AssignmentBean;
 import logic.bean.CourseBean;
+import logic.bean.UserBean;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.Role;
@@ -60,7 +60,7 @@ public class AssignmentPageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		if (Session.getSession().getRole() == Role.PROFESSOR) {
+		if (UserBean.getInstance().getRole() == Role.PROFESSOR) {
 			anchorDeliver.setVisible(false);
 			btnAdd.setVisible(false);
 			btnRemove.setVisible(false);

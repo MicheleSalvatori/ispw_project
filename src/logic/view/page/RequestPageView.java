@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
+import logic.bean.UserBean;
 import logic.controller.AcceptRequestController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
@@ -37,7 +38,7 @@ public class RequestPageView implements Initializable {
 		acceptRequestController = new AcceptRequestController();
 
 		try {
-			courses = acceptRequestController.getCourses();
+			courses = acceptRequestController.getCourses(UserBean.getInstance());
 			for (CourseBean courseBean : courses) {
 				CourseFilterCard courseFilterCard = new CourseFilterCard(courseBean);
 				vboxCourse.getChildren().add(courseFilterCard);
@@ -64,7 +65,7 @@ public class RequestPageView implements Initializable {
 		acceptRequestController = new AcceptRequestController();
 		
 		try {
-			requests = acceptRequestController.getRequests();
+			requests = acceptRequestController.getRequests(UserBean.getInstance());
 			for (RequestBean requestBean : requests) {	
 				RequestCard requestCard = new RequestCard(requestBean);
 				vboxRequest.getChildren().add(requestCard);

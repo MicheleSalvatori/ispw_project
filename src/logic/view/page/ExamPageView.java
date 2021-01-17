@@ -37,9 +37,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.StudentBean;
+import logic.bean.UserBean;
 import logic.bean.VerbalizedBean;
 import logic.controller.ViewVerbalizedExamsController;
 import logic.exceptions.RecordNotFoundException;
@@ -75,7 +75,7 @@ public class ExamPageView implements Initializable {
 		controller = new ViewVerbalizedExamsController();
 
 		try {
-			verbs = controller.getVerbalizedExams();
+			verbs = controller.getVerbalizedExams(UserBean.getInstance());
 			for (VerbalizedBean verbBean : verbs) {
 				ExamCard examCard = new ExamCard(verbBean, verbs.indexOf(verbBean) + 1);
 				vboxExam.getChildren().add(examCard);
@@ -106,7 +106,7 @@ public class ExamPageView implements Initializable {
 		controller = new ViewVerbalizedExamsController();
 		
 		try {
-			courses = controller.getCourses();
+			courses = controller.getCourses(UserBean.getInstance());
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -211,11 +211,11 @@ public class ExamPageView implements Initializable {
 		controller = new ViewVerbalizedExamsController();
 		
 		StudentBean studentBean = new StudentBean();
-		studentBean.setEmail(Session.getSession().getUserLogged().getEmail());
-		studentBean.setName(Session.getSession().getUserLogged().getName());
-		studentBean.setPassword(Session.getSession().getPassword());
-		studentBean.setSurname(Session.getSession().getUserLogged().getSurname());
-		studentBean.setUsername(Session.getSession().getUsername());
+		studentBean.setEmail(UserBean.getInstance().getEmail());
+		studentBean.setName(UserBean.getInstance().getName());
+		studentBean.setPassword(UserBean.getInstance().getPassword());
+		studentBean.setSurname(UserBean.getInstance().getSurname());
+		studentBean.setUsername(UserBean.getInstance().getUsername());
 		
 		CourseBean courseBean = courses.get(comboCourse.getSelectionModel().getSelectedIndex());
 		

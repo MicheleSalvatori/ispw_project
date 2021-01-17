@@ -90,7 +90,7 @@ public class SignupView implements Initializable {
 				return true;
 			}
 			else {
-				AlertController.infoAlert("Different password");
+				AlertController.infoAlert("Different passwords");
 				return false;
 			}
 		}

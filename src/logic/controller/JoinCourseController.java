@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
@@ -56,18 +55,18 @@ public class JoinCourseController {
 		return getBeans(courses);
 	}
 	
-	public List<CourseBean> getCourses() throws SQLException, RecordNotFoundException {
+	public List<CourseBean> getCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
 		List<Course> courses;
 		
 		// User is a student
-		if (Session.getSession().getRole() == Role.STUDENT) {
-			courses = CourseDAO.getStudentCourses(Session.getSession().getUsername());
+		if (userBean.getRole() == Role.STUDENT) {
+			courses = CourseDAO.getStudentCourses(userBean.getUsername());
 		}
 		
 		// User is a professor
-		else if (Session.getSession().getRole() == Role.PROFESSOR) {
-			courses = CourseDAO.getProfessorCourses(Session.getSession().getUsername());
+		else if (userBean.getRole() == Role.PROFESSOR) {
+			courses = CourseDAO.getProfessorCourses(userBean.getUsername());
 		}
 		
 		// User is an admin
@@ -78,8 +77,8 @@ public class JoinCourseController {
 		return getBeans(courses);
 	}
 	
-	public List<CourseBean> getRequestedCourses() throws SQLException, RecordNotFoundException {
-		List<Course> courses = CourseDAO.getStudentCoursesByRequest(Session.getSession().getUsername());
+	public List<CourseBean> getRequestedCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
+		List<Course> courses = CourseDAO.getStudentCoursesByRequest(userBean.getUsername());
 		return getBeans(courses);
 	}
 	

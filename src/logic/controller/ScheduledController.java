@@ -5,12 +5,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.Session;
 import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
 import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
 import logic.model.Course;
@@ -23,12 +23,8 @@ import logic.model.dao.LessonDAO;
 import logic.utilities.Role;
 
 public class ScheduledController {
-
-	public ScheduledController() {
-		
-	}
 	
-	public List<LessonBean> getLessons() throws SQLException, RecordNotFoundException {
+	public List<LessonBean> getLessons(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
 		// Get current date
 		Date date = new Date(System.currentTimeMillis());
@@ -36,12 +32,12 @@ public class ScheduledController {
 		List<LessonBean> lessonsBean = new ArrayList<>();
 		
 		// Get user lessons and courses
-		if (Session.getSession().getRole() == Role.STUDENT) {
-			lessons = LessonDAO.getNextLessonsStudent(date, Session.getSession().getUsername());
+		if (userBean.getRole() == Role.STUDENT) {
+			lessons = LessonDAO.getNextLessonsStudent(date, userBean.getUsername());
 		}
 		
-		else if (Session.getSession().getRole() == Role.PROFESSOR) {
-			lessons = LessonDAO.getNextLessonsProfessor(date, Session.getSession().getUsername());
+		else if (userBean.getRole() == Role.PROFESSOR) {
+			lessons = LessonDAO.getNextLessonsProfessor(date, userBean.getUsername());
 		}
 		
 		else {
@@ -88,7 +84,7 @@ public class ScheduledController {
 		return lessonsBean;
 	}
 	
-	public List<ExamBean> getExams() throws SQLException, RecordNotFoundException {
+	public List<ExamBean> getExams(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
 		// Get current date
 		Date date = new Date(System.currentTimeMillis());
@@ -96,12 +92,12 @@ public class ScheduledController {
 		List<ExamBean> examsBean = new ArrayList<>();
 		
 		// Get user lessons and courses
-		if (Session.getSession().getRole() == Role.STUDENT) {
-			exams = ExamDAO.getNextExamsStudent(date, Session.getSession().getUsername());
+		if (userBean.getRole() == Role.STUDENT) {
+			exams = ExamDAO.getNextExamsStudent(date, userBean.getUsername());
 		}
 		
-		else if (Session.getSession().getRole() == Role.PROFESSOR) {
-			exams = ExamDAO.getNextExamsProfessor(date, Session.getSession().getUsername());
+		else if (userBean.getRole() == Role.PROFESSOR) {
+			exams = ExamDAO.getNextExamsProfessor(date, userBean.getUsername());
 		}
 		
 		else {
@@ -139,18 +135,18 @@ public class ScheduledController {
 		return examsBean;
 	}
 	
-	public List<CourseBean> getCourses() throws SQLException, RecordNotFoundException {
+	public List<CourseBean> getCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
 		List<Course> courses;
 		List<CourseBean> coursesBean = new ArrayList<>();
 		
 		// Get user lessons and courses
-		if (Session.getSession().getRole() == Role.STUDENT) {
-			courses = CourseDAO.getStudentCourses(Session.getSession().getUsername());
+		if (userBean.getRole() == Role.STUDENT) {
+			courses = CourseDAO.getStudentCourses(userBean.getUsername());
 		}
 		
-		else if (Session.getSession().getRole() == Role.PROFESSOR) {
-			courses = CourseDAO.getProfessorCourses(Session.getSession().getUsername());
+		else if (userBean.getRole() == Role.PROFESSOR) {
+			courses = CourseDAO.getProfessorCourses(userBean.getUsername());
 		}
 		
 		else {

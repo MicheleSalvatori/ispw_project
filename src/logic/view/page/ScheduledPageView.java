@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
+import logic.bean.UserBean;
 import logic.controller.ScheduledController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Page;
@@ -50,14 +51,14 @@ public class ScheduledPageView implements Initializable {
 				labelPage.setText("Lessons");
 				
 				// Get user lessons
-				lessons = scheduledController.getLessons();
+				lessons = scheduledController.getLessons(UserBean.getInstance());
 			}
 			
 			else if (PageLoader.getPage() == Page.SCHEDULED_EXAMS) {
 				labelPage.setText("Exams");
 				
 				// Get user exams
-				exams = scheduledController.getExams();
+				exams = scheduledController.getExams(UserBean.getInstance());
 			}
 
 		} catch (RecordNotFoundException e) {
@@ -70,7 +71,7 @@ public class ScheduledPageView implements Initializable {
 		
 		try {
 			// Get user courses
-			courses = scheduledController.getCourses();
+			courses = scheduledController.getCourses(UserBean.getInstance());
 			
 		} catch (RecordNotFoundException e) {
 			vboxCourse.getChildren().add(new Label(e.getMessage()));

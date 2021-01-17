@@ -4,15 +4,13 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.model.Student;
-
 public class QuestionBean {
 	
 	private int id;
 	private String title;
 	private String text;
 	private CourseBean course;
-	private Student student;
+	private StudentBean student;
 	private boolean solved;
 	private Date date;
 	private List<AnswerBean> answers;
@@ -86,21 +84,20 @@ public class QuestionBean {
 		this.course = c;
 	}
 
-	public Student getStudent() {
+	public StudentBean getStudent() {
 		return student;
 	}
 
-	public void setStudent(Student student) {
+	public void setStudent(StudentBean student) {
 		this.student = student;
 	}
 
 	@Override
 	public String toString() {
-		String buildString = "ID: "+getId()
+		return "ID: "+getId()
 			+"\nTitle: "+ getTitle()
 			+"\nText: "+ getText()
 			+"\nAuthor: "+getStudent().getName() + " " + getStudent().getSurname()
 			+"\nCourse: "+getCourse().getAbbrevation();
-		return buildString;
 	}
 }

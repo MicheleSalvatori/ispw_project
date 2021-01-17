@@ -2,7 +2,6 @@ package logic.controller;
 
 import java.sql.SQLException;
 
-import logic.Session;
 import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Admin;
@@ -21,7 +20,7 @@ public class LoginController {
 	public UserBean login(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
 		Role role = getUserRole(userBean);
-		
+		System.out.println(role);
 		switch (role) {
 		
 		case STUDENT:
@@ -34,7 +33,11 @@ public class LoginController {
 			
 		case ADMIN:
 			loginAsAdmin(userBean);
+			break;
 		}
+		
+		UserBean.setInstance(userBean);
+		userBean.setRole(role);
 		
 		return userBean;
 	}
@@ -59,10 +62,6 @@ public class LoginController {
 		userBean.setSurname(professor.getSurname());
 		userBean.setEmail(professor.getEmail());
 		System.out.println("FINE: "+ professor.getUsername());
-		
-		//Gestione Sessione
-		Session.getSession().setUserLogged(professor);
-		Session.getSession().setRole(Role.PROFESSOR);
 	}
 	
 	public void loginAsStudent(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -75,10 +74,6 @@ public class LoginController {
 		userBean.setSurname(student.getSurname());
 		userBean.setEmail(student.getEmail());
 		System.out.println("FINE: "+ student.getUsername());
-			
-		//Gestione Sessione
-		Session.getSession().setUserLogged(student);
-		Session.getSession().setRole(Role.STUDENT);
 	}
 	
 	public void loginAsAdmin(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -90,16 +85,11 @@ public class LoginController {
 		userBean.setSurname(admin.getSurname());
 		userBean.setEmail(admin.getEmail());
 		System.out.println("FINE: "+ admin.getUsername());
-			
-		//Gestione Sessione
-		Session.getSession().setUserLogged(admin);
-		Session.getSession().setRole(Role.ADMIN);
-		
 	}
 	
 	public void logout() {
 		// Delete Session
-		Session.getSession().setUserLogged(null);
+		UserBean.setInstance(null);
 		
 		// Delete Navigation Bar
 		NavigationBar.setInstance(null);

@@ -14,12 +14,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
+import logic.bean.StudentBean;
+import logic.bean.UserBean;
 import logic.controller.InsertQuestionController;
 import logic.exceptions.RecordNotFoundException;
-import logic.model.Student;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -52,7 +52,7 @@ public class NewQuestionView implements Initializable {
 				.or(Bindings.isEmpty(textSubject.textProperty())).or((courseComboBox.valueProperty().isNull())));
 		
 		try {
-			courses = controller.getCoursesOfStudent(Session.getSession().getUserLogged().getUsername());
+			courses = controller.getCoursesOfStudent(UserBean.getInstance().getUsername());
 			for (CourseBean c : courses) {
 				courseComboBox.getItems().add(c.getAbbrevation());
 			}
@@ -68,8 +68,15 @@ public class NewQuestionView implements Initializable {
 		questionBean = new QuestionBean();
 		this.questionSubject = textSubject.getText();
 		this.questionText = textQuestion.getText();
+		
+		StudentBean studentBean = new StudentBean();
+		studentBean.setEmail(UserBean.getInstance().getEmail());
+		studentBean.setName(UserBean.getInstance().getName());
+		studentBean.setPassword(UserBean.getInstance().getPassword());
+		studentBean.setSurname(UserBean.getInstance().getSurname());
+		studentBean.setUsername(UserBean.getInstance().getUsername());
 
-		questionBean.setStudent((Student) (Session.getSession().getUserLogged()));
+		questionBean.setStudent(studentBean);
 		questionBean.setText(questionText);
 		questionBean.setTitle(questionSubject);
 		questionBean.setCourseByAbbr(courseComboBox.getValue());

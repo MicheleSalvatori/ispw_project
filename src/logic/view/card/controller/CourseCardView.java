@@ -8,11 +8,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Line;
-import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
 import logic.bean.StudentBean;
+import logic.bean.UserBean;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.CourseCard.Type;
@@ -58,11 +58,11 @@ public class CourseCardView {
 		ProfilePageView profilePageView = (ProfilePageView) PageLoader.getInstance().getController();
 		
 		StudentBean studentBean = new StudentBean();
-		studentBean.setEmail(Session.getSession().getUserLogged().getEmail());
-		studentBean.setName(Session.getSession().getUserLogged().getName());
-		studentBean.setPassword(Session.getSession().getPassword());
-		studentBean.setSurname(Session.getSession().getUserLogged().getSurname());
-		studentBean.setUsername(Session.getSession().getUsername());
+		studentBean.setEmail(UserBean.getInstance().getEmail());
+		studentBean.setName(UserBean.getInstance().getName());
+		studentBean.setPassword(UserBean.getInstance().getPassword());
+		studentBean.setSurname(UserBean.getInstance().getSurname());
+		studentBean.setUsername(UserBean.getInstance().getUsername());
 		
 		RequestBean requestBean = new RequestBean();
 		requestBean.setStudent(studentBean);

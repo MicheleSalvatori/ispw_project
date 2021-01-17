@@ -6,9 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
+import logic.bean.UserBean;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
@@ -58,7 +58,7 @@ public class QuestionCardView {
 			btnSolved.setStyle("-fx-text-fill: green");
 		} else {
 //			Only the author of this question can be set it to solved
-			if (question.getStudent().getUsername().equals(Session.getSession().getUsername())) {
+			if (question.getStudent().getUsername().equals(UserBean.getInstance().getUsername())) {
 				btnSolved.setDisable(false);
 				btnSolved.setText("Set Solved");
 			} else {

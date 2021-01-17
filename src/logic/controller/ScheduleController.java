@@ -4,9 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.Session;
 import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
+import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
 import logic.model.Course;
@@ -30,9 +30,9 @@ public class ScheduleController {
 		return classroomsBean;
 	}
 	
-	public List<CourseBean> getCourses() throws SQLException, RecordNotFoundException {
+	public List<CourseBean> getCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
-		List<Course> courses = CourseDAO.getProfessorCourses(Session.getSession().getUsername());
+		List<Course> courses = CourseDAO.getProfessorCourses(userBean.getUsername());
 		List<CourseBean> coursesBean = new ArrayList<>();
 		
 		for (Course course : courses) {

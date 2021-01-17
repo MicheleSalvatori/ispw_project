@@ -15,10 +15,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import logic.Session;
 import logic.bean.AssignmentBean;
 import logic.bean.CourseBean;
 import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.controller.AddAssignmentController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
@@ -59,7 +59,7 @@ public class NewAssignmentView implements Initializable {
 		
 		try {
 			ProfessorBean professorBean = new ProfessorBean();
-			professorBean.setUsername(Session.getSession().getUsername());
+			professorBean.setUsername(UserBean.getInstance().getUsername());
 			
 			courses = addAssignmentController.getCoursesOfProfessor(professorBean);
 			for (CourseBean course : courses) {

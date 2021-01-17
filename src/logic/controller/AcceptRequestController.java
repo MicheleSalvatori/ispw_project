@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.bean.StudentBean;
+import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Request;
@@ -51,9 +51,9 @@ public class AcceptRequestController {
 		return RequestDAO.deleteRequest(request);
 	}
 	
-	public List<CourseBean> getCourses() throws SQLException, NullPointerException, RecordNotFoundException {
+	public List<CourseBean> getCourses(UserBean userBean) throws SQLException, NullPointerException, RecordNotFoundException {
 		
-		List<Course> courses = CourseDAO.getProfessorCourses(Session.getSession().getUsername());
+		List<Course> courses = CourseDAO.getProfessorCourses(userBean.getUsername());
 		List<CourseBean> coursesBean = new ArrayList<>();
 		
 		for (Course course : courses) {
@@ -73,9 +73,9 @@ public class AcceptRequestController {
 		return coursesBean;
 	}
 	
-	public List<RequestBean> getRequests() throws SQLException, NullPointerException, RecordNotFoundException {
+	public List<RequestBean> getRequests(UserBean userBean) throws SQLException, NullPointerException, RecordNotFoundException {
 		
-		List<Request> requests = RequestDAO.getRequestsByProfessor(Session.getSession().getUsername());
+		List<Request> requests = RequestDAO.getRequestsByProfessor(userBean.getUsername());
 		List<RequestBean> requestsBean = new ArrayList<>();
 	
 		for (Request request : requests) {

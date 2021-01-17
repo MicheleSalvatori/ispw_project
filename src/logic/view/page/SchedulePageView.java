@@ -18,12 +18,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.Pair;
-import logic.Session;
 import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
 import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.controller.ScheduleController;
 import logic.controller.ScheduleExamController;
 import logic.controller.ScheduleLessonController;
@@ -33,19 +33,46 @@ import logic.utilities.AlertController;
 public class SchedulePageView implements Initializable {
 	
 	@FXML
-	private TextField textTimeLesson, textTimeExam;
+	private TextField textTimeLesson;
 	
 	@FXML
-	private TextArea textTopic, textNote;
+	private TextField textTimeExam;
 	
 	@FXML
-	private ComboBox<String> comboCourseLesson, comboClassLesson, comboCourseExam, comboClassExam;
+	private TextArea textTopic;
 	
 	@FXML
-	private DatePicker dateLesson, dateExam;
+	private TextArea textNote;
 	
 	@FXML
-	private Button btnTimeLesson, btnTimeExam, btnAddLesson, btnAddExam;
+	private ComboBox<String> comboCourseLesson;
+	
+	@FXML
+	private ComboBox<String> comboClassLesson;
+	
+	@FXML
+	private ComboBox<String> comboCourseExam;
+	
+	@FXML
+	private ComboBox<String> comboClassExam;
+	
+	@FXML
+	private DatePicker dateLesson;
+	
+	@FXML
+	private DatePicker dateExam;
+	
+	@FXML
+	private Button btnTimeLesson;
+	
+	@FXML
+	private Button btnTimeExam;
+	
+	@FXML
+	private Button btnAddLesson;
+	
+	@FXML
+	private Button btnAddExam;
 	
 	private List<ClassroomBean> classrooms;
 	private List<CourseBean> courses;
@@ -76,7 +103,7 @@ public class SchedulePageView implements Initializable {
 				comboClassExam.getItems().add(classroom.getName());
 			}
 			
-			courses = scheduleController.getCourses();
+			courses = scheduleController.getCourses(UserBean.getInstance());
 			for (CourseBean course : courses) {
 				comboCourseLesson.getItems().add(course.getAbbrevation());
 				comboCourseExam.getItems().add(course.getAbbrevation());
@@ -112,11 +139,11 @@ public class SchedulePageView implements Initializable {
 		lessonBean.setClassroom(classroom);
 		
 		ProfessorBean professor = new ProfessorBean();
-		professor.setEmail(Session.getSession().getUserLogged().getEmail());
-		professor.setName(Session.getSession().getUserLogged().getName());
-		professor.setPassword(Session.getSession().getPassword());
-		professor.setSurname(Session.getSession().getUserLogged().getSurname());
-		professor.setUsername(Session.getSession().getUsername());
+		professor.setEmail(UserBean.getInstance().getEmail());
+		professor.setName(UserBean.getInstance().getName());
+		professor.setPassword(UserBean.getInstance().getPassword());
+		professor.setSurname(UserBean.getInstance().getSurname());
+		professor.setUsername(UserBean.getInstance().getUsername());
 		lessonBean.setProfessor(professor);
 		
 		ScheduleLessonController scheduleLessonController = new ScheduleLessonController();

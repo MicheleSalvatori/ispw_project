@@ -2,7 +2,6 @@ package logic.controller;
 
 import java.sql.SQLException;
 
-import logic.Session;
 import logic.bean.UserBean;
 import logic.exceptions.DuplicatedRecordException;
 import logic.exceptions.RecordNotFoundException;
@@ -22,12 +21,12 @@ public class SignupController {
 		User user = new User(userBean.getUsername(), userBean.getPassword(), userBean.getName(), userBean.getSurname(), userBean.getEmail());
 		
 		// User is a student
-		if (Session.getSession().getRole() == Role.STUDENT) {
+		if (userBean.getRole() == Role.STUDENT) {
 			StudentDAO.changePassword(user);
 		}
 		
 		// User is a professor
-		else if (Session.getSession().getRole() == Role.PROFESSOR) {
+		else if (userBean.getRole() == Role.PROFESSOR) {
 			ProfessorDAO.changePassword(user);
 		}
 	}

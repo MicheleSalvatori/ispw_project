@@ -1,6 +1,11 @@
 package logic.bean;
 
+import logic.utilities.Role;
+
 public class UserBean {
+	
+	private static UserBean userInstance = null;
+	private Role role;
 	
 	private String username;
 	private String password;
@@ -8,7 +13,21 @@ public class UserBean {
 	private String surname;
 	private String email;
 	
-	public UserBean() {}
+	public static UserBean getInstance() {
+		return UserBean.userInstance;
+	}
+	
+	public static void setInstance(UserBean userBean) {
+		UserBean.userInstance = userBean;
+	}
+	
+	public Role getRole() {
+		return UserBean.userInstance.role;
+	}
+	
+	public void setRole(Role role) {
+		UserBean.userInstance.role = role;
+	}
 	
 	public String getUsername() {
 		return username;

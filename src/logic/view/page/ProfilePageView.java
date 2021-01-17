@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
@@ -59,13 +58,13 @@ public class ProfilePageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		labelUsername.setText(Session.getSession().getUserLogged().getUsername());
-		labelName.setText(Session.getSession().getUserLogged().getName());
-		labelSurname.setText(Session.getSession().getUserLogged().getSurname());
-		labelEmail.setText(Session.getSession().getUserLogged().getEmail());
+		labelUsername.setText(UserBean.getInstance().getUsername());
+		labelName.setText(UserBean.getInstance().getName());
+		labelSurname.setText(UserBean.getInstance().getSurname());
+		labelEmail.setText(UserBean.getInstance().getEmail());
 		labelPassword.setText("**********");
 		
-		if (Session.getSession().getRole() == Role.PROFESSOR) {
+		if (UserBean.getInstance().getRole() == Role.PROFESSOR) {
 			btnAdd.setVisible(false);
 			btnRemove.setVisible(false);
 		}
@@ -87,7 +86,7 @@ public class ProfilePageView implements Initializable {
 				password = AlertController.changePassword();
 	
 				// Password inserted is the same to current password
-				if (password.compareTo(Session.getSession().getPassword()) == 0) {
+				if (password.compareTo(UserBean.getInstance().getPassword()) == 0) {
 					AlertController.infoAlert("You have inserted same password.\nInsert another password.");
 				}
 				
@@ -104,7 +103,7 @@ public class ProfilePageView implements Initializable {
 		}
 		
 		UserBean userBean = new UserBean();
-		userBean.setUsername(Session.getSession().getUsername());
+		userBean.setUsername(UserBean.getInstance().getUsername());
 		userBean.setPassword(password);
 		
 		if (AlertController.confirmationAlert("Do you want to change your password?\nYou will be logged out.")) {
@@ -131,7 +130,7 @@ public class ProfilePageView implements Initializable {
 		joinCourseController = new JoinCourseController();
 		
 		UserBean userBean = new UserBean();
-		userBean.setUsername(Session.getSession().getUsername());
+		userBean.setUsername(UserBean.getInstance().getUsername());
 
 		try {
 			List<CourseBean> courses = joinCourseController.getStudentCourses(userBean);
@@ -147,11 +146,11 @@ public class ProfilePageView implements Initializable {
 				CourseBean courseBean = courses.get(index);
 				
 				StudentBean studentBean = new StudentBean();
-				studentBean.setEmail(Session.getSession().getUserLogged().getEmail());
-				studentBean.setName(Session.getSession().getUserLogged().getName());
-				studentBean.setPassword(Session.getSession().getPassword());
-				studentBean.setSurname(Session.getSession().getUserLogged().getSurname());
-				studentBean.setUsername(Session.getSession().getUsername());
+				studentBean.setEmail(UserBean.getInstance().getEmail());
+				studentBean.setName(UserBean.getInstance().getName());
+				studentBean.setPassword(UserBean.getInstance().getPassword());
+				studentBean.setSurname(UserBean.getInstance().getSurname());
+				studentBean.setUsername(UserBean.getInstance().getUsername());
 				
 				RequestBean requestBean = new RequestBean();
 				requestBean.setStudent(studentBean);
@@ -180,7 +179,7 @@ public class ProfilePageView implements Initializable {
 		joinCourseController = new JoinCourseController();
 		
 		UserBean userBean = new UserBean();
-		userBean.setUsername(Session.getSession().getUsername());
+		userBean.setUsername(UserBean.getInstance().getUsername());
 		
 		List<CourseBean> courses = null;
 		try {
@@ -206,11 +205,11 @@ public class ProfilePageView implements Initializable {
 			CourseBean courseBean = courses.get(index);
 			
 			StudentBean studentBean = new StudentBean();
-			studentBean.setEmail(Session.getSession().getUserLogged().getEmail());
-			studentBean.setName(Session.getSession().getUserLogged().getName());
-			studentBean.setPassword(Session.getSession().getPassword());
-			studentBean.setSurname(Session.getSession().getUserLogged().getSurname());
-			studentBean.setUsername(Session.getSession().getUsername());
+			studentBean.setEmail(UserBean.getInstance().getEmail());
+			studentBean.setName(UserBean.getInstance().getName());
+			studentBean.setPassword(UserBean.getInstance().getPassword());
+			studentBean.setSurname(UserBean.getInstance().getSurname());
+			studentBean.setUsername(UserBean.getInstance().getUsername());
 			
 			RequestBean requestBean = new RequestBean();
 			requestBean.setStudent(studentBean);
@@ -226,8 +225,8 @@ public class ProfilePageView implements Initializable {
 	@FXML
 	private void showPass() {
 
-		if (!show) {
-			labelPassword.setText(Session.getSession().getUserLogged().getPassword());
+		if (Boolean.FALSE.equals(show)) {
+			labelPassword.setText(UserBean.getInstance().getPassword());
 			btnShowPass.getStyleClass().remove("button-show");
 			btnShowPass.getStyleClass().add("button-no-show");
 			show = true;
@@ -263,7 +262,7 @@ public class ProfilePageView implements Initializable {
 	
 		try {
 			
-			courses = joinCourseController.getCourses();
+			courses = joinCourseController.getCourses(UserBean.getInstance());
 			for (CourseBean courseBean : courses) {
 				professors = joinCourseController.getCourseProfessors(courseBean);
 				CourseCard courseCard = new CourseCard(courseBean, professors, Type.FOLLOW);
@@ -285,8 +284,8 @@ public class ProfilePageView implements Initializable {
 		
 		try {
 			
-			if (Session.getSession().getRole() == Role.STUDENT) {
-				requests = joinCourseController.getRequestedCourses();
+			if (UserBean.getInstance().getRole() == Role.STUDENT) {
+				requests = joinCourseController.getRequestedCourses(UserBean.getInstance());
 				for (CourseBean courseBean : requests) {
 					professors = joinCourseController.getCourseProfessors(courseBean);
 					CourseCard courseCard = new CourseCard(courseBean, professors, Type.REQUEST);

@@ -17,8 +17,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
-import logic.Session;
 import logic.bean.LessonBean;
+import logic.bean.UserBean;
 import logic.controller.AllQuestionController;
 import logic.controller.ViewNextLessonController;
 import logic.controller.ViewVerbalizedExamsController;
@@ -54,7 +54,7 @@ public class HomepageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		setUserName(Session.getSession().getUserLogged().getName());
+		setUserName(UserBean.getInstance().getName());
 		addStatCards();
 		addWeatherCards();
 		addLessonCards();
@@ -71,7 +71,7 @@ public class HomepageView implements Initializable {
 		try {
 			
 			viewNextLessonController = new ViewNextLessonController();
-			List<LessonBean> lessons = viewNextLessonController.getTodayLessons();
+			List<LessonBean> lessons = viewNextLessonController.getTodayLessons(UserBean.getInstance());
 			
 			if (lessons.size() == 1) {
 				vboxScroll.getChildren().add(new Label("There are no future lessons today"));
@@ -111,21 +111,21 @@ public class HomepageView implements Initializable {
 		try {
 			
 			// User is a Student
-			if (Session.getSession().getRole() == Role.STUDENT) {
+			if (UserBean.getInstance().getRole() == Role.STUDENT) {
 				
 				ViewVerbalizedExamsController controller = new ViewVerbalizedExamsController();
-				StudentStatCard studentCard1 = new StudentStatCard(controller.countVerbalizedExams(), "Verbalized", "Grades");
-				StudentStatCard studentCard2 = new StudentStatCard((int)controller.WPA(controller.getVerbalizedExams()), "Average", "Grade");
+				StudentStatCard studentCard1 = new StudentStatCard(controller.countVerbalizedExams(UserBean.getInstance()), "Verbalized", "Grades");
+				StudentStatCard studentCard2 = new StudentStatCard((int)controller.WPA(controller.getVerbalizedExams(UserBean.getInstance())), "Average", "Grade");
 				
 				hboxStats.getChildren().add(studentCard1);
 				hboxStats.getChildren().add(studentCard2);
 			}
 				
 			// User is a Professor
-			else if (Session.getSession().getRole() == Role.PROFESSOR) {
+			else if (UserBean.getInstance().getRole() == Role.PROFESSOR) {
 				
 				AllQuestionController controller = new AllQuestionController();
-				ProfessorStatCard professorCard = new ProfessorStatCard(controller.countQuestions());
+				ProfessorStatCard professorCard = new ProfessorStatCard(controller.countQuestions(UserBean.getInstance()));
 				
 				hboxStats.getChildren().add(professorCard);
 			}
@@ -133,7 +133,7 @@ public class HomepageView implements Initializable {
 		} catch (RecordNotFoundException e) {
 			try {
 				
-				if (Session.getSession().getRole() == Role.STUDENT) {
+				if (UserBean.getInstance().getRole() == Role.STUDENT) {
 					StudentStatCard studentCard1 = new StudentStatCard(0, "Verbalized", "Grades");
 					StudentStatCard studentCard2 = new StudentStatCard(0, "Average", "Grade");
 					hboxStats.getChildren().clear();
@@ -141,7 +141,7 @@ public class HomepageView implements Initializable {
 					hboxStats.getChildren().add(studentCard2);
 				}
 				
-				else if (Session.getSession().getRole() == Role.PROFESSOR) {
+				else if (UserBean.getInstance().getRole() == Role.PROFESSOR) {
 					ProfessorStatCard professorCard = new ProfessorStatCard(0);
 					hboxStats.getChildren().clear();
 					hboxStats.getChildren().add(professorCard);

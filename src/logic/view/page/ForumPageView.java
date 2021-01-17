@@ -14,9 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import logic.Session;
 import logic.bean.AssignmentBean;
 import logic.bean.QuestionBean;
+import logic.bean.UserBean;
 import logic.controller.AddAssignmentController;
 import logic.controller.AllQuestionController;
 import logic.exceptions.RecordNotFoundException;
@@ -54,7 +54,7 @@ public class ForumPageView implements Initializable {
 				for (QuestionBean q : allQuestions) {
 					QuestionCard questionCard;
 					String userQuestion = q.getStudent().getUsername();
-					String userSession = Session.getSession().getUserLogged().getUsername();
+					String userSession = UserBean.getInstance().getUsername();
 					if (userQuestion.equals(userSession)) {
 						myQuestions.add(q);
 						questionCard = new QuestionCard(q);
@@ -93,7 +93,7 @@ public class ForumPageView implements Initializable {
 
 	private void getAllQuestions() {
 		try {
-			allQuestions = allQuestionController.getAllQuestions();
+			allQuestions = allQuestionController.getAllQuestions(UserBean.getInstance());
 			
 		} catch (SQLException e) {
 			AlertController.infoAlert(e.getMessage());
@@ -134,12 +134,12 @@ public class ForumPageView implements Initializable {
 		allQuestionController = new AllQuestionController();
 		int nCourses;
 		try {
-			nCourses = allQuestionController.getNumberCourses();
+			nCourses = allQuestionController.getNumberCourses(UserBean.getInstance());
 		} catch (SQLException e) {
 			nCourses = 0;
 		}
 		
-		Role roleLogged = Session.getSession().getRole();
+		Role roleLogged = UserBean.getInstance().getRole();
 		switch (roleLogged) {
 		
 		case PROFESSOR:
@@ -179,7 +179,7 @@ public class ForumPageView implements Initializable {
 			
 			addAssignmentController = new AddAssignmentController();
 			
-			assignments = addAssignmentController.getAssignments();
+			assignments = addAssignmentController.getAssignments(UserBean.getInstance());
 			
 			for (AssignmentBean assignmentBean : assignments) {
 				AssignmentCard assignmentCard = new AssignmentCard(assignmentBean);
@@ -188,7 +188,6 @@ public class ForumPageView implements Initializable {
 			
 		} catch (RecordNotFoundException e) {
 			vboxAssignment.getChildren().add(new Label("No assignment found"));
-			return;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.StudentBean;
+import logic.bean.UserBean;
 import logic.bean.VerbalizedBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
@@ -18,14 +18,10 @@ import logic.model.dao.CourseDAO;
 import logic.model.dao.VerbalizedDAO;
 
 public class ViewVerbalizedExamsController {
-
-	public ViewVerbalizedExamsController() {
-		
-	}
 	
-	public List<VerbalizedBean> getVerbalizedExams() throws SQLException, RecordNotFoundException {
+	public List<VerbalizedBean> getVerbalizedExams(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
-		List<Verbalized> verbs = VerbalizedDAO.getVerbalizedExams(Session.getSession().getUsername());
+		List<Verbalized> verbs = VerbalizedDAO.getVerbalizedExams(userBean.getUsername());
 		List<VerbalizedBean> verbsBean = new ArrayList<>();
 		
 		for (Verbalized verb : verbs) {
@@ -61,8 +57,8 @@ public class ViewVerbalizedExamsController {
 		return verbsBean;
 	}
 	
-	public int countVerbalizedExams() throws SQLException, RecordNotFoundException {
-		return VerbalizedDAO.countVerbalizedExams(Session.getSession().getUsername());
+	public int countVerbalizedExams(UserBean userBean) throws SQLException, RecordNotFoundException {
+		return VerbalizedDAO.countVerbalizedExams(userBean.getUsername());
 	}
 	
 	// Calculate GPA
@@ -94,9 +90,9 @@ public class ViewVerbalizedExamsController {
 		return bd.doubleValue();
 	}
 
-	public List<CourseBean> getCourses() throws SQLException, RecordNotFoundException {
+	public List<CourseBean> getCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
-		List<Course> courses = CourseDAO.getNotVerbalizedCourses(Session.getSession().getUsername());
+		List<Course> courses = CourseDAO.getNotVerbalizedCourses(userBean.getUsername());
 		List<CourseBean> coursesBean = new ArrayList<>();
 		
 		for (Course course : courses) {
