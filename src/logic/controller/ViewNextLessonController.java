@@ -62,6 +62,9 @@ public class ViewNextLessonController {
 			Classroom classroom = lesson.getClassroom();
 			ClassroomBean classroomBean = new ClassroomBean();
 			classroomBean.setName(classroom.getName());
+			classroomBean.setSeatRow(classroom.getSeatRow());
+			classroomBean.setSeatColumn(classroom.getSeatColumn());
+			
 			
 			Professor professor = lesson.getProfessor();
 			ProfessorBean professorBean = new ProfessorBean();

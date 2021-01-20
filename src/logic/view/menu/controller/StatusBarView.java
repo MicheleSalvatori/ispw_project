@@ -50,7 +50,7 @@ public class StatusBarView implements Initializable {
 		
 		loginController = new LoginController();
 		loginController.logout();
-		PageLoader.getInstance().buildPage(Page.LOGIN, event);
+		PageLoader.getInstance().buildPage(Page.LOGIN);
 	}
 	
 	@FXML

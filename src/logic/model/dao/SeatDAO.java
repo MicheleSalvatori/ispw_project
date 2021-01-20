@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.bean.LessonBean;
+import logic.bean.SeatBean;
 import logic.model.Seat;
 import logic.utilities.Queries;
 import logic.utilities.SQLConverter;
@@ -15,7 +16,7 @@ import logic.utilities.SingletonDB;
 
 public class SeatDAO {
 
-	public static void occupateSeat(String nameClassRoom, int seatID) throws SQLException {
+	public static void occupateSeat(String username, LessonBean lesson, int seatID) throws SQLException {
 		Statement stmt = null;
 		Connection conn = null;
 
@@ -26,7 +27,7 @@ public class SeatDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			Queries.occupateSeat(stmt, seatID, nameClassRoom);
+			Queries.occupateSeat(stmt, seatID, lesson.getClassroom().getName(), lesson.getDate().toString(), lesson.getTime().toString(), lesson.getCourse().getAbbrevation(), username);
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -34,7 +35,7 @@ public class SeatDAO {
 		}
 	}
 
-	public static void freeSeat(String nameClassRoom, int seatID) throws SQLException {
+	public static void freeSeat(int seatID, String user, LessonBean lessonBean) throws SQLException {
 		Statement stmt = null;
 		Connection conn = null;
 
@@ -45,7 +46,7 @@ public class SeatDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			Queries.freeSeat(stmt, seatID, nameClassRoom);
+			Queries.freeSeat(stmt, seatID, lessonBean.getClassroom().getName(), user, lessonBean.getCourse().getAbbrevation(), lessonBean.getDate().toString(), lessonBean.getTime().toString());
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -99,7 +100,8 @@ public class SeatDAO {
 				throw new SQLException();
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			String dateLesson = SQLConverter.date(lesson.getDate());
+//			String dateLesson = SQLConverter.date(lesson.getDate());		// Non funziona, sul db è yyyy/mm/gg
+			String dateLesson = lesson.getDate().toString();
 			String timeLesson = SQLConverter.time(lesson.getTime());
 			ResultSet rs = Queries.getOccupateSeats(stmt, lesson.getCourse().getAbbrevation(), dateLesson, timeLesson);
 
@@ -119,5 +121,34 @@ public class SeatDAO {
 			}
 		}
 		return occupiedSeats;
+	}
+
+	public static SeatBean getMySeatIn(String username, LessonBean lesson) throws SQLException {
+		Connection conn = null;
+		Statement stmt = null;
+		SeatBean mySeat;
+
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			// Non mettere SQLConverte per date che non funziona, gli serve prima l'anno
+			ResultSet rs = Queries.getSeat(stmt, username, lesson.getDate().toString(), lesson.getTime().toString(),
+					lesson.getCourse().getAbbrevation());
+
+			if (!rs.first()) {
+				mySeat = null;
+			} else {
+				rs.first();
+				mySeat = new SeatBean(rs.getInt("seat"));
+			}
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return mySeat;
 	}
 }

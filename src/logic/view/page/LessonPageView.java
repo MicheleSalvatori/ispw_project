@@ -3,7 +3,6 @@ package logic.view.page;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.util.Observable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,8 +28,8 @@ import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.SeatBean;
 import logic.controller.BookSeatController;
-import logic.model.Classroom;
-import logic.model.Course;
+import logic.exceptions.DuplicatedRecordException;
+import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
@@ -62,13 +61,27 @@ public class LessonPageView {
 	private EventHandler<ActionEvent> seatEvent;
 	private BookSeatController controlSeat;
 	private GridPane gridSeat;
+	private SeatBean mySeat;
+	private ObservableList<Node> buttonList;
+
+	private enum SeatState {
+		FREE, BOOKED, YOUR
+	};
+	
+	@FXML
+	private void course(ActionEvent event) throws IOException, SQLException {
+		CourseBean courseBean = lesson.getCourse();
+		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
+	}
 
 	public void setBean(Object lesson) {
 		controlSeat = new BookSeatController();
 		this.lesson = (LessonBean) lesson;
 		try {
-			this.classroom = controlSeat.getOccupateSeatOf(this.lesson); // mettiamo nella classroom solo i posti
-																			// occupati
+			this.classroom = this.lesson.getClassroom();
+			this.classroom.setSeat(controlSeat.getOccupateSeatOf(this.lesson)); // mettiamo nella classroom SOLO i posti
+																				// occupati
+			this.mySeat = controlSeat.getMySeat(this.lesson);
 			setPage();
 		} catch (SQLException e) {
 			System.out.println("CATCH");
@@ -88,38 +101,55 @@ public class LessonPageView {
 		setupRoom();
 	}
 
-	@FXML
-	private void course(ActionEvent event) throws IOException, SQLException {
-		CourseBean courseBean = lesson.getCourse();
-		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
-	}
-
 	private void setupEvent() {
 		seatEvent = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				Button btnSeat = (Button) event.getSource();
-				int row = GridPane.getRowIndex(btnSeat) * classroom.getSeatColumn();
-				int col = GridPane.getColumnIndex(btnSeat) + 1;
-				int seatId = row + col;
-				SeatBean seat = new SeatBean();
-				seat.setId(seatId);
-				seat.setClassroomName(classroom.getName());
-				bookSeat(seat, btnSeat);
+				switch (btnSeat.getId()) {
+				case "your-seat":
+					if (AlertController.confirmationAlert("Are you sure you want to free your seat?")) {
+						freeSeat(btnSeat);
+					}
+					break;
+				case "free-seat":
+					if (AlertController.confirmationAlert("Are you sure you want to book this seat?")) {
+						bookSeat(btnSeat);
+					}
+					break;
+				default:
+					break;
+				}
 			}
 		};
 	}
 
-	private void bookSeat(SeatBean seat, Button btn) {
+	private void freeSeat(Button buttonSeat) {
 		try {
-			controlSeat.occupateSeat(seat);
-			classroom.getSeats().get(seat.getId() - 1).occupateSeat();
-			btn.setStyle("-fx-background-color: #3899D0;");
-//			AlertConfirmation
+			controlSeat.freeSeat(mySeat, this.lesson);
+			changeState(getSeat(buttonSeat), SeatState.FREE);
+			mySeat = null;
 		} catch (SQLException e) {
-//			AlerControl nuova
+			AlertController.infoAlert("The system was unable to accommodate your request, please try again!");
 		}
+	}
 
+	private void bookSeat(Button buttonSeat) {
+		SeatBean seatToBook = getSeat(buttonSeat);
+		SeatBean newSeat = null;
+		try {
+			newSeat = controlSeat.occupateSeat(seatToBook, lesson);
+			if (mySeat != null) {
+				changeState(mySeat, SeatState.FREE);
+			}
+			mySeat = newSeat;
+			changeState(mySeat, SeatState.YOUR);
+		} catch (SQLException e) {
+			AlertController.infoAlert("Something bad happened, booking failed, please try again!");
+		} catch (DuplicatedRecordException e) {
+			AlertController.infoAlert(e.getMessage());
+			changeState(seatToBook, SeatState.BOOKED);
+		}
 	}
 
 	private void setupRoom() {
@@ -133,9 +163,7 @@ public class LessonPageView {
 		AnchorPane.setRightAnchor(gridSeat, 0d);
 
 		scrollPane.setFitToWidth(true);
-
 		gridSeat.setVgap(10);
-
 		gridSeat.setAlignment(Pos.TOP_CENTER);
 
 		for (int i = 0; i < numRow; i++) {
@@ -144,6 +172,7 @@ public class LessonPageView {
 
 				Button btn = new Button(j + 1 + "");
 				btn.getStylesheets().add("/res/style/SeatButton.css");
+				btn.setId("free-seat");
 				btn.setMaxWidth(1);
 				btn.setOnAction(seatEvent);
 				gridSeat.add(btn, j, i);
@@ -163,13 +192,41 @@ public class LessonPageView {
 	}
 
 	private void setupSeatStatus() {
-		ObservableList<Node> seatButtons = gridSeat.getChildren();
-		for (SeatBean s : classroom.getSeat()) {
-			int row = s.getId() % classroom.getSeatColumn() - 1;
-			//TODO come prendo la colonna porcamadonna e l'algebra 
-			buttonSeat.getStyleClass().remove("button");
-			buttonSeat.getStyleClass().add("bookead-seat");
-			buttonSeat.setDisable(true);
+		buttonList = gridSeat.getChildren();
+		if (classroom.getSeat() != null) {
+			for (SeatBean s : classroom.getSeat()) {
+				if (mySeat != null && s.getId() == mySeat.getId()) {
+					changeState(s, SeatState.YOUR);
+				} else {
+					changeState(s, SeatState.BOOKED);
+				}
+			}
+		}
+	}
+
+	private SeatBean getSeat(Button button) {
+		int row = GridPane.getRowIndex(button) * classroom.getSeatColumn();
+		int col = GridPane.getColumnIndex(button) + 1;
+		System.out.println(row + col);
+		SeatBean seat = new SeatBean(row + col, lesson.getClassroom().getName());
+		return seat;
+	}
+
+	private void changeState(SeatBean seat, SeatState state) {
+		Button button = (Button) buttonList.get(seat.getId() - 1);
+		switch (state) {
+		case FREE:
+			button.setId("free-seat");
+			button.setDisable(false);
+			break;
+		case BOOKED:
+			button.setId("booked-seat");
+			button.setDisable(true);
+			break;
+		case YOUR:
+			button.setId("your-seat");
+			button.setDisable(false);
+			break;
 		}
 	}
 
