@@ -8,7 +8,7 @@
 
 
 <head>
-	<link rel="stylesheet" href="RES/style/LoginPage.css" >
+	<link rel="stylesheet" href="res/style/LoginPage.css" >
 	<meta charset="utf-8">
 	<title>App - Login</title>
 	
@@ -31,7 +31,7 @@
 			  
 			<tr>
 			  <th id="logo" colspan="2" style="text-align: center; padding-bottom: 50px;">
-				<img class="logo" src="RES/img/Logo.png" alt="Logo">
+				<img class="logo" src="res/img/Logo.png" alt="Logo">
 			  </th>  
 			</tr>
 			  
@@ -63,7 +63,7 @@
 			  
 			<tr>
 				<td colspan="2" style="text-align: center; padding-bottom: 18px;">
-					<a class="signup" href="SignupPage.jsp"> 
+					<a class="signup" href="/ispw_project/SignupServlet"> 
 						<button class="signup" type="button">
 							Sign Up
 						</button>

@@ -9,7 +9,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>App - Signup</title>
-		<link rel="stylesheet" href="res/style/SignupPage.css" >
+		<link rel="stylesheet" href="style/SignupPage.css" >
 	</head>
 
 	<body>
@@ -20,7 +20,7 @@
 			  
 			<tr>
 			  	<th id="logo" style="text-align: center; padding-bottom: 50px;" colspan="2">
-					<img class="logo" src="res/img/Logo.png" alt="Logo">
+					<img class="logo" src="img/Logo.png" alt="Logo">
 				</th>
 			</tr>
 			  
@@ -70,7 +70,7 @@
 								</td>
 								
 								<td style="text-align: right;">
-									<img src="RES/img/Facebook.png" alt="Facebook">
+									<img src="img/Facebook.png" alt="Facebook">
 								</td>
 							</tr>
 						</table>	
@@ -86,7 +86,7 @@
 								</td>
 								
 								<td style="text-align: right;">
-									<img src="RES/img/Google.png" alt="Google">
+									<img src="img/Google.png" alt="Google">
 								</td>
 							</tr>
 						</table>
@@ -96,7 +96,7 @@
 			  
 			<tr>
 			  	<td colspan="2" style="text-align: center;">
-			  		<a href="LoginPage.jsp">
+			  		<a href="/ispw_project/LoginServlet">
 						<button class="label" type="button">
 							Already have an account? Log In
 						</button>
