@@ -36,9 +36,7 @@ public class LoginController {
 			break;
 		}
 		
-		UserBean.setInstance(userBean);
 		userBean.setRole(role);
-		
 		return userBean;
 	}
 	

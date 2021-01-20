@@ -80,7 +80,8 @@ public class LoginView implements Initializable {
 		loginController = new LoginController();
 		
 		try {
-			loginController.login(userBean);
+			userBean = loginController.login(userBean);
+			UserBean.setInstance(userBean);
 			
 		} catch (SQLException e) {
 			AlertController.infoAlert("Connection failed!");

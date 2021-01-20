@@ -23,18 +23,23 @@ public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/WEB-INF/SignupPage.jsp").forward(request, response);
+	}
+	
+	@Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		String password = req.getParameter("password");
 		String confirmPassword = req.getParameter("confirmPassword");
 		if (!password.equals(confirmPassword)) {
-			alert(req, resp, "Passwords doesn't match", "/SignupPage.jsp");
+			alert(req, resp, "Passwords doesn't match", "/WEB-INF/SignupPage.jsp");
 			return;
 		}
 		
 		String email = req.getParameter("email");
 		if (!email.contains("@") || !email.contains(".com") || !email.contains(".it")) {
-			alert(req, resp, "Invalid Email", "/SignupPage.jsp");
+			alert(req, resp, "Invalid Email", "/WEB-INF/SignupPage.jsp");
 			return;
 		}
 		
@@ -54,11 +59,11 @@ public class SignupServlet extends HttpServlet {
 			e.printStackTrace();
 			
 		} catch (DuplicatedRecordException e) {
-			alert(req, resp, e.getMessage(), "/SignupPage.jsp");
+			alert(req, resp, e.getMessage(), "/WEB-INF/SignupPage.jsp");
 			return;
 		}
 
-		alert(req, resp, "Registration completed!\nYou will'be redirect to the login page.", "/LoginPage.jsp");
+		alert(req, resp, "Registration completed!\nYou will'be redirect to the login page.", "/WEB-INF/LoginPage.jsp");
     }
 	
 	private void alert(HttpServletRequest req, HttpServletResponse resp, String msg, String page) throws ServletException, IOException {

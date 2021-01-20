@@ -53,7 +53,6 @@ public class HomepageView implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
 		setUserName(UserBean.getInstance().getName());
 		addStatCards();
 		addWeatherCards();
@@ -93,7 +92,6 @@ public class HomepageView implements Initializable {
 		
 		} catch (RecordNotFoundException e) {
 			vboxScroll.getChildren().add(new Label("There are no future lessons today"));
-			return;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -185,7 +183,7 @@ public class HomepageView implements Initializable {
 					h = Integer.toString(hour+i);
 				}
 				
-				WeatherCard weatherCard = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour+i).getDouble("temp")) + " \u2103", image, h + ":00");
+				WeatherCard weatherCard = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour+i).getDouble("temp")) + "°C", image, h + ":00");
 				hboxWeather.getChildren().add(weatherCard);
 				
 			} catch (IOException e) {

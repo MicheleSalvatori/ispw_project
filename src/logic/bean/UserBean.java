@@ -22,11 +22,11 @@ public class UserBean {
 	}
 	
 	public Role getRole() {
-		return UserBean.userInstance.role;
+		return role;
 	}
 	
 	public void setRole(Role role) {
-		UserBean.userInstance.role = role;
+		this.role = role;
 	}
 	
 	public String getUsername() {

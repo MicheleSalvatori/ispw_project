@@ -18,6 +18,10 @@ import javafx.scene.image.Image;
 
 public class Weather {
 	
+	private Weather() {
+		
+	}
+	
 	public static double kelvinToCelsius(double kelvin) {
 		BigDecimal bd = new BigDecimal(kelvin-273.15).setScale(1, RoundingMode.HALF_UP);
 		return bd.doubleValue();
@@ -106,21 +110,20 @@ public class Weather {
 
 	public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
 		InputStream is = new URL(url).openStream();
-		try {
-	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-	      String jsonText = readAll(rd);
-	      JSONObject json = new JSONObject(jsonText);
-	      return json;
-	    } finally {
-	      is.close();
-	    }
+	    BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+	    String jsonText = readAll(rd);
+	    JSONObject json = new JSONObject(jsonText);
+	    is.close();
+	    return json;
 	}
 	
 	public static JSONArray getInfo() {
 
 		String API_KEY = "a4f22e032f9d48ee8fd3a2dfe5101878";
+		//String LOCATION = "Rome, IT";
 		String LAT = "41.89";
 		String LON = "12.48";
+		//String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + LOCATION + "&appid=" + API_KEY + "&units=imperial";
 		String urlString = "https://api.openweathermap.org/data/2.5/onecall?lat=" + LAT + "&lon=" + LON +"&exclude=daily,minutely,current,alerts&appid=" + API_KEY;
 
 		JSONObject json;

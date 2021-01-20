@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+		request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
 	}
 	
 	@Override
@@ -45,13 +45,13 @@ public class LoginServlet extends HttpServlet {
 			
 		} catch (RecordNotFoundException e) {
 			req.setAttribute("alertMsg", "Not valid login credentials.");
-            RequestDispatcher rd = req.getRequestDispatcher("/LoginPage.jsp");
+            RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/LoginPage.jsp");
             rd.include(req, resp);
             return;
 		}
 
         HttpSession session = req.getSession(true);
         session.setAttribute("loggedUser", userBean);
-        resp.sendRedirect("HomePage.jsp");
+        resp.sendRedirect(req.getContextPath() + "/NextLessonsServlet");
     }
 }

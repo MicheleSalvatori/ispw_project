@@ -17,6 +17,10 @@ public class Email {
 	private static final String PASS = AppProperties.getInstance().getProperty("emailpasswd");
 	private static String TO;
 	
+	private Email() {
+		
+	}
+	
 	public static void password(String TO, String password) throws MessagingException {
 		
 		Email.TO = TO;

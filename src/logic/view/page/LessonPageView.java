@@ -179,7 +179,9 @@ public class LessonPageView {
 
 		WeatherCard a;
 		try {
-			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + String.valueOf(248) + "C", image, h + ":00");			weatherCard.getChildren().add(a);
+			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "°C", image,
+					h + ":00");
+			weatherCard.getChildren().add(a);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
