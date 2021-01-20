@@ -4,7 +4,16 @@ public class SeatBean {
 	private boolean free;
 	private int id;
 	private String classroomName;
-
+	
+	public SeatBean(int id) {
+		setId(id);
+	}
+	
+	public SeatBean(int id, String classroom) {
+		setId(id);
+		setClassroomName(classroom);
+	}
+	
 	public String getClassroomName() {
 		return classroomName;
 	}

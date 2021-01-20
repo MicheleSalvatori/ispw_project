@@ -473,14 +473,14 @@ public class Queries {
 /******************************************************************************************************************/
 
 	// Seat Queries
-	public static void occupateSeat(Statement stmt, int id, String classroom) throws SQLException {
-		String sql = String.format("UPDATE seat SET free = 0 WHERE id = '%d' AND classroom = '%s';", id, classroom);
+	public static void occupateSeat(Statement stmt, int seat, String classroom, String date, String time, String course, String username) throws SQLException {
+		String sql = String.format("INSERT INTO occupant (student, seat, classroom, lessonDate, lessonTime, course) VALUES('%s', '%d', '%s', '%s', '%s', '%s');", username, seat, classroom, date, time, course );
 		System.out.println(sql);
 		stmt.executeUpdate(sql);
 	}
 
-	public static void freeSeat(Statement stmt, int id, String classroom) throws SQLException {
-		String sql = String.format("UPDATE seat SET free = 0 WHERE id = '%d' AND classroom = '%s';", id, classroom);
+	public static void freeSeat(Statement stmt, int seat, String classroom, String username, String course, String date, String time) throws SQLException {
+		String sql = String.format("DELETE FROM occupant WHERE student = '%s' and seat = '%d' and classroom = '%s' and lessonDate = '%s' and lessonTime = '%s' and course = '%s';", username, seat, classroom, date, time, course);
 		System.out.println(sql);
 		stmt.executeUpdate(sql);
 	}
@@ -491,8 +491,19 @@ public class Queries {
 		return stmt.executeQuery(sql);
 	}
 
-	public static ResultSet getOccupateSeats(Statement stmt, String course, String date, String time) throws SQLException {
-		String sql = String.format("SELECT seat FROM occupant WHERE lessonDate = '%s' and lessonTime = '%s' and course = '%s';", date, time, course);
+	public static ResultSet getOccupateSeats(Statement stmt, String course, String date, String time)
+			throws SQLException {
+		String sql = String.format(
+				"SELECT seat FROM occupant WHERE lessonDate = '%s' and lessonTime = '%s' and course = '%s';", date,
+				time, course);
+		System.out.println(sql);
+		return stmt.executeQuery(sql);
+	}
+
+	public static ResultSet getSeat(Statement stmt, String username, String dateLesson, String timeLesson, String course) throws SQLException {
+		String sql = String.format(
+				"SELECT seat FROM occupant WHERE student = '%s' and lessonDate = '%s' and lessonTime = '%s' and course = '%s';",
+				username, dateLesson, timeLesson, course);
 		System.out.println(sql);
 		return stmt.executeQuery(sql);
 	}

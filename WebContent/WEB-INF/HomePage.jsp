@@ -27,9 +27,9 @@
 	<head>
 		<meta charset="utf-8">
 		<title>App - HomePage</title>
-		<link rel="stylesheet" href="res/style/Frame.css" >
-		<link rel="stylesheet" href="res/style/NavigationBar.css" >
-		<link rel="stylesheet" href="res/style/StatusBar.css" >
+		<link rel="stylesheet" href="../res/style/Frame.css" >
+		<link rel="stylesheet" href="../res/style/NavigationBar.css" >
+		<link rel="stylesheet" href="../res/style/StatusBar.css" >
 	</head>
 	
 	<body>

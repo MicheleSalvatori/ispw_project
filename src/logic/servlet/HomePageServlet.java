@@ -27,10 +27,10 @@ public class HomePageServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		if (request.getSession().getAttribute("loggedUser") == null) {
+		/*if (request.getSession().getAttribute("loggedUser") == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
-		}
+		}*/
 		
 		HttpSession session = request.getSession(false);
 

@@ -1,10 +1,13 @@
 package logic.bean;
 
+import java.util.List;
+
 public class ClassroomBean {
 	
 	private String name;
 	private int seatRow;
 	private int seatColumn;
+	List<SeatBean> seat;
 	
 	public ClassroomBean() {
 	
@@ -32,5 +35,13 @@ public class ClassroomBean {
 
 	public void setSeatColumn(int seatColumn) {
 		this.seatColumn = seatColumn;
+	}
+	
+	public void setSeat(List<SeatBean> seat) {
+        this.seat = seat;
+    }
+	
+	public List<SeatBean> getSeat() {
+		return seat;
 	}
 }
