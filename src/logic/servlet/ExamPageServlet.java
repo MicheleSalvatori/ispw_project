@@ -26,16 +26,12 @@ public class ExamPageServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		System.out.println(session.getAttribute("loggedUser"));
-		
-		UserBean userBean = new UserBean();
-		userBean.setUsername(request.getParameter("username"));
+		HttpSession session = request.getSession();
 		
 		ViewVerbalizedExamsController controller = new ViewVerbalizedExamsController();
 		
 		try {
-			List<VerbalizedBean> exams = controller.getVerbalizedExams(userBean);
+			List<VerbalizedBean> exams = controller.getVerbalizedExams((UserBean) session.getAttribute("loggedUser"));
 			session.setAttribute("listOfExam", exams);
 			
 		} catch (SQLException e) {

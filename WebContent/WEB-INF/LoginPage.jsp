@@ -1,14 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-
 <!doctype html>
 <html lang="en">
 
-<jsp:useBean id="userBean" scope="session" class="logic.bean.UserBean"/>
-
-
 <head>
-	<link rel="stylesheet" href="../res/style/LoginPage.css" >
+	<link rel="stylesheet" href="res/style/LoginPage.css" >
 	<meta charset="utf-8">
 	<title>App - Login</title>
 	

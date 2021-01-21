@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
     
 <!doctype html>
 <html lang="en">
@@ -9,7 +8,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>App - Signup</title>
-		<link rel="stylesheet" href="style/SignupPage.css" >
+		<link rel="stylesheet" href="res/style/SignupPage.css" >
 	</head>
 
 	<body>
@@ -20,7 +19,7 @@
 			  
 			<tr>
 			  	<th id="logo" style="text-align: center; padding-bottom: 50px;" colspan="2">
-					<img class="logo" src="img/Logo.png" alt="Logo">
+					<img class="logo" src="res/img/Logo.png" alt="Logo">
 				</th>
 			</tr>
 			  
@@ -70,7 +69,7 @@
 								</td>
 								
 								<td style="text-align: right;">
-									<img src="img/Facebook.png" alt="Facebook">
+									<img src="res/img/Facebook.png" alt="Facebook">
 								</td>
 							</tr>
 						</table>	
@@ -86,7 +85,7 @@
 								</td>
 								
 								<td style="text-align: right;">
-									<img src="img/Google.png" alt="Google">
+									<img src="res/img/Google.png" alt="Google">
 								</td>
 							</tr>
 						</table>

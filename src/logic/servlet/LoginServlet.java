@@ -50,8 +50,8 @@ public class LoginServlet extends HttpServlet {
             return;
 		}
 
-        HttpSession session = req.getSession(true);
+        HttpSession session = req.getSession();
         session.setAttribute("loggedUser", userBean);
-        resp.sendRedirect(req.getContextPath() + "/NextLessonsServlet");
+        resp.sendRedirect(req.getContextPath() + "/HomePageServlet"); 
     }
 }

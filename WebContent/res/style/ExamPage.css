@@ -74,3 +74,26 @@
 	padding-left: 35px;
 	text-align: right;
 }
+
+.add-exam-button {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.5vw;
+	width: 30%;
+	filter: drop-shadow(5px 5px 5px black);
+	
+	border-radius: 20px;
+	background-color: #F0F0F2;
+}
+
+.add-exam-button:hover {
+	cursor: pointer;
+}
+
+.plus-img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 28px;
+	min-width: 10px;
+}

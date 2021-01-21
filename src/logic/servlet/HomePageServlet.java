@@ -10,13 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import logic.bean.LessonBean;
 import logic.bean.UserBean;
 import logic.controller.ViewNextLessonController;
 import logic.exceptions.RecordNotFoundException;
 
-@WebServlet("/NextLessonsServlet")
+@WebServlet("/HomePageServlet")
 public class HomePageServlet extends HttpServlet {
 
 	/**
@@ -27,16 +26,17 @@ public class HomePageServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		/*if (request.getSession().getAttribute("loggedUser") == null) {
+		if (request.getSession().getAttribute("loggedUser") == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
-		}*/
+		}
 		
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
+		UserBean loggedUser = (UserBean) session.getAttribute("loggedUser");
 
 		ViewNextLessonController viewNextLessonController = new ViewNextLessonController();
 		try {
-			List<LessonBean> lessons = viewNextLessonController.getTodayLessons((UserBean) session.getAttribute("loggedUser"));
+			List<LessonBean> lessons = viewNextLessonController.getTodayLessons(loggedUser);
 			LessonBean lesson = lessons.get(0);
 			lessons.remove(0);
 			request.setAttribute("lesson", lesson);

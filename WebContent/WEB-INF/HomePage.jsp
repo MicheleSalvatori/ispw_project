@@ -8,18 +8,13 @@
 <%@ page import="logic.bean.LessonBean" %>
 <%@ page import="logic.utilities.SQLConverter" %>
 <%@ page import="logic.utilities.Role" %>
+<%@ page import ="javax.servlet.RequestDispatcher" %>
 
 <jsp:useBean id="lesson" class="logic.bean.LessonBean" scope="request" />
 
 <%UserBean user = new UserBean();
-	if (session.getAttribute("loggedUser") != null) {
-		user = (UserBean) session.getAttribute("loggedUser");
-		System.out.println(user.getUsername());
-	}
-		
-	else {
-		user.setUsername("");
-	}
+	user = (UserBean) request.getSession().getAttribute("loggedUser");
+	System.out.println(user.getUsername());
 	
 	lesson = (LessonBean) request.getAttribute("lesson");
 %>
@@ -27,13 +22,14 @@
 	<head>
 		<meta charset="utf-8">
 		<title>App - HomePage</title>
-		<link rel="stylesheet" href="../res/style/Frame.css" >
-		<link rel="stylesheet" href="../res/style/NavigationBar.css" >
-		<link rel="stylesheet" href="../res/style/StatusBar.css" >
+		<link rel="stylesheet" href="res/style/Frame.css" >
+		<link rel="stylesheet" href="res/style/NavigationBar.css" >
+		<link rel="stylesheet" href="res/style/StatusBar.css" >
 	</head>
 	
 	<body>
 		<!-- Side navigation -->
+		<form action="${pageContext.request.contextPath}/HomePageServlet" method="post">
 		<div class="sidenav">
 		  <table class="nav-root" width="132" border="0">
 			  <tbody>
@@ -53,7 +49,7 @@
 				<tr>
 					<td style="padding-bottom: 20px;" align="center">
 						<%if (user.getRole() == Role.STUDENT) { %>
-						<a href="/ispw_project/ExamPageServlet?username=<%=user.getUsername()%>">
+						<a href="/ispw_project/ExamPageServlet">
 						<button class="nav-button" type="button" name="exam">
 							<svg class="nav-icon" width="31" height="27" viewBox="0 0 31 27" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M28.7954 24.9126C28.7503 24.9903 28.7052 25.0669 28.6604 25.142C28.6156 25.0669 28.5705 24.9903 28.5254 24.9126C28.2844 24.4972 28.0548 24.0676 27.8884 23.689C27.8054 23.4998 27.7443 23.3374 27.7053 23.2055C27.686 23.1404 27.6741 23.0892 27.6672 23.051C27.6602 23.0117 27.6604 22.9961 27.6604 23C27.6604 22.6395 27.8555 22.3206 28.163 22.1419L28.6604 21.8527L29.1578 22.1419C29.4653 22.3206 29.6604 22.6395 29.6604 23C29.6604 22.9961 29.6606 23.0117 29.6536 23.051C29.6467 23.0892 29.6348 23.1404 29.6155 23.2055C29.5765 23.3374 29.5154 23.4998 29.4324 23.689C29.266 24.0676 29.0364 24.4972 28.7954 24.9126ZM15.6349 1.01359L15.6481 1.00699L15.6597 1.00076L15.6749 1.00908L15.6918 1.01752L29.5808 7.96009L29.6572 8L29.6243 8.01722L15.6858 14.9864L15.6727 14.993L15.6611 14.9992L15.6459 14.9909L15.629 14.9825L1.73994 8.03989L1.66356 8L1.74028 7.95994L15.6349 1.01359ZM17.4728 18.5643L17.4729 18.5643L23.6604 15.4698V18C23.6604 18.8524 23.0266 19.8346 21.5388 20.6612C20.085 21.469 18.0087 22 15.6604 22C13.3121 22 11.2358 21.469 9.78195 20.6612C8.29419 19.8346 7.6604 18.8524 7.6604 18V15.4694L13.8438 18.5603C13.8445 18.5607 13.8452 18.561 13.846 18.5614C13.9638 18.6209 14.0826 18.6708 14.2021 18.7123C14.6688 18.9009 15.159 19 15.6604 19C16.1634 19 16.6547 18.9007 17.123 18.7121C17.2399 18.6712 17.3561 18.6227 17.4728 18.5643Z" stroke="white" stroke-width="2"/>
@@ -126,6 +122,7 @@
 			  </tbody>
 			</table>
 		</div>
+		</form>
 	
 		<!-- Status bar -->
 		<div class="topnav">
@@ -155,7 +152,7 @@
 					</td>
 					
 				  	<td style="padding-right: 10px;">
-				  		<a href="/ispw_project/LoginServlet" onclick="<%session.setAttribute("loggedUser",null);%>">
+				  		<a href="/ispw_project/LoginServlet" onclick="session.invalidate();">
 						<button class="status-button" type="button" name="logout">
 							<svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M18.4067 19.9873V22.0269C18.4067 24.2761 16.5769 26.1059 14.3277 26.1059H4.07905C1.8298 26.1059 0 24.2761 0 22.0269V4.07905C0 1.8298 1.8298 0 4.07905 0H14.3277C16.5769 0 18.4067 1.8298 18.4067 4.07905V6.11857C18.4067 6.68183 17.9502 7.13833 17.3869 7.13833C16.8237 7.13833 16.3672 6.68183 16.3672 6.11857V4.07905C16.3672 2.95452 15.4522 2.03952 14.3277 2.03952H4.07905C2.95452 2.03952 2.03952 2.95452 2.03952 4.07905V22.0269C2.03952 23.1514 2.95452 24.0664 4.07905 24.0664H14.3277C15.4522 24.0664 16.3672 23.1514 16.3672 22.0269V19.9873C16.3672 19.4241 16.8237 18.9676 17.3869 18.9676C17.9502 18.9676 18.4067 19.4241 18.4067 19.9873ZM25.3592 11.3012L23.0757 9.01772C22.6774 8.61938 22.0316 8.61938 21.6335 9.01772C21.2351 9.41587 21.2351 10.0616 21.6335 10.4597L23.2577 12.0842H11.0134C10.4502 12.0842 9.99367 12.5407 9.99367 13.1039C9.99367 13.6672 10.4502 14.1237 11.0134 14.1237H23.2577L21.6335 15.7482C21.2351 16.1463 21.2351 16.792 21.6335 17.1902C21.8327 17.3893 22.0936 17.4889 22.3545 17.4889C22.6156 17.4889 22.8765 17.3893 23.0757 17.1902L25.3592 14.9066C26.3533 13.9126 26.3533 12.2953 25.3592 11.3012Z" fill="black"/>
