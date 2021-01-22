@@ -35,23 +35,23 @@ public class HomePageServlet extends HttpServlet {
 		UserBean loggedUser = (UserBean) session.getAttribute("loggedUser");
 
 		ViewNextLessonController viewNextLessonController = new ViewNextLessonController();
+		List<LessonBean> lessons = null;
+		LessonBean lesson = null;
 		try {
-			List<LessonBean> lessons = viewNextLessonController.getTodayLessons(loggedUser);
-			LessonBean lesson = lessons.get(0);
+			lessons = viewNextLessonController.getTodayLessons(loggedUser);
+			lesson = lessons.get(0);
 			lessons.remove(0);
-			request.setAttribute("lesson", lesson);
-			request.setAttribute("listOfLesson", lessons);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		
 		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();					// TODO Not found show
-			//return;
+			lesson = null;
 		}
 		
+		request.setAttribute("lesson", lesson);
+		request.setAttribute("listOfLesson", lessons);
 		request.getRequestDispatcher("/WEB-INF/HomePage.jsp").forward(request, response);
 	}
 }

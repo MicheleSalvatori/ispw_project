@@ -8,15 +8,10 @@
 <%@ page import="logic.bean.LessonBean" %>
 <%@ page import="logic.utilities.SQLConverter" %>
 <%@ page import="logic.utilities.Role" %>
-<%@ page import ="javax.servlet.RequestDispatcher" %>
 
-<jsp:useBean id="lesson" class="logic.bean.LessonBean" scope="request" />
-
-<%UserBean user = new UserBean();
-	user = (UserBean) request.getSession().getAttribute("loggedUser");
-	System.out.println(user.getUsername());
-	
-	lesson = (LessonBean) request.getAttribute("lesson");
+<%	
+	UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
+	LessonBean lesson = (LessonBean) request.getAttribute("lesson");
 %>
 	
 	<head>
@@ -212,9 +207,19 @@
 			
 				<!-- First Col -->
 				<div class="col" style="float: left; width: 47%; margin-right: 5vw;">
+				
 					<!-- Next Lesson -->
 					<div style="width: 100%">
+						
 						<table class="lesson" style="width: 100%;">
+						<%if (lesson == null) { %>
+							<tr>
+								<td align="center" class="next-lessons-label" style="width: 100%;">
+									No lesson found
+								</td>
+							</tr>
+							<!--<a align="center" class="next-lessons-label lesson" style="width: 100%;">No lesson found</a>-->
+						<%} else { %>
 							<tr>
 								<td style="padding: 1vw; white-space: nowrap; width: 50px;">
 									<img class="img" src="res/img/Lesson.png" alt="lesson">
@@ -253,8 +258,8 @@
 									<button class="button-view" type="button">View</button>
 								</td>
 							</tr>
-
-						</table>
+						<%} %>
+						</table>	
 					</div>
 					
 					<!-- Next Lessons-->
@@ -269,7 +274,14 @@
 								</tr>
 							</thead>
 							
-							<tbody style="overflow: auto; display: block;">
+							<tbody style="overflow: auto; width: 100%;">
+								<c:if test="${empty listOfLesson}">
+									<tr>
+										<td colspan="5" class="next-lessons-label" style="text-align: center;">
+											No lesson found
+										</td>
+									</tr>
+								</c:if>
 								<c:forEach items="${listOfLesson}" var="lesson">
 								<tr class="lesson">
 									<td style="padding: 1vw; white-space: nowrap; width: 50px; border-radius: 14px 0 0 14px;">
