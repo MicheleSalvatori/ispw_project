@@ -11,9 +11,6 @@
 <%@ page import="logic.utilities.Role"%>
 <%@ page import="javax.servlet.RequestDispatcher"%>
 
-<jsp:useBean id="question" class="logic.bean.QuestionBean"
-	scope="request"></jsp:useBean>
-
 <%
 UserBean user = new UserBean();
 if (session.getAttribute("loggedUser") != null) {
@@ -27,7 +24,7 @@ else {
 <head>
 <meta charset="utf-8">
 <title>App - HomePage</title>
-<link rel="stylesheet" href="res/style/QuestionPage.css">
+<link rel="stylesheet" href="res/style/ForumPage.css">
 <link rel="stylesheet" href="res/style/NavigationBar.css">
 <link rel="stylesheet" href="res/style/StatusBar.css">
 </head>
@@ -268,14 +265,15 @@ else {
 								</tr>
 							</table>
 						</td>
-
 						<td align="right" class="course"
 							style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left;">
 							${question.getCourse().getAbbrevation()}</td>
-
 						<td align="right"
 							style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
-							<button class="button-view" type="button">View</button>
+							<form action="${pageContext.request.contextPath}/ForumPageServlet" method="post">
+							<input type="hidden" name="course" value="Piero" />
+							<button name="viewQuestion" class="button-view" type="submit">View</button>
+							</form>
 						</td>
 					</tr>
 				</c:forEach>

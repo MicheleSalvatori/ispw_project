@@ -18,8 +18,8 @@ import logic.controller.AddAssignmentController;
 import logic.controller.AllQuestionController;
 import logic.exceptions.RecordNotFoundException;
 
-@WebServlet("/QuestionPageServlet")
-public class QuestionPageServlet extends HttpServlet {
+@WebServlet("/ForumPageServlet")
+public class ForumPageServlet extends HttpServlet {
 	/**
 	 * 
 	 */
@@ -48,11 +48,18 @@ public class QuestionPageServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute("listOfAssignment", assignments);
-		request.getRequestDispatcher("/WEB-INF/QuestionPage.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		
+		if (request.getParameter("viewQuestion") != null) {
+			System.out.println("A");
+		}else {
+			System.out.println("B");
+		}
 	}
 	
 	
