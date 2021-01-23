@@ -42,10 +42,14 @@ public class ExamPageServlet extends HttpServlet {
 		
 		List<VerbalizedBean> exams = null;
 		List<CourseBean> courses = null;
+		double GPA = 0;
+		double WPA = 0;
 		
 		try {
 			exams = controller.getVerbalizedExams((UserBean) session.getAttribute("loggedUser"));
-
+			GPA = controller.GPA(exams);
+			WPA = controller.WPA(exams);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,6 +69,8 @@ public class ExamPageServlet extends HttpServlet {
 			// niente
 		}
 		
+		request.setAttribute("gpa", GPA);
+		request.setAttribute("wpa", WPA);
 		request.setAttribute("listOfExam", exams);
 		request.setAttribute("listOfCourse", courses);
 		request.getRequestDispatcher("/WEB-INF/ExamPage.jsp").forward(request, response);
@@ -118,10 +124,9 @@ public class ExamPageServlet extends HttpServlet {
 			verb.setStudent(studentBean);
 			
 			controller.saveVerbalizedExam(verb);
-			doGet(request, response);
 		}
 		
-		else {
+		else if (request.getParameter("deleteExam") != null){
 			ViewVerbalizedExamsController controller = new ViewVerbalizedExamsController();
 			String course = request.getParameter("course");
 			CourseBean courseBean = new CourseBean();
@@ -135,7 +140,8 @@ public class ExamPageServlet extends HttpServlet {
 			verb.setStudent(studentBean);
 			
 			controller.deleteVerbalizedExam(verb);
-			doGet(request, response);
 		}
+		
+		response.sendRedirect("/ispw_project/ExamPageServlet");
 	}
 }

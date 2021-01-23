@@ -4,27 +4,25 @@
 <html lang="en">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="logic.bean.UserBean" %>
-<%@ page import="logic.bean.LessonBean" %>
-<%@ page import="logic.utilities.SQLConverter" %>
 <%@ page import="logic.utilities.Role" %>
 
-<%	
-	UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
-	LessonBean lesson = (LessonBean) request.getAttribute("lesson");
+<%
+	UserBean user = (UserBean) session.getAttribute("loggedUser");
 %>
 	
 	<head>
 		<meta charset="utf-8">
 		<title>App - HomePage</title>
-		<link rel="stylesheet" href="res/style/HomePage.css" >
+		<link rel="stylesheet" href="res/style/ProfilePage.css" >
 		<link rel="stylesheet" href="res/style/NavigationBar.css" >
 		<link rel="stylesheet" href="res/style/StatusBar.css" >
+		<link rel="stylesheet" href="res/style/ModalBox.css" >
 	</head>
 	
 	<body>
 		<!-- Side navigation -->
-		<form action="${pageContext.request.contextPath}/HomePageServlet" method="post">
 		<div class="sidenav">
 		  <table class="nav-root" width="132" border="0">
 			  <tbody>
@@ -44,7 +42,7 @@
 				<tr>
 					<td style="padding-bottom: 20px;" align="center">
 						<%if (user.getRole() == Role.STUDENT) { %>
-						<a href="/ispw_project/ExamPageServlet" class="nav-button" type="button" width="50%">
+						<a href="/ispw_project/ExamPageServlet" class="nav-button" type="button">
 							<svg class="nav-icon" width="31" height="27" viewBox="0 0 31 27" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M28.7954 24.9126C28.7503 24.9903 28.7052 25.0669 28.6604 25.142C28.6156 25.0669 28.5705 24.9903 28.5254 24.9126C28.2844 24.4972 28.0548 24.0676 27.8884 23.689C27.8054 23.4998 27.7443 23.3374 27.7053 23.2055C27.686 23.1404 27.6741 23.0892 27.6672 23.051C27.6602 23.0117 27.6604 22.9961 27.6604 23C27.6604 22.6395 27.8555 22.3206 28.163 22.1419L28.6604 21.8527L29.1578 22.1419C29.4653 22.3206 29.6604 22.6395 29.6604 23C29.6604 22.9961 29.6606 23.0117 29.6536 23.051C29.6467 23.0892 29.6348 23.1404 29.6155 23.2055C29.5765 23.3374 29.5154 23.4998 29.4324 23.689C29.266 24.0676 29.0364 24.4972 28.7954 24.9126ZM15.6349 1.01359L15.6481 1.00699L15.6597 1.00076L15.6749 1.00908L15.6918 1.01752L29.5808 7.96009L29.6572 8L29.6243 8.01722L15.6858 14.9864L15.6727 14.993L15.6611 14.9992L15.6459 14.9909L15.629 14.9825L1.73994 8.03989L1.66356 8L1.74028 7.95994L15.6349 1.01359ZM17.4728 18.5643L17.4729 18.5643L23.6604 15.4698V18C23.6604 18.8524 23.0266 19.8346 21.5388 20.6612C20.085 21.469 18.0087 22 15.6604 22C13.3121 22 11.2358 21.469 9.78195 20.6612C8.29419 19.8346 7.6604 18.8524 7.6604 18V15.4694L13.8438 18.5603C13.8445 18.5607 13.8452 18.561 13.846 18.5614C13.9638 18.6209 14.0826 18.6708 14.2021 18.7123C14.6688 18.9009 15.159 19 15.6604 19C16.1634 19 16.6547 18.9007 17.123 18.7121C17.2399 18.6712 17.3561 18.6227 17.4728 18.5643Z" stroke="white" stroke-width="2"/>
 							</svg>
@@ -115,7 +113,6 @@
 			  </tbody>
 			</table>
 		</div>
-		</form>
 	
 		<!-- Status bar -->
 		<div class="topnav">
@@ -123,9 +120,9 @@
 			  <tbody>
 				<tr>
 				  	<td style="padding-right: 10px;">
-						<label class="status-label" id="statusName">
-							<%=user.getName()%>
-						</label>
+				  		<a class="status-label">
+				  			<%=user.getName()%>
+				  		</a>
 					</td>
 					
 				  	<td style="padding-right: 10px;">
@@ -160,217 +157,307 @@
 		</div>
 		
 		<!-- Page info -->
-		<div class="content">
+		<div class="content row">
 			
-			<!-- First Row -->
-			<div class="row">
+			<!-- Profile info -->
+			<div style="width: 35%; margin-right: 5vw; float: left;">
+				<div class="info-text">Profile</div>
+				<div style="border: 2px solid #0C0B0B; border-radius: 14px; width: 100%; height: 100%;">
+					<table align="center" style="width: 100%; padding: 10px; height: 100%; overflow: auto;">
+						<tr>
+							<td colspan="2" align="center">
+								<img class="img-avatar" src="res/img/Logo.png" alt="avatar">
+							</td>
+						</tr>
+
+						<tr>
+							<td class="info-text">
+								Username:
+							</td>
+
+							<td class="value-text">
+								<%=user.getUsername()%>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="info-text">
+								Name:
+							</td>
+
+							<td class="value-text">
+								<%=user.getName()%>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="info-text">
+								Surname:
+							</td>
+
+							<td class="value-text">
+								<%=user.getSurname()%>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="info-text">
+								E-mail:
+							</td>
+
+							<td class="value-text">
+								<%=user.getEmail()%>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="info-text">
+								Password:
+								<input type="checkbox" id="checkbox" onclick="show()" style="display: none; text-align: right; ">
+								<label for="checkbox"></label>
+							</td>
+
+							<td style="text-align: right;">
+								<input class="value-text" type="password" value="<%=user.getPassword()%>" id="password" readonly style="border: 0; background-color: transparent;">
+							</td>
+						</tr>
+					</table>
+				</div>
 				
-				<!-- Hello -->
-				<div class="hello col" id="hello">
-					<table>
-						<tr>
-							<td class="hello-text">
-								Hello nome!
-							</td>
-						</tr>
-						
-						<tr>
-							<td class="hello-sub">
-								It's good to see you again.
-							</td>
-						</tr>
-					</table>
+				<form action="/ispw_project/ProfilePageServlet" name="passwordForm" method="post">
+				<div style="padding-top: 25px; text-align: center; width: 100%;">
+					<input name="password" type="hidden">
+					<input class="change-text" type="submit" name="changePassword" value="Change your password" onclick="return getPassword()">
 				</div>
-
-				<!-- Stats -->
-				<div class="stat col">
-					<table style="border-collapse: collapse;" align="center">
-						<tr>
-							<td class="stat-num">
-								25
-							</td>
-
-							<td class="stat-text">
-								New<br>Questions
-							</td>
-						</tr>
-					</table>
-				</div>
-			
+				</form>
 			</div>
 			
-			
-			<!-- Second Row -->
-			<div style="padding-top: 2vw;">
-			
-				<!-- First Col -->
-				<div class="col" style="float: left; width: 47%; margin-right: 5vw;">
-				
-					<!-- Next Lesson -->
-					<div style="width: 100%">
-						
-						<table class="lesson" style="width: 100%;">
-						<%if (lesson == null) { %>
-							<tr>
-								<td align="center" class="next-lessons-label" style="width: 100%;">
-									No lesson found
-								</td>
-							</tr>
-							<!--<a align="center" class="next-lessons-label lesson" style="width: 100%;">No lesson found</a>-->
-						<%} else { %>
-							<tr>
-								<td style="padding: 1vw; white-space: nowrap; width: 50px;">
-									<img class="img" src="res/img/Lesson.png" alt="lesson">
-								</td>
-
-								<td style="vertical-align: middle;" align="left">
-									<table style="display: inline; vertical-align: middle;" spacing="0">
-										<tr>
-											<td class="lesson-text">
-												<%=lesson.getCourse().getAbbrevation()%>
-											</td>
-										</tr>
-
-										<tr>
-											<td style="padding-top: 0;" class="lesson-classroom">
-												<%=lesson.getClassroom().getName()%>
-											</td>
-										</tr>
-									</table>
-
-									<br>
-
-								</td>
-
-								<td align="right">
-									<img class="time-img" src="res/img/Time.png" alt="time">
-								</td>
-
-								<td style="vertical-align: middle; padding-left: 0.5vw; white-space: nowrap; width: 1%;" class="lesson-time">
-									<label style="display: inline; vertical-align: middle;">
-										<%=SQLConverter.time(lesson.getTime())%>
-									</label>
-								</td>
-
-								<td align="right" style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
-									<button class="button-view" type="button">View</button>
-								</td>
-							</tr>
-						<%} %>
-						</table>	
-					</div>
-					
-					<!-- Next Lessons-->
-					<div style="padding-top: 2vw; width: 100%;">
-						<table style="border-collapse: separate; width: 100%; border-spacing: 0 15px;">
-							
-							<thead>
-								<tr>
-									<th colspan="3" class="next-lessons-label" align="left">
-										Today Lessons
-									</th>
-								</tr>
-							</thead>
-							
-							<tbody style="overflow: auto; width: 100%;">
-								<c:if test="${empty listOfLesson}">
+			<!-- Courses info -->
+			<div class="col" style="float: right;">
+				<div class="info-text">Courses</div>
+				<div style="border: 2px solid #0C0B0B; border-radius: 14px; width: 100%; height: 100%;">
+					<table style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
+						<c:forEach items="${listOfCourse}" var="course" varStatus="courseind">
+						<tr height="50px" class="course">
+							<td style="border-radius: 14px 0 0 14px; white-space: nowrap; padding: 1vw;">
+								<table style="display: inline; vertical-align: middle;" spacing="0">
 									<tr>
-										<td colspan="5" class="next-lessons-label" style="text-align: center;">
-											No lesson found
-										</td>
-									</tr>
-								</c:if>
-								<c:forEach items="${listOfLesson}" var="lesson">
-								<tr class="lesson">
-									<td style="padding: 1vw; white-space: nowrap; width: 50px; border-radius: 14px 0 0 14px;">
-										<img class="img" src="res/img/Lesson.png" alt="lesson">
-									</td>
-
-									<td style="vertical-align: middle;" align="left">
-										<table style="display: inline; vertical-align: middle;" spacing="0">
-											<tr>
-												<td class="lesson-text">
-												  ${lesson.getCourse().getAbbrevation()}
-												</td>
-											</tr>
-
-											<tr>
-												<td style="padding-top: 0;" class="lesson-classroom">
-													${lesson.getClassroom().getName()}
-												</td>
-											</tr>
-										</table>
-
-										<br>
-
-									</td>
-
-									<td align="right">
-										<img class="time-img" src="res/img/Time.png" alt="time">
-									</td>
-
-									<td style="vertical-align: middle; padding-left: 0.5vw; white-space: nowrap; width: 1%;" class="lesson-time">
-										<label style="display: inline; vertical-align: middle;">
-											${SQLConverter.time(lesson.getTime())}
-										</label>
-									</td>
-
-									<td align="right" style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%; border-radius: 0 14px 14px 0;">
-										<button class="button-view" type="button">View</button>
-									</td>
-								</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-				
-				</div>
-				
-				<!-- Second Col -->
-				<div class="col" style="float: right; width: 45%;">
-					<!-- Weather -->
-					<table style="height: 80%;">
-						<thead>
-							<tr>
-								<th colspan="3" class="next-lessons-label" align="left">
-									Weather
-								</th>
-							</tr>
-						</thead>
-					
-						<tbody>
-						<tr>
-							<c:forEach items="${listOfLesson}" var="mhanz">
-							<td style="padding-right: 1vw; width: 20%;">
-								<table class="weather" align="center">
-									<tr>
-										<td class="weather-text">
-											15 °C
+										<td class="course-text">
+											${course.getAbbrevation()}
 										</td>
 									</tr>
 
 									<tr>
-										<td align="center">
-											<img class="img" src="Cloud.png" alt="weath">
-										</td>
-									</tr>
-
-									<tr>
-										<td class="weather-text">
-											10:00
+										<td style="padding-top: 0; " class="course-professor">
+											${listOfProfessor[courseind.index].getName()} ${listOfProfessor[courseind.index].getSurname()}
 										</td>
 									</tr>
 								</table>
 							</td>
-							</c:forEach>
+
+							<td align="right" class="course-year" style="width: 8vw; text-align: center;">
+								${course.getYear()}
+							</td>
+
+							<td align="right" class="course-year" style="width: 8vw; border-radius: 0 14px 14px 0; white-space: nowrap; text-align: center;">
+								${course.getSemester()}
+							</td>	
 						</tr>
-						</tbody>
-					
-					</table>
+						</c:forEach>
+						
+						<c:forEach items="${listOfRequest}" var="request" varStatus="requestind">
+						<tr height="50px" class="course">
+							<td style="border-radius: 14px 0 0 14px; white-space: nowrap; padding: 1vw;">
+								<table style="display: inline; vertical-align: middle;" spacing="0">
+									<tr>
+										<td class="course-text">
+											${request.getAbbrevation()}
+										</td>
+									</tr>
+
+									<tr>
+										<td style="padding-top: 0; " class="course-professor">
+											${listOfProfessor[requestind.index].getName()} ${listOfProfessor[requestind.index].getSurname()}
+										</td>
+									</tr>
+								</table>
+							</td>
+
+							<td colspan="2" style="border-radius: 0 14px 14px 0; white-space: nowrap; text-align: right; padding-right: 2vw;">
+								<form action="/ispw_project/ProfilePageServlet" method="post">
+								<input type="hidden" name="course" value="${request.getAbbrevation()}" />
+								<button name="deleteRequest" class="delete-button" type="submit" onclick="return confirm('Are you sure you want to delete?')">
+									Delete
+								</button>
+								</form>
+							</td>
+						</tr>
+						</c:forEach>
+				</table>
 				</div>
-			
+				<div style="text-align: center; padding-top: 20px;">
+					<button name="btnAdd" id="btnAdd" class="button-add" style="margin-right: 5vw;">
+						<img style="vertical-align: middle;" class="plus-img" src="res/img/Plus.png" alt="add">
+						Add Course
+					</button>
+						
+					<button name="btnRemove" id="btnRemove" class="button-add">
+						<img style="vertical-align: middle;" class="plus-img" src="res/img/Minus.png" alt="remove">
+						Remove Course
+					</button>
+				</div>
 			</div>
-			
 		</div>
+		
+		<!-- Modal add -->
+		<div id="modalAdd" class="modal">
+		
+		   	<!-- Modal content -->
+		   	<form action="/ispw_project/ProfilePageServlet" method="post">
+			<div class="modal-content">
+			
+			  <div class="modal-header">
+			    <span class="close-add">&times;</span>
+			    <a class="modal-text">Add Course</a>
+			  </div>
+			  
+			  <div class="modal-body" style="text-align: center; padding: 25px 0 25px 0;">
+			  
+			  	<select name="course-select" class="select" name="courses" id="course-select" style="width: 50%;" required>	
+			  		<c:if test="${!empty listOfAvailable}">
+			  			<option value="" disabled selected>Select course</option>
+			  		</c:if>
+			  		
+			  		<c:if test="${empty listOfAvailable}">
+			  			<option value="" disabled selected>No course available</option>
+			  		</c:if>
+			  		
+				    <c:forEach items="${listOfAvailable}" var="course">
+				    <option value="${course.getAbbrevation()}">
+				    	${course.getName()}
+				    </option>
+				    </c:forEach>
+				</select>
+			  </div>
+			  
+			  <div class="modal-footer" style="text-align: right; padding: 10px 10px 10px 0;">
+			    	<button class="modal-button" type="submit" name="submitAdd">Submit</button>
+			  </div>
+			</div> 
+			</form>
+		
+		</div>
+		
+		<!-- Modal remove -->
+		<div id="modalRemove" class="modal">
+		
+		   	<!-- Modal content -->
+		   	<form action="/ispw_project/ProfilePageServlet" method="post">
+			<div class="modal-content">
+			
+			  <div class="modal-header">
+			    <span class="close-remove">&times;</span>
+			    <a class="modal-text">Remove Course</a>
+			  </div>
+			  
+			  <div class="modal-body" style="text-align: center; padding: 25px 0 25px 0;">
+			  
+			  	<select name="course-select" class="select" name="courses" id="course-select" style="width: 50%;" required>	
+			  		<c:if test="${!empty listOfCourse}">
+			  			<option value="" disabled selected>Select course</option>
+			  		</c:if>
+			  		
+			  		<c:if test="${empty listOfCourse}">
+			  			<option value="" disabled selected>No course available</option>
+			  		</c:if>
+			  		
+				    <c:forEach items="${listOfCourse}" var="course">
+				    <option value="${course.getAbbrevation()}">
+				    	${course.getName()}
+				    </option>
+				    </c:forEach>
+				</select>
+			  </div>
+			  
+			  <div class="modal-footer" style="text-align: right; padding: 10px 10px 10px 0;">
+			    	<button class="modal-button" type="submit" name="submitRemove">Submit</button>
+			  </div>
+			</div> 
+			</form>
+		
+		</div> 
+		
+		<%String message = (String)session.getAttribute("error");
+    	if(message != null){ 
+    		session.setAttribute("error", null); %>
+	        <script type="text/javascript">
+	            var msg = "<%=message%>";
+	            alert(msg);
+	        </script>
+   		<%} %>
+		
 	</body>
+	
+<script>
+	//Get the modal
+	var modalAdd = document.getElementById("modalAdd");
+	var modalRemove = document.getElementById("modalRemove");
+	
+	// Get the button that opens the modal
+	var btnAdd = document.getElementById("btnAdd");
+	var btnRemove = document.getElementById("btnRemove");
+	
+	// Get the <span> element that closes the modal
+	var spanAdd = document.getElementsByClassName("close-add")[0];
+	var spanRemove = document.getElementsByClassName("close-remove")[0];
+	
+	// When the user clicks on the button, open the modal
+	btnAdd.onclick = function() {
+	  modalAdd.style.display = "block";
+	}
+	btnRemove.onclick = function() {
+	  modalRemove.style.display = "block";
+	}
+	
+	// When the user clicks on <span> (x), close the modal
+	spanAdd.onclick = function() {
+		modalAdd.style.display = "none";
+	}
+	spanRemove.onclick = function() {
+		modalRemove.style.display = "none";
+	}
+	
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	  if (event.target == modalAdd) {
+	    modalAdd.style.display = "none";
+	  }
+	  if (event.target == modalRemove) {
+		modalRemove.style.display = "none";
+	  }
+	}
+	
+	function show() {
+	  var x = document.getElementById("password");
+	  if (x.type === "password") {
+	    x.type = "text";
+	  } else {
+	    x.type = "password";
+	  }
+	}
+	
+	function getPassword() {
+		var pass = prompt("Insert a new password");
+		var form = document.forms.passwordForm;
+		form.elements.password.value = pass;
+		if (pass) {
+			return confirm('Are you sure you want to continue?');
+		}
+		else {
+			alert("Blank password is not allowed");
+			return false;
+		}
+	}
+</script>
+
 </html>

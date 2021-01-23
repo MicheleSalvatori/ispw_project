@@ -5,12 +5,6 @@
 }
 
 @font-face {
-	font-family: 'Overpass';
-	src: url("Overpass-Regular.ttf");
-	font-weight: normal;
-}
-
-@font-face {
 	font-family: 'Roboto';
 	src: url("../font/Roboto/Roboto-Regular.ttf");
 	font-weight: normal;
@@ -33,91 +27,112 @@
   	margin-left: 200px; /* Same as the width of the sidebar */
 	margin-top: 70px;
 	margin-right: 25px;
-	height: 70vh;
 }
 
-.img {
-	width: 100%;
-	height: auto;
-	
-	max-width: 50px;
-	min-width: 15px;
+.row {
+	display: flex;
 }
-.exam {
+
+.col {
+	flex: 1;
+}
+
+.course {
 	background-color: #F0F0F2;
 	border-radius: 14px;
 	min-width: 100%;
 }
 
-.exam-label {
+.info-text {
 	font-family: "Baloo Bhai";
 	font-weight: normal;
 	font-size: 1.5vw;
+	color: #0C0B0B;
 }
 
-.exam-number {
-	font-family: "Baloo Bhai";
+.value-text {
+	font-family: "Roboto";
 	font-weight: normal;
-	font-size: 2vw;
+	font-size: 1.5vw;
+	text-align: right;
+	color: #0C0B0B;
 }
 
-.exam-text {
+.course-text {
 	font-family: "Baloo Bhai";
 	font-weight: normal;
 	font-size: 1.3vw;
+	color: #0C0B0B;
 }
 
-.exam-date {
+.course-professor {
 	font-family: "Roboto";
 	font-weight: normal;
 	font-size: 1vw;
+	color: #0C0B0B;
+	text-decoration: underline;
 }
 
-.exam-grade {
+.course-year {
 	font-family: "Baloo Bhai";
 	font-weight: normal;
 	font-size: 1vw;
+	color: #0C0B0B;
 }
 
-.exam-average {
-	font-family: "Baloo Bhai";
-	font-weight: normal;
-	font-size: 1.5vw;
+.img-avatar {
+	width: 100%;
+	height: auto;
+	
+	max-width: 200px;
+	min-width: 15px;
 }
 
-.num-average {
+.img-show {
+	width: 100%;
+	height: auto;
+	
+	max-width: 20px;
+	min-width: 10px;
+}
+
+.change-text {
 	font-family: "Roboto";
-	font-weight: normal;
-	font-size: 1.2vw;
-	padding-left: 35px;
-	text-align: right;
+	font-weight: lighter;
+	font-size: 1vw;
+	color: #241C1C;
+	text-align: center;
+	text-decoration: underline;
+	background-color: transparent;
+	border: 0;
 }
 
-.add-exam-button {
+.change-text:hover {
+	cursor: pointer;
+}
+
+.button-add {
 	font-family: "Baloo Bhai";
 	font-weight: normal;
 	font-size: 1.5vw;
 	width: 30%;
 	filter: drop-shadow(5px 5px 5px black);
-	
-	border-radius: 20px;
 	border: 0;
+	border-radius: 20px;
 	background-color: #F0F0F2;
+	transition-duration: 0.4s;
 }
 
-.add-exam-button:hover {
+.button-add:hover {
 	cursor: pointer;
+	filter: drop-shadow(2px 2px 5px black);
 }
 
-.plus-img {
-	width: 100%;
-	height: auto;
-	
-	max-width: 28px;
-	min-width: 10px;
+.button-add:active {
+	filter: drop-shadow(1px 1px 5px black);
 }
 
-.exam-button {
+.delete-button {
 	font-family: "Roboto";
 	font-weight: bold;
 	font-size: 1vw;
@@ -130,6 +145,15 @@
 	border: 0;
 }
 
-.exam-button:hover {
+.delete-button:hover {
 	cursor: pointer;
+}
+
+label:before {
+  content: url("../img/Show.png");
+  position: absolute;
+  z-index: 100;
+}
+:checked+label:before {
+  content: url("../img/NoShow.png");
 }

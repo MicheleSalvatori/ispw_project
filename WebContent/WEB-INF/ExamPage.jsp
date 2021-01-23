@@ -4,6 +4,7 @@
 <html lang="en">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="logic.bean.UserBean" %>
 <%@ page import="logic.utilities.SQLConverter" %>
 <%@ page import="logic.utilities.Role" %>
@@ -37,23 +38,21 @@
 				</tr>
 				<tr>
 					<td valign="top" style="padding-bottom: 20px;" align="center">
-						<button class="nav-button" type="button" name="home">
+						<a href="/ispw_project/HomePageServlet" class="nav-button" type="button">
 							<svg class="nav-icon" width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M14.6444 1.40837L14.6446 1.40854L25.2517 12.0152L25.2517 12.0153C25.2517 12.0153 25.2517 12.0153 25.2518 12.0153L25.2518 12.0153L25.2518 12.0154C25.2518 12.0154 25.2518 12.0154 25.2518 12.0154C25.2518 12.0154 25.2519 12.0154 25.2519 12.0154C25.2519 12.0154 25.2519 12.0155 25.2519 12.0155C25.7934 12.5585 25.793 13.4433 25.2509 13.9858C24.9858 14.2505 24.6392 14.3939 24.2656 14.3939H23.8736H22.8736V15.3939V23.1989C22.8736 24.191 22.0648 25 21.0721 25H17.161V19.1191C17.161 17.8621 16.14 16.8411 14.8829 16.8411H12.4355C11.1785 16.8411 10.1575 17.8621 10.1575 19.1191V25H6.24636C5.2537 25 4.44487 24.191 4.44487 23.1989V15.3939V14.3939H3.44487H3.03362L3.0184 14.3924L2.99124 14.3912C2.64014 14.3761 2.31541 14.2335 2.06733 13.9853L2.06716 13.9851C1.52582 13.4438 1.52465 12.5605 2.06463 12.0174L2.07253 12.0094L2.07623 12.0056L12.6737 1.40833L12.6737 1.40832C12.9385 1.14356 13.2852 1 13.6592 1C14.0331 1 14.3798 1.14362 14.6444 1.40837ZM25.2516 12.0151C25.2516 12.0151 25.2516 12.0151 25.2516 12.0151L25.2515 12.0151C25.2516 12.0151 25.2516 12.0151 25.2516 12.0151ZM2.07789 12.0039L2.07758 12.0042L2.07789 12.0039Z" stroke="white" stroke-width="2"/>
 							</svg>
-						</button>
+						</a>
 					</td>
 				</tr>
 				  
 				<tr>
 					<td style="padding-bottom: 20px;" align="center">
 						<%if (user.getRole() == Role.STUDENT) { %>
-						<a href="/ispw_project/ExamPageServlet?username=<%=user.getUsername()%>">
-						<button class="nav-button" type="button" name="exam">
+						<a href="/ispw_project/ExamPageServlet" class="nav-button" type="button" width="50%">
 							<svg class="nav-icon" width="31" height="27" viewBox="0 0 31 27" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M28.7954 24.9126C28.7503 24.9903 28.7052 25.0669 28.6604 25.142C28.6156 25.0669 28.5705 24.9903 28.5254 24.9126C28.2844 24.4972 28.0548 24.0676 27.8884 23.689C27.8054 23.4998 27.7443 23.3374 27.7053 23.2055C27.686 23.1404 27.6741 23.0892 27.6672 23.051C27.6602 23.0117 27.6604 22.9961 27.6604 23C27.6604 22.6395 27.8555 22.3206 28.163 22.1419L28.6604 21.8527L29.1578 22.1419C29.4653 22.3206 29.6604 22.6395 29.6604 23C29.6604 22.9961 29.6606 23.0117 29.6536 23.051C29.6467 23.0892 29.6348 23.1404 29.6155 23.2055C29.5765 23.3374 29.5154 23.4998 29.4324 23.689C29.266 24.0676 29.0364 24.4972 28.7954 24.9126ZM15.6349 1.01359L15.6481 1.00699L15.6597 1.00076L15.6749 1.00908L15.6918 1.01752L29.5808 7.96009L29.6572 8L29.6243 8.01722L15.6858 14.9864L15.6727 14.993L15.6611 14.9992L15.6459 14.9909L15.629 14.9825L1.73994 8.03989L1.66356 8L1.74028 7.95994L15.6349 1.01359ZM17.4728 18.5643L17.4729 18.5643L23.6604 15.4698V18C23.6604 18.8524 23.0266 19.8346 21.5388 20.6612C20.085 21.469 18.0087 22 15.6604 22C13.3121 22 11.2358 21.469 9.78195 20.6612C8.29419 19.8346 7.6604 18.8524 7.6604 18V15.4694L13.8438 18.5603C13.8445 18.5607 13.8452 18.561 13.846 18.5614C13.9638 18.6209 14.0826 18.6708 14.2021 18.7123C14.6688 18.9009 15.159 19 15.6604 19C16.1634 19 16.6547 18.9007 17.123 18.7121C17.2399 18.6712 17.3561 18.6227 17.4728 18.5643Z" stroke="white" stroke-width="2"/>
 							</svg>
-						</button>
 						</a>
 						<%} else { %>
 						<button class="nav-button" type="button" name="request">
@@ -67,11 +66,11 @@
 				  
 				<tr>
 					<td style="padding-bottom: 20px;" align="center">
-						<button class="nav-button" type="button" name="profile">
+						<a href="/ispw_project/ProfilePageServlet" class="nav-button" type="button">
 							<svg class="nav-icon" width="26" height="32" viewBox="0 0 26 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M5.8 8C5.8 4.14822 8.94822 1 12.8 1C16.6518 1 19.8 4.14822 19.8 8C19.8 11.8518 16.6518 15 12.8 15C8.94822 15 5.8 11.8518 5.8 8ZM1 22.8C1 21.3783 2.17828 20.2 3.6 20.2H22C23.4217 20.2 24.6 21.3783 24.6 22.8V23.7594C24.6 25.6597 23.3904 27.4941 21.2951 28.8303C19.2095 30.1603 16.2915 31 12.8 31C9.30855 31 6.39049 30.1603 4.30487 28.8303C2.20957 27.4941 1 25.6597 1 23.7594V22.8Z" stroke="white" stroke-width="2"/>
 							</svg>
-						</button>
+						</a>
 					</td>
 				</tr>
 				  
@@ -174,7 +173,7 @@
 			
 				<table style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
 					<c:forEach items="${listOfExam}" var="exam" varStatus="examind">	
-						<tr height="50px" class="exam" style="">
+						<tr height="50px" class="exam">
 							<td style="border-radius: 14px 0 0 14px; white-space: nowrap; padding: 1vw; width: 2vw;">
 								<img class="img" src="res/img/Exam.png" alt="exam">
 							</td>
@@ -214,7 +213,7 @@
 							<td align="right" style="border-radius: 0 14px 14px 0; white-space: nowrap; text-align: center;">
 								<form action="/ispw_project/ExamPageServlet" method="post">
 								<input type="hidden" name="course" value="${exam.getCourse().getAbbrevation()}" />
-								<button class="exam-button" type="submit">
+								<button name="deleteExam" class="exam-button" type="submit" onclick="return confirm('Are you sure you want to delete?')">
 									Delete
 								</button>
 								</form>
@@ -229,11 +228,11 @@
 				<table>
 					<tr>
 						<td class="exam-average">
-							Verbalizd Exams:
+							Verbalized Exams:
 						</td>
 						
 						<td class="num-average">
-							0
+							${fn:length(listOfExam)}
 						</td>
 					</tr>
 					
@@ -243,7 +242,7 @@
 						</td>
 						
 						<td class="num-average">
-							0
+							<%=request.getAttribute("gpa")%>
 						</td>
 					</tr>
 					
@@ -253,7 +252,7 @@
 						</td>
 						
 						<td class="num-average">
-							20
+							<%=request.getAttribute("wpa")%>
 						</td>
 					</tr>
 				
