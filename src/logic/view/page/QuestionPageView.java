@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.animation.Interpolator;
@@ -35,7 +36,9 @@ import javafx.util.Duration;
 import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
 import logic.bean.UserBean;
+import logic.controller.AllQuestionController;
 import logic.controller.InsertAnswerController;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.SQLConverter;
 import logic.view.card.element.AnswerCard;
@@ -63,6 +66,8 @@ public class QuestionPageView implements Initializable{
 	private EventHandler<ActionEvent> addAnswerEvent, cancAddAnswerEvent;
 	private TextArea textAnswer;
 	private Button btnSubmit, btnCancel;
+	private AllQuestionController controller; //TODO forse getAnswer non deve rientrare tra le funzionalità di AllQuestionController?
+	private List<AnswerBean> answersList;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -75,17 +80,21 @@ public class QuestionPageView implements Initializable{
 		labelSubjectQuestion.setText(question.getTitle());
 		labelAuthor.setText(question.getStudent().getName() + " " + question.getStudent().getSurname());
 		labelDate.setText(SQLConverter.date(question.getDate()));
+		controller = new AllQuestionController();
 		loadAnswer();
 	}
 
 	private void loadAnswer() {
 		vboxAnswer.getChildren().clear();
-		if (question.getAnswers() == null) {
-			vboxAnswer.getChildren().add(new Label("\"No one seems to have a solution. Be the first!\""));
+		try {
+			answersList = controller.getAnswersOf(question.getId());
+		} catch (RecordNotFoundException e1) {
+			System.out.println("ENTRO");
+			vboxAnswer.getChildren().add(new Label("No one seems to have a solution. Be the first!"));
 			return;
 		}
 		
-		for (AnswerBean answer : question.getAnswers()) {
+		for (AnswerBean answer : answersList) {
 			AnswerCard answerCard;
 			try {
 				
@@ -184,7 +193,7 @@ public class QuestionPageView implements Initializable{
 			controller.save(answer);
 			closeStage(dialogStage);
 			AlertController.infoAlert("The answer has been entered correctly!");
-			this.question.addAnswers(answer);
+			answersList.add(answer);
 			loadAnswer();
 			
 		} catch (SQLException e) {

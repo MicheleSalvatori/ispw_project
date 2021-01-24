@@ -50,10 +50,10 @@ public class QuestionDAO {
 				Student s = StudentDAO.findStudentByUsername(rs.getString("username"));
 				Date d = rs.getDate("date");
 				boolean so = rs.getBoolean("solved");
-				List<Answer> a = AnswerDAO.getAnswerOf(rs.getInt("id"));
+//				List<Answer> a = AnswerDAO.getAnswerOf(rs.getInt("id"));
 				Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
 				Question q = new Question(t, te, c, s, so, d);
-				q.setAnswers(a);
+//				q.setAnswers(a);
 				q.setId(id);
 				questions.add(q);
 			} while (rs.next());
