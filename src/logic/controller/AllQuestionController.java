@@ -68,27 +68,6 @@ public class AllQuestionController {
 				bean.setCourseByAbbr(q.getCourse().getAbbrevation());
 				bean.setSolved(q.isSolved());
 				bean.setDate(q.getDate());
-//				List<Answer> answers = q.getAnswers();
-//				if (answers != null) {
-//					for (Answer answer : answers) {
-//						
-//						User user = answer.getUser();
-//						UserBean usrBean = new UserBean();
-//						usrBean.setEmail(user.getEmail());
-//						usrBean.setName(user.getName());
-//						usrBean.setPassword(user.getPassword());
-//						usrBean.setSurname(user.getSurname());
-//						usrBean.setUsername(user.getUsername());
-//						
-//						AnswerBean answerBean = new AnswerBean();
-//						answerBean.setDate(answer.getDate());
-//						answerBean.setId(answer.getId());
-//						answerBean.setText(answer.getText());
-//						answerBean.setUser(usrBean);
-//						
-//						bean.addAnswers(answerBean);
-//					}
-//				}
 				questionBeans.add(bean);
 			}
 

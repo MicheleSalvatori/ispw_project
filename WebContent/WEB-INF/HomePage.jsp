@@ -98,7 +98,7 @@ lesson = (LessonBean) request.getAttribute("lesson");
 
 					<tr>
 						<td style="padding-bottom: 20px;" align="center">
-						<a href="/ispw_project/QuestionPageServlet">
+						<a href="/ispw_project/ForumPageServlet">
 							<button class="nav-button" type="button" name="forum">
 								<svg class="nav-icon" width="27" height="25" viewBox="0 0 27 25"
 									fill="none" xmlns="http://www.w3.org/2000/svg">

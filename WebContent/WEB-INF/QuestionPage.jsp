@@ -7,9 +7,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="logic.bean.UserBean"%>
 <%@ page import="logic.bean.QuestionBean"%>
+<%@ page import="logic.bean.AnswerBean"%>
 <%@ page import="logic.utilities.SQLConverter"%>
 <%@ page import="logic.utilities.Role"%>
 <%@ page import="javax.servlet.RequestDispatcher"%>
+
+<jsp:useBean id="question" class="logic.bean.QuestionBean"
+	scope="request" />
 
 <%
 UserBean user = new UserBean();
@@ -20,11 +24,13 @@ if (session.getAttribute("loggedUser") != null) {
 else {
 	user.setUsername("");
 }
+
+question = (QuestionBean) request.getAttribute("question");
 %>
 <head>
 <meta charset="utf-8">
 <title>App - HomePage</title>
-<link rel="stylesheet" href="res/style/ForumPage.css">
+<link rel="stylesheet" href="res/style/QuestionPage.css">
 <link rel="stylesheet" href="res/style/NavigationBar.css">
 <link rel="stylesheet" href="res/style/StatusBar.css">
 </head>
@@ -214,134 +220,65 @@ else {
 </div>
 
 <!-- Page info -->
-	<!--  Left side -->
-	<div class="content">
-		<a class="title-label">Questions</a>
-		<!-- Question Table -->
+<div class="content">
+
+	<!-- Question info -->
+	<a class="title-label"><%=question.getTitle()%></a>
+	<a class="author"><%=question.getStudent().getName() + " " + question.getStudent().getSurname() + " | "%></a>
+	<a class="author"><%=question.getDate()%></a>
+	<div width="100%"
+		style="height: 100%; border: 2px solid #0C0B0B; border-radius: 14px;">
+		<table
+			style="border-collapse: separate; border-spacing: 0; width: 100%; border: 15px solid transparent; table-layout: fixed;">
+			<tbody style="overflow: auto; display: block;">
+				<tr>
+					<td style="word-break: break-all" class="question-text"><%=question.getText()%></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<form action="ispw_project/QuestionPageServlet" method="post">
 		<div
-			style="height: 100%; border: 2px solid #0C0B0B; border-radius: 14px;">
-			<table
-				style="border-collapse: separate; border-spacing: 0; width: 100%; border: 15px solid transparent;">
-				<tbody style="overflow: auto; display: block;">
-					<c:forEach items="${listOfQuestion}" var="question">
-						<tr height="50px" class="question">
-							<td
-								style="border-radius: 14px 0 0 14px; white-space: nowrap; padding: 1vw; width: 2vw;">
-								<img class="img" src="res/img/Question.png" alt="q">
-							</td>
-							<td class="id">${question.getId() }</td>
-							<td align="left" class="question-subject"
-								style="text-align: left;">
-								<table align="left"
-									style="display: inline; vertical-align: middle;" spacing="0">
-									<tr>
-										<td style="padding: 0;" class="question-subject">${question.getTitle()}</td>
-									</tr>
-
-									<tr>
-										<td style="padding: 0;" class="question-date">${question.getDate()}</td>
-									</tr>
-
-									<tr>
-										<c:choose>
-											<c:when test="${question.isSolved()}">
-												<td style="padding: 0; color: green;"
-													class="question-solved">Solved</td>
-											</c:when>
-											<c:otherwise>
-												<td style="padding: 0; color: red;" class="question-solved">Unsolved</td>
-											</c:otherwise>
-										</c:choose>
-									</tr>
-								</table>
-							</td>
-							<td align="right" style="text-align: left;">
-								<table style="display: inline; vertical-align: middle;"
-									spacing="0">
-									<tr>
-										<td class="author">${question.getStudent().getName()}</td>
-									</tr>
-									<tr>
-										<td class="author">${question.getStudent().getSurname()}</td>
-									</tr>
-								</table>
-							</td>
-							<td align="right" class="course"
-								style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left;">
-								${question.getCourse().getAbbrevation()}</td>
-							<td align="right"
-								style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
-								<form
-									action="${pageContext.request.contextPath}/QuestionPageServlet"
-									method="get">
-									<input type="hidden" name="questionID"
-										value="${question.getId()}" /> <input type="hidden"
-										name="questionTitle" value="${question.getTitle()}" /> <input
-										type="hidden" name="questionText"
-										value="${question.getText()}" /> <input type="hidden"
-										name="authorName" value="${question.getStudent().getName()}" />
-									<input type="hidden" name="authorSurname"
-										value="${question.getStudent().getSurname()}" /> <input
-										type="hidden" name="questionDate"
-										value="${question.getDate().toString()}" />
-									<button name="viewQuestion" class="button-view" type="submit">View</button>
-								</form>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+			style="width: 50%; float: right; text-align: right; padding-top: 10px;">
+			<button type="button" class="add-answer" id="addAnswer"
+				name="addAnswer">
+				<img style="vertical-align: middle;" class="plus-img"
+					src="res/img/Plus.png" alt="add"> Add Answer
+			</button>
 		</div>
-		</div>
+	</form>
 
-
-		<!-- Right side -->
-		<div style="float: right;">
-			<!-- Buttons -->
-			<div style="padding-top: 10px;">
-				<button type="button" class="new-question" id="newQuestion"
-					name="newQuestion">Insert New Question</button>
-			</div>
-
-			<!-- Assignment List -->
-			<div class="content-assignment">
-				<table
-					style="border-collapse: separate; border-spacing: 0; width: 100%; border: 15px solid transparent;">
-					<tbody style="overflow: auto; display: block;">
-						<c:forEach items="${listOfAssignment}" var="assignment">
-							<tr height="30px" class="question">
-								<td
-									style="border-radius: 14px 0 0 14px; white-space: nowrap; padding: 1vw; width: 2vw;">
-									<img class="img" src="res/img/Assignment.png" alt="q">
-								</td>
-								<td class="id">${assignment.getId() }</td>
-								<td align="left" class="question-subject"
-									style="text-align: left;">
-									<table align="left"
-										style="display: inline; vertical-align: middle;" spacing="0">
-										<tr>
-											<td style="padding: 0;" class="question-subject">${assignment.getTitle()}</td>
-										</tr>
-										<tr>
-											<td style="padding: 0;" class="question-date">${assignment.getDate()}</td>
-										</tr>
-									</table>
-								</td>
-
-								<td align="right" class="course"
-									style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left;">
-									${assignment.getCourse().getAbbrevation()}</td>
-
-								<td align="right"
-									style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
-									<button class="button-view" type="button">View</button>
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</div>
-
+	<!-- Answers  -->
+	<div style="padding-top: 100px">
+		<c:choose>
+			<c:when test="${empty listOfAnswers}">
+				<a class="empty-label"> No one seems to have a solution. Be the first! </a>
+			</c:when>
+			<c:otherwise>
+				<a class="title-label">Answers</a>
+				<c:forEach items="${listOfAnswers}" var="answer">
+					<div width="200%"
+						style="height: 100%; margin-top: 10px; border: 2px solid #0C0B0B; border-radius: 14px;">
+						<table
+							style="border-collapse: collapse; border-spacing: 0; width: 100%; border: 15px solid transparent; table-layout: fixed;">
+							<tbody style="overflow: auto; display: block;">
+								<tr class="bordered-tr">
+									<td class="author">${answer.getUser().getName()}
+										${answer.getUser().getSurname()}</td>
+									<td align="right"
+										style="text-align: right; position: absolute; left: 90%"
+										class="author">${SQLConverter.date(answer.getDate())}</td>
+								</tr>
+								<tr>
+									<td style="word-break: break-all" class="answer-text">${answer.getText()}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+	</div>
+</div>
 </body>
 </html>

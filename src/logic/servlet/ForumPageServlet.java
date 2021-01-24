@@ -20,24 +20,22 @@ import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/ForumPageServlet")
 public class ForumPageServlet extends HttpServlet {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
+
 		AllQuestionController controller = new AllQuestionController();
 		List<QuestionBean> questions = null;
 		try {
-			questions = controller.getAllQuestions( (UserBean) session.getAttribute("loggedUser"));
+			questions = controller.getAllQuestions((UserBean) session.getAttribute("loggedUser"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		request.setAttribute("listOfQuestion", questions);
-		
+
 		AddAssignmentController assignmentController = new AddAssignmentController();
 		List<AssignmentBean> assignments = null;
 		try {
@@ -50,17 +48,4 @@ public class ForumPageServlet extends HttpServlet {
 		request.setAttribute("listOfAssignment", assignments);
 		request.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(request, response);
 	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		
-		if (request.getParameter("viewQuestion") != null) {
-			System.out.println("A");
-		}else {
-			System.out.println("B");
-		}
-	}
-	
-	
 }
