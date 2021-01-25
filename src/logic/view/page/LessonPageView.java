@@ -89,7 +89,7 @@ public class LessonPageView {
 	}
 
 	public void setPage() {
-		btnCourse.setText(lesson.getCourse().getAbbrevation());
+		btnCourse.setText(lesson.getCourse().getAbbreviation());
 		labelClassroom.setText(lesson.getClassroom().getName());
 		labelTime.setText(SQLConverter.time(lesson.getTime()));
 		labelDate.setText(SQLConverter.date(lesson.getDate()));

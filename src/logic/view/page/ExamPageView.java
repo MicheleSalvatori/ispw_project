@@ -170,7 +170,7 @@ public class ExamPageView implements Initializable {
 		btnCancel.setOnAction(cancAddExamEvent);
 
 		for (CourseBean courseBean : courses) {
-			comboCourse.getItems().add(courseBean.getAbbrevation());
+			comboCourse.getItems().add(courseBean.getAbbreviation());
 		}
 		
 		for (Integer g : grades) {

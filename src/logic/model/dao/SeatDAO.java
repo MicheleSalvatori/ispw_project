@@ -27,7 +27,7 @@ public class SeatDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			Queries.occupateSeat(stmt, seatID, lesson.getClassroom().getName(), lesson.getDate().toString(), lesson.getTime().toString(), lesson.getCourse().getAbbrevation(), username);
+			Queries.occupateSeat(stmt, seatID, lesson.getClassroom().getName(), lesson.getDate().toString(), lesson.getTime().toString(), lesson.getCourse().getAbbreviation(), username);
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -46,7 +46,7 @@ public class SeatDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			Queries.freeSeat(stmt, seatID, lessonBean.getClassroom().getName(), user, lessonBean.getCourse().getAbbrevation(), lessonBean.getDate().toString(), lessonBean.getTime().toString());
+			Queries.freeSeat(stmt, seatID, lessonBean.getClassroom().getName(), user, lessonBean.getCourse().getAbbreviation(), lessonBean.getDate().toString(), lessonBean.getTime().toString());
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -103,7 +103,7 @@ public class SeatDAO {
 //			String dateLesson = SQLConverter.date(lesson.getDate());		// Non funziona, sul db è yyyy/mm/gg
 			String dateLesson = lesson.getDate().toString();
 			String timeLesson = SQLConverter.time(lesson.getTime());
-			ResultSet rs = Queries.getOccupateSeats(stmt, lesson.getCourse().getAbbrevation(), dateLesson, timeLesson);
+			ResultSet rs = Queries.getOccupateSeats(stmt, lesson.getCourse().getAbbreviation(), dateLesson, timeLesson);
 
 			if (!rs.first()) {
 				occupiedSeats = null;
@@ -136,7 +136,7 @@ public class SeatDAO {
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			// Non mettere SQLConverte per date che non funziona, gli serve prima l'anno
 			ResultSet rs = Queries.getSeat(stmt, username, lesson.getDate().toString(), lesson.getTime().toString(),
-					lesson.getCourse().getAbbrevation());
+					lesson.getCourse().getAbbreviation());
 
 			if (!rs.first()) {
 				mySeat = null;

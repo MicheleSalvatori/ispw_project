@@ -41,7 +41,7 @@ public class InsertQuestionController {
 
 	public void save(QuestionBean questionBean) throws SQLException {
 		Course course = new Course();
-		course.setAbbrevation(questionBean.getCourse().getAbbrevation());
+		course.setAbbrevation(questionBean.getCourse().getAbbreviation());
 		
 		Student student = new Student(questionBean.getStudent().getUsername(), questionBean.getStudent().getPassword(), questionBean.getStudent().getName(),
 				questionBean.getStudent().getSurname(), questionBean.getStudent().getEmail());

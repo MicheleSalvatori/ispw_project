@@ -26,7 +26,7 @@ public class CourseController {
 		
 		Date date = new Date(System.currentTimeMillis());
 		Time time = new Time(System.currentTimeMillis());
-		Lesson lesson = LessonDAO.getNextLessonByCourse(date, time, courseBean.getAbbrevation());
+		Lesson lesson = LessonDAO.getNextLessonByCourse(date, time, courseBean.getAbbreviation());
 		
 		Classroom classroom = lesson.getClassroom();
 		ClassroomBean classroomBean = new ClassroomBean();
@@ -53,7 +53,7 @@ public class CourseController {
 	
 	public List<ProfessorBean> getCourseProfessors(CourseBean courseBean) throws SQLException, RecordNotFoundException {
 		
-		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbrevation());
+		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbreviation());
 		List<ProfessorBean> professorsBean = new ArrayList<>();
 		
 		for (Professor professor : professors) {
@@ -72,7 +72,7 @@ public class CourseController {
 	
 	public List<WeeklyLessonBean> getWeeklyLessons(CourseBean courseBean) throws SQLException, RecordNotFoundException {
 		
-		List<WeeklyLesson> lessons = WeeklyLessonDAO.getCourseWeeklyLessons(courseBean.getAbbrevation());
+		List<WeeklyLesson> lessons = WeeklyLessonDAO.getCourseWeeklyLessons(courseBean.getAbbreviation());
 		List<WeeklyLessonBean> lessonsBean = new ArrayList<>();
 		
 		for (WeeklyLesson lesson : lessons) {

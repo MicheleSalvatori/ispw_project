@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -80,27 +77,7 @@ public class ExamPageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		if (request.getParameter("addExam") != null) {
-			ViewVerbalizedExamsController controller = new ViewVerbalizedExamsController();
-			try {
-				List<CourseBean> courses = controller.getCourses((UserBean) session.getAttribute("loggedUser"));
-				List<Integer> grades = IntStream.rangeClosed(18, 30).boxed().collect(Collectors.toList());
-				request.setAttribute("listOfCourse", courses);
-				request.setAttribute("listOfGrade", grades);
-				//doGet(request, response);
-				request.getRequestDispatcher("/WEB-INF/ExamPage.jsp").forward(request, response);
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			
-			} catch (RecordNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		else if (request.getParameter("submitAdd") != null) {
+		if (request.getParameter("submitAdd") != null) {
 			ViewVerbalizedExamsController controller = new ViewVerbalizedExamsController();
 			
 			String course = request.getParameter("course-select");
@@ -115,7 +92,7 @@ public class ExamPageServlet extends HttpServlet {
 			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
 		
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course);
+			courseBean.setAbbreviation(course);
 			
 			VerbalizedBean verb = new VerbalizedBean();
 			verb.setCourse(courseBean);
@@ -130,7 +107,7 @@ public class ExamPageServlet extends HttpServlet {
 			ViewVerbalizedExamsController controller = new ViewVerbalizedExamsController();
 			String course = request.getParameter("course");
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course);
+			courseBean.setAbbreviation(course);
 			
 			StudentBean studentBean = new StudentBean();
 			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());

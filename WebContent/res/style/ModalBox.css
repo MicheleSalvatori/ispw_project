@@ -35,6 +35,13 @@
 }
 
 /* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
 .close-add {
   color: white;
   float: right;
@@ -47,6 +54,13 @@
   float: right;
   font-size: 28px;
   font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .close-add:hover,
@@ -126,6 +140,20 @@
 	cursor: pointer;
 	border-radius: 8px;
 	border: 2px solid #0C0B0B;
+}
+
+.text-input {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 18px;
+	color: #0C0B0B;
+	
+	width: 25%;
+	height: 100%;
+	cursor: pointer;
+	border-radius: 8px;
+	border: 2px solid #0C0B0B;
+	padding-left: 5px;
 }
 
 /* Add Animation */

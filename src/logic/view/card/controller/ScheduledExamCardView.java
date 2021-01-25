@@ -37,7 +37,7 @@ public class ScheduledExamCardView {
 		this.exam = exam;
 		
 		labelDay.setText(SQLConverter.date(exam.getDate()));
-		btnCourse.setText(exam.getCourse().getAbbrevation());
+		btnCourse.setText(exam.getCourse().getAbbreviation());
 		labelClass.setText(exam.getClassroom().getName());
 		labelTime.setText(SQLConverter.time(exam.getTime()));
 	}

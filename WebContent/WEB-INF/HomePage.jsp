@@ -50,12 +50,12 @@
 							</svg>
 						</a>
 						<%} else { %>
-						<button class="nav-button" type="button" name="request">
+						<a href="/ispw_project/RequestPageServlet" class="nav-button" type="button">
 							<svg width="21" height="27" viewBox="0 0 21 27" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M0.0351562 0V3.375H1.19531C1.56885 8.89892 4.60547 12.2212 6.25781 13.6406C5.00098 14.77 1.61279 18.0835 1.19531 23.625H0.0351562V27H20.2852V23.625H19.125C18.7075 18.0835 15.3193 14.77 14.0625 13.6406C15.7192 12.2388 18.7646 8.97363 19.125 3.375H20.2852V0H0.0351562ZM3.48047 3.375H16.8398C16.3608 9.97998 11.8477 12.5156 11.8477 12.5156L10.4062 13.3594L11.707 14.3789C11.707 14.3789 16.2686 18.1099 16.8398 23.625H16.6641C15.7324 21.1685 12.2871 18 10.1602 18C8.0332 18 4.58789 21.1685 3.65625 23.625H3.48047C4.05176 18.1099 8.61328 14.3789 8.61328 14.3789L9.87891 13.3594L8.47266 12.5508C8.47266 12.5508 3.95947 9.89648 3.48047 3.375ZM7.91016 9C7.91016 10.0107 9.14942 12.375 10.1602 12.375C11.1709 12.375 12.4102 10.0107 12.4102 9H7.91016Z" fill="white"/>
 							</svg>
+						</a>
 						<%} %>
-						</button>
 					</td>
 				</tr>
 				  
@@ -92,12 +92,12 @@
 				<tr>
 					<td style="padding-bottom: 20px;" align="center">
 						<%if (user.getRole() == Role.PROFESSOR) { %>
-						<button class="nav-button" type="button" name="schedule">
+						<a href="/ispw_project/SchedulePageServlet" class="nav-button">
 							<svg class="nav-icon" width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M21.3271 2.58333H23.9104V6.45833H21.3271V2.58333ZM8.4104 15.5C4.1479 15.5 0.6604 12.0125 0.6604 7.75C0.6604 3.4875 4.1479 0 8.4104 0C12.6729 0 16.1604 3.4875 16.1604 7.75C16.1604 12.0125 12.6729 15.5 8.4104 15.5ZM8.4104 2.58333C5.56873 2.58333 3.24373 4.90833 3.24373 7.75C3.24373 10.5917 5.56873 12.9167 8.4104 12.9167C11.2521 12.9167 13.5771 10.5917 13.5771 7.75C13.5771 4.90833 11.2521 2.58333 8.4104 2.58333ZM11.3812 9.42917L9.44373 7.62083L10.9937 4.90833L9.5729 4.13333L7.37707 7.87917L10.2187 10.7208L11.3812 9.42917Z" fill="white"/>
 								<path d="M25.2021 5.16663H18.4053C18.6184 5.99329 18.7437 6.85613 18.7437 7.74996H25.2021V10.3333H18.4053C18.1689 11.2504 17.8137 12.1171 17.35 12.9166H25.2021L25.2034 25.8333H7.11873V17.9942C6.21586 17.8818 5.35044 17.6558 4.5354 17.3251V25.8333C4.5354 27.258 5.69403 28.4166 7.11873 28.4166H25.2021C26.6268 28.4166 27.7854 27.258 27.7854 25.8333V7.74996C27.7854 6.32525 26.6268 5.16663 25.2021 5.16663Z" fill="white"/>
 							</svg>
-						</button>
+						</a>
 						<%} %>
 					</td>
 				</tr>
@@ -213,7 +213,7 @@
 						<%if (lesson == null) { %>
 							<tr>
 								<td align="center" class="next-lessons-label" style="width: 100%;">
-									No lesson found
+									There are no future lesson today.
 								</td>
 							</tr>
 							<!--<a align="center" class="next-lessons-label lesson" style="width: 100%;">No lesson found</a>-->
@@ -227,7 +227,7 @@
 									<table style="display: inline; vertical-align: middle;" spacing="0">
 										<tr>
 											<td class="lesson-text">
-												<%=lesson.getCourse().getAbbrevation()%>
+												<%=lesson.getCourse().getAbbreviation()%>
 											</td>
 										</tr>
 
@@ -276,7 +276,7 @@
 								<c:if test="${empty listOfLesson}">
 									<tr>
 										<td colspan="5" class="next-lessons-label" style="text-align: center;">
-											No lesson found
+											There are no future lesson today.
 										</td>
 									</tr>
 								</c:if>
@@ -290,7 +290,7 @@
 										<table style="display: inline; vertical-align: middle;" spacing="0">
 											<tr>
 												<td class="lesson-text">
-												  ${lesson.getCourse().getAbbrevation()}
+												  ${lesson.getCourse().getAbbreviation()}
 												</td>
 											</tr>
 

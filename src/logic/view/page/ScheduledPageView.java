@@ -98,7 +98,7 @@ public class ScheduledPageView implements Initializable {
 	public void setFilters(CourseBean course) throws IOException {
 		for (CourseBean courseBean : courses) {	
 			CourseFilterCard courseFilterCard = new CourseFilterCard(courseBean);
-			if (courseBean.getAbbrevation().compareTo(course.getAbbrevation()) == 0) {
+			if (courseBean.getAbbreviation().compareTo(course.getAbbreviation()) == 0) {
 				courseFilterCard.getController().getButton().setSelected(true);
 			}
 			vboxCourse.getChildren().add(courseFilterCard);
@@ -107,18 +107,18 @@ public class ScheduledPageView implements Initializable {
 	
 	public void filterLessons(CourseBean course) {
 		
-		if (filteredCourses.contains(course.getAbbrevation())) {
-			filteredCourses.remove(course.getAbbrevation());
+		if (filteredCourses.contains(course.getAbbreviation())) {
+			filteredCourses.remove(course.getAbbreviation());
 		}
 		else {
-			filteredCourses.add(course.getAbbrevation());
+			filteredCourses.add(course.getAbbreviation());
 		}
 		
 		try {
 			vboxScroll.getChildren().clear();
 			
 			for (LessonBean lessonBean : lessons) {
-				if (filteredCourses.contains(lessonBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
+				if (filteredCourses.contains(lessonBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
 					LessonCard lessonCard = new LessonCard(lessonBean);
 					vboxScroll.getChildren().add(lessonCard);
 				}
@@ -141,17 +141,17 @@ public class ScheduledPageView implements Initializable {
 	
 	public void filterExams(CourseBean course) {
 		
-		if (filteredCourses.contains(course.getAbbrevation())) {
-			filteredCourses.remove(course.getAbbrevation());
+		if (filteredCourses.contains(course.getAbbreviation())) {
+			filteredCourses.remove(course.getAbbreviation());
 		}
 		else {
-			filteredCourses.add(course.getAbbrevation());
+			filteredCourses.add(course.getAbbreviation());
 		}
 		
 		try {
 			vboxScroll.getChildren().clear();
 			for (ExamBean examBean : exams) {
-				if (filteredCourses.contains(examBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
+				if (filteredCourses.contains(examBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
 					ScheduledExamCard scheduledExamCard = new ScheduledExamCard(examBean);
 					vboxScroll.getChildren().add(scheduledExamCard);
 				}

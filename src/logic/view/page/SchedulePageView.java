@@ -105,8 +105,8 @@ public class SchedulePageView implements Initializable {
 			
 			courses = scheduleController.getCourses(UserBean.getInstance());
 			for (CourseBean course : courses) {
-				comboCourseLesson.getItems().add(course.getAbbrevation());
-				comboCourseExam.getItems().add(course.getAbbrevation());
+				comboCourseLesson.getItems().add(course.getAbbreviation());
+				comboCourseExam.getItems().add(course.getAbbreviation());
 			}
 			
 		} catch (RecordNotFoundException e) {

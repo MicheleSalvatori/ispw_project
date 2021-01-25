@@ -101,7 +101,7 @@ public class CoursePageView {
 			vboxScroll.getChildren().add(new Label(e.getMessage()));
 		}
 
-		labelCourse.setText(course.getAbbrevation());
+		labelCourse.setText(course.getAbbreviation());
 		labelYear.setText(course.getYear());
 		labelCredits.setText(course.getCredits());
 		labelGoal.setText(course.getGoal());

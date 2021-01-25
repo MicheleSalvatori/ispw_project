@@ -110,7 +110,7 @@ public class ProfilePageServlet extends HttpServlet {
 			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
 			
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course);
+			courseBean.setAbbreviation(course);
 			
 			RequestBean requestBean = new RequestBean();
 			requestBean.setStudent(studentBean);
@@ -131,7 +131,7 @@ public class ProfilePageServlet extends HttpServlet {
 			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
 			
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course);
+			courseBean.setAbbreviation(course);
 			
 			RequestBean requestBean = new RequestBean();
 			requestBean.setStudent(studentBean);
@@ -145,7 +145,7 @@ public class ProfilePageServlet extends HttpServlet {
 			String course = request.getParameter("course");
 			
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course);
+			courseBean.setAbbreviation(course);
 			
 			StudentBean studentBean = new StudentBean();
 			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
@@ -175,6 +175,7 @@ public class ProfilePageServlet extends HttpServlet {
 					try {
 						signupController.changePassword(userBean);
 						session.invalidate();
+						session.setAttribute("alertMsg", "You will be redirected to Login page.");
 						response.sendRedirect("/ispw_project/LoginServlet");
 						return;
 						

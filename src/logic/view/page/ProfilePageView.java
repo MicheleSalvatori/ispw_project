@@ -158,7 +158,7 @@ public class ProfilePageView implements Initializable {
 				
 				joinCourseController.removeCourse(requestBean);
 				
-				AlertController.infoAlert("Course " + courseBean.getAbbrevation() + " removed.");
+				AlertController.infoAlert("Course " + courseBean.getAbbreviation() + " removed.");
 				loadCourses();
 			}
 			
@@ -311,7 +311,7 @@ public class ProfilePageView implements Initializable {
 			joinCourseController = new JoinCourseController();
 			joinCourseController.deleteRequest(requestBean);
 			
-			AlertController.infoAlert("Request of course '" + requestBean.getCourse().getAbbrevation() + "' deleted.");
+			AlertController.infoAlert("Request of course '" + requestBean.getCourse().getAbbreviation() + "' deleted.");
 			loadCourses();
 		}
 	}

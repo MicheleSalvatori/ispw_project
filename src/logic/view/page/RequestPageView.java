@@ -86,18 +86,18 @@ public class RequestPageView implements Initializable {
 	
 	public void filterRequests(CourseBean course) {
 		
-		if (filteredCourses.contains(course.getAbbrevation())) {
-			filteredCourses.remove(course.getAbbrevation());
+		if (filteredCourses.contains(course.getAbbreviation())) {
+			filteredCourses.remove(course.getAbbreviation());
 		}
 		else {
-			filteredCourses.add(course.getAbbrevation());
+			filteredCourses.add(course.getAbbreviation());
 		}
 
 		try {
 			vboxRequest.getChildren().clear();
 			
 			for (RequestBean requestBean : requests) {
-				if (filteredCourses.contains(requestBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
+				if (filteredCourses.contains(requestBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
 					RequestCard requestCard = new RequestCard(requestBean);
 					vboxRequest.getChildren().add(requestCard);
 				}

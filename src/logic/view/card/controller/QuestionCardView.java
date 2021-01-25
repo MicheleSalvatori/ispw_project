@@ -45,7 +45,7 @@ public class QuestionCardView {
 	public void setCard(QuestionBean question) {
 		this.question = question;
 
-		btnCourse.setText(question.getCourse().getAbbrevation());
+		btnCourse.setText(question.getCourse().getAbbreviation());
 		labelName.setText(question.getStudent().getName());
 		labelSurname.setText(question.getStudent().getSurname());
 		labelNumber.setText(String.valueOf(question.getId()));
