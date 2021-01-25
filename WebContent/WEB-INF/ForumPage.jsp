@@ -27,6 +27,7 @@ else {
 <link rel="stylesheet" href="res/style/ForumPage.css">
 <link rel="stylesheet" href="res/style/NavigationBar.css">
 <link rel="stylesheet" href="res/style/StatusBar.css">
+<link rel="stylesheet" href="res/style/ModalBox.css">
 </head>
 
 <!-- Side navigation -->
@@ -214,14 +215,13 @@ else {
 </div>
 
 <!-- Page info -->
+<div class="content">
 	<!--  Left side -->
-	<div class="content">
+	<div class="content-question">
 		<a class="title-label">Questions</a>
 		<!-- Question Table -->
-		<div
-			style="height: 100%; border: 2px solid #0C0B0B; border-radius: 14px;">
-			<table
-				style="border-collapse: separate; border-spacing: 0; width: 100%; border: 15px solid transparent;">
+		<div class="border-table">
+			<table class="table-question">
 				<tbody style="overflow: auto; display: block;">
 					<c:forEach items="${listOfQuestion}" var="question">
 						<tr height="50px" class="question">
@@ -231,9 +231,8 @@ else {
 							</td>
 							<td class="id">${question.getId() }</td>
 							<td align="left" class="question-subject"
-								style="text-align: left;">
-								<table align="left"
-									style="display: inline; vertical-align: middle;" spacing="0">
+								style="text-align: left; flex: 1">
+								<table style="display: inline; vertical-align: middle; flex: 1;">
 									<tr>
 										<td style="padding: 0;" class="question-subject">${question.getTitle()}</td>
 									</tr>
@@ -254,10 +253,8 @@ else {
 										</c:choose>
 									</tr>
 								</table>
-							</td>
 							<td align="right" style="text-align: left;">
-								<table style="display: inline; vertical-align: middle;"
-									spacing="0">
+								<table style="display: inline; vertical-align: middle; flex: 1;">
 									<tr>
 										<td class="author">${question.getStudent().getName()}</td>
 									</tr>
@@ -267,10 +264,10 @@ else {
 								</table>
 							</td>
 							<td align="right" class="course"
-								style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left;">
+								style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left; flex: 1">
 								${question.getCourse().getAbbrevation()}</td>
 							<td align="right"
-								style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
+								style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%; flex: 1">
 								<form
 									action="${pageContext.request.contextPath}/QuestionPageServlet"
 									method="get">
@@ -292,22 +289,32 @@ else {
 				</tbody>
 			</table>
 		</div>
-		</div>
+	</div>
 
+	<!-- Buttons -->
+	<div class="content-right">
+		<table>
+			<tr>
+				<td>
+					<button type="button" class="new-question" id="newQuestion">Insert
+						New Question</button>
+				</td>
+			</tr>
 
-		<!-- Right side -->
-		<div style="float: right;">
-			<!-- Buttons -->
-			<div style="padding-top: 10px;">
-				<button type="button" class="new-question" id="newQuestion"
-					name="newQuestion">Insert New Question</button>
-			</div>
-
-			<!-- Assignment List -->
-			<div class="content-assignment">
-				<table
-					style="border-collapse: separate; border-spacing: 0; width: 100%; border: 15px solid transparent;">
-					<tbody style="overflow: auto; display: block;">
+			<tr>
+				<td>
+					<button type="button" class="questions-button" id="myQuestion"
+						name="myQuestion">My Questions</button>
+					<button type="button" class="questions-button" id="allQuestion"
+						name="allQuestion">All Questions</button>
+				</td>
+			</tr>
+		</table>
+		<div style="margin-top: 30px;">
+			<a class="title-label">Assignments</a>
+			<div class="border-table">
+				<table class="table-question;">
+					<tbody style="overflow: scroll;">
 						<c:forEach items="${listOfAssignment}" var="assignment">
 							<tr height="30px" class="question">
 								<td
@@ -317,8 +324,7 @@ else {
 								<td class="id">${assignment.getId() }</td>
 								<td align="left" class="question-subject"
 									style="text-align: left;">
-									<table align="left"
-										style="display: inline; vertical-align: middle;" spacing="0">
+									<table style="display: inline; vertical-align: middle;">
 										<tr>
 											<td style="padding: 0;" class="question-subject">${assignment.getTitle()}</td>
 										</tr>
@@ -326,8 +332,6 @@ else {
 											<td style="padding: 0;" class="question-date">${assignment.getDate()}</td>
 										</tr>
 									</table>
-								</td>
-
 								<td align="right" class="course"
 									style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left;">
 									${assignment.getCourse().getAbbrevation()}</td>
@@ -342,6 +346,35 @@ else {
 				</table>
 			</div>
 		</div>
+	</div>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+	<!-- Modal content -->
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<p>Some text in the Modal..</p>
+	</div>
+</div>
+
 
 </body>
+
+<script>
+	var modal = document.getElementById("myModal");
+	var btn = document.getElementById("myQuestion");
+	var span = document.getElementsByClassName("close")[0];
+	btn.onclick = function() {
+		modal.style.display = "block";
+	}
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+</script>
 </html>

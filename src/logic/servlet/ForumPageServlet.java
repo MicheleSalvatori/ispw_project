@@ -48,4 +48,10 @@ public class ForumPageServlet extends HttpServlet {
 		request.setAttribute("listOfAssignment", assignments);
 		request.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(request, response);
 	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("doPost ForumServlet");
+		req.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(req, resp);
+	}
 }
