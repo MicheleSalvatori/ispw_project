@@ -52,7 +52,7 @@ public class NewQuestionView implements Initializable {
 				.or(Bindings.isEmpty(textSubject.textProperty())).or((courseComboBox.valueProperty().isNull())));
 		
 		try {
-			courses = controller.getCoursesOfStudent(UserBean.getInstance().getUsername());
+			courses = controller.getCoursesOfStudent(UserBean.getInstance());
 			for (CourseBean c : courses) {
 				courseComboBox.getItems().add(c.getAbbrevation());
 			}

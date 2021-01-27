@@ -7,6 +7,7 @@ import java.util.List;
 
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
+import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Question;
@@ -20,11 +21,12 @@ public class InsertQuestionController {
 		
 	}
 
-	public List<CourseBean> getCoursesOfStudent(String usernameString) throws RecordNotFoundException {
+	public List<CourseBean> getCoursesOfStudent(UserBean user) throws RecordNotFoundException {
 		List<Course> courses = new ArrayList<>();
 		List<CourseBean> courseBeans;
+		String username = user.getUsername();
 		try {
-			courses = CourseDAO.getStudentCourses(usernameString);
+			courses = CourseDAO.getStudentCourses(username);
 
 			courseBeans = new ArrayList<>();
 			for (Course c : courses) {
@@ -43,8 +45,12 @@ public class InsertQuestionController {
 		Course course = new Course();
 		course.setAbbrevation(questionBean.getCourse().getAbbrevation());
 		
-		Student student = new Student(questionBean.getStudent().getUsername(), questionBean.getStudent().getPassword(), questionBean.getStudent().getName(),
-				questionBean.getStudent().getSurname(), questionBean.getStudent().getEmail());
+		//TODO possiamo togliere StudentBean in QuestionBean e mettere String username soltanto? 
+		// Non so se è corretto passargli soltanto l'username in questionBean. Altrimenti in web bisogna passare tutto
+//		Student student = new Student(questionBean.getStudent().getUsername(), questionBean.getStudent().getPassword(), questionBean.getStudent().getName(),
+//				questionBean.getStudent().getSurname(), questionBean.getStudent().getEmail());
+		Student student = new Student();
+		student.setUsername(questionBean.getStudent().getUsername());
 				
 		Question question = new Question(questionBean.getTitle(), questionBean.getText(), course, student,
 										 false, new Date(System.currentTimeMillis()));

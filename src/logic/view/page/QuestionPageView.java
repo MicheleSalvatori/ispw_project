@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -193,7 +194,10 @@ public class QuestionPageView implements Initializable{
 			controller.save(answer);
 			closeStage(dialogStage);
 			AlertController.infoAlert("The answer has been entered correctly!");
-			answersList.add(answer);
+			if (answersList == null) {
+				answersList = new ArrayList<>();
+				answersList.add(answer);
+			}
 			loadAnswer();
 			
 		} catch (SQLException e) {
