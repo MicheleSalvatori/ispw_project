@@ -6,8 +6,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="logic.bean.UserBean"%>
-<%@ page import="logic.bean.QuestionBean"%>
-<%@ page import="logic.utilities.SQLConverter"%>
+<%@ page import="logic.bean.CourseBean"%>
 <%@ page import="logic.utilities.Role"%>
 <%@ page import="javax.servlet.RequestDispatcher"%>
 
@@ -23,8 +22,8 @@ else {
 %>
 <head>
 <meta charset="utf-8">
-<title>App - Forum</title>
-<link rel="stylesheet" href="res/style/ForumPage.css">
+<title>App - Ask a Question</title>
+<link rel="stylesheet" href="res/style/NewQuestionPage.css">
 <link rel="stylesheet" href="res/style/NavigationBar.css">
 <link rel="stylesheet" href="res/style/StatusBar.css">
 <link rel="stylesheet" href="res/style/ModalBox.css">
@@ -157,6 +156,7 @@ else {
 		</tbody>
 	</table>
 </div>
+</form>
 
 <!-- Status bar -->
 <div class="topnav">
@@ -212,138 +212,47 @@ else {
 
 <!-- Page info -->
 <div class="content">
-	<!--  Left side -->
-	<div class="content-question">
-		<a class="title-label">Questions</a>
-		<!-- Question Table -->
-		<div class="border-table">
-			<table class="table-question">
-				<tbody style="overflow: auto; display: block;">
-					<c:forEach items="${listOfQuestion}" var="question">
-						<tr height="50px" class="question">
-							<td
-								style="border-radius: 14px 0 0 14px; white-space: nowrap; padding: 1vw; width: 2vw;">
-								<img class="img" src="res/img/Question.png" alt="q">
-							</td>
-							<td class="id">${question.getId() }</td>
-							<td align="left" class="question-subject"
-								style="text-align: left; flex: 1">
-								<table style="display: inline; vertical-align: middle; flex: 1;">
-									<tr>
-										<td style="padding: 0;" class="question-subject">${question.getTitle()}</td>
-									</tr>
-
-									<tr>
-										<td style="padding: 0;" class="question-date">${question.getDate()}</td>
-									</tr>
-
-									<tr>
-										<c:choose>
-											<c:when test="${question.isSolved()}">
-												<td style="padding: 0; color: green;"
-													class="question-solved">Solved</td>
-											</c:when>
-											<c:otherwise>
-												<td style="padding: 0; color: red;" class="question-solved">Unsolved</td>
-											</c:otherwise>
-										</c:choose>
-									</tr>
-								</table>
-							<td align="right" style="text-align: left;">
-								<table style="display: inline; vertical-align: middle; flex: 1;">
-									<tr>
-										<td class="author">${question.getStudent().getName()}</td>
-									</tr>
-									<tr>
-										<td class="author">${question.getStudent().getSurname()}</td>
-									</tr>
-								</table>
-							</td>
-							<td align="right" class="course"
-								style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left; flex: 1">
-								${question.getCourse().getAbbrevation()}</td>
-							<td align="right"
-								style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%; flex: 1">
-								<form
-									action="${pageContext.request.contextPath}/QuestionPageServlet"
-									method="get">
-									<input type="hidden" name="questionID"
-										value="${question.getId()}" /> <input type="hidden"
-										name="questionTitle" value="${question.getTitle()}" /> <input
-										type="hidden" name="questionText"
-										value="${question.getText()}" /> <input type="hidden"
-										name="authorName" value="${question.getStudent().getName()}" />
-									<input type="hidden" name="authorSurname"
-										value="${question.getStudent().getSurname()}" /> <input
-										type="hidden" name="questionDate"
-										value="${question.getDate().toString()}" />
-									<button name="viewQuestion" class="button-view" type="submit">View</button>
-								</form>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
+	<a class="title-label">Post new question</a>
+	<div style="margin-top: 20px;">
+		<input class="input-subject" type="text" id="question-subject"
+			name="question-subject" placeholder="Subject" onkeyup="fun()"
+			onclick="fun()" form="question-form"> 
+			<select class="course-select" id="courses"
+			name="courses" onclick="fun()" onkeyup="fun()" form="question-form">
+			<option disabled selected value="0">Select course</option>
+			<c:forEach items="${listOfCourses}" var="course">
+				<option value="${course.getAbbrevation()}">${course.getAbbrevation()}</option>
+			</c:forEach>
+		</select>
 	</div>
-
-	<!-- Buttons -->
-	<div class="content-right">
-		<table>
-			<tr>
-				<td><a href="/ispw_project/NewQuestionPageServlet">
-						<button type="button" class="new-question" id="newQuestion">Insert
-							New Question</button>
-				</a></td>
-			</tr>
-
-			<tr>
-				<td>
-					<button type="button" class="questions-button" id="myQuestion"
-						name="myQuestion">My Questions</button>
-					<button type="button" class="questions-button" id="allQuestion"
-						name="allQuestion">All Questions</button>
-				</td>
-			</tr>
-		</table>
-		<div style="margin-top: 30px;">
-			<a class="title-label">Assignments</a>
-			<div class="border-table">
-				<table class="table-question;">
-					<tbody style="overflow: scroll;">
-						<c:forEach items="${listOfAssignment}" var="assignment">
-							<tr height="30px" class="question">
-								<td
-									style="border-radius: 14px 0 0 14px; white-space: nowrap; padding: 1vw; width: 2vw;">
-									<img class="img" src="res/img/Assignment.png" alt="q">
-								</td>
-								<td class="id">${assignment.getId() }</td>
-								<td align="left" class="question-subject"
-									style="text-align: left;">
-									<table style="display: inline; vertical-align: middle;">
-										<tr>
-											<td style="padding: 0;" class="question-subject">${assignment.getTitle()}</td>
-										</tr>
-										<tr>
-											<td style="padding: 0;" class="question-date">${assignment.getDate()}</td>
-										</tr>
-									</table>
-								<td align="right" class="course"
-									style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left;">
-									${assignment.getCourse().getAbbrevation()}</td>
-
-								<td align="right"
-									style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
-									<button class="button-view" type="button">View</button>
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</div>
+	<div style="margin-top: 20px;">
+		<textarea id="questionText" onkeyup="fun()" onclick="fun()"
+			placeholder="Question" name="question-text" form="question-form"></textarea>
 	</div>
+	<form
+		action="${pageContext.request.contextPath}/NewQuestionPageServlet"
+		method="post" id="question-form">
+		<button class="button-submit" id="submit" name="submit"
+			disabled="disabled" onclick="return confirm('Are you sure you want to ask this question?')">Submit</button>
+	</form>
 </div>
-
 </body>
+
+<script>
+	function fun() {
+		var text = document.getElementById("questionText").value.length;
+		var course = document.getElementById("courses").value;
+		var subject = document.getElementById("question-subject").value.length;
+
+		if (text > 0 && subject > 0 && course != "0") {
+			document.getElementById("submit").disabled = false;
+		} else {
+			document.getElementById("submit").disabled = true;
+		}
+
+	}
+
+</script>
+
+
 </html>
