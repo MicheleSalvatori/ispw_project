@@ -101,9 +101,9 @@ public class SchedulePageServlet extends HttpServlet {
 			controller.scheduleLesson(lessonBean);
 		}
 		
-		else if (request.getParameter("btnAddLesson") != null) {
+		else if (request.getParameter("btnAddExam") != null) {
 			String note = request.getParameter("note");
-			String course = request.getParameter("selCourseLesson");
+			String course = request.getParameter("selCourseExam");
 			String classroom = request.getParameter("selClassExam");
 			String date = request.getParameter("dateExam");
 			String time = request.getParameter("timeExam");
