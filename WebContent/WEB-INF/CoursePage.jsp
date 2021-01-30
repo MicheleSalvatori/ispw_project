@@ -184,9 +184,11 @@
 								</td>
 
 								<td class="course-prof-info" style="text-align: right;">
+									<div class="course-prof-info" style="height: 3vh; overflow-y: scroll;">
 									<c:forEach items="${listOfProfessor}" var="professor">
-										${professor.getName()} ${professor.getSurname()}\
+										${professor.getName()} ${professor.getSurname()}<br>
 									</c:forEach>
+									</div>
 								</td>
 							</tr>
 						</table>
@@ -376,7 +378,7 @@
 									Reception:
 								</td>
 								
-								<td class="course-prof-info">
+								<td style="padding-bottom: 15px;"class="course-prof-info">
 									<%=course.getReception()%>
 								</td>
 							</tr>

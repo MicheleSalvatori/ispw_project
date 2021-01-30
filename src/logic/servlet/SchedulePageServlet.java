@@ -99,6 +99,7 @@ public class SchedulePageServlet extends HttpServlet {
 			lessonBean.setProfessor(p);
 			
 			controller.scheduleLesson(lessonBean);
+			session.setAttribute("alert", "Lesson added correctly.");
 		}
 		
 		else if (request.getParameter("btnAddExam") != null) {
@@ -129,6 +130,7 @@ public class SchedulePageServlet extends HttpServlet {
 			examBean.setClassroom(cl);
 
 			controller.scheduleExam(examBean);
+			session.setAttribute("alert", "Exam added correctly.");
 		}
 		
 		response.sendRedirect("/ispw_project/SchedulePageServlet");

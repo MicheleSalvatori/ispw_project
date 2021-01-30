@@ -229,7 +229,7 @@
 						<tr class="course-row">
 							<td style="border-radius: 14px; white-space: nowrap; text-align: center; padding: 10px 0 10px 0;">
 								<button onclick="filter(this.value)" class="button-small" value="">
-									RESET
+									Reset
 								</button>
 							</td>	
 						</tr>	
@@ -275,5 +275,12 @@ function filter(val) {
   }
 }
 </script>
+
+<% if (request.getParameter("course") != null) { 
+	System.out.println(request.getParameter("course"));%>
+	<script>
+		filter("<%=request.getParameter("course")%>");
+	</script>
+<% } %>
 
 </html>

@@ -6,7 +6,7 @@
 <head>
 	<link rel="stylesheet" href="res/style/LoginPage.css" >
 	<meta charset="utf-8">
-	<title>App - Login</title>
+	<title>App - LoginPage</title>
 	
 	<%String message = (String)request.getAttribute("alertMsg");
     if(message != null){ %>

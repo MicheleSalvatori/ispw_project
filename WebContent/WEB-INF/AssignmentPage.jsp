@@ -4,24 +4,25 @@
 <html lang="en">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="logic.bean.UserBean" %>
+<%@ page import="logic.utilities.SQLConverter" %>
 <%@ page import="logic.utilities.Role" %>
 
-<%
-	UserBean user = (UserBean) session.getAttribute("loggedUser");
+<%	
+	UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
 %>
 	
 	<head>
 		<meta charset="utf-8">
-		<title>App - HomePage</title>
-		<link rel="stylesheet" href="res/style/SchedulePage.css" >
+		<title>App - AssignmentPage</title>
+		<link rel="stylesheet" href="res/style/AssignmentPage.css" >
 		<link rel="stylesheet" href="res/style/NavigationBar.css" >
 		<link rel="stylesheet" href="res/style/StatusBar.css" >
 	</head>
 	
 	<body>
 		<!-- Side navigation -->
+		<form action="${pageContext.request.contextPath}/HomePageServlet" method="post">
 		<div class="sidenav">
 		  <table class="nav-root" width="132" border="0">
 			  <tbody>
@@ -41,7 +42,7 @@
 				<tr>
 					<td style="padding-bottom: 20px;" align="center">
 						<%if (user.getRole() == Role.STUDENT) { %>
-						<a href="/ispw_project/ExamPageServlet" class="nav-button" type="button">
+						<a href="/ispw_project/ExamPageServlet" class="nav-button" type="button" width="50%">
 							<svg class="nav-icon" width="31" height="27" viewBox="0 0 31 27" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M28.7954 24.9126C28.7503 24.9903 28.7052 25.0669 28.6604 25.142C28.6156 25.0669 28.5705 24.9903 28.5254 24.9126C28.2844 24.4972 28.0548 24.0676 27.8884 23.689C27.8054 23.4998 27.7443 23.3374 27.7053 23.2055C27.686 23.1404 27.6741 23.0892 27.6672 23.051C27.6602 23.0117 27.6604 22.9961 27.6604 23C27.6604 22.6395 27.8555 22.3206 28.163 22.1419L28.6604 21.8527L29.1578 22.1419C29.4653 22.3206 29.6604 22.6395 29.6604 23C29.6604 22.9961 29.6606 23.0117 29.6536 23.051C29.6467 23.0892 29.6348 23.1404 29.6155 23.2055C29.5765 23.3374 29.5154 23.4998 29.4324 23.689C29.266 24.0676 29.0364 24.4972 28.7954 24.9126ZM15.6349 1.01359L15.6481 1.00699L15.6597 1.00076L15.6749 1.00908L15.6918 1.01752L29.5808 7.96009L29.6572 8L29.6243 8.01722L15.6858 14.9864L15.6727 14.993L15.6611 14.9992L15.6459 14.9909L15.629 14.9825L1.73994 8.03989L1.66356 8L1.74028 7.95994L15.6349 1.01359ZM17.4728 18.5643L17.4729 18.5643L23.6604 15.4698V18C23.6604 18.8524 23.0266 19.8346 21.5388 20.6612C20.085 21.469 18.0087 22 15.6604 22C13.3121 22 11.2358 21.469 9.78195 20.6612C8.29419 19.8346 7.6604 18.8524 7.6604 18V15.4694L13.8438 18.5603C13.8445 18.5607 13.8452 18.561 13.846 18.5614C13.9638 18.6209 14.0826 18.6708 14.2021 18.7123C14.6688 18.9009 15.159 19 15.6604 19C16.1634 19 16.6547 18.9007 17.123 18.7121C17.2399 18.6712 17.3561 18.6227 17.4728 18.5643Z" stroke="white" stroke-width="2"/>
 							</svg>
@@ -112,6 +113,7 @@
 			  </tbody>
 			</table>
 		</div>
+		</form>
 	
 		<!-- Status bar -->
 		<div class="topnav">
@@ -119,9 +121,9 @@
 			  <tbody>
 				<tr>
 				  	<td style="padding-right: 10px;">
-				  		<a class="status-label">
-				  			<%=user.getName()%>
-				  		</a>
+						<label class="status-label" id="statusName">
+							<%=user.getName()%>
+						</label>
 					</td>
 					
 				  	<td style="padding-right: 10px;">
@@ -154,155 +156,115 @@
 			  </tbody>
 			</table>
 		</div>
+
+			<!-- Page info -->
+		<div class="content" style="height: 60vh;">
+			
+			<!-- First Row -->
+			<div class="row" style="width: 47%;">
+				<table class="hello" style="width: 100%;">
+					<tr>
+						<td class="primary-text">
+							Course:
+						</td>
+						
+						<td class="primary-text-info" style="text-align: right; padding-right: 1.5vw;">
+							ISPW
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="secondary-text" style="padding-bottom: 20px; padding-left: 1.5vw;">
+							Deadline:
+						</td>
+						
+						<td class="secondary-text-info" style="text-align: right; padding-right: 1.5vw;">
+							03/01/2020
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<!-- Second Row -->
+			<div class="row" style="padding-top: 25px;">
+				
+				<!-- Hello -->
+				<div class="hello col">
+					<table style="width: 100%; height: 100%;">
+						<tr>
+							<td class="primary-text">
+								Title:
+							</td>
+							
+							<td class="primary-text-info" style="text-align: right; padding-right: 2vw;">
+								Story Board
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<!-- Stats -->
+				<div class="background col" style="float: right;">
+					<table style="width: 100%; height: 100%;">
+						<tr>
+							<td class="primary-text">
+								Delivered:
+							</td>
+							
+							<td class="primary-text-info" style="text-align: right; padding-right: 2vw;">
+								Story Board
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="secondary-text">
+								Date:
+							</td>
+							
+							<td class="secondary-text-info" style="text-align: right; padding-right: 2vw;">
+								Story Board
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="secondary-text">
+								File name:
+							</td>
+							
+							<td class="secondary-text-info" style="text-align: right; padding-right: 2vw;">
+								Story Board
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			
+			<div style="float: right; width: 40%;">
+				<table style="text-align: center; width: 100%;">
+					<tr>
+						<td style="text-align: right; padding-right: 2vw;">
+							<button class="button-add" style="width: 50%;">
+								<img class="img" src="res/img/Plus.png" alt="plus">
+								Add
+							</button>
+						</td>
+						
+						<td style="text-align: left; padding-left: 2vw;">
+							<button class="button-add" style="width: 35%;">
+								<img class="img" src="res/img/Minus.png" alt="min">
+								Remove
+							</button>
+						</td>
+					</tr>
+				</table>
+			</div>
 		
-		<!-- Page info -->		
-      	<div class="content">
-			
-			<!-- Schedule lesson -->
-			<div>
-			<a class="text">Schedule Lesson</a><br>
-			<div class="row">
-				<div class="col" style="float: left;">
-					<textarea name="topic" form="lessonForm" class="input-text" placeholder="Insert lesson topic" required></textarea>
-				</div>
-
-				<div class="col" style="float: right;">
-					
-					<table style="width: 100%;">
-						<tr>
-							<td style="text-align: right;">
-								<select name="selCourseLesson" form="lessonForm" class="select-schedule" required> 
-									<c:if test="${empty listOfCourse}">
-										<option disabled selected>No course found</option>
-									</c:if>
-									<c:if test="${!empty listOfCourse}">
-										<option disabled selected>Select Course</option>
-									</c:if>
-									<c:forEach items="${listOfCourse}" var="course">
-										<option value="${course.getAbbreviation()}">
-											${course.getAbbreviation()}
-										</option>
-									</c:forEach>
-								</select>
-							</td>
-							
-							<td style="text-align: left; padding-left: 1vw;">
-								<select name="selClassLesson" form="lessonForm" class="select-schedule" required>
-									<option disabled selected>Select Class</option>
-									<c:forEach items="${listOfClass}" var="classroom">
-										<option value="${classroom.getName()}">
-											${classroom.getName()}
-										</option>
-									</c:forEach>
-								</select>
-							</td>
-						</tr>
-						
-						<tr>
-							<td colspan="2" style="text-align: center; padding-top: 15px;">
-								<input name="dateLesson" form="lessonForm" type="date" class="datepicker-input-schedule" required>
-							</td>
-						</tr>
-						
-						<tr>
-							<td colspan="2" style="text-align: center; padding-top: 15px;">
-								<input name="timeLesson" form="lessonForm" type="time" class="time-input-schedule" required>
-							</td>
-						</tr>
-						
-						<tr>
-							<td colspan="2" style="text-align: center; padding-top: 15px;">
-								<form id="lessonForm" action="/ispw_project/SchedulePageServlet" method="post">
-								<button name="btnAddLesson" type="submit" class="button-add" style="width: 35%;" onclick="return confirm('Do you really want to add a new lesson?')">
-									<img class="img-time" src="res/img/Plus.png" alt="plus">
-									Schedule Lesson
-								</button>
-								</form>
-							</td>
-						</tr>
-					</table>
-				</div>
+			<!-- Third Row -->
+			<div style="padding-top: 25px; height: 60%; width: 46%;">
+				<a class="secondary-text" style="padding-left: 0;">Assignment</a><br>
+				<textarea class="text-area" readonly style="height: 100%;">lutz</textarea>
 			</div>
-			</div>
-			
-			<!-- Schedule exam -->
-			<div style="padding-top: 50px;">
-			<a class="text">Schedule Exam</a><br>
-			<div class="row">
-				<div class="col" style="float: left;">
-					<textarea name="note" form="examForm" class="input-text" placeholder="Note" required></textarea>
-				</div>
-
-				<div class="col" style="float: right;">
-					
-					<table style="width: 100%;">
-						<tr>
-							<td style="text-align: right;">
-								<select name="selCourseExam" form="examForm" class="select-schedule" required> 
-									<c:if test="${empty listOfCourse}">
-										<option disabled selected>No course found</option>
-									</c:if>
-									<c:if test="${!empty listOfCourse}">
-										<option disabled selected>Select Course</option>
-									</c:if>
-									<c:forEach items="${listOfCourse}" var="course">
-										<option value="${course.getAbbreviation()}">
-											${course.getAbbreviation()}
-										</option>
-									</c:forEach>
-								</select>
-							</td>
-							
-							<td style="text-align: left; padding-left: 1vw;">
-								<select name="selClassExam" form="examForm" class="select-schedule" required>
-									<option disabled selected>Select Class</option>
-									<c:forEach items="${listOfClass}" var="classroom">
-										<option value="${classroom.getName()}">
-											${classroom.getName()}
-										</option>
-									</c:forEach>
-								</select>
-							</td>
-						</tr>
-						
-						<tr>
-							<td colspan="2" style="text-align: center; padding-top: 15px;">
-								<input name="dateExam" form="examForm" type="date" class="datepicker-input-schedule" required>
-							</td>
-						</tr>
-						
-						<tr>
-							<td colspan="2" style="text-align: center; padding-top: 15px;">
-								<input name="timeExam" form="examForm" type="time" class="time-input-schedule" required>	
-							</td>
-						</tr>
-						
-						<tr>
-							<td colspan="2" style="text-align: center; padding-top: 15px;">
-								<form id="examForm" action="/ispw_project/SchedulePageServlet" method="post">
-								<button name="btnAddExam" class="button-add" style="width: 35%;" onclick="return confirm('Do you really want to add a new exam?')">
-									<img class="img-time" src="res/img/Plus.png" alt="plus">
-									Schedule Exam
-								</button>
-								</form>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			</div>
-			
 		</div>
-		
-	<%String message = (String)session.getAttribute("alert");
-   	if(message != null){ 
-    	session.setAttribute("alert", null); %>
-	    <script type="text/javascript">
-	    	var msg = "<%=message%>";
-	        alert(msg);
-		</script>
-   	<%} %>
-		
+	
 	</body>
-
 </html>
