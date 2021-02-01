@@ -1,12 +1,12 @@
 @font-face {
 	font-family: 'Baloo Bhai';
-	src: url("BalooBhai-Regular.ttf");
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: 'Overpass';
-	src: url("Overpass-Regular.ttf");
+	src: url("../font/Overpass/Overpass-Regular.ttf");
 	font-weight: normal;
 }
 

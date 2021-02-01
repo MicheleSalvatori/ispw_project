@@ -20,9 +20,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title>App - CoursePage</title>
-		<link rel="stylesheet" href="res/style/CoursePage.css" >
-		<link rel="stylesheet" href="res/style/NavigationBar.css" >
-		<link rel="stylesheet" href="res/style/StatusBar.css" >
+		<link rel="stylesheet" href="res/style/CoursePage.css">
+		<link rel="stylesheet" href="res/style/NavigationBar.css">
+		<link rel="stylesheet" href="res/style/StatusBar.css">
+		<link rel="icon" href="res/img/Logo.png">
 	</head>
 	
 	<body>
@@ -106,7 +107,7 @@
 				  
 				<tr>
 					<td style="padding-bottom: 20px; padding-top: 100px;" align="center">
-						<button class="nav-button" type="button" name="back">
+						<button class="nav-button" type="button" name="back" onclick="history.back()">
 							<svg style="cursor: pointer;" width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M11.9158 13.1H9.50159L11.2087 14.8071L12.9533 16.5517C12.9918 16.5902 12.9918 16.6544 12.9533 16.6929C12.9148 16.7314 12.8506 16.7314 12.8121 16.6929L9.18981 13.0706C9.14973 13.0305 9.15103 12.9681 9.1889 12.9303L9.18981 12.9294L12.8121 9.30711C12.8506 9.26863 12.9148 9.26863 12.9533 9.30711C12.9918 9.34558 12.9918 9.40982 12.9533 9.44829L11.2087 11.1929L9.50159 12.9H11.9158H18.0604C18.1153 12.9 18.1604 12.9451 18.1604 13C18.1604 13.0549 18.1153 13.1 18.0604 13.1H11.9158ZM13.6604 1C7.03282 1 1.6604 6.37242 1.6604 13C1.6604 19.6276 7.03282 25 13.6604 25C20.288 25 25.6604 19.6276 25.6604 13C25.6604 6.37242 20.288 1 13.6604 1Z" stroke="white" stroke-width="2"/>
 							</svg>
