@@ -16,7 +16,7 @@ UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
 LessonBean lesson = (LessonBean) request.getAttribute("lesson");
 int seatColumn = lesson.getClassroom().getSeatColumn();
 int row = lesson.getClassroom().getSeatRow();
-System.out.println("ROW: "+ row);
+System.out.println("ROW: " + row);
 %>
 
 <head>
@@ -42,7 +42,7 @@ System.out.println("ROW: "+ row);
 						<td valign="top" style="padding-bottom: 20px;" align="center">
 							<a href="/ispw_project/HomePageServlet" class="nav-button"
 							type="button"> <svg class="nav-icon" width="27" height="26"
-									viewBox="0 0 27 26" fill="none"
+									viewBox="0 0 27 26" fill="white"
 									xmlns="http://www.w3.org/2000/svg">
 								<path
 										d="M14.6444 1.40837L14.6446 1.40854L25.2517 12.0152L25.2517 12.0153C25.2517 12.0153 25.2517 12.0153 25.2518 12.0153L25.2518 12.0153L25.2518 12.0154C25.2518 12.0154 25.2518 12.0154 25.2518 12.0154C25.2518 12.0154 25.2519 12.0154 25.2519 12.0154C25.2519 12.0154 25.2519 12.0155 25.2519 12.0155C25.7934 12.5585 25.793 13.4433 25.2509 13.9858C24.9858 14.2505 24.6392 14.3939 24.2656 14.3939H23.8736H22.8736V15.3939V23.1989C22.8736 24.191 22.0648 25 21.0721 25H17.161V19.1191C17.161 17.8621 16.14 16.8411 14.8829 16.8411H12.4355C11.1785 16.8411 10.1575 17.8621 10.1575 19.1191V25H6.24636C5.2537 25 4.44487 24.191 4.44487 23.1989V15.3939V14.3939H3.44487H3.03362L3.0184 14.3924L2.99124 14.3912C2.64014 14.3761 2.31541 14.2335 2.06733 13.9853L2.06716 13.9851C1.52582 13.4438 1.52465 12.5605 2.06463 12.0174L2.07253 12.0094L2.07623 12.0056L12.6737 1.40833L12.6737 1.40832C12.9385 1.14356 13.2852 1 13.6592 1C14.0331 1 14.3798 1.14362 14.6444 1.40837ZM25.2516 12.0151C25.2516 12.0151 25.2516 12.0151 25.2516 12.0151L25.2515 12.0151C25.2516 12.0151 25.2516 12.0151 25.2516 12.0151ZM2.07789 12.0039L2.07758 12.0042L2.07789 12.0039Z"
@@ -56,8 +56,7 @@ System.out.println("ROW: "+ row);
 						<td style="padding-bottom: 20px;" align="center">
 							<%
 							if (user.getRole() == Role.STUDENT) {
-							%> <a
-							href="/ispw_project/ExamPageServlet" class="nav-button"
+							%> <a href="/ispw_project/ExamPageServlet" class="nav-button"
 							type="button" width="50%"> <svg class="nav-icon" width="31"
 									height="27" viewBox="0 0 31 27" fill="none"
 									xmlns="http://www.w3.org/2000/svg">
@@ -67,8 +66,8 @@ System.out.println("ROW: "+ row);
 							</svg>
 						</a> <%
  } else {
- %> <a href="/ispw_project/RequestPageServlet"
-							class="nav-button" type="button"> <svg width="21" height="27"
+ %> <a href="/ispw_project/RequestPageServlet" class="nav-button"
+							type="button"> <svg width="21" height="27"
 									viewBox="0 0 21 27" fill="none"
 									xmlns="http://www.w3.org/2000/svg">
 								<path
@@ -124,8 +123,7 @@ System.out.println("ROW: "+ row);
 						<td style="padding-bottom: 20px;" align="center">
 							<%
 							if (user.getRole() == Role.PROFESSOR) {
-							%> <a
-							href="/ispw_project/SchedulePageServlet" class="nav-button">
+							%> <a href="/ispw_project/SchedulePageServlet" class="nav-button">
 								<svg class="nav-icon" width="32" height="31" viewBox="0 0 32 31"
 									fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path
@@ -251,18 +249,18 @@ System.out.println("ROW: "+ row);
 					<table style="width: 100%; height: 100%;">
 						<tr>
 							<td style="text-align: right; width: 50%;"><img
-								class="time-img" src="/res/img/Time.png" alt="time"
+								class="time-img" src="res/img/Time.png" alt="time"
 								style="padding-right: 2vw;"></td>
 
-							<td class="time-text"><%=lesson.getTime()%></td>
+							<td class="time-text"><%=SQLConverter.time(lesson.getTime())%></td>
 						</tr>
 
 						<tr>
 							<td style="text-align: right;"><img class="time-img"
-								src="/res/img/Date.png" alt="date" style="padding-right: 2vw;">
+								src="res/img/Calendar.png" alt="date" style="padding-right: 2vw;">
 							</td>
 
-							<td class="time-text"><%=lesson.getDate()%></td>
+							<td class="time-text"><%=SQLConverter.date(lesson.getDate())%></td>
 						</tr>
 					</table>
 				</div>
@@ -274,7 +272,7 @@ System.out.println("ROW: "+ row);
 						</tr>
 
 						<tr>
-							<td align="center"><img class="img" src="/res/img/Cloud.png"
+							<td align="center"><img class="img" src="res/img/Cloud.png"
 								alt="weath"></td>
 						</tr>
 
@@ -297,22 +295,28 @@ System.out.println("ROW: "+ row);
 			<a class="text" style="padding-left: 0; text-align: left;">Seat
 				Map</a>
 			<div class="seat">
-				<img class="img" src="/res/img/Cloud.png" alt="weath">
+				<form action="/ispw_project/LessonPageServlet" method="post">
+				<div style="text-align: center;">
+				<img style="padding:10px; max-height: 8vw; margin-top: 18px;" src="res/img/ClassProf.png" alt="classroom">
+				</div>
 				<table style="border-spacing: 10px;">
 					<c:forEach var="i" begin="1" end="<%=row%>">
 						<tr>
 							<c:forEach var="j" begin="1" end="<%=seatColumn%>">
 								<td>
-										<c:set var="idSeat" value="${(j-1)+(lesson.getClassroom().getSeatColumn())*(i-1)}" />
-								<c:choose>
+								<c:set var="seatColumn"	value="${lesson.getClassroom().getSeatColumn()}" />
+								 <c:set var="idSeat" value="${(j-1)+seatColumn*(i-1)}" /> 
+								 <c:choose>
 										<c:when test="${idSeat ==  mySeat.getId()-1}">
-										<button class="button-seat seat-your">${j}</button>
-										</c:when>										
+											<button name="yourSeat"class="button-seat seat-your" value="${idSeat+1}"
+											onclick="return confirm('Are you sure you want to free this seat?')">${j}</button>
+										</c:when>
 										<c:when test="${occupiedSeats[idSeat].isFree()}">
-											<button class="button-seat seat-free">${j}</button>
+											<button name="bookSeat" class="button-seat seat-free" type="submit" value="${idSeat+1}"
+											onclick="return confirm('Are you sure you want to book this seat?')" >${j}</button>
 										</c:when>
 										<c:otherwise>
-											<button class="button-seat seat-booked">${j}</button>
+											<button class="button-seat seat-booked" disabled="disabled">${j}</button>
 										</c:otherwise>
 									</c:choose>
 									</td>
@@ -322,7 +326,7 @@ System.out.println("ROW: "+ row);
 						</tr>
 					</c:forEach>
 				</table>
-
+			</form>
 			</div>
 		</div>
 	</div>

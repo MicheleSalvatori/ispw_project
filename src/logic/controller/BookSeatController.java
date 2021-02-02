@@ -15,13 +15,13 @@ import logic.model.dao.SeatDAO;
 
 public class BookSeatController {
 
-	public SeatBean occupateSeat(SeatBean seat, LessonBean lesson) throws SQLException, DuplicatedRecordException {
+	public SeatBean occupateSeat(SeatBean seat, LessonBean lesson, UserBean user) throws SQLException, DuplicatedRecordException {
 		SeatBean mySeat = null;
 		try {
-			mySeat = getMySeat(lesson);
-			SeatDAO.occupateSeat(UserBean.getInstance().getUsername(), lesson, seat.getId());
+			mySeat = getMySeat(lesson, user);
+			SeatDAO.occupateSeat(user.getUsername(), lesson, seat.getId());
 			if (mySeat != null) {
-				freeSeat(mySeat, lesson);
+				freeSeat(mySeat, lesson, user);
 			}
 			mySeat = new SeatBean(seat.getId(), lesson.getClassroom().getName());
 		} catch (MySQLIntegrityConstraintViolationException e) {
@@ -30,8 +30,8 @@ public class BookSeatController {
 		return mySeat;
 	}
 
-	public void freeSeat(SeatBean seat, LessonBean lesson) throws SQLException {
-		SeatDAO.freeSeat(seat.getId(), UserBean.getInstance().getUsername(), lesson);
+	public void freeSeat(SeatBean seat, LessonBean lesson, UserBean user) throws SQLException {
+		SeatDAO.freeSeat(seat.getId(), user.getUsername(), lesson);
 	}
 
 	public List<SeatBean> getOccupateSeatOf(LessonBean lessonBean) throws SQLException {

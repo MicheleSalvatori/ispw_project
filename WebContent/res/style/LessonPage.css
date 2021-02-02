@@ -167,19 +167,21 @@
 	height: 3vw;
 	
 	border-radius: 50%;
-	border: 0;
+	border: 0px;
 }
 
-.button-seat:hover {
+.button-seat:hover:enabled {
 	cursor: pointer;
+	border: 2px solid;
 }
 
 .seat-free {
 	background-color: #38D06B;
 }
 
-.seat-booked {
+.seat-booked{
 	background-color: #DD2D2D;
+	opacity: none;
 }
 
 .seat-your {

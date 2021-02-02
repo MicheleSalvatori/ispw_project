@@ -27,6 +27,7 @@ import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.SeatBean;
+import logic.bean.UserBean;
 import logic.controller.BookSeatController;
 import logic.exceptions.DuplicatedRecordException;
 import logic.utilities.AlertController;
@@ -67,7 +68,7 @@ public class LessonPageView {
 	private enum SeatState {
 		FREE, BOOKED, YOUR
 	}
-	
+
 	@FXML
 	private void course(ActionEvent event) throws IOException {
 		CourseBean courseBean = lesson.getCourse();
@@ -79,9 +80,8 @@ public class LessonPageView {
 		this.lesson = (LessonBean) lesson;
 		try {
 			this.classroom = this.lesson.getClassroom();
-			this.classroom.setSeat(controlSeat.getOccupateSeatOf(this.lesson)); // mettiamo nella classroom SOLO i posti
-																				// occupati
-			this.mySeat = controlSeat.getMySeat(this.lesson);
+			this.classroom.setSeat(controlSeat.getOccupateSeatOf(this.lesson));
+			this.mySeat = controlSeat.getMySeat(this.lesson, UserBean.getInstance());
 			setPage();
 		} catch (SQLException e) {
 			System.out.println("CATCH");
@@ -126,7 +126,7 @@ public class LessonPageView {
 
 	private void freeSeat(Button buttonSeat) {
 		try {
-			controlSeat.freeSeat(mySeat, this.lesson);
+			controlSeat.freeSeat(mySeat, this.lesson, UserBean.getInstance());
 			changeState(getSeat(buttonSeat), SeatState.FREE);
 			mySeat = null;
 		} catch (SQLException e) {
@@ -138,7 +138,7 @@ public class LessonPageView {
 		SeatBean seatToBook = getSeat(buttonSeat);
 		SeatBean newSeat = null;
 		try {
-			newSeat = controlSeat.occupateSeat(seatToBook, lesson);
+			newSeat = controlSeat.occupateSeat(seatToBook, lesson, UserBean.getInstance());
 			if (mySeat != null) {
 				changeState(mySeat, SeatState.FREE);
 			}
@@ -197,12 +197,13 @@ public class LessonPageView {
 			for (SeatBean s : classroom.getSeat()) {
 				if (mySeat != null && s.getId() == mySeat.getId()) {
 					changeState(s, SeatState.YOUR);
-				} else {
+				} else if (!s.isFree()) {
 					changeState(s, SeatState.BOOKED);
 				}
 			}
 		}
 	}
+
 
 	private SeatBean getSeat(Button button) {
 		int row = GridPane.getRowIndex(button) * classroom.getSeatColumn();
@@ -252,7 +253,8 @@ public class LessonPageView {
 
 		WeatherCard a;
 		try {
-			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "°C", image, h + ":00");
+			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "°C", image,
+					h + ":00");
 			weatherCard.getChildren().add(a);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
