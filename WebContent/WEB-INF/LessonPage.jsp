@@ -303,9 +303,12 @@ System.out.println("ROW: "+ row);
 						<tr>
 							<c:forEach var="j" begin="1" end="<%=seatColumn%>">
 								<td>
-										<c:out value="${occupiedSeats[i].isFree()}"></c:out>
+										<c:set var="idSeat" value="${(j-1)+(lesson.getClassroom().getSeatColumn())*(i-1)}" />
 								<c:choose>
-										<c:when test="${occupiedSeats[(j-1)+seatColumn*(i-1)].isFree()}">
+										<c:when test="${idSeat ==  mySeat.getId()-1}">
+										<button class="button-seat seat-your">${j}</button>
+										</c:when>										
+										<c:when test="${occupiedSeats[idSeat].isFree()}">
 											<button class="button-seat seat-free">${j}</button>
 										</c:when>
 										<c:otherwise>

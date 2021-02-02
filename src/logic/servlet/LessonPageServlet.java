@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import logic.bean.ClassroomBean;
 import logic.bean.LessonBean;
 import logic.bean.SeatBean;
+import logic.bean.UserBean;
 import logic.controller.BookSeatController;
 
 @WebServlet("/LessonPageServlet")
@@ -29,10 +30,13 @@ public class LessonPageServlet extends HttpServlet{
 		try {
 //			controller.getMySeat(lesson);
 			List<SeatBean> occupiedSeats = controller.getOccupateSeatOf(lesson);
+			SeatBean mySeat = controller.getMySeat(lesson, (UserBean)req.getSession().getAttribute("loggedUser"));
 			System.out.println("ID: " +occupiedSeats.get(0).getId() + " "+occupiedSeats.get(0).isFree());
 			System.out.println("ID: " +occupiedSeats.get(1).getId() + " "+occupiedSeats.get(1).isFree());
 			System.out.println("ID: " +occupiedSeats.get(10).getId() + " "+occupiedSeats.get(1).isFree());
 			req.setAttribute("occupiedSeats", occupiedSeats);
+			req.setAttribute("mySeat", mySeat);
+			System.out.println(occupiedSeats.size());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

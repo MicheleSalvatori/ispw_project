@@ -42,7 +42,7 @@ public class BookSeatController {
 			seatsBean = null;
 		} else {
 
-			for (int i = 1; i<lessonBean.getClassroom().getSeatColumn() * lessonBean.getClassroom().getSeatRow(); i++) {
+			for (int i = 1; i<=lessonBean.getClassroom().getSeatColumn() * lessonBean.getClassroom().getSeatRow(); i++) {
 //				SeatBean sBean = new SeatBean(s.getIndex());
 //				sBean.setFree(s.getState());
 //				seatsBean.add(sBean);
@@ -60,8 +60,8 @@ public class BookSeatController {
 		return seatsBean;
 	}
 
-	public SeatBean getMySeat(LessonBean lesson) throws SQLException {
-		String username = UserBean.getInstance().getUsername();
+	public SeatBean getMySeat(LessonBean lesson, UserBean user) throws SQLException {
+		String username = user.getUsername();
 		SeatBean mySeat = SeatDAO.getMySeatIn(username, lesson);
 		return mySeat;
 	}
