@@ -96,13 +96,12 @@ public class ForumPageView implements Initializable {
 			allQuestions = allQuestionController.getAllQuestions(UserBean.getInstance());
 			
 		} catch (SQLException e) {
-			AlertController.infoAlert(e.getMessage());
-			btnMyQuestions.setDisable(true);
-			btnAllQuestions.setDisable(true);
+			//TODO
 			
 		} catch (RecordNotFoundException e) {
 			AlertController.infoAlert(e.getMessage());
-			e.printStackTrace();
+			btnMyQuestions.setDisable(true);
+			btnAllQuestions.setDisable(true);
 		}
 	}
 

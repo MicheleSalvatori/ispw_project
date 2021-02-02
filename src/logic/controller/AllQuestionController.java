@@ -35,47 +35,38 @@ public class AllQuestionController {
 		return courses;
 	}
 
-	public List<QuestionBean> getAllQuestions(UserBean userBean) throws SQLException {
+	public List<QuestionBean> getAllQuestions(UserBean userBean) throws SQLException, RecordNotFoundException {
 
 		List<QuestionBean> questionBeans = new ArrayList<>();
 		List<Question> questionList;
 
-		try {
+		// User is a student
+		if (userBean.getRole() == Role.STUDENT) {
+			questionList = QuestionDAO.getStudentCoursesQuestions(userBean.getUsername());
+		}
 
-			// User is a student
-			if (userBean.getRole() == Role.STUDENT) {
-				questionList = QuestionDAO.getStudentCoursesQuestions(userBean.getUsername());
-			}
+		// User is a professor
+		else {
+			questionList = QuestionDAO.getProfessorCoursesQuestions(userBean.getUsername());
+		}
 
-			// User is a professor
-			else {
-				questionList = QuestionDAO.getProfessorCoursesQuestions(userBean.getUsername());
-			}
+		for (Question q : questionList) {
 
-			for (Question q : questionList) {
+			StudentBean studentBean = new StudentBean();
+			studentBean.setEmail(q.getStudent().getEmail());
+			studentBean.setName(q.getStudent().getName());
+			studentBean.setSurname(q.getStudent().getSurname());
+			studentBean.setUsername(q.getStudent().getUsername());
 
-				StudentBean studentBean = new StudentBean();
-				studentBean.setEmail(q.getStudent().getEmail());
-				studentBean.setName(q.getStudent().getName());
-				studentBean.setSurname(q.getStudent().getSurname());
-				studentBean.setUsername(q.getStudent().getUsername());
-
-				QuestionBean bean = new QuestionBean();
-				bean.setId(q.getId());
-				bean.setStudent(studentBean);
-				bean.setText(q.getText());
-				bean.setTitle(q.getTitle());
-				bean.setCourseByAbbr(q.getCourse().getAbbrevation());
-				bean.setSolved(q.isSolved());
-				bean.setDate(q.getDate());
-				questionBeans.add(bean);
-			}
-
-		} catch (RecordNotFoundException e) {
-			throw new SQLException();
-
-		} catch (NullPointerException e) {
-			questionBeans = null;
+			QuestionBean bean = new QuestionBean();
+			bean.setId(q.getId());
+			bean.setStudent(studentBean);
+			bean.setText(q.getText());
+			bean.setTitle(q.getTitle());
+			bean.setCourseByAbbr(q.getCourse().getAbbrevation());
+			bean.setSolved(q.isSolved());
+			bean.setDate(q.getDate());
+			questionBeans.add(bean);
 		}
 
 		return questionBeans;

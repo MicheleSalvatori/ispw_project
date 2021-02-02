@@ -31,9 +31,14 @@ public class ForumPageServlet extends HttpServlet {
 		List<QuestionBean> questions = null;
 		try {
 			questions = controller.getAllQuestions((UserBean) session.getAttribute("loggedUser"));
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
+		} catch (RecordNotFoundException e) {
+			//
 		}
+		
 		request.setAttribute("listOfQuestion", questions);
 
 		AddAssignmentController assignmentController = new AddAssignmentController();

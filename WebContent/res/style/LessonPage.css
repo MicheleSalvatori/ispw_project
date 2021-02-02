@@ -1,0 +1,187 @@
+@font-face {
+	font-family: 'Baloo Bhai';
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Overpass';
+	src: url("../font/Overpass/Overpass-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+	src: url("../font/Roboto/Roboto-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ 	font-weight: bold;
+}
+ 
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ 	font-weight: light;
+}
+
+
+/* Style page content */
+.content {
+  	margin-left: 200px; /* Same as the width of the sidebar */
+	margin-top: 70px;
+	margin-right: 25px;
+}
+
+.row {
+	display: flex;
+}
+
+.col {
+	flex: 1;
+}
+
+.info {
+	background-color: #F0F0F2;
+	border-radius: 14px;
+}
+
+.time {
+	width: 90%;
+	background-color: #F0F0F2;
+	border-radius: 14px;
+	
+	margin-top: 25px;
+}
+
+.text {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 2vw;
+	
+	padding-top: 0.5vw;
+	padding-left: 1.5vw;
+}
+
+.info {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 2vw;
+	
+	padding-top: 0.5vw;
+	padding-right: 1.5vw;
+}
+
+.secondary-info {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 1.5vw;
+	
+	padding-top: 0.5vw;
+	padding-right: 1.5vw;
+}
+
+.secondary-text {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.5vw;
+	
+	padding-top: 0.5vw;
+	padding-left: 1.5vw;
+}
+
+.time-text {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.5vw;
+}
+
+.img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 50px;
+	min-width: 15px;
+}
+
+.weather-img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 31px;
+	min-width: 15px;
+}
+
+.time-img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 24px;
+	min-width: 10px;
+}
+
+.weather {
+	width: 10%;
+	height: 100%;
+	background-color: #0C0B0B;
+	border-radius: 18px;
+	margin-top: 25px;
+}
+
+.weather-text {
+	font-family: "Overpass";
+	font-weight: normal;
+	font-size: 1vw;
+	
+	color: white;
+	text-align: center;
+}
+
+.text-area {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 1vw;
+	border: 2px solid #0C0B0B;
+	border-radius: 14px;
+	width: 100%;
+	height: 100%;
+	padding: 5px;
+	resize: none;
+}
+
+.seat {
+	border: 2px solid #0C0B0B;
+	border-radius: 14px;
+	height: 83vh;
+}
+
+.button-seat {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.5vw;
+	
+	width: 3vw;
+	height: 3vw;
+	
+	border-radius: 50%;
+	border: 0;
+}
+
+.button-seat:hover {
+	cursor: pointer;
+}
+
+.seat-free {
+	background-color: #38D06B;
+}
+
+.seat-booked {
+	background-color: #DD2D2D;
+}
+
+.seat-your {
+	background-color: #3899D0;
+}

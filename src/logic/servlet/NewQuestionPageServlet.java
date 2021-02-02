@@ -17,7 +17,6 @@ import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.InsertQuestionController;
 import logic.exceptions.RecordNotFoundException;
-import sun.security.provider.certpath.ResponderId;
 
 @WebServlet("/NewQuestionPageServlet")
 public class NewQuestionPageServlet extends HttpServlet {
@@ -51,7 +50,7 @@ public class NewQuestionPageServlet extends HttpServlet {
 		CourseBean course = new CourseBean();
 		StudentBean student = new StudentBean();
 		student.setUsername(((UserBean) req.getSession().getAttribute("loggedUser")).getUsername());
-		course.setAbbrevation(req.getParameter("courses"));
+		course.setAbbreviation(req.getParameter("courses"));
 		newQuestion.setCourse(course);
 		newQuestion.setStudent(student);
 		newQuestion.setText(req.getParameter("question-text"));
