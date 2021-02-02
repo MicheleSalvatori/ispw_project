@@ -186,7 +186,8 @@ public class Queries {
 	}
 	
 	public static int saveAnswer(Statement stmt, int id, String username, String text, Date date) throws SQLException {
-		String sql = String.format("INSERT INTO answer VALUES (%i, '%s', '%s', '%s')", id, username, text, date);
+		// %i genera errore di conversione
+		String sql = String.format("INSERT INTO answer VALUES (%d, '%s', '%s', '%s')", id, username, text, date);
 		System.out.println(sql);
 		return stmt.executeUpdate(sql);
 	}

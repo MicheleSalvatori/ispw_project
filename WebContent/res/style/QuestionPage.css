@@ -1,0 +1,131 @@
+
+@font-face {
+  font-family: 'Baloo Bhai';
+  src: url("..font/BalooBhai/BalooBhai-Regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Baloo Bhai 2';
+  src: url("..font/BalooBhai/BalooBhai2-Bold.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'Overpass';
+  src: url("..font/Overpass/Overpass-Regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url("..font/Roboto/Roboto-Regular.ttf");
+  font-weight: normal;
+}
+
+/* Style page content */
+
+.content {
+  margin-left: 200px; 
+  margin-top: 70px;
+  margin-right: 80px;
+}
+
+.title-label {
+  font-family: "Baloo Bhai 2";
+  font-weight: bold;
+  font-size: 1.8vw;
+}
+
+.empty-label {
+  font-family: "Baloo Bhai 2";
+  font-weight: bold;
+  font-size: 1.3vw;
+}
+.button-view {
+  background-color: #0C0B0B;
+  border-radius: 8px;
+  border-color: transparent;
+  color: white;
+  font-family: "Overpass";
+  font-weight: bold;
+  font-size: 0.8vw;
+  height: 2vw;
+  width: 4vw;
+  text-align: center;
+}
+.button-view:hover {
+  cursor: pointer;
+}
+
+.question-date {
+  font-family: "Baloo Bhai";
+  font-weight: normal;
+  font-size: 1.3vw;
+}
+
+.question-text {
+  font-family: "Baloo Bhai 2";
+  font-weight: bold;
+  font-size: 1.1vw;
+}
+.answer-text {
+  font-family: "Roboto";
+  font-weight: normal;
+  font-size: 1.1vw;
+  word-break: break-all;
+  margin-left: 10px;
+}
+.author {
+  font-family: "Baloo Bhai";
+  font-weight: normal;
+  font-size: 0.9vw;
+}
+
+.add-answer{
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.5vw;
+	width: 30%;
+	
+	border-radius: 20px;
+	border: 0;
+	background-color: #F0F0F2;
+}
+
+.add-answer:hover{
+	border-color: transparent;
+}
+
+textarea {
+	width: 80%;
+	border-radius: 14px;
+	border: 2px solid #555;
+	height: 150px;
+	padding: 12px;
+	font-family: "Overpass";
+	font-size: 1.3vw;
+	overflow: auto;
+	resize: none;
+}
+
+textarea:hover {
+	cursor: pointer;
+}
+
+textarea:focus {
+	border-color: transparent;
+}
+
+
+.plus-img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 28px;
+	min-width: 10px;
+}
+
+.bordered-tr{
+	border-bottom: 1pt solid #000000;
+}

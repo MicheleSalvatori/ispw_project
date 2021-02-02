@@ -109,9 +109,13 @@
 	border: 0;
 }
 
-.modal-button:hover {
-	color: grey;
+.modal-button:disabled {
+	opacity: 0.5;
+}
+
+.modal-button:hover:enabled {
 	cursor: pointer;
+	color: grey;
 }
 
 .select {
@@ -176,3 +180,4 @@
   from {opacity: 0} 
   to {opacity: 1}
 }
+

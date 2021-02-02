@@ -1,0 +1,107 @@
+@font-face {
+	font-family: 'Baloo Bhai';
+	src: url("BalooBhai-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Overpass';
+	src: url("Overpass-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+	src: url("Roboto/Roboto-Regular.ttf");
+	font-weight: normal;
+}
+
+/* Style page content */
+.content {
+	margin-left: 200px; /* Same as the width of the sidebar */
+	margin-top: 70px;
+	margin-right: 140px;
+}
+.title-label{
+	font-family: "Baloo Bhai";
+	font-size: 2vw;
+	font-weight: normal;
+}
+.input-subject {
+	width: 50%;
+	border-radius: 10px;
+	border: 2px solid #555;
+	height: 40px;
+	padding: 4px;
+	padding-left: 10px;
+	font-family: "Overpass";
+	font-size: 1.2vw;
+	font-weight: bold;
+	overflow: auto;
+}
+
+.input-subject:hover {
+	cursor: pointer;
+}
+
+.input-subject:focus {
+	border-color: transparent;
+}
+
+textarea {
+	width: 100%;
+	border-radius: 14px;
+	border: 2px solid #555;
+	height: 200px;
+	padding: 12px;
+	font-family: "Overpass";
+	font-size: 1.3vw;
+	overflow: auto;
+	resize: none;
+}
+
+textarea:hover {
+	cursor: pointer;
+}
+
+textarea:focus {
+	border-color: transparent;
+}
+
+.button-submit {
+	float: right;
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 2vw;
+	border-radius: 10px;
+	border: 0;
+	background-color: #F0F0F2;
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 200px;
+	margin-top: 10px;
+}
+
+.button-submit:disabled {
+	opacity: inherit;
+}
+
+.button-submit:hover:enabled {
+	cursor: pointer;
+}
+
+.content-question {
+	display: inline-block;
+	width: 70%;
+}
+
+.course-select {
+	float: right;
+	clear: right;
+	background-color: #E5E5EB;
+	font-family: "Baloo Bhai";
+	font-size: 18px;
+	border-width: 3px;
+	border-color: transparent;
+	border-radius: 5px;
+}

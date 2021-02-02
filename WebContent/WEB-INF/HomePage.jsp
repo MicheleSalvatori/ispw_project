@@ -346,7 +346,7 @@
 								<table class="weather" align="center">
 									<tr>
 										<td class="weather-text">
-											15 °C
+											15 Â°C
 										</td>
 									</tr>
 
