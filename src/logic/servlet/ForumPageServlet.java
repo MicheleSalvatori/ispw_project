@@ -51,7 +51,15 @@ public class ForumPageServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("doPost ForumServlet");
-		req.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(req, resp);
+		System.out.print("doPost ForumServlet: ");
+		System.out.println(req.getParameter("set-solved"));
+		
+		if (req.getParameter("set-solved") != null) {
+			int questionID = Integer.valueOf(req.getParameter("set-solved"));
+			AllQuestionController controller = new AllQuestionController();
+			controller.setSolved(questionID);
+		}
+		
+		resp.sendRedirect("/ispw_project/ForumPageServlet");
 	}
 }

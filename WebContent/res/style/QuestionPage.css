@@ -73,11 +73,13 @@
   font-family: "Roboto";
   font-weight: normal;
   font-size: 1.1vw;
+  word-break: break-all;
+  margin-left: 10px;
 }
 .author {
   font-family: "Baloo Bhai";
   font-weight: normal;
-  font-size: 0.83vw;
+  font-size: 0.9vw;
 }
 
 .add-answer{
@@ -85,11 +87,34 @@
 	font-weight: normal;
 	font-size: 1.5vw;
 	width: 30%;
-	filter: drop-shadow(5px 5px 5px black);
 	
 	border-radius: 20px;
 	border: 0;
 	background-color: #F0F0F2;
+}
+
+.add-answer:hover{
+	border-color: transparent;
+}
+
+textarea {
+	width: 80%;
+	border-radius: 14px;
+	border: 2px solid #555;
+	height: 150px;
+	padding: 12px;
+	font-family: "Overpass";
+	font-size: 1.3vw;
+	overflow: auto;
+	resize: none;
+}
+
+textarea:hover {
+	cursor: pointer;
+}
+
+textarea:focus {
+	border-color: transparent;
 }
 
 

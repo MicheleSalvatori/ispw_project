@@ -72,7 +72,12 @@
 	border-radius: 10px;
 	border: 0;
 	background-color: #F0F0F2;
-	width: 45%;
+	width: 48%;
+	margin-top: 10px;
+}
+
+.questions-button:disabled{
+	opacity: 0.4;
 }
 
 .new-question:hover{
@@ -123,8 +128,25 @@
 
 .question-solved {
 	font-family: "Roboto";
-	font-weight: normal;
-	font-size: 0.8vw;
+	font-weight: bold;
+	font-size: 0.99vw;
+}
+
+.button-solved{
+	color: red;
+	font-family: "Roboto";
+	font-weight: bold;
+	font-size: 1.01vw;
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	margin: 0;
+	border:0;
+	text-decoration: underline;
+}
+
+.button-solved:hover{
+	cursor:pointer;
 }
 
 .id {

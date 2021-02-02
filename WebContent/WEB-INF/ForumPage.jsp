@@ -97,7 +97,7 @@ else {
 				<td style="padding-bottom: 20px;" align="center">
 					<button class="nav-button" type="button" name="forum">
 						<svg class="nav-icon" width="27" height="25" viewBox="0 0 27 25"
-							fill="none" xmlns="http://www.w3.org/2000/svg">
+							fill="white" xmlns="http://www.w3.org/2000/svg">
 								<path
 								d="M1.99755 18.8087L1.99599 18.8079C1.7829 18.701 1.6604 18.4965 1.6604 18.2735V4.1625C1.6604 2.43364 3.09398 1 4.8854 1H17.2354C19.0268 1 20.4604 2.43364 20.4604 4.1625V11.2067C20.4604 12.9356 19.0268 14.3692 17.2354 14.3692H9.10151H8.78016L8.51897 14.5564L2.65882 18.7564L2.6587 18.7565C2.54849 18.8355 2.41928 18.8757 2.28667 18.8757C2.18405 18.8757 2.08513 18.8528 1.99755 18.8087ZM18.7992 19.6795L18.5381 19.4923H18.2167H10.0854C9.36344 19.4923 8.6945 19.2556 8.15683 18.8589L9.84754 17.65H17.2354C20.8221 17.65 23.7604 14.7764 23.7604 11.2067V6.40404C24.8845 6.90443 25.6604 8.01711 25.6604 9.28557V23.399C25.6604 23.6222 25.5378 23.8222 25.3328 23.922L25.3209 23.9278L25.3091 23.9339C25.2242 23.9781 25.1294 24 25.0354 24C24.9006 24 24.7734 23.9606 24.6619 23.8807C24.6619 23.8807 24.6619 23.8807 24.6619 23.8807L18.7992 19.6795Z"
 								stroke="white" stroke-width="2" />
@@ -217,7 +217,7 @@ else {
 		<a class="title-label">Questions</a>
 		<!-- Question Table -->
 		<div class="border-table">
-			<table class="table-question">
+			<table class="table-question" id="tableQuestions">
 				<tbody style="overflow: auto; display: block;">
 					<c:forEach items="${listOfQuestion}" var="question">
 						<tr height="50px" class="question">
@@ -244,7 +244,24 @@ else {
 													class="question-solved">Solved</td>
 											</c:when>
 											<c:otherwise>
-												<td style="padding: 0; color: red;" class="question-solved">Unsolved</td>
+												<c:choose>
+													<c:when
+														test="${question.getStudent().getUsername() == sessionScope.loggedUser.getUsername()}">
+														<td>
+															<form action="/ispw_project/ForumPageServlet"
+																method="post">
+																<button name="set-solved" class="button-solved"
+																	value="${question.getId()}"
+																	onclick="return confirm('Are you sure you want to set this question as solved?')">Set
+																	Solved</button>
+															</form>
+														</td>
+													</c:when>
+													<c:otherwise>
+														<td style="padding: 0; color: red;"
+															class="question-solved">Unsolved</td>
+													</c:otherwise>
+												</c:choose>
 											</c:otherwise>
 										</c:choose>
 									</tr>
@@ -258,27 +275,29 @@ else {
 										<td class="author">${question.getStudent().getSurname()}</td>
 									</tr>
 								</table>
-							</td>
-							<td align="right" class="course"
-								style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left; flex: 1">
-								${question.getCourse().getAbbrevation()}</td>
-							<td align="right"
-								style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%; flex: 1">
-								<form
-									action="${pageContext.request.contextPath}/QuestionPageServlet"
-									method="get">
-									<input type="hidden" name="questionID"
-										value="${question.getId()}" /> <input type="hidden"
-										name="questionTitle" value="${question.getTitle()}" /> <input
-										type="hidden" name="questionText"
-										value="${question.getText()}" /> <input type="hidden"
-										name="authorName" value="${question.getStudent().getName()}" />
-									<input type="hidden" name="authorSurname"
-										value="${question.getStudent().getSurname()}" /> <input
-										type="hidden" name="questionDate"
-										value="${question.getDate().toString()}" />
-									<button name="viewQuestion" class="button-view" type="submit">View</button>
-								</form>
+						<td align="right" class="course"
+							style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left; flex: 1">
+							${question.getCourse().getAbbrevation()}</td>
+						<td align="right"
+							style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%; flex: 1">
+							<form
+								action="${pageContext.request.contextPath}/QuestionPageServlet"
+								method="get">
+								<input type="hidden" name="questionID"
+									value="${question.getId()}" /> <input type="hidden"
+									name="questionTitle" value="${question.getTitle()}" /> <input
+									type="hidden" name="questionText" value="${question.getText()}" />
+								<input type="hidden" name="authorName"
+									value="${question.getStudent().getName()}" /> <input
+									type="hidden" name="authorSurname"
+									value="${question.getStudent().getSurname()}" /> <input
+									type="hidden" name="questionDate"
+									value="${question.getDate().toString()}" />
+								<button name="viewQuestion" class="button-view" type="submit">View</button>
+							</form>
+						</td>
+						<td>
+							<input type="hidden" id = "question-username" name="question-username" value="${question.getStudent().getUsername()}">
 							</td>
 						</tr>
 					</c:forEach>
@@ -289,23 +308,20 @@ else {
 
 	<!-- Buttons -->
 	<div class="content-right">
-		<table>
-			<tr>
-				<td><a href="/ispw_project/NewQuestionPageServlet">
-						<button type="button" class="new-question" id="newQuestion">Insert
-							New Question</button>
-				</a></td>
-			</tr>
+		<a href="/ispw_project/NewQuestionPageServlet">
+			<button type="button" class="new-question" id="newQuestion">Insert
+				New Question</button>
+		</a>
+		<div>
+			<button type="button" class="questions-button" id="myQuestion"
+				name="myQuestion" onclick="filterMyQuestions()">My
+				Questions</button>
 
-			<tr>
-				<td>
-					<button type="button" class="questions-button" id="myQuestion"
-						name="myQuestion">My Questions</button>
-					<button type="button" class="questions-button" id="allQuestion"
-						name="allQuestion">All Questions</button>
-				</td>
-			</tr>
-		</table>
+			<button type="button" class="questions-button" style="float: right;"
+				id="allQuestions" name="allQuestion" disabled="disabled" onclick="filterAllQuestions()">All
+				Questions</button>
+		</div>
+
 		<div style="margin-top: 30px;">
 			<a class="title-label">Assignments</a>
 			<div class="border-table">
@@ -337,6 +353,7 @@ else {
 									<button class="button-view" type="button">View</button>
 								</td>
 							</tr>
+							
 						</c:forEach>
 					</tbody>
 				</table>
@@ -344,6 +361,32 @@ else {
 		</div>
 	</div>
 </div>
-
 </body>
+
+<script>
+	function filterMyQuestions() {
+		var td, username;
+		var tableRows = document.getElementById("tableQuestions").rows;
+		var sessionUsername = "${loggedUser.getUsername()}";
+
+		for (i = 0; i < tableRows.length; i++) {
+			var tdInput = tableRows[i].cells[6].getElementsByTagName('input')[0].value;
+			
+			if (tdInput != sessionUsername){
+				tableRows[i].style.display = "none";
+			}
+		}
+		document.getElementById("myQuestion").disabled = true;
+		document.getElementById("allQuestions").disabled = false;
+	}
+	
+	function filterAllQuestions() {
+		var tableRows = document.getElementById("tableQuestions").rows;
+		for (i = 0; i < tableRows.length; i++) {
+			tableRows[i].style.display = "";
+		}
+		document.getElementById("myQuestion").disabled = false;
+		document.getElementById("allQuestions").disabled = true;
+	}
+</script>
 </html>
