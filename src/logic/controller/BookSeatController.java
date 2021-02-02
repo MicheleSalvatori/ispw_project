@@ -42,10 +42,19 @@ public class BookSeatController {
 			seatsBean = null;
 		} else {
 
-			for (Seat s : seats) {
-				SeatBean sBean = new SeatBean(s.getIndex());
-				sBean.setFree(s.getState());
+			for (int i = 1; i<lessonBean.getClassroom().getSeatColumn() * lessonBean.getClassroom().getSeatRow(); i++) {
+//				SeatBean sBean = new SeatBean(s.getIndex());
+//				sBean.setFree(s.getState());
+//				seatsBean.add(sBean);
+				
+				SeatBean sBean = new SeatBean(i);
+				sBean.setFree(true);
 				seatsBean.add(sBean);
+			}
+			
+			for (Seat s : seats) {
+				System.out.println("S: "+s.getIndex()+s.getState());
+				seatsBean.get(s.getIndex()-1).setFree(s.getState());
 			}
 		}
 		return seatsBean;

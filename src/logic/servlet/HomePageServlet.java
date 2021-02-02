@@ -25,7 +25,6 @@ public class HomePageServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		if (request.getSession().getAttribute("loggedUser") == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
@@ -53,5 +52,10 @@ public class HomePageServlet extends HttpServlet {
 		request.setAttribute("lesson", lesson);
 		request.setAttribute("listOfLesson", lessons);
 		request.getRequestDispatcher("/WEB-INF/HomePage.jsp").forward(request, response);
+	}
+	
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	}
 }
