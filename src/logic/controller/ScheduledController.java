@@ -53,7 +53,7 @@ public class ScheduledController {
 			
 			Course course = lesson.getCourse();
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbrevation());
 			courseBean.setCredits(course.getCredits());
 			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
@@ -113,7 +113,7 @@ public class ScheduledController {
 			
 			Course course = exam.getCourse();
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbrevation());
 			courseBean.setCredits(course.getCredits());
 			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
@@ -156,7 +156,7 @@ public class ScheduledController {
 		
 		for (Course course : courses) {
 	    	CourseBean courseBean = new CourseBean();
-	    	courseBean.setAbbrevation(course.getAbbrevation());
+	    	courseBean.setAbbreviation(course.getAbbrevation());
 	    	courseBean.setName(course.getName());
 	    	courseBean.setYear(course.getYear());
 	    	courseBean.setCredits(course.getCredits());

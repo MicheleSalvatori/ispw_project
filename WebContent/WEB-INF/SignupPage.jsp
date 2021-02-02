@@ -8,7 +8,8 @@
 	<head>
 		<meta charset="utf-8">
 		<title>App - Signup</title>
-		<link rel="stylesheet" href="res/style/SignupPage.css" >
+		<link rel="stylesheet" href="res/style/SignupPage.css">
+		<link rel="icon" href="res/img/Logo.png">
 	</head>
 
 	<body>

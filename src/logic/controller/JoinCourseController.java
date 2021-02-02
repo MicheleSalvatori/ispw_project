@@ -88,7 +88,7 @@ public class JoinCourseController {
 		
 		for (Course course : courses) {
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbrevation());
 			courseBean.setCredits(course.getCredits());
 			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
@@ -104,7 +104,7 @@ public class JoinCourseController {
 	}
 	
 	public List<ProfessorBean> getCourseProfessors(CourseBean courseBean) throws SQLException, RecordNotFoundException {
-		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbrevation());
+		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbreviation());
 		List<ProfessorBean> professorsBean = new ArrayList<>();
 		
 		for (Professor professor : professors) {
@@ -131,7 +131,7 @@ public class JoinCourseController {
 	private Course getCourse(RequestBean requestBean) {
 		CourseBean courseBean = requestBean.getCourse();
 		Course course = new Course();
-		course.setAbbrevation(courseBean.getAbbrevation());
+		course.setAbbrevation(courseBean.getAbbreviation());
 		return course;
 	}
 }

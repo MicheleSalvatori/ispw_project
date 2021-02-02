@@ -40,7 +40,7 @@ public class ExamCardView {
 		
 		labelNumber.setText(Integer.toString(num));
 		labelDate.setText(SQLConverter.date(verb.getDate()));
-		btnCourse.setText(verb.getCourse().getAbbrevation());
+		btnCourse.setText(verb.getCourse().getAbbreviation());
 		labelCFU.setText(verb.getCourse().getCredits());
 		labelName.setText(verb.getCourse().getName());
 		labelVote.setText(Integer.toString(verb.getGrade()));

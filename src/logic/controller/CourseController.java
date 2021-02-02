@@ -13,9 +13,11 @@ import logic.bean.ProfessorBean;
 import logic.bean.WeeklyLessonBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
+import logic.model.Course;
 import logic.model.Lesson;
 import logic.model.Professor;
 import logic.model.WeeklyLesson;
+import logic.model.dao.CourseDAO;
 import logic.model.dao.LessonDAO;
 import logic.model.dao.ProfessorDAO;
 import logic.model.dao.WeeklyLessonDAO;
@@ -26,7 +28,7 @@ public class CourseController {
 		
 		Date date = new Date(System.currentTimeMillis());
 		Time time = new Time(System.currentTimeMillis());
-		Lesson lesson = LessonDAO.getNextLessonByCourse(date, time, courseBean.getAbbrevation());
+		Lesson lesson = LessonDAO.getNextLessonByCourse(date, time, courseBean.getAbbreviation());
 		
 		Classroom classroom = lesson.getClassroom();
 		ClassroomBean classroomBean = new ClassroomBean();
@@ -53,7 +55,7 @@ public class CourseController {
 	
 	public List<ProfessorBean> getCourseProfessors(CourseBean courseBean) throws SQLException, RecordNotFoundException {
 		
-		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbrevation());
+		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbreviation());
 		List<ProfessorBean> professorsBean = new ArrayList<>();
 		
 		for (Professor professor : professors) {
@@ -72,7 +74,7 @@ public class CourseController {
 	
 	public List<WeeklyLessonBean> getWeeklyLessons(CourseBean courseBean) throws SQLException, RecordNotFoundException {
 		
-		List<WeeklyLesson> lessons = WeeklyLessonDAO.getCourseWeeklyLessons(courseBean.getAbbrevation());
+		List<WeeklyLesson> lessons = WeeklyLessonDAO.getCourseWeeklyLessons(courseBean.getAbbreviation());
 		List<WeeklyLessonBean> lessonsBean = new ArrayList<>();
 		
 		for (WeeklyLesson lesson : lessons) {
@@ -92,5 +94,22 @@ public class CourseController {
 		}
 		
 		return lessonsBean;
+	}
+	
+	public CourseBean getCourse(CourseBean courseBean) throws SQLException, RecordNotFoundException {
+		
+		Course course = CourseDAO.getCourseByAbbrevation(courseBean.getAbbreviation());
+		
+		CourseBean c = new CourseBean();
+		c.setAbbreviation(course.getAbbrevation());
+		c.setCredits(course.getCredits());
+		c.setGoal(course.getGoal());
+		c.setName(course.getName());
+		c.setPrerequisites(course.getPrerequisites());
+		c.setReception(course.getReception());
+		c.setSemester(course.getSemester());
+		c.setYear(course.getYear());
+		
+		return c;
 	}
 }

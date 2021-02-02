@@ -4,26 +4,23 @@
 <html lang="en">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="logic.bean.UserBean" %>
 <%@ page import="logic.utilities.SQLConverter" %>
 <%@ page import="logic.utilities.Role" %>
 
-<%UserBean user = new UserBean();
-	if (session.getAttribute("loggedUser") != null) {
-		user = (UserBean) session.getAttribute("loggedUser");
-	}
-		
-	else {
-		user.setUsername("");
-	}
+<%
+	UserBean user = (UserBean) session.getAttribute("loggedUser");
 %>
 	
 	<head>
 		<meta charset="utf-8">
 		<title>App - HomePage</title>
-		<link rel="stylesheet" href="res/style/ExamPage.css" >
-		<link rel="stylesheet" href="res/style/NavigationBar.css" >
-		<link rel="stylesheet" href="res/style/StatusBar.css" >
+		<link rel="stylesheet" href="res/style/ExamPage.css">
+		<link rel="stylesheet" href="res/style/NavigationBar.css">
+		<link rel="stylesheet" href="res/style/StatusBar.css">
+		<link rel="stylesheet" href="res/style/ModalBox.css">
+		<link rel="icon" href="res/img/Logo.png">
 	</head>
 	
 	<body>
@@ -36,41 +33,39 @@
 				</tr>
 				<tr>
 					<td valign="top" style="padding-bottom: 20px;" align="center">
-						<button class="nav-button" type="button" name="home">
+						<a href="/ispw_project/HomePageServlet" class="nav-button" type="button">
 							<svg class="nav-icon" width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M14.6444 1.40837L14.6446 1.40854L25.2517 12.0152L25.2517 12.0153C25.2517 12.0153 25.2517 12.0153 25.2518 12.0153L25.2518 12.0153L25.2518 12.0154C25.2518 12.0154 25.2518 12.0154 25.2518 12.0154C25.2518 12.0154 25.2519 12.0154 25.2519 12.0154C25.2519 12.0154 25.2519 12.0155 25.2519 12.0155C25.7934 12.5585 25.793 13.4433 25.2509 13.9858C24.9858 14.2505 24.6392 14.3939 24.2656 14.3939H23.8736H22.8736V15.3939V23.1989C22.8736 24.191 22.0648 25 21.0721 25H17.161V19.1191C17.161 17.8621 16.14 16.8411 14.8829 16.8411H12.4355C11.1785 16.8411 10.1575 17.8621 10.1575 19.1191V25H6.24636C5.2537 25 4.44487 24.191 4.44487 23.1989V15.3939V14.3939H3.44487H3.03362L3.0184 14.3924L2.99124 14.3912C2.64014 14.3761 2.31541 14.2335 2.06733 13.9853L2.06716 13.9851C1.52582 13.4438 1.52465 12.5605 2.06463 12.0174L2.07253 12.0094L2.07623 12.0056L12.6737 1.40833L12.6737 1.40832C12.9385 1.14356 13.2852 1 13.6592 1C14.0331 1 14.3798 1.14362 14.6444 1.40837ZM25.2516 12.0151C25.2516 12.0151 25.2516 12.0151 25.2516 12.0151L25.2515 12.0151C25.2516 12.0151 25.2516 12.0151 25.2516 12.0151ZM2.07789 12.0039L2.07758 12.0042L2.07789 12.0039Z" stroke="white" stroke-width="2"/>
 							</svg>
-						</button>
+						</a>
 					</td>
 				</tr>
 				  
 				<tr>
 					<td style="padding-bottom: 20px;" align="center">
 						<%if (user.getRole() == Role.STUDENT) { %>
-						<a href="/ispw_project/ExamPageServlet?username=<%=user.getUsername()%>">
-						<button class="nav-button" type="button" name="exam">
+						<a href="/ispw_project/ExamPageServlet" class="nav-button" type="button">
 							<svg class="nav-icon" width="31" height="27" viewBox="0 0 31 27" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M28.7954 24.9126C28.7503 24.9903 28.7052 25.0669 28.6604 25.142C28.6156 25.0669 28.5705 24.9903 28.5254 24.9126C28.2844 24.4972 28.0548 24.0676 27.8884 23.689C27.8054 23.4998 27.7443 23.3374 27.7053 23.2055C27.686 23.1404 27.6741 23.0892 27.6672 23.051C27.6602 23.0117 27.6604 22.9961 27.6604 23C27.6604 22.6395 27.8555 22.3206 28.163 22.1419L28.6604 21.8527L29.1578 22.1419C29.4653 22.3206 29.6604 22.6395 29.6604 23C29.6604 22.9961 29.6606 23.0117 29.6536 23.051C29.6467 23.0892 29.6348 23.1404 29.6155 23.2055C29.5765 23.3374 29.5154 23.4998 29.4324 23.689C29.266 24.0676 29.0364 24.4972 28.7954 24.9126ZM15.6349 1.01359L15.6481 1.00699L15.6597 1.00076L15.6749 1.00908L15.6918 1.01752L29.5808 7.96009L29.6572 8L29.6243 8.01722L15.6858 14.9864L15.6727 14.993L15.6611 14.9992L15.6459 14.9909L15.629 14.9825L1.73994 8.03989L1.66356 8L1.74028 7.95994L15.6349 1.01359ZM17.4728 18.5643L17.4729 18.5643L23.6604 15.4698V18C23.6604 18.8524 23.0266 19.8346 21.5388 20.6612C20.085 21.469 18.0087 22 15.6604 22C13.3121 22 11.2358 21.469 9.78195 20.6612C8.29419 19.8346 7.6604 18.8524 7.6604 18V15.4694L13.8438 18.5603C13.8445 18.5607 13.8452 18.561 13.846 18.5614C13.9638 18.6209 14.0826 18.6708 14.2021 18.7123C14.6688 18.9009 15.159 19 15.6604 19C16.1634 19 16.6547 18.9007 17.123 18.7121C17.2399 18.6712 17.3561 18.6227 17.4728 18.5643Z" stroke="white" stroke-width="2"/>
 							</svg>
-						</button>
 						</a>
 						<%} else { %>
-						<button class="nav-button" type="button" name="request">
+						<a href="/ispw_project/RequestPageServlet" class="nav-button" type="button">
 							<svg width="21" height="27" viewBox="0 0 21 27" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M0.0351562 0V3.375H1.19531C1.56885 8.89892 4.60547 12.2212 6.25781 13.6406C5.00098 14.77 1.61279 18.0835 1.19531 23.625H0.0351562V27H20.2852V23.625H19.125C18.7075 18.0835 15.3193 14.77 14.0625 13.6406C15.7192 12.2388 18.7646 8.97363 19.125 3.375H20.2852V0H0.0351562ZM3.48047 3.375H16.8398C16.3608 9.97998 11.8477 12.5156 11.8477 12.5156L10.4062 13.3594L11.707 14.3789C11.707 14.3789 16.2686 18.1099 16.8398 23.625H16.6641C15.7324 21.1685 12.2871 18 10.1602 18C8.0332 18 4.58789 21.1685 3.65625 23.625H3.48047C4.05176 18.1099 8.61328 14.3789 8.61328 14.3789L9.87891 13.3594L8.47266 12.5508C8.47266 12.5508 3.95947 9.89648 3.48047 3.375ZM7.91016 9C7.91016 10.0107 9.14942 12.375 10.1602 12.375C11.1709 12.375 12.4102 10.0107 12.4102 9H7.91016Z" fill="white"/>
 							</svg>
+						</a>
 						<%} %>
-						</button>
 					</td>
 				</tr>
 				  
 				<tr>
 					<td style="padding-bottom: 20px;" align="center">
-						<button class="nav-button" type="button" name="profile">
+						<a href="/ispw_project/ProfilePageServlet" class="nav-button" type="button">
 							<svg class="nav-icon" width="26" height="32" viewBox="0 0 26 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M5.8 8C5.8 4.14822 8.94822 1 12.8 1C16.6518 1 19.8 4.14822 19.8 8C19.8 11.8518 16.6518 15 12.8 15C8.94822 15 5.8 11.8518 5.8 8ZM1 22.8C1 21.3783 2.17828 20.2 3.6 20.2H22C23.4217 20.2 24.6 21.3783 24.6 22.8V23.7594C24.6 25.6597 23.3904 27.4941 21.2951 28.8303C19.2095 30.1603 16.2915 31 12.8 31C9.30855 31 6.39049 30.1603 4.30487 28.8303C2.20957 27.4941 1 25.6597 1 23.7594V22.8Z" stroke="white" stroke-width="2"/>
 							</svg>
-						</button>
+						</a>
 					</td>
 				</tr>
 				  
@@ -97,19 +92,19 @@
 				<tr>
 					<td style="padding-bottom: 20px;" align="center">
 						<%if (user.getRole() == Role.PROFESSOR) { %>
-						<button class="nav-button" type="button" name="schedule">
+						<a href="/ispw_project/SchedulePageServlet" class="nav-button">
 							<svg class="nav-icon" width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M21.3271 2.58333H23.9104V6.45833H21.3271V2.58333ZM8.4104 15.5C4.1479 15.5 0.6604 12.0125 0.6604 7.75C0.6604 3.4875 4.1479 0 8.4104 0C12.6729 0 16.1604 3.4875 16.1604 7.75C16.1604 12.0125 12.6729 15.5 8.4104 15.5ZM8.4104 2.58333C5.56873 2.58333 3.24373 4.90833 3.24373 7.75C3.24373 10.5917 5.56873 12.9167 8.4104 12.9167C11.2521 12.9167 13.5771 10.5917 13.5771 7.75C13.5771 4.90833 11.2521 2.58333 8.4104 2.58333ZM11.3812 9.42917L9.44373 7.62083L10.9937 4.90833L9.5729 4.13333L7.37707 7.87917L10.2187 10.7208L11.3812 9.42917Z" fill="white"/>
 								<path d="M25.2021 5.16663H18.4053C18.6184 5.99329 18.7437 6.85613 18.7437 7.74996H25.2021V10.3333H18.4053C18.1689 11.2504 17.8137 12.1171 17.35 12.9166H25.2021L25.2034 25.8333H7.11873V17.9942C6.21586 17.8818 5.35044 17.6558 4.5354 17.3251V25.8333C4.5354 27.258 5.69403 28.4166 7.11873 28.4166H25.2021C26.6268 28.4166 27.7854 27.258 27.7854 25.8333V7.74996C27.7854 6.32525 26.6268 5.16663 25.2021 5.16663Z" fill="white"/>
 							</svg>
-						</button>
+						</a>
 						<%} %>
 					</td>
 				</tr>
 				  
 				<tr>
 					<td style="padding-bottom: 20px; padding-top: 100px;" align="center">
-						<button class="nav-button" type="button" name="back">
+						<button class="nav-button" type="button" name="back" onclick="history.back()">
 							<svg style="cursor: pointer;" width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M11.9158 13.1H9.50159L11.2087 14.8071L12.9533 16.5517C12.9918 16.5902 12.9918 16.6544 12.9533 16.6929C12.9148 16.7314 12.8506 16.7314 12.8121 16.6929L9.18981 13.0706C9.14973 13.0305 9.15103 12.9681 9.1889 12.9303L9.18981 12.9294L12.8121 9.30711C12.8506 9.26863 12.9148 9.26863 12.9533 9.30711C12.9918 9.34558 12.9918 9.40982 12.9533 9.44829L11.2087 11.1929L9.50159 12.9H11.9158H18.0604C18.1153 12.9 18.1604 12.9451 18.1604 13C18.1604 13.0549 18.1153 13.1 18.0604 13.1H11.9158ZM13.6604 1C7.03282 1 1.6604 6.37242 1.6604 13C1.6604 19.6276 7.03282 25 13.6604 25C20.288 25 25.6604 19.6276 25.6604 13C25.6604 6.37242 20.288 1 13.6604 1Z" stroke="white" stroke-width="2"/>
 							</svg>
@@ -170,15 +165,23 @@
 			
 			<!-- Exam table	-->
 			<div width="100%" style="height: 100%; border: 2px solid #0C0B0B; border-radius: 14px;">
-				<table style="border-collapse: separate; border-spacing: 0; width: 100%; border: 15px solid transparent;">
-					<c:forEach items="${listOfExam}" var="exam">		
+			
+				<table style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
+					<c:if test="${empty listOfExam}">
+						<tr>
+							<td colspan="7" class="exam-text">
+								No exam found.
+							</td>
+						</tr>
+					</c:if>
+					<c:forEach items="${listOfExam}" var="exam" varStatus="examind">	
 						<tr height="50px" class="exam">
 							<td style="border-radius: 14px 0 0 14px; white-space: nowrap; padding: 1vw; width: 2vw;">
 								<img class="img" src="res/img/Exam.png" alt="exam">
 							</td>
 
 							<td style="text-align: left; width: 2vw;" class="exam-number">
-								1
+								${examind.count}
 							</td>
 
 							<td>
@@ -205,10 +208,21 @@
 								${exam.getCourse().getCredits()}
 							</td>
 
-							<td align="right" class="exam-grade" style="width: 8vw; border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: center;">
-								${exam.getCourse().getAbbrevation()}
-							</td>	
-						</tr>
+							<td align="right" class="exam-grade" style="width: 8vw; text-decoration: underline; text-align: center;">
+								<a href="/ispw_project/CoursePageServlet?course=${exam.getCourse().getAbbreviation()}">
+									${exam.getCourse().getAbbreviation()}
+								</a>
+							</td>
+							
+							<td align="right" style="border-radius: 0 14px 14px 0; white-space: nowrap; text-align: center;">
+								<form action="/ispw_project/ExamPageServlet" method="post">
+								<input type="hidden" name="course" value="${exam.getCourse().getAbbreviation()}" />
+								<button name="deleteExam" class="exam-button" type="submit" onclick="return confirm('Are you sure you want to delete?')">
+									Delete
+								</button>
+								</form>
+							</td>
+						</tr>	
 					</c:forEach>
 				</table>
 			</div>
@@ -218,11 +232,11 @@
 				<table>
 					<tr>
 						<td class="exam-average">
-							Verbalizd Exams:
+							Verbalized Exams:
 						</td>
 						
 						<td class="num-average">
-							0
+							${fn:length(listOfExam)}
 						</td>
 					</tr>
 					
@@ -232,7 +246,7 @@
 						</td>
 						
 						<td class="num-average">
-							0
+							<%=request.getAttribute("gpa")%>
 						</td>
 					</tr>
 					
@@ -242,7 +256,7 @@
 						</td>
 						
 						<td class="num-average">
-							20
+							<%=request.getAttribute("wpa")%>
 						</td>
 					</tr>
 				
@@ -250,13 +264,94 @@
 			</div>
 			
 			<!-- Add button	-->
+			<form action="/ispw_project/ExamPageServlet" method="post">
 			<div style="width: 50%; float: right; text-align: right; padding-top: 50px;">
-				<button class="add-exam-button">
+				<button type="button" class="add-exam-button" id="addExam" name="addExam">
 					<img style="vertical-align: middle;" class="plus-img" src="res/img/Plus.png" alt="add">
 					Add Exam
 				</button>
 			</div>
+			</form>
 		
 		</div>
+		
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+		
+		   	<!-- Modal content -->
+		   	<form action="/ispw_project/ExamPageServlet" method="post">
+			<div class="modal-content">
+			
+			  <div class="modal-header">
+			    <span class="close">&times;</span>
+			    <a class="modal-text">Add Exam</a>
+			  </div>
+			  
+			  <div class="modal-body" style="text-align: center; padding: 25px 0 25px 0;">
+			  
+			  	
+			  	<select name="course-select" class="select" name="courses" id="course-select" style="float: left; margin-left: 25px;" required>	
+			  		<c:if test="${!empty listOfCourse}">
+			  			<option value="" disabled selected>Select course</option>
+			  		</c:if>
+			  		
+			  		<c:if test="${empty listOfCourse}">
+			  			<option value="" disabled selected>No course available</option>
+			  		</c:if>
+			  		
+				    <c:forEach items="${listOfCourse}" var="course">
+				    <option value="${course.getAbbreviation()}">
+				    	${course.getAbbreviation()}
+				    </option>
+				    </c:forEach>
+				</select>
+				
+				<input name="date" type="date" class="datepicker-input" required>
+				
+				<select name="grade-select" class="select" name="grades" id="grade-select" style="float: right; margin-right: 25px;" required>
+					<option value="" disabled selected>Select grade</option>
+					<c:forEach var="i" begin="18" end="30">
+						<option value="${i}">${i}</option>
+					</c:forEach>
+				</select>
+			  </div>
+			  
+			  <div class="modal-footer" style="text-align: right; padding: 10px 10px 10px 0;">
+			    	<button class="modal-button" type="submit" name="submitAdd">Submit</button>
+			  </div>
+			</div> 
+			</form>
+		
+		</div> 
+		
 	</body>
+	
+<script>
+	//Get the modal
+	var modal = document.getElementById("myModal");
+	
+	// Get the button that opens the modal
+	var btn = document.getElementById("addExam");
+	
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+	
+	// When the user clicks on the button, open the modal
+	btn.onclick = function() {
+	  modal.style.display = "block";
+	}
+	
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+	  modal.style.display = "none";
+	}
+	
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	  if (event.target == modal) {
+	    modal.style.display = "none";
+	  }
+	} 
+</script>
+
 </html>

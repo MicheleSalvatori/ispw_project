@@ -74,7 +74,7 @@ public class CourseCardView {
 	public void setCourse(CourseBean courseBean, List<ProfessorBean> professors, Type type) {
 		this.courseBean = courseBean;
 		
-		btnCourse.setText(courseBean.getAbbrevation());
+		btnCourse.setText(courseBean.getAbbreviation());
 		btnProfessor.setText(professors.get(0).getName() + " " + professors.get(0).getSurname());
 		
 		if (type == Type.REQUEST) {

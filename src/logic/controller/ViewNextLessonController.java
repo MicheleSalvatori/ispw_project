@@ -46,7 +46,7 @@ public class ViewNextLessonController {
 			
 			Course course = lesson.getCourse();
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbrevation());
 			courseBean.setCredits(course.getCredits());
 			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());

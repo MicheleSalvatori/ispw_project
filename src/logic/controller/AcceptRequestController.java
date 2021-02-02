@@ -26,7 +26,7 @@ public class AcceptRequestController {
 			
 			CourseBean courseBean = requestBean.getCourse();
 			Course course = new Course();
-			course.setAbbrevation(courseBean.getAbbrevation());
+			course.setAbbrevation(courseBean.getAbbreviation());
 			
 			Request request = new Request(student, course);
 			return RequestDAO.insertFollow(request);
@@ -45,20 +45,20 @@ public class AcceptRequestController {
 		
 		CourseBean courseBean = requestBean.getCourse();
 		Course course = new Course();
-		course.setAbbrevation(courseBean.getAbbrevation());
+		course.setAbbrevation(courseBean.getAbbreviation());
 		
 		Request request = new Request(student, course);
 		return RequestDAO.deleteRequest(request);
 	}
 	
-	public List<CourseBean> getCourses(UserBean userBean) throws SQLException, NullPointerException, RecordNotFoundException {
+	public List<CourseBean> getCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
 		List<Course> courses = CourseDAO.getProfessorCourses(userBean.getUsername());
 		List<CourseBean> coursesBean = new ArrayList<>();
 		
 		for (Course course : courses) {
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbrevation());
 			courseBean.setCredits(course.getCredits());
 			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
@@ -73,7 +73,7 @@ public class AcceptRequestController {
 		return coursesBean;
 	}
 	
-	public List<RequestBean> getRequests(UserBean userBean) throws SQLException, NullPointerException, RecordNotFoundException {
+	public List<RequestBean> getRequests(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
 		List<Request> requests = RequestDAO.getRequestsByProfessor(userBean.getUsername());
 		List<RequestBean> requestsBean = new ArrayList<>();
@@ -83,7 +83,7 @@ public class AcceptRequestController {
 			
 			Course course = request.getCourse();
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbrevation());
 			courseBean.setCredits(course.getAbbrevation());
 			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());

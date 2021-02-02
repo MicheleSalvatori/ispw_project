@@ -15,7 +15,7 @@ public class ScheduleLessonController {
 	public boolean scheduleLesson(LessonBean lessonBean) {
 		
 		CourseBean courseBean = lessonBean.getCourse();
-		Course course = new Course(courseBean.getName(), courseBean.getAbbrevation(), courseBean.getYear(),
+		Course course = new Course(courseBean.getName(), courseBean.getAbbreviation(), courseBean.getYear(),
 									courseBean.getSemester(), courseBean.getCredits(), courseBean.getPrerequisites(),
 									courseBean.getGoal(), courseBean.getReception());
 		

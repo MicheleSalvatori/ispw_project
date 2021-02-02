@@ -36,7 +36,7 @@ public class AddAssignmentController {
 			
 			Course course = assignment.getCourse();
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbrevation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbrevation());
 			courseBean.setCredits(course.getCredits());
 			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
@@ -80,7 +80,7 @@ public class AddAssignmentController {
 	public boolean saveAssignment(AssignmentBean assignmentBean) throws SQLException {
 
 		Course course = new Course();
-		course.setAbbrevation(assignmentBean.getCourse().getAbbrevation());
+		course.setAbbrevation(assignmentBean.getCourse().getAbbreviation());
 		
 		Assignment assignment = new Assignment(course, assignmentBean.getTitle(), assignmentBean.getDate(), assignmentBean.getText());
 

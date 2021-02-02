@@ -63,7 +63,7 @@ public class NewAssignmentView implements Initializable {
 			
 			courses = addAssignmentController.getCoursesOfProfessor(professorBean);
 			for (CourseBean course : courses) {
-				comboCourse.getItems().add(course.getAbbrevation());
+				comboCourse.getItems().add(course.getAbbreviation());
 			}
 			
 			

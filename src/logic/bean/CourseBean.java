@@ -7,7 +7,7 @@ import java.util.List;
 public class CourseBean {
 
 	private String name;
-	private String abbrevation;
+	private String abbreviation;
 	private List<StudentBean> students;
 	
 	private String year;
@@ -23,7 +23,7 @@ public class CourseBean {
 	
 	public CourseBean(String course, String abbrv) {
 		this.name = course;
-		this.abbrevation = abbrv;
+		this.abbreviation = abbrv;
 	}
 
 	public String getName() {
@@ -46,12 +46,12 @@ public class CourseBean {
 		this.students.add(student);
 	}
 
-	public String getAbbrevation() {
-		return abbrevation;
+	public String getAbbreviation() {
+		return abbreviation;
 	}
 
-	public void setAbbrevation(String abbrevation) {
-		this.abbrevation = abbrevation;
+	public void setAbbreviation(String abbreviation) {
+		this.abbreviation = abbreviation;
 	}
 	
 	public String getYear() {

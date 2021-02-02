@@ -54,7 +54,7 @@ public class NewQuestionView implements Initializable {
 		try {
 			courses = controller.getCoursesOfStudent(UserBean.getInstance());
 			for (CourseBean c : courses) {
-				courseComboBox.getItems().add(c.getAbbrevation());
+				courseComboBox.getItems().add(c.getAbbreviation());
 			}
 			
 		} catch (RecordNotFoundException e) {

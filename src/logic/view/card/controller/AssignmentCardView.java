@@ -34,7 +34,7 @@ public class AssignmentCardView {
 	public void setCard(AssignmentBean assignment) {
 		this.assignment = assignment;
 		
-		btnCourse.setText(assignment.getCourse().getAbbrevation());
+		btnCourse.setText(assignment.getCourse().getAbbreviation());
 		labelNumber.setText(Integer.toString(assignment.getId()));
 		labelDate.setText(SQLConverter.date(assignment.getDate()));
 		labelTitle.setText(assignment.getTitle());

@@ -50,6 +50,29 @@
 	-fx-alignment: CENTER-RIGHT;
 }
 
+.list-professor {
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai 2";
+	-fx-font-size: 24px;
+	-fx-alignment: RIGHT;
+	-fx-background-color: transparent;
+}
+
+.list-professor .list-cell {
+	-fx-text-fill: black;
+	-fx-font-family: "Baloo Bhai 2";
+	-fx-font-size: 24px;
+	-fx-alignment: CENTER-RIGHT;
+	-fx-background-color: transparent;
+}
+
+.list-professor .increment-button,
+.list-professor .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-color: white;
+}
+
 .button-scheduled {
 	-fx-background-color: #E5E5EB;
 	-fx-background-radius: 14px;

@@ -37,7 +37,7 @@ public class CourseFilterCardView {
 	
 	public void setCard(CourseBean course) {
 		this.course = course;
-		btnCourse.setText(course.getAbbrevation());
+		btnCourse.setText(course.getAbbreviation());
 	}
 	
 	public ToggleButton getButton() {

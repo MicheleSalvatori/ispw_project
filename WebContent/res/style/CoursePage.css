@@ -1,13 +1,25 @@
 @font-face {
 	font-family: 'Baloo Bhai';
-	src: url("../font/BalooBhai-Regular.ttf");
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
 	font-weight: normal;
 }
 
 @font-face {
-	font-family: 'Overpass';
-	src: url("../font/Overpass-Regular.ttf");
+	font-family: 'Roboto';
+	src: url("../font/Roboto/Roboto-Regular.ttf");
 	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ 	font-weight: bold;
+}
+ 
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ 	font-weight: light;
 }
 
 /* Style page content */
@@ -25,8 +37,8 @@
 	flex: 1;
 }
 
-.hello {
-	width: 45%;
+.info {
+	width: 100%;
 	background-color: #F0F0F2;
 	border-radius: 14px;
 	
@@ -34,7 +46,7 @@
 	margin-right: 5vw;
 }
 
-.hello-text {
+.course-text {
 	font-family: "Baloo Bhai";
 	font-weight: normal;
 	font-size: 2vw;
@@ -43,36 +55,62 @@
 	padding-left: 1.5vw;
 }
 
-.hello-sub {
-	font-family: "Roboto";
+.course-prof {
+	font-family: "Baloo Bhai";
 	font-weight: normal;
-	font-size: 1vw;
+	font-size: 1.2vw;
 	
+	padding-top: 0.1vw;
 	padding-left: 1.5vw;
 }
 
-.stat {
-	width: 45%;
-	background-color: #F0F0F2;
-	border-radius: 14px;
-	
-	float: right;
-	text-align: center;
-}
-
-.stat-num {
-	font-family: "Baloo Bhai";
-	font-weight: normal;
-	font-size: 4vw;
-}
-
-.stat-text {
+.course-name-info {
 	font-family: "Roboto";
 	font-weight: normal;
 	font-size: 2vw;
-	height: 100%;
-	text-align: left;
-	padding-left: 10px;
+	
+	padding-top: 0.5vw;
+	padding-right: 1.5vw;
+	text-align: right;
+}
+
+.course-prof-info {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 1.2vw;
+	
+	padding-top: 0.1vw;
+	padding-right: 1.5vw;
+	text-align: right;
+}
+
+.info-tab {
+	background-color: #F0F0F2;
+	border-radius: 14px; 
+	width: 80%;
+}
+
+.button {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 2vw;
+	
+	background-color: #F0F0F2;
+	border-radius: 14px;
+	border: 0;
+	filter: drop-shadow(5px 5px 5px black);
+	width: 80%;
+	height: 95px;
+	transition-duration: 0.4s;
+}
+
+.button:hover {
+	cursor: pointer;
+	filter: drop-shadow(2px 2px 5px black);
+}
+
+.button:active {
+	filter: drop-shadow(1px 1px 5px black);
 }
 
 .img {
@@ -80,14 +118,6 @@
 	height: auto;
 	
 	max-width: 50px;
-	min-width: 15px;
-}
-
-.weather-img {
-	width: 100%;
-	height: auto;
-	
-	max-width: 31px;
 	min-width: 15px;
 }
 
@@ -138,7 +168,7 @@
 }
 
 .lesson {
-	width: 45%;
+	width: 100%;
 	background-color: #F0F0F2;
 	border-radius: 14px;
 }
@@ -146,38 +176,5 @@
 .next-lessons-label {
 	font-family: "Baloo Bhai";
 	font-weight: normal;
-	font-size: 2vw;
+	font-size: 1.5vw;
 }
-
-.weather {
-	width: 100%;
-	height: 100%;
-	background-color: #0C0B0B;
-	border-radius: 18px;
-}
-
-.weather-text {
-	font-family: "Overpass";
-	font-weight: normal;
-	font-size: 1vw;
-	
-	color: white;
-	text-align: center;
-}
-
- /* width */
-::-webkit-scrollbar {
-  width: 10	px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
-  border-radius: 10px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: red;
-  border-radius: 10px;
-} 

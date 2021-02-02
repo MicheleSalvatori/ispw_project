@@ -13,7 +13,7 @@ public class ScheduleExamController {
 	public boolean scheduleExam(ExamBean examBean) {
 		
 		CourseBean courseBean = examBean.getCourse();
-		Course course = new Course(courseBean.getName(), courseBean.getAbbrevation(), courseBean.getYear(),
+		Course course = new Course(courseBean.getName(), courseBean.getAbbreviation(), courseBean.getYear(),
 									courseBean.getSemester(), courseBean.getCredits(), courseBean.getPrerequisites(),
 									courseBean.getGoal(), courseBean.getReception());
 		

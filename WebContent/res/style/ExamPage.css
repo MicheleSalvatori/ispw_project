@@ -1,13 +1,31 @@
 @font-face {
 	font-family: 'Baloo Bhai';
-	src: url("BalooBhai-Regular.ttf");
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: 'Overpass';
-	src: url("Overpass-Regular.ttf");
+	src: url("../font/Overpass/Overpass-Regular.ttf");
 	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+	src: url("../font/Roboto/Roboto-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ 	font-weight: bold;
+}
+ 
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ 	font-weight: light;
 }
 
 /* Style page content */
@@ -83,6 +101,7 @@
 	filter: drop-shadow(5px 5px 5px black);
 	
 	border-radius: 20px;
+	border: 0;
 	background-color: #F0F0F2;
 }
 
@@ -96,4 +115,21 @@
 	
 	max-width: 28px;
 	min-width: 10px;
+}
+
+.exam-button {
+	font-family: "Roboto";
+	font-weight: bold;
+	font-size: 1vw;
+	color: white;
+	height: 2vw;
+	width: 5vw;
+	
+	background-color: #0C0B0B;
+	border-radius: 8px;
+	border: 0;
+}
+
+.exam-button:hover {
+	cursor: pointer;
 }

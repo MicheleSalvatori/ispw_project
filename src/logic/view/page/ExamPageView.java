@@ -44,6 +44,7 @@ import logic.bean.VerbalizedBean;
 import logic.controller.ViewVerbalizedExamsController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
+import logic.utilities.PageLoader;
 import logic.view.card.element.ExamCard;
 
 public class ExamPageView implements Initializable {
@@ -140,7 +141,7 @@ public class ExamPageView implements Initializable {
 	    GaussianBlur blur = new GaussianBlur(55);
 	    adj.setInput(blur);
 		
-		labelVE.getScene().getRoot().setEffect(adj);
+		PageLoader.getStage().getScene().getRoot().setEffect(adj);
 		dialogStage.show();
 		animation(dialogStage);
 		
@@ -170,7 +171,7 @@ public class ExamPageView implements Initializable {
 		btnCancel.setOnAction(cancAddExamEvent);
 
 		for (CourseBean courseBean : courses) {
-			comboCourse.getItems().add(courseBean.getAbbrevation());
+			comboCourse.getItems().add(courseBean.getAbbreviation());
 		}
 		
 		for (Integer g : grades) {
@@ -201,7 +202,7 @@ public class ExamPageView implements Initializable {
 		this.cancAddExamEvent = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				dialogStage.close();
-				labelVE.getScene().getRoot().setEffect(null);	//TODO
+				PageLoader.getStage().getScene().getRoot().setEffect(null);	//TODO
 			}
 		};
 	}

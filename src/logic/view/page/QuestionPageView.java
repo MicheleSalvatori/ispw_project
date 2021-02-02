@@ -41,6 +41,7 @@ import logic.controller.AllQuestionController;
 import logic.controller.InsertAnswerController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
+import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
 import logic.view.card.element.AnswerCard;
 
@@ -138,7 +139,7 @@ public class QuestionPageView implements Initializable{
 	    GaussianBlur blur = new GaussianBlur(55);
 	    adj.setInput(blur);
 	    
-	    labelAuthor.getScene().getRoot().setEffect(adj);
+	    PageLoader.getStage().getScene().getRoot().setEffect(adj);
 		dialogStage.show();
 		animation(dialogStage);
 		
@@ -176,7 +177,7 @@ public class QuestionPageView implements Initializable{
 		this.cancAddAnswerEvent = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				closeStage(dialogStage);
-				labelAuthor.getScene().getRoot().setEffect(null);
+				PageLoader.getStage().getScene().getRoot().setEffect(null);
 			}
 		};
 	}

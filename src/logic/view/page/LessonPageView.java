@@ -66,10 +66,10 @@ public class LessonPageView {
 
 	private enum SeatState {
 		FREE, BOOKED, YOUR
-	};
+	}
 	
 	@FXML
-	private void course(ActionEvent event) throws IOException, SQLException {
+	private void course(ActionEvent event) throws IOException {
 		CourseBean courseBean = lesson.getCourse();
 		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
@@ -89,7 +89,7 @@ public class LessonPageView {
 	}
 
 	public void setPage() {
-		btnCourse.setText(lesson.getCourse().getAbbrevation());
+		btnCourse.setText(lesson.getCourse().getAbbreviation());
 		labelClassroom.setText(lesson.getClassroom().getName());
 		labelTime.setText(SQLConverter.time(lesson.getTime()));
 		labelDate.setText(SQLConverter.date(lesson.getDate()));
@@ -252,11 +252,7 @@ public class LessonPageView {
 
 		WeatherCard a;
 		try {
-			a = new WeatherCard(
-					Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + String.valueOf(248) + "C",
-					image,
-
-					h + ":00");
+			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "°C", image, h + ":00");
 			weatherCard.getChildren().add(a);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

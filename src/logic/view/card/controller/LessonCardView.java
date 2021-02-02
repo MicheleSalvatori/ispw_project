@@ -47,7 +47,7 @@ public class LessonCardView {
 			line2.setVisible(false);
 			btnCourse.setVisible(false);
 			
-			labelLesson.setText(lesson.getCourse().getAbbrevation());
+			labelLesson.setText(lesson.getCourse().getAbbreviation());
 			labelClass.setText(lesson.getClassroom().getName());
 			labelTime.setText(SQLConverter.time(lesson.getTime()));
 		}
@@ -72,7 +72,7 @@ public class LessonCardView {
 			labelLesson.setText(SQLConverter.date(lesson.getDate()));
 			labelClass.setText(lesson.getClassroom().getName());
 			labelTime.setText(SQLConverter.time(lesson.getTime()));
-			btnCourse.setText(lesson.getCourse().getAbbrevation());
+			btnCourse.setText(lesson.getCourse().getAbbreviation());
 		}
 	}
 	

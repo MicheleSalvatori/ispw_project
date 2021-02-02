@@ -1,6 +1,6 @@
 @font-face {
 	font-family: 'Baloo Bhai';
-	src: url("BalooBhai-Regular.ttf");
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
 	font-weight: normal;
 }
 
@@ -108,6 +108,7 @@
 	border-radius: 15px;
 	border: 0;
 }
+
 .modal-button:disabled {
 	opacity: 0.5;
 }
@@ -179,3 +180,4 @@
   from {opacity: 0} 
   to {opacity: 1}
 }
+

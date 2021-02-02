@@ -1,0 +1,183 @@
+@font-face {
+	font-family: 'Baloo Bhai';
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Overpass';
+	src: url("../font/Overpass/Overpass-Regular.ttf");
+	font-weight: normal;
+}
+
+/* Style page content */
+.content {
+  	margin-left: 200px; /* Same as the width of the sidebar */
+	margin-top: 70px;
+	margin-right: 25px;
+}
+
+.row {
+	display: flex;
+}
+
+.col {
+	flex: 1;
+}
+
+.hello {
+	width: 45%;
+	background-color: #F0F0F2;
+	border-radius: 14px;
+	
+	float: left;
+	margin-right: 5vw;
+}
+
+.hello-text {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 2vw;
+	
+	padding-top: 0.5vw;
+	padding-left: 1.5vw;
+}
+
+.hello-sub {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 1vw;
+	
+	padding-left: 1.5vw;
+}
+
+.stat {
+	width: 45%;
+	background-color: #F0F0F2;
+	border-radius: 14px;
+	
+	float: right;
+	text-align: center;
+}
+
+.stat-num {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 4vw;
+}
+
+.stat-text {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 2vw;
+	height: 100%;
+	text-align: left;
+	padding-left: 10px;
+}
+
+.img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 50px;
+	min-width: 15px;
+}
+
+.weather-img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 31px;
+	min-width: 15px;
+}
+
+.time-img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 24px;
+	min-width: 10px;
+}
+
+.button-view {
+	background-color: #0C0B0B;
+	border-radius: 8px;
+	border-color: transparent;
+	
+	color: white;
+	font-family: "Roboto";
+	font-weight: bold;
+	font-size: 0.8vw;
+	
+	height: 2vw;
+	width: 4vw;
+	
+	text-align: center;
+}
+
+.button-view:hover {
+	cursor:pointer;
+}
+
+.lesson-text {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.3vw;
+}
+
+.lesson-classroom {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 1vw;
+}
+
+.lesson-time {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 2vw;
+}
+
+.lesson {
+	width: 45%;
+	background-color: #F0F0F2;
+	border-radius: 14px;
+}
+
+.next-lessons-label {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 2vw;
+}
+
+.weather {
+	width: 100%;
+	height: 100%;
+	background-color: #0C0B0B;
+	border-radius: 18px;
+}
+
+.weather-text {
+	font-family: "Overpass";
+	font-weight: normal;
+	font-size: 1vw;
+	
+	color: white;
+	text-align: center;
+}
+
+ /* width */
+::-webkit-scrollbar {
+  width: 10	px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 10px;
+} 

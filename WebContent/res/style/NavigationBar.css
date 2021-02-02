@@ -6,7 +6,7 @@
 
 @font-face {
 	font-family: 'Baloo Bhai';
-	src: url("BalooBhai-Regular.ttf");
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
 	font-weight: normal;
 }
 
@@ -59,7 +59,7 @@ html,body {
 
 /* The navigation menu links */
 .sidenav a {
-  padding: 6px 8px 6px 16px;
+  padding: 0 8px 0 8px;
   text-decoration: none;
   font-size: 25px;
   color: #818181;

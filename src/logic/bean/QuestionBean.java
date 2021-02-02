@@ -80,7 +80,7 @@ public class QuestionBean {
 
 	public void setCourseByAbbr(String course) {
 		CourseBean c = new CourseBean();
-		c.setAbbrevation(course);
+		c.setAbbreviation(course);
 		this.course = c;
 	}
 
@@ -98,6 +98,6 @@ public class QuestionBean {
 			+"\nTitle: "+ getTitle()
 			+"\nText: "+ getText()
 			+"\nAuthor: "+getStudent().getName() + " " + getStudent().getSurname()
-			+"\nCourse: "+getCourse().getAbbrevation();
+			+"\nCourse: "+getCourse().getAbbreviation();
 	}
 }

@@ -57,6 +57,10 @@ public class PageLoader {
 		PageLoader.page = page;
 	}
 	
+	public static Stage getStage() {
+		return stage;
+	}
+
 	public static Object getObject() {
 		return obj;
 	}

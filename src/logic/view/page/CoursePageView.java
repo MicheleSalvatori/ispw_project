@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
@@ -23,7 +24,10 @@ import logic.view.card.element.WeeklyLessonCard;
 public class CoursePageView {
 
     @FXML
-    private Label labelCourse, labelProfessor, labelPrerequisites, labelGoal, labelReception, labelYear, labelSemester,labelCredits;
+    private Label labelCourse, labelPrerequisites, labelGoal, labelReception, labelYear, labelSemester,labelCredits;
+    
+    @FXML
+    private ListView<String> listProfessor;
 
     @FXML
     private AnchorPane anchorNextLesson;
@@ -57,15 +61,14 @@ public class CoursePageView {
 		CourseController courseController = new CourseController();
 		
 		try {
+			List<ProfessorBean> professors = courseController.getCourseProfessors(course);
+			for (ProfessorBean professor : professors) {
+				listProfessor.getItems().add(professor.getName() + " " + professor.getSurname());
+			}	
+			
 			LessonBean lessonBean = courseController.getNextLesson(course); 
 			LessonCard lessonCard = new LessonCard(lessonBean);
 			anchorNextLesson.getChildren().add(lessonCard); 
-			
-			List<ProfessorBean> professors = courseController.getCourseProfessors(course);
-			labelProfessor.setText("");
-			for (ProfessorBean professor : professors) {
-				labelProfessor.setText(labelProfessor.getText()+"/"+professor.getName() + " " + professor.getSurname());
-			}	
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -101,7 +104,7 @@ public class CoursePageView {
 			vboxScroll.getChildren().add(new Label(e.getMessage()));
 		}
 
-		labelCourse.setText(course.getAbbrevation());
+		labelCourse.setText(course.getAbbreviation());
 		labelYear.setText(course.getYear());
 		labelCredits.setText(course.getCredits());
 		labelGoal.setText(course.getGoal());

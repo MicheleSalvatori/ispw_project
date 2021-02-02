@@ -1,0 +1,168 @@
+@font-face {
+	font-family: 'Baloo Bhai';
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+	src: url("../font/Roboto/Roboto-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ 	font-weight: bold;
+}
+ 
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ 	font-weight: light;
+}
+
+/* Style page content */
+.content {
+  	margin-left: 200px; /* Same as the width of the sidebar */
+	margin-top: 70px;
+	margin-right: 25px;
+}
+
+.row {
+	display: flex;
+}
+
+.col {
+	flex: 1;
+}
+
+.text {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.5vw;
+}
+
+.text-select {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1vw;
+}
+
+.input-text {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 1vw;
+	border: 2px solid #0C0B0B;
+	border-radius: 14px;
+	width: 100%;
+	height: 100%;
+	padding: 5px;
+	resize: none;
+}
+
+.select-schedule {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1vw;
+	padding-left: 0.3vw;
+	color: #0C0B0B;
+	border: 0;
+	border-radius: 8px;
+	appearance: none;
+	width: 50%;
+	height: 55px;
+	background-color: #F0F0F2;
+	background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCA3LjMzbDIuODI5LTIuODMgOS4xNzUgOS4zMzkgOS4xNjctOS4zMzkgMi44MjkgMi44My0xMS45OTYgMTIuMTd6Ii8+PC9zdmc+');
+    background-repeat: no-repeat, repeat;
+ 	background-position: right .7em top 50%, 0 0;
+  	background-size: .65em auto, 100%;
+  	cursor: pointer;
+}
+
+.datepicker-input-schedule {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1vw;
+	color: #0C0B0B;
+	
+	width: 50%;
+	height: 36px;
+	cursor: pointer;
+	border-radius: 8px;
+	border: 2px solid #0C0B0B;
+}
+
+.text-input-schedule {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1vw;
+	color: #0C0B0B;
+	
+	width: 50%;
+	height: 36px;
+	cursor: pointer;
+	border-radius: 8px;
+	border: 2px solid #0C0B0B;
+}
+
+.time-input-schedule {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1vw;
+	color: #0C0B0B;
+	
+	width: 50%;
+	height: 36px;
+	cursor: pointer;
+	border-radius: 8px;
+	border: 2px solid #0C0B0B;
+	padding-left: 5px;
+}
+
+.button-add {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.5vw;
+	width: 30%;
+	filter: drop-shadow(5px 5px 5px black);
+	border: 0;
+	border-radius: 20px;
+	background-color: #F0F0F2;
+	transition-duration: 0.4s;
+}
+
+.button-add:hover {
+	cursor: pointer;
+	filter: drop-shadow(2px 2px 5px black);
+}
+
+.button-add:active {
+	filter: drop-shadow(1px 1px 5px black);
+}
+
+.text-img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 1vw;
+	min-width: 1px;
+}
+
+.img-time {
+	width: 100%;
+	height: auto;
+	
+	max-width: 1.5vw;
+	min-width: 1px;
+	vertical-align: middle;
+}
+
+.button {
+	background-color: transparent;
+	border: 0;
+}
+
+.button:hover {
+	cursor: pointer;
+}

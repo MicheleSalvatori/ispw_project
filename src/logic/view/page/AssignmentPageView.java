@@ -78,7 +78,7 @@ public class AssignmentPageView implements Initializable {
 	}
 	
 	private void setPage() {
-		btnCourse.setText(assignment.getCourse().getAbbrevation());
+		btnCourse.setText(assignment.getCourse().getAbbreviation());
 		labelDeadline.setText(SQLConverter.date(assignment.getDate()));
 		labelTitle.setText(assignment.getTitle());
 		textDesc.setText(assignment.getText());
