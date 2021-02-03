@@ -329,4 +329,43 @@ public class LessonDAO {
 		}
 		return true;
 	}
+
+	public static Lesson getLesson(Date date, Time time, String course) throws SQLException, RecordNotFoundException {
+		
+		Statement stmt = null;
+		Connection conn = null;
+		Lesson lesson;
+		
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = Queries.selectLesson(stmt, date, time, course);
+
+			if (!rs.first()) {
+				throw new RecordNotFoundException("No lesson found");
+				
+			} else {
+				rs.first();
+				Date d = rs.getDate("date");
+				Time t = rs.getTime("time");
+				Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+				Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
+				String to = rs.getString("topic");
+				Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));;
+				lesson = new Lesson(d, t, c, cl, to, p);
+			}
+			rs.close();
+			
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		
+		return lesson;
+	}
 }

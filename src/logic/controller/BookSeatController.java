@@ -6,14 +6,47 @@ import java.util.List;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
+import logic.bean.ClassroomBean;
+import logic.bean.CourseBean;
 import logic.bean.LessonBean;
+import logic.bean.ProfessorBean;
 import logic.bean.SeatBean;
 import logic.bean.UserBean;
 import logic.exceptions.DuplicatedRecordException;
+import logic.exceptions.RecordNotFoundException;
+import logic.model.Lesson;
 import logic.model.Seat;
+import logic.model.dao.LessonDAO;
 import logic.model.dao.SeatDAO;
 
 public class BookSeatController {
+	
+	public LessonBean getLesson(LessonBean lesson) throws SQLException, RecordNotFoundException {
+
+		Lesson l = LessonDAO.getLesson(lesson.getDate(), lesson.getTime(), lesson.getCourse().getAbbreviation());
+		
+		ClassroomBean classroom = new ClassroomBean();
+		classroom.setName(l.getClassroom().getName());
+		classroom.setSeatRow(l.getClassroom().getSeatRow());
+		classroom.setSeatColumn(l.getClassroom().getSeatColumn());
+		
+		CourseBean course = new CourseBean();
+		course.setAbbreviation(l.getCourse().getAbbrevation());
+		
+		ProfessorBean professor = new ProfessorBean();
+		professor.setName(l.getProfessor().getName());
+		professor.setSurname(l.getProfessor().getSurname());
+		
+		LessonBean lessonBean = new LessonBean();
+		lessonBean.setClassroom(classroom);
+		lessonBean.setCourse(course);
+		lessonBean.setDate(l.getDate());
+		lessonBean.setProfessor(professor);
+		lessonBean.setTime(l.getTime());
+		lessonBean.setTopic(l.getTopic());
+		
+		return lessonBean;
+	}
 
 	public SeatBean occupateSeat(SeatBean seat, LessonBean lesson, UserBean user) throws SQLException, DuplicatedRecordException {
 		SeatBean mySeat = null;
@@ -38,25 +71,23 @@ public class BookSeatController {
 		List<Seat> seats = SeatDAO.getOccupiedSeat(lessonBean);
 		List<SeatBean> seatsBean = new ArrayList<>();
 
-		if (seats == null) {
-			seatsBean = null;
-		} else {
-
-			for (int i = 1; i<=lessonBean.getClassroom().getSeatColumn() * lessonBean.getClassroom().getSeatRow(); i++) {
-//				SeatBean sBean = new SeatBean(s.getIndex());
-//				sBean.setFree(s.getState());
-//				seatsBean.add(sBean);
+		for (int i = 1; i<=lessonBean.getClassroom().getSeatColumn() * lessonBean.getClassroom().getSeatRow(); i++) {
+//			SeatBean sBean = new SeatBean(s.getIndex());
+//			sBean.setFree(s.getState());
+//			seatsBean.add(sBean);
 				
-				SeatBean sBean = new SeatBean(i);
-				sBean.setFree(true);
-				seatsBean.add(sBean);
-			}
+			SeatBean sBean = new SeatBean(i);
+			sBean.setFree(true);
+			seatsBean.add(sBean);
+		}
 			
+		if (seats != null) {
 			for (Seat s : seats) {
 				System.out.println("S: "+s.getIndex()+s.getState());
 				seatsBean.get(s.getIndex()-1).setFree(s.getState());
 			}
 		}
+			
 		return seatsBean;
 	}
 

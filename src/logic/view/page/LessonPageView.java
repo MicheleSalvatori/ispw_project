@@ -76,6 +76,10 @@ public class LessonPageView {
 	}
 
 	public void setBean(Object lesson) {
+		//TODO Da modificare?
+		//this.lesson = controlSeat.getLesson((LessonBean) lesson);
+		
+		
 		controlSeat = new BookSeatController();
 		this.lesson = (LessonBean) lesson;
 		try {

@@ -12,11 +12,11 @@
 <%@ page import="java.lang.String"%>
 
 <%
-UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
-LessonBean lesson = (LessonBean) request.getAttribute("lesson");
-int seatColumn = lesson.getClassroom().getSeatColumn();
-int row = lesson.getClassroom().getSeatRow();
-System.out.println("ROW: " + row);
+	UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
+	LessonBean lesson = (LessonBean) request.getAttribute("lesson");
+	int seatColumn = lesson.getClassroom().getSeatColumn();
+	int row = lesson.getClassroom().getSeatRow();
+	System.out.println("ROW: " + row);
 %>
 
 <head>
@@ -304,6 +304,9 @@ System.out.println("ROW: " + row);
 						<tr>
 							<c:forEach var="j" begin="1" end="<%=seatColumn%>">
 								<td>
+								<input type = "hidden" name="lessonCourse" value="<%=lesson.getCourse().getAbbreviation()%>">
+								<input type = "hidden" name="lessonDate" value="<%=lesson.getDate()%>">
+								<input type = "hidden" name="lessonTime" value="<%=lesson.getTime()%>">
 								<c:set var="seatColumn"	value="${lesson.getClassroom().getSeatColumn()}" />
 								 <c:set var="idSeat" value="${(j-1)+seatColumn*(i-1)}" /> 
 								 <c:choose>
@@ -332,4 +335,13 @@ System.out.println("ROW: " + row);
 	</div>
 
 </body>
+
+<%String message = (String)request.getAttribute("alertMsg");
+  if(message != null){ %>
+  	<script type="text/javascript">
+    	var msg = "<%=message%>";
+    	alert(msg);
+  	</script>
+<%} %>
+
 </html>
