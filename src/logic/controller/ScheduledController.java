@@ -9,14 +9,12 @@ import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
 import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Exam;
 import logic.model.Lesson;
-import logic.model.Professor;
 import logic.model.dao.CourseDAO;
 import logic.model.dao.ExamDAO;
 import logic.model.dao.LessonDAO;
@@ -31,19 +29,16 @@ public class ScheduledController {
 		List<Lesson> lessons;
 		List<LessonBean> lessonsBean = new ArrayList<>();
 		
-		// Get user lessons and courses
+		// Student role
 		if (userBean.getRole() == Role.STUDENT) {
 			lessons = LessonDAO.getNextLessonsStudent(date, userBean.getUsername());
 		}
 		
-		else if (userBean.getRole() == Role.PROFESSOR) {
+		// Professor role
+		else {
 			lessons = LessonDAO.getNextLessonsProfessor(date, userBean.getUsername());
 		}
-		
-		else {
-			// Admin role
-			return null;
-		}
+
 		
 		for (Lesson lesson : lessons) {
 			
@@ -54,29 +49,12 @@ public class ScheduledController {
 			Course course = lesson.getCourse();
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course.getAbbrevation());
-			courseBean.setCredits(course.getCredits());
-			courseBean.setGoal(course.getGoal());
-			courseBean.setName(course.getName());
-			courseBean.setPrerequisites(course.getPrerequisites());
-			courseBean.setReception(course.getReception());
-			courseBean.setSemester(course.getSemester());
-			courseBean.setYear(course.getYear());
-			
-			Professor professor = lesson.getProfessor();
-			ProfessorBean professorBean = new ProfessorBean();
-			professorBean.setEmail(professor.getEmail());
-			professorBean.setName(professor.getName());
-			professorBean.setPassword(professor.getPassword());
-			professorBean.setSurname(professor.getSurname());
-			professorBean.setUsername(professor.getUsername());
 			
 			LessonBean lessonBean = new LessonBean();
 			lessonBean.setClassroom(classroomBean);
 			lessonBean.setCourse(courseBean);
 			lessonBean.setDate(lesson.getDate());
-			lessonBean.setProfessor(professorBean);
 			lessonBean.setTime(lesson.getTime());
-			lessonBean.setTopic(lesson.getTopic());
 			
 			lessonsBean.add(lessonBean);
 		}
