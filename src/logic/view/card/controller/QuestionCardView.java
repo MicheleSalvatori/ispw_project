@@ -45,7 +45,7 @@ public class QuestionCardView {
 	public void setCard(QuestionBean question) {
 		this.question = question;
 
-		btnCourse.setText(question.getCourse().getAbbreviation());
+		btnCourse.setText(question.getCourse());
 		labelName.setText(question.getStudent().getName());
 		labelSurname.setText(question.getStudent().getSurname());
 		labelNumber.setText(String.valueOf(question.getId()));
@@ -84,7 +84,9 @@ public class QuestionCardView {
 
 	@FXML
 	private void course(ActionEvent event) throws IOException {
-    	CourseBean courseBean = question.getCourse();
+//    	CourseBean courseBean = question.getCourse();
+    	CourseBean courseBean = new CourseBean();
+    	courseBean.setAbbreviation(question.getCourse());
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 }

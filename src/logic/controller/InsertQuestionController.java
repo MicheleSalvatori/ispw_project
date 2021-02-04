@@ -43,12 +43,8 @@ public class InsertQuestionController {
 
 	public void save(QuestionBean questionBean) throws SQLException {
 		Course course = new Course();
-		course.setAbbrevation(questionBean.getCourse().getAbbreviation());
+		course.setAbbrevation(questionBean.getCourse());
 		
-		//TODO possiamo togliere StudentBean in QuestionBean e mettere String username soltanto? 
-		// Non so se è corretto passargli soltanto l'username in questionBean. Altrimenti in web bisogna passare tutto
-//		Student student = new Student(questionBean.getStudent().getUsername(), questionBean.getStudent().getPassword(), questionBean.getStudent().getName(),
-//				questionBean.getStudent().getSurname(), questionBean.getStudent().getEmail());
 		Student student = new Student();
 		student.setUsername(questionBean.getStudent().getUsername());
 				

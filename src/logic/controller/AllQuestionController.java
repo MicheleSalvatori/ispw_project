@@ -1,5 +1,6 @@
 package logic.controller;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,24 @@ public class AllQuestionController {
 
 		return courses;
 	}
+	
+	public QuestionBean getQuestionByID(int id) throws SQLException, RecordNotFoundException {
+		Question question = QuestionDAO.getQuestion(id);
+		StudentBean studentBean = new StudentBean();
+		studentBean.setName(question.getStudent().getName());
+		studentBean.setSurname(question.getStudent().getSurname());
+		studentBean.setUsername(question.getStudent().getUsername());
+		QuestionBean questionBean = new QuestionBean();
+		questionBean.setCourse(question.getCourse().getAbbrevation());
+		questionBean.setId(question.getId());
+		questionBean.setDate(question.getDate());
+		questionBean.setSolved(question.isSolved());
+		questionBean.setStudent(studentBean);
+		questionBean.setText(question.getText());
+		questionBean.setTitle(question.getTitle());
+		return questionBean;
+		
+	}
 
 	public List<QuestionBean> getAllQuestions(UserBean userBean) throws SQLException, RecordNotFoundException {
 
@@ -53,7 +72,6 @@ public class AllQuestionController {
 		for (Question q : questionList) {
 
 			StudentBean studentBean = new StudentBean();
-			studentBean.setEmail(q.getStudent().getEmail());
 			studentBean.setName(q.getStudent().getName());
 			studentBean.setSurname(q.getStudent().getSurname());
 			studentBean.setUsername(q.getStudent().getUsername());
@@ -63,7 +81,8 @@ public class AllQuestionController {
 			bean.setStudent(studentBean);
 			bean.setText(q.getText());
 			bean.setTitle(q.getTitle());
-			bean.setCourseByAbbr(q.getCourse().getAbbrevation());
+//			bean.setCourseByAbbr(q.getCourse().getAbbrevation());
+			bean.setCourse(q.getCourse().getAbbrevation());
 			bean.setSolved(q.isSolved());
 			bean.setDate(q.getDate());
 			questionBeans.add(bean);
