@@ -30,6 +30,7 @@ import logic.bean.SeatBean;
 import logic.bean.UserBean;
 import logic.controller.BookSeatController;
 import logic.exceptions.DuplicatedRecordException;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -77,18 +78,21 @@ public class LessonPageView {
 
 	public void setBean(Object lesson) {
 		//TODO Da modificare?
-		//this.lesson = controlSeat.getLesson((LessonBean) lesson);
-		
 		
 		controlSeat = new BookSeatController();
-		this.lesson = (LessonBean) lesson;
+
 		try {
+			this.lesson = controlSeat.getLesson((LessonBean) lesson);
 			this.classroom = this.lesson.getClassroom();
 			this.classroom.setSeat(controlSeat.getOccupateSeatOf(this.lesson));
 			this.mySeat = controlSeat.getMySeat(this.lesson, UserBean.getInstance());
 			setPage();
+			
 		} catch (SQLException e) {
 			System.out.println("CATCH");
+			
+		} catch (RecordNotFoundException e) {
+			// nothing
 		}
 	}
 

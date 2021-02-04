@@ -34,21 +34,11 @@ public class CourseController {
 		ClassroomBean classroomBean = new ClassroomBean();
 		classroomBean.setName(classroom.getName());
 		
-		Professor professor = lesson.getProfessor();
-		ProfessorBean professorBean = new ProfessorBean();
-		professorBean.setEmail(professor.getEmail());
-		professorBean.setName(professor.getName());
-		professorBean.setPassword(professor.getPassword());
-		professorBean.setSurname(professor.getSurname());
-		professorBean.setUsername(professor.getUsername());
-		
 		LessonBean lessonBean = new LessonBean();
 		lessonBean.setClassroom(classroomBean);
 		lessonBean.setCourse(courseBean);
 		lessonBean.setDate(lesson.getDate());
-		lessonBean.setProfessor(professorBean);
 		lessonBean.setTime(lesson.getTime());
-		lessonBean.setTopic(lesson.getTopic());
 		
 		return lessonBean;
 	}
@@ -60,11 +50,8 @@ public class CourseController {
 		
 		for (Professor professor : professors) {
 			ProfessorBean professorBean = new ProfessorBean();
-			professorBean.setEmail(professor.getEmail());
 			professorBean.setName(professor.getName());
-			professorBean.setPassword(professor.getPassword());
 			professorBean.setSurname(professor.getSurname());
-			professorBean.setUsername(professor.getUsername());
 			
 			professorsBean.add(professorBean);
 		}
@@ -81,8 +68,6 @@ public class CourseController {
 			
 			ClassroomBean classroomBean = new ClassroomBean();
 			classroomBean.setName(lesson.getClassroom().getName());
-			classroomBean.setSeatColumn(lesson.getClassroom().getSeatColumn());
-			classroomBean.setSeatRow(lesson.getClassroom().getSeatRow());
 			
 			WeeklyLessonBean lessonBean = new WeeklyLessonBean();
 			lessonBean.setDay(lesson.getDay());

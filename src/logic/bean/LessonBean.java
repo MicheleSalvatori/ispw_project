@@ -12,10 +12,6 @@ public class LessonBean {
 	private ProfessorBean professor;
 	private String topic;
 	
-	public LessonBean() {
-		
-	}
-	
 	public Date getDate() {
 		return date;
 	}
