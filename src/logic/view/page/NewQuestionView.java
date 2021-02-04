@@ -79,8 +79,9 @@ public class NewQuestionView implements Initializable {
 		questionBean.setStudent(studentBean);
 		questionBean.setText(questionText);
 		questionBean.setTitle(questionSubject);
-		questionBean.setCourseByAbbr(courseComboBox.getValue());
-
+//		questionBean.setCourseByAbbr(courseComboBox.getValue());
+		questionBean.setCourse(courseComboBox.getValue());
+		
 		try {
 			controller.save(questionBean);
 			AlertController.infoAlert("Your question has been correctly entered");

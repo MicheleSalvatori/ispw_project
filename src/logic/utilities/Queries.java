@@ -175,6 +175,12 @@ public class Queries {
 		System.out.println(query);
 		return stmt.executeQuery(query);
 	}
+	
+	public static ResultSet getQuestion(Statement stmt, int id) throws SQLException {
+		String query = String.format("SELECT * FROM question WHERE id = '%d';", id);
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
 
 /******************************************************************************************************************/
 

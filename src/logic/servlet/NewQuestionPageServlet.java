@@ -47,11 +47,11 @@ public class NewQuestionPageServlet extends HttpServlet {
 		System.out.println(req.getParameter("question-text"));
 		InsertQuestionController controller = new InsertQuestionController();
 		QuestionBean newQuestion = new QuestionBean();
-		CourseBean course = new CourseBean();
+//		CourseBean course = new CourseBean();
 		StudentBean student = new StudentBean();
 		student.setUsername(((UserBean) req.getSession().getAttribute("loggedUser")).getUsername());
-		course.setAbbreviation(req.getParameter("courses"));
-		newQuestion.setCourse(course);
+//		course.setAbbreviation(req.getParameter("courses"));
+		newQuestion.setCourse(req.getParameter("courses"));
 		newQuestion.setStudent(student);
 		newQuestion.setText(req.getParameter("question-text"));
 		newQuestion.setTitle(req.getParameter("question-subject"));

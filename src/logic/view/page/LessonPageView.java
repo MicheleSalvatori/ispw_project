@@ -77,7 +77,6 @@ public class LessonPageView {
 	}
 
 	public void setBean(Object lesson) {
-		//TODO Da modificare?
 		
 		controlSeat = new BookSeatController();
 
@@ -261,7 +260,7 @@ public class LessonPageView {
 
 		WeatherCard a;
 		try {
-			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "°C", image,
+			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "Â°C", image,
 					h + ":00");
 			weatherCard.getChildren().add(a);
 		} catch (JSONException e) {

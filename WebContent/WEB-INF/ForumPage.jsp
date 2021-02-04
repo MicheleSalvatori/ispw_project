@@ -277,7 +277,7 @@ else {
 								</table>
 						<td align="right" class="course"
 							style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left; flex: 1">
-							${question.getCourse().getAbbrevation()}</td>
+							${question.getCourse()}</td>
 						<td align="right"
 							style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%; flex: 1">
 							<form
@@ -346,7 +346,7 @@ else {
 									</table>
 								<td align="right" class="course"
 									style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left;">
-									${assignment.getCourse().getAbbrevation()}</td>
+									${assignment.getCourse()}</td>
 
 								<td align="right"
 									style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">

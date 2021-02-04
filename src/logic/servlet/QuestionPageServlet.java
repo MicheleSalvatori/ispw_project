@@ -25,23 +25,27 @@ public class QuestionPageServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		QuestionBean questionBean = new QuestionBean();
-		StudentBean student = new StudentBean();
-		questionBean.setDate(Date.valueOf(req.getParameter("questionDate")));
-		questionBean.setTitle(req.getParameter("questionTitle"));
-		questionBean.setText(req.getParameter("questionText"));
-		student.setName(req.getParameter("authorName"));
-		student.setSurname(req.getParameter("authorSurname"));
-		questionBean.setStudent(student);
+//		QuestionBean questionBean = new QuestionBean();
+//		StudentBean student = new StudentBean();
+//		questionBean.setDate(Date.valueOf(req.getParameter("questionDate")));
+//		questionBean.setTitle(req.getParameter("questionTitle"));
+//		questionBean.setText(req.getParameter("questionText"));
+//		student.setName(req.getParameter("authorName"));
+//		student.setSurname(req.getParameter("authorSurname"));
+//		questionBean.setStudent(student);
 
 		AllQuestionController controller = new AllQuestionController();
 		List<AnswerBean> answers = null;
+		QuestionBean questionBean = null;
 		try {
+			questionBean = controller.getQuestionByID(Integer.valueOf(req.getParameter("questionID")));
 			answers = controller.getAnswersOf(Integer.valueOf(req.getParameter("questionID")));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (RecordNotFoundException e) {
 			answers = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		
 		req.setAttribute("listOfAnswers", answers);

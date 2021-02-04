@@ -9,7 +9,7 @@ public class QuestionBean {
 	private int id;
 	private String title;
 	private String text;
-	private CourseBean course;
+	private String course;
 	private StudentBean student;
 	private boolean solved;
 	private Date date;
@@ -70,19 +70,19 @@ public class QuestionBean {
 		this.text = text;
 	}
 	
-	public CourseBean getCourse() {
+	public String getCourse() {
 		return course;
 	}
 
-	public void setCourse(CourseBean course) {
+	public void setCourse(String course) {
 		this.course = course;
 	}
 
-	public void setCourseByAbbr(String course) {
-		CourseBean c = new CourseBean();
-		c.setAbbreviation(course);
-		this.course = c;
-	}
+//	public void setCourseByAbbr(String course) {
+//		CourseBean c = new CourseBean();
+//		c.setAbbreviation(course);
+//		this.course = c;
+//	}
 
 	public StudentBean getStudent() {
 		return student;
@@ -98,6 +98,6 @@ public class QuestionBean {
 			+"\nTitle: "+ getTitle()
 			+"\nText: "+ getText()
 			+"\nAuthor: "+getStudent().getName() + " " + getStudent().getSurname()
-			+"\nCourse: "+getCourse().getAbbreviation();
+			+"\nCourse: "+getCourse();
 	}
 }

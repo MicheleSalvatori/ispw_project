@@ -77,12 +77,16 @@ public class QuestionPageView implements Initializable{
 	}
 	
 	public void setBean(Object obj) {
-		this.question = (QuestionBean) obj;
+		controller = new AllQuestionController();
+		try {
+			this.question = controller.getQuestionByID(((QuestionBean) obj).getId());
+		} catch (SQLException | RecordNotFoundException e) {
+			System.out.println("CATCHHHH");
+		}
 		textQuestion.setText(question.getText());
 		labelSubjectQuestion.setText(question.getTitle());
 		labelAuthor.setText(question.getStudent().getName() + " " + question.getStudent().getSurname());
 		labelDate.setText(SQLConverter.date(question.getDate()));
-		controller = new AllQuestionController();
 		loadAnswer();
 	}
 
