@@ -35,18 +35,9 @@ public class AddAssignmentController {
 		for (Assignment assignment : assignments) {
 			
 			Course course = assignment.getCourse();
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbrevation());
-			courseBean.setCredits(course.getCredits());
-			courseBean.setGoal(course.getGoal());
-			courseBean.setName(course.getName());
-			courseBean.setPrerequisites(course.getPrerequisites());
-			courseBean.setReception(course.getReception());
-			courseBean.setSemester(course.getSemester());
-			courseBean.setYear(course.getYear());
 			
 			AssignmentBean assignmentBean = new AssignmentBean();
-			assignmentBean.setCourse(courseBean);
+			assignmentBean.setCourse(course.getAbbrevation());
 			assignmentBean.setDate(assignment.getDate());
 			assignmentBean.setId(assignment.getId());
 			assignmentBean.setText(assignment.getText());
@@ -80,10 +71,24 @@ public class AddAssignmentController {
 	public boolean saveAssignment(AssignmentBean assignmentBean) throws SQLException {
 
 		Course course = new Course();
-		course.setAbbrevation(assignmentBean.getCourse().getAbbreviation());
+		course.setAbbrevation(assignmentBean.getCourse());
 		
 		Assignment assignment = new Assignment(course, assignmentBean.getTitle(), assignmentBean.getDate(), assignmentBean.getText());
 
 		return AssignmentDAO.saveAssignment(assignment);
+	}
+	
+	public AssignmentBean getAssignmentByID(int id) throws SQLException, RecordNotFoundException {
+		Assignment assignment = AssignmentDAO.getAssignment(id);
+
+		AssignmentBean assignmentBean = new AssignmentBean();
+		assignmentBean.setCourse(assignment.getCourse().getAbbrevation());
+		assignmentBean.setTitle(assignment.getTitle());
+		assignmentBean.setText(assignment.getText());
+		assignmentBean.setDate(assignment.getDate());
+		assignmentBean.setId(assignment.getId());
+		
+		return assignmentBean;
+		
 	}
 }

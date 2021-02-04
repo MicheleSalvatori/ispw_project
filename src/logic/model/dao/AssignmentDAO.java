@@ -125,4 +125,37 @@ public class AssignmentDAO {
 		
 		return true;
 	}
+
+	public static Assignment getAssignment(int id) throws SQLException, RecordNotFoundException {
+		Connection conn;
+		Statement stmt = null;
+		Assignment assignment = null;
+
+		conn = SingletonDB.getDbInstance().getConnection();
+		if (conn == null) {
+			throw new SQLException();
+		}
+
+		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet rs = null;
+
+		rs = Queries.getAssignment(stmt, id);
+
+		if (!rs.first()) {
+			throw new RecordNotFoundException("No assignment found");
+
+		} else {
+			rs.first();
+			int i = rs.getInt("id");
+			String t = rs.getString("title");
+			String te = rs.getString("text");;
+			Date d = rs.getDate("date");;
+			Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+
+			assignment = new Assignment(i, c, t, d, te);
+		}
+
+		rs.close();
+		return assignment;
+	}
 }

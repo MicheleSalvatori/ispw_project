@@ -79,7 +79,7 @@ public class NewAssignmentView implements Initializable {
 		assignmentBean.setTitle(textTitle.getText());
 		assignmentBean.setText(textDesc.getText());
 		assignmentBean.setDate(Date.valueOf(dateDeadline.getValue()));
-		assignmentBean.setCourse(courses.get(comboCourse.getSelectionModel().getSelectedIndex()));
+		assignmentBean.setCourse(courses.get(comboCourse.getSelectionModel().getSelectedIndex()).getAbbreviation());
 	
 		addAssignmentController = new AddAssignmentController();
 		if (addAssignmentController.saveAssignment(assignmentBean)) {

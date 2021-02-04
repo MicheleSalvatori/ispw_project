@@ -34,7 +34,7 @@ public class AssignmentCardView {
 	public void setCard(AssignmentBean assignment) {
 		this.assignment = assignment;
 		
-		btnCourse.setText(assignment.getCourse().getAbbreviation());
+		btnCourse.setText(assignment.getCourse());
 		labelNumber.setText(Integer.toString(assignment.getId()));
 		labelDate.setText(SQLConverter.date(assignment.getDate()));
 		labelTitle.setText(assignment.getTitle());
@@ -47,7 +47,8 @@ public class AssignmentCardView {
 	
 	@FXML
 	private void course(ActionEvent event) throws IOException {
-    	CourseBean courseBean = assignment.getCourse();
+    	CourseBean courseBean = new CourseBean();
+    	courseBean.setAbbreviation(assignment.getCourse());
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 }

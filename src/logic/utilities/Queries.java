@@ -484,6 +484,12 @@ public class Queries {
 		return stmt.executeUpdate(query);
 	}
 	
+	public static ResultSet getAssignment(Statement stmt, int id) throws SQLException {
+		String query = "SELECT * FROM assignment WHERE id = '" + id + "' ORDER BY id;";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
 /******************************************************************************************************************/
 
 	// Seat Queries

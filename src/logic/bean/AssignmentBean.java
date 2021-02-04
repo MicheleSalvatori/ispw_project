@@ -5,14 +5,10 @@ import java.sql.Date;
 public class AssignmentBean {
 	
 	private int id;
-	private CourseBean course;
+	private String course;
 	private String title;
 	private Date date;
 	private String text;
-	
-	public AssignmentBean() {
-		
-	}
 	
 	public int getId() {
 		return id;
@@ -22,11 +18,11 @@ public class AssignmentBean {
 		this.id = id;
 	}
 	
-	public CourseBean getCourse() {
+	public String getCourse() {
 		return course;
 	}
 	
-	public void setCourse(CourseBean course) {
+	public void setCourse(String course) {
 		this.course = course;
 	}
 	

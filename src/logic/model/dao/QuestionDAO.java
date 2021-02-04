@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.exceptions.RecordNotFoundException;
-import logic.model.Answer;
 import logic.model.Course;
 import logic.model.Question;
 import logic.model.Student;

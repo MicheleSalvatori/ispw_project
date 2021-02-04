@@ -2,6 +2,7 @@ package logic.view.page;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javax.swing.JFileChooser;
@@ -17,6 +18,8 @@ import javafx.scene.layout.AnchorPane;
 import logic.bean.AssignmentBean;
 import logic.bean.CourseBean;
 import logic.bean.UserBean;
+import logic.controller.AddAssignmentController;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.Role;
@@ -53,7 +56,8 @@ public class AssignmentPageView implements Initializable {
 	
 	@FXML
 	private void course(ActionEvent event) throws IOException {
-		CourseBean courseBean = assignment.getCourse();
+		CourseBean courseBean = new CourseBean();
+		courseBean.setAbbreviation(assignment.getCourse());
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
@@ -73,12 +77,25 @@ public class AssignmentPageView implements Initializable {
 	
 	
 	public void setBean(Object obj) {
-		this.assignment = (AssignmentBean) obj;		// TODO Forse high coupling
+		AddAssignmentController controller = new AddAssignmentController();
+		try {
+			this.assignment = controller.getAssignmentByID(((AssignmentBean) obj).getId());
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		//this.assignment = (AssignmentBean) obj;		// TODO Forse high coupling
 		setPage();
 	}
 	
 	private void setPage() {
-		btnCourse.setText(assignment.getCourse().getAbbreviation());
+		btnCourse.setText(assignment.getCourse());
 		labelDeadline.setText(SQLConverter.date(assignment.getDate()));
 		labelTitle.setText(assignment.getTitle());
 		textDesc.setText(assignment.getText());
