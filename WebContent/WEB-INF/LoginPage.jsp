@@ -8,15 +8,6 @@
 	<link rel="stylesheet" href="res/style/LoginPage.css">
 	<meta charset="utf-8">
 	<title>App - LoginPage</title>
-	
-	<%String message = (String)request.getAttribute("alertMsg");
-    if(message != null){ %>
-        <script type="text/javascript">
-            var msg = "<%=message%>";
-            alert(msg);
-        </script>
-   	<%} %>
-   	
 </head>
 
 <body>
@@ -79,12 +70,13 @@
 	</form>
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script>
-	function myFunction() {
-  		alert("Functionality not implemented.");
-	}
-</script>
+	
+<%String message = (String)request.getAttribute("alertMsg");
+  if(message != null){ %>
+  	<script type="text/javascript">
+    	var msg = "<%=message%>";
+    	alert(msg);
+  	</script>
+<%} %>
 
 </html>

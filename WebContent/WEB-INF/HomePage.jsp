@@ -12,6 +12,7 @@
 <%	
 	UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
 	LessonBean lesson = (LessonBean) request.getAttribute("lesson");
+	//session.setAttribute("lesson", lesson);
 %>
 	
 	<head>
@@ -252,9 +253,13 @@
 										<%=SQLConverter.time(lesson.getTime())%>
 									</label>
 								</td>
-
 								<td align="right" style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
-									<button class="button-view" type="button">View</button>
+								<form action="/ispw_project/LessonPageServlet" method="get" >
+									<button name = "viewLesson" class="button-view" type="submit" onclick="f(<%=lesson%>)">View</button>
+									<input type = "hidden" name = "lessonCourse" value = "<%=lesson.getCourse().getAbbreviation()%>">
+									<input type = "hidden" name = "lessonDate" value = "<%=lesson.getDate()%>">
+									<input type = "hidden" name = "lessonTime" value = "<%=lesson.getTime()%>">
+								</form>
 								</td>
 							</tr>
 						<%} %>
@@ -317,7 +322,7 @@
 									</td>
 
 									<td align="right" style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%; border-radius: 0 14px 14px 0;">
-										<button class="button-view" type="button">View</button>
+										<a href="/ispw_project/LessonPageServlet" class="button-view" type="button" onclick="<c:set var="lesson" value="${lesson}" scope="session"/>">View</a>
 									</td>
 								</tr>
 								</c:forEach>
@@ -374,4 +379,15 @@
 			
 		</div>
 	</body>
+	
+	<script>
+	function fun(){
+		request.setAttribute("lessonBean", ${lesson});
+	}
+	
+	function f(var a) {
+		<c:set var="lesson" value="a" scope="session" />
+		
+	}
+	</script>
 </html>

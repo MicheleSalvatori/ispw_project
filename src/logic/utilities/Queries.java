@@ -192,9 +192,16 @@ public class Queries {
 		return stmt.executeUpdate(sql);
 	}
 
-/******************************************************************************************************************/
+/**
+ * @throws SQLException ****************************************************************************************************************/
 
 	// Lesson queries
+	public static ResultSet selectLesson(Statement stmt, Date date, Time time, String course) throws SQLException {
+		String query = "SELECT * FROM lesson WHERE date = '" + date + "' AND time = '" + time + "' AND course = '" + course + "';";
+		System.out.println(query);
+		return stmt.executeQuery(query);
+	}
+	
 	public static ResultSet selectLesson(Statement stmt, Date date, Time time) throws SQLException {
 		String query = "SELECT * FROM lesson WHERE date = '" + date + "' AND time = '" + time + "';";
 		System.out.println(query);

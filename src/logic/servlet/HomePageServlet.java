@@ -25,7 +25,6 @@ public class HomePageServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		if (request.getSession().getAttribute("loggedUser") == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
@@ -47,7 +46,7 @@ public class HomePageServlet extends HttpServlet {
 			e.printStackTrace();
 		
 		} catch (RecordNotFoundException e) {
-			lesson = null;
+			//lesson = null;
 		}
 		
 		request.setAttribute("lesson", lesson);
