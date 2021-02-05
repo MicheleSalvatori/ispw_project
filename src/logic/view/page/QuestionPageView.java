@@ -68,7 +68,7 @@ public class QuestionPageView implements Initializable{
 	private EventHandler<ActionEvent> addAnswerEvent, cancAddAnswerEvent;
 	private TextArea textAnswer;
 	private Button btnSubmit, btnCancel;
-	private AllQuestionController controller; //TODO forse getAnswer non deve rientrare tra le funzionalità di AllQuestionController?
+	private AllQuestionController controller; 
 	private List<AnswerBean> answersList;
 
 	@Override
