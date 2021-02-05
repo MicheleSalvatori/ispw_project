@@ -26,13 +26,13 @@ public class AdminDAO {
 				throw new SQLException();
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			resultSet = Queries.selectProfessor(stmt, username, password);
+			resultSet = Queries.selectAdmin(stmt, username, password);
 			
 			if (!resultSet.first()) {
 				throw new RecordNotFoundException("No Username Found matching with name: " + username);
 				
 			}else {
-				resultSet.first();				// mi riposiziono alla prima riga 
+				resultSet.first();
 				adminLogged = new Admin();
 				adminLogged.setUsername(resultSet.getString("username"));
 				adminLogged.setName(resultSet.getString("name"));

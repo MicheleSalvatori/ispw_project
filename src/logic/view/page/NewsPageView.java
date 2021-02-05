@@ -1,14 +1,19 @@
 package logic.view.page;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import logic.bean.CommunicationBean;
+import logic.controller.PostCommunicationController;
+import logic.exceptions.RecordNotFoundException;
+import logic.utilities.SQLConverter;
 import logic.view.card.element.CommunicationCard;
-import logic.view.card.element.NewsCard;
 
 public class NewsPageView implements Initializable {
 
@@ -21,14 +26,21 @@ public class NewsPageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		for (int i=0; i<10; i++) {
-			CommunicationCard communicationCard = new CommunicationCard(i+"",i+"",i+"");
-			vboxComm.getChildren().add(communicationCard.getPane());
-		}
-		
-		for (int i=0; i<10; i++) {
-			NewsCard newsCard = new NewsCard(i+"",i+"",i+"");
-			vboxNews.getChildren().add(newsCard.getPane());
+		PostCommunicationController controller = new PostCommunicationController();
+		List<CommunicationBean> communications = null;
+		try {
+			communications = controller.getCommunications();
+			for (CommunicationBean c : communications) {
+				CommunicationCard communicationCard = new CommunicationCard(c.getText(), c.getTitle(),
+						SQLConverter.date(c.getDate()), c.getId() + "");
+				vboxComm.getChildren().add(communicationCard.getPane());
+			}
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			
+		} catch (RecordNotFoundException e1) {
+			e1.printStackTrace();
 		}
 	}
 }

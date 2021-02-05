@@ -40,7 +40,19 @@ public class Queries {
 		System.out.println(query);
 		return stmt.executeUpdate(query);
 	}
+	
+/******************************************************************************************************************/
+	
+	// Admin queries
+    public static ResultSet selectAdmin(Statement stmt, String username, String passwrod) throws SQLException {
+        String sql = String.format("SELECT * FROM admin WHERE username = '%s' AND password = '%s';", username,
+                passwrod);
+        System.out.println(sql);
+        return stmt.executeQuery(sql);
 
+    }
+
+    
 /******************************************************************************************************************/
 	
 	// Professor queries
@@ -536,4 +548,19 @@ public class Queries {
 		System.out.println(sql);
 		return stmt.executeQuery(sql);
 	}
+	
+/******************************************************************************************************************/
+	
+	//Comunication Queries
+    public static ResultSet getComunication(Statement stmt) throws SQLException {
+        String sql = "SELECT * FROM comunications;";
+        System.out.println(sql);
+        return stmt.executeQuery(sql);
+    }
+    
+    public static void saveCommunication(Statement stmt, String title, String text, Date date) throws SQLException {
+        String sql = String.format("INSERT INTO communications (text, title, date) VALUES('%s', '%s', '%s');", text, title, date.toString());
+        System.out.println(sql);
+        stmt.executeUpdate(sql);
+    }
 }

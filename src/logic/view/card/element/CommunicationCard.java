@@ -8,11 +8,11 @@ public class CommunicationCard extends GraphicElement {
 	
 	private CommunicationCardView communicationCardView = new CommunicationCardView();
 	
-	public CommunicationCard(String title, String date, String number) {
+	public CommunicationCard(String text, String title, String date, String number) {
 		FXMLLoader loader = getLoader("src/res/fxml/card/CommunicationCard.fxml");
 		loader.setController(communicationCardView);
 		load(loader);
 
-		communicationCardView.setLabel(title, date, number);
+		communicationCardView.setLabel(text, title, date, number);
 	}
 }

@@ -1,5 +1,7 @@
 package logic.view.card.controller;
 
+import java.awt.TextArea;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,7 +20,11 @@ public class CommunicationCardView {
 	@FXML
 	private Button btnView;
 	
-	public void setLabel(String title, String date, String number) {
+	@FXML
+	private TextArea textArea;
+	
+	public void setLabel(String text, String title, String date, String number) {
+		textArea.setText(text);
 		labelTitle.setText(title);
 		labelDate.setText(date);
 		labelNumber.setText(number);
