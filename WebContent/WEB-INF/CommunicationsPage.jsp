@@ -218,7 +218,7 @@ else {
 			<c:if test="${empty listOfCommunications}">
 				<tr>
 					<td colspan="3" class="title-label" align="center">No
-						comunications to view.</td>
+						communications to view.</td>
 				</tr>
 			</c:if>
 			<c:forEach items="${listOfCommunications}" var="communication">
