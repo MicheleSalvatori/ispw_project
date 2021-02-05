@@ -10,9 +10,9 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="173.0" prefWidth="1124.0" styleClass="root" stylesheets="@../../style/card/CommunicationCard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       
-      <TextArea fx:id="textArea" layoutX="187.0" layoutY="53.0" minWidth="916.0" prefHeight="92.0" prefWidth="916.0" promptText="Comunication" styleClass="text-area" wrapText="true" />
+      <TextArea fx:id="textAnswer" editable="false" layoutX="187.0" layoutY="53.0" minWidth="916.0" prefHeight="92.0" prefWidth="916.0" promptText="Communication" styleClass="text-area" wrapText="true" />
 
-      <Label fx:id="labelTitle" layoutX="203.0" layoutY="5.0" styleClass="label_title" text="Title" AnchorPane.leftAnchor="190.0" AnchorPane.topAnchor="5.0" />
+      <Label fx:id="labelTitle" layoutX="203.0" layoutY="5.0" styleClass="label_title" text="Title" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="8.0" />
       
             <Label fx:id="labelDate" layoutX="57.0" layoutY="142.0" nodeOrientation="RIGHT_TO_LEFT" styleClass="label_date" text="date" AnchorPane.leftAnchor="57.0" />
       

@@ -12,12 +12,12 @@ public class CommunicationCard extends AnchorPane {
 	
 	private CommunicationCardView communicationCardView = new CommunicationCardView();
 	
-	public CommunicationCard(String title, String date, String number) throws IOException {
+	public CommunicationCard(String text, String title, String date, String number) throws IOException {
 		URL url = new File("src/res/fxml/card/CommunicationCard.fxml").toURI().toURL();
 		FXMLLoader loader = new FXMLLoader(url);
 		loader.setController(communicationCardView);
 		this.getChildren().add(loader.load());
 
-		communicationCardView.setLabel(title, date, number);
+		communicationCardView.setLabel(text, title, date, number);
 	}
 }

@@ -10,9 +10,6 @@
 .scroll-pane > .viewport {
    	-fx-background-color: transparent;
     -fx-background-radius: 14px;
-    /*-fx-border-color: #0C0B0B; // Non riesco a sistemare
-    -fx-border-radius: 14px;
-    -fx-border-width: 2px;*/
 }
 
 .scroll-bar:horizontal, .scroll-bar:vertical{

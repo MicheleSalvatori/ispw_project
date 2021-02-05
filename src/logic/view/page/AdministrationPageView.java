@@ -6,21 +6,27 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import logic.bean.CommunicationBean;
 import logic.controller.PostCommunicationController;
 import logic.exceptions.RecordNotFoundException;
+import logic.utilities.Page;
+import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
 import logic.view.card.element.CommunicationCard;
 
-public class NewsPageView implements Initializable {
+public class AdministrationPageView implements Initializable {
 
 	@FXML
-	private VBox vboxComm, vboxNews;
+	private VBox vboxComm;
 
+	@FXML
+	private Button btnAddCommunication, btnAddCourse, btnCredentialsProfessor;
 	@FXML
 	private ScrollPane scroll;
 
@@ -47,4 +53,19 @@ public class NewsPageView implements Initializable {
 		}
 	}
 
+	@FXML
+	public void postCommunication(ActionEvent event) throws IOException {
+		System.out.println("Post Communication");
+		PageLoader.getInstance().buildPage(Page.POST_COMMUNICATION);
+	}
+
+	@FXML
+	public void assignProfessor(ActionEvent event) throws IOException {
+		System.out.println("Professor Credentials");
+	}
+	
+	@FXML
+	public void addCourse(ActionEvent event) throws IOException {
+		System.out.println("Add Course");
+	}
 }

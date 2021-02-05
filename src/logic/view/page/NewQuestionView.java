@@ -43,8 +43,6 @@ public class NewQuestionView implements Initializable {
 	private InsertQuestionController controller;
 	private List<CourseBean> courses;
 
-	// TODO mettere il controllo sui numeri dei corso nel forum page e bloccare nel
-	// caso il tasto new question
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		controller = new InsertQuestionController();

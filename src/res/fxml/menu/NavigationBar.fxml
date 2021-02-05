@@ -14,8 +14,13 @@
             <Insets bottom="20.0" />
          </VBox.margin>
       </Label>
-      
-      <Button fx:id="btnHome" mnemonicParsing="false" onAction="#homeButton" styleClass="home-button" />
+      <AnchorPane>
+         <children>
+            
+            <Button fx:id="btnHome" layoutX="53.0" mnemonicParsing="false" onAction="#homeButton" styleClass="home-button" />
+            <Button fx:id="btnSettings" layoutX="54.0" layoutY="-3.0" mnemonicParsing="false" styleClass="settings-button" />
+         </children>
+      </AnchorPane>
       
       <AnchorPane>
          <children>
@@ -26,9 +31,9 @@
       
       <Button fx:id="btnProfile" mnemonicParsing="false" onAction="#profileButton" styleClass="profile-button" />
       
-      <Button fx:id="btnForum" mnemonicParsing="false" onAction="#forumButton" styleClass="forum-button" />
+                        <Button fx:id="btnForum" mnemonicParsing="false" onAction="#forumButton" styleClass="forum-button" />
       
-      <Button fx:id="btnNews" mnemonicParsing="false" onAction="#newsButton" styleClass="news-button" />
+                  <Button fx:id="btnNews" mnemonicParsing="false" onAction="#newsButton" styleClass="news-button" />
       
       <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#scheduleButton" styleClass="schedule-button" />
       

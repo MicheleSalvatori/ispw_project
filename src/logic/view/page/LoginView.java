@@ -23,6 +23,7 @@ import logic.utilities.AlertController;
 import logic.utilities.Email;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.utilities.Role;
 
 public class LoginView implements Initializable {
 
@@ -36,8 +37,7 @@ public class LoginView implements Initializable {
 	private PasswordField textPassword;
 
 	private LoginController loginController;
-	
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -49,7 +49,7 @@ public class LoginView implements Initializable {
 			public void handle(ActionEvent event) {
 				try {
 					loginUser(event);
-					
+
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -78,33 +78,36 @@ public class LoginView implements Initializable {
 		userBean.setPassword(password);
 		userBean.setUsername(username);
 		loginController = new LoginController();
-		
+
 		try {
 			userBean = loginController.login(userBean);
 			UserBean.setInstance(userBean);
-			
+
 		} catch (SQLException e) {
 			AlertController.infoAlert("Connection failed!");
 			return;
-			
+
 		} catch (RecordNotFoundException e) {
 			AlertController.infoAlert("User not found: incorrect username or password.\nTry again or signup!");
 			return;
 		}
-			
-		PageLoader.getInstance().buildPage(Page.HOMEPAGE);
+		if (userBean.getRole() == Role.ADMIN) {
+			PageLoader.getInstance().buildPage(Page.ADMINISTRATION_PAGE);
+		} else {
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
+		}
 	}
 
 	@FXML
 	private void forgotPassword(ActionEvent event) {
-		
+
 		loginController = new LoginController();
-		
+
 		try {
 			String email = AlertController.emailInput();
 			UserBean userBean = new UserBean();
 			userBean.setEmail(email);
-			
+
 			String password = loginController.getUserByEmail(userBean).getPassword();
 			Email.password(email, password);
 
@@ -119,7 +122,7 @@ public class LoginView implements Initializable {
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
+
 		} catch (CancelException e) {
 			System.out.println(e.getMessage());
 			return;
