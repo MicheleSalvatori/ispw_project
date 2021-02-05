@@ -305,9 +305,6 @@ public class CourseDAO {
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectCoursesByProfessor(stmt, professor);
@@ -332,6 +329,7 @@ public class CourseDAO {
 				} while (rs.next());
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();

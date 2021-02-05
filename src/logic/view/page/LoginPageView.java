@@ -1,11 +1,8 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
-import javax.mail.MessagingException;
 
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -24,7 +21,7 @@ import logic.utilities.Email;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
-public class LoginView implements Initializable {
+public class LoginPageView implements Initializable {
 
 	@FXML
 	private Button btnLogin;
@@ -47,33 +44,26 @@ public class LoginView implements Initializable {
 		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				try {
-					loginUser(event);
-					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				loginUser(event);
 			}
 		};
 
-		// Se premi invio quando sei sul campo username o password fa il login
 		textUsername.setOnAction(eventHandler);
 		textPassword.setOnAction(eventHandler);
 	}
 
 	@FXML
-	void loginUser(ActionEvent event) throws IOException {
+	void loginUser(ActionEvent event) {
 
 		String username = textUsername.getText();
 		String password = textPassword.getText();
 
 		if (username.isEmpty() || password.isEmpty()) {
-			System.out.println("One or more fields are empty");
+			AlertController.infoAlert("One or more fields are empty");
 			return;
 		}
 
-		// get type user
+		// Get user type
 		UserBean userBean = new UserBean();
 		userBean.setPassword(password);
 		userBean.setUsername(username);
@@ -109,19 +99,14 @@ public class LoginView implements Initializable {
 			Email.password(email, password);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert("Connection failed!");
+			return;
 
 		} catch (RecordNotFoundException e) {
 			AlertController.infoAlert(e.getMessage());
 			return;
 
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
 		} catch (CancelException e) {
-			System.out.println(e.getMessage());
 			return;
 		}
 
@@ -129,8 +114,17 @@ public class LoginView implements Initializable {
 	}
 
 	@FXML
-	void gotoSignup(ActionEvent event) throws IOException {
-		// load Signup Page
+	void gotoSignup(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.SIGNUP);
+	}
+	
+	@FXML
+	void facebookLogin(ActionEvent event) {
+		AlertController.infoAlert("Functionality not yet implemented");
+	}
+	
+	@FXML
+	void googleLogin(ActionEvent event) {
+		AlertController.infoAlert("Functionality not yet implemented");
 	}
 }

@@ -1,6 +1,5 @@
-<%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
 <!doctype html>
 <html lang="en">
 
@@ -8,18 +7,13 @@
 <%@ page import="logic.bean.UserBean"%>
 <%@ page import="logic.bean.CourseBean"%>
 <%@ page import="logic.utilities.Role"%>
+<%@ page import="java.util.List"%>
 <%@ page import="javax.servlet.RequestDispatcher"%>
 
 <%
-UserBean user = new UserBean();
-if (session.getAttribute("loggedUser") != null) {
-	user = (UserBean) session.getAttribute("loggedUser");
-}
-
-else {
-	user.setUsername("");
-}
+	UserBean user = (UserBean) session.getAttribute("loggedUser");
 %>
+
 <head>
 <meta charset="utf-8">
 <title>App - Ask a Question</title>

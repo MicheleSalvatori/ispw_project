@@ -1,23 +1,18 @@
 package logic.view.card.element;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
 import logic.bean.QuestionBean;
 import logic.view.card.controller.QuestionCardView;
+import logic.view.graphic.GraphicElement;
 
-public class QuestionCard extends AnchorPane {
+public class QuestionCard extends GraphicElement {
 	
 	private QuestionCardView questionCardView = new QuestionCardView();
 	
-	public QuestionCard(QuestionBean question) throws IOException {
-		URL url = new File("src/res/fxml/card/QuestionCard.fxml").toURI().toURL();
-		FXMLLoader loader = new FXMLLoader(url);
+	public QuestionCard(QuestionBean question) {
+		FXMLLoader loader = getLoader("src/res/fxml/card/QuestionCard.fxml");
 		loader.setController(questionCardView);
-		this.getChildren().add(loader.load());	
+		load(loader);	
 		questionCardView.setCard(question);
 	}
 }

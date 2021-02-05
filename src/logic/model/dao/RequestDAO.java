@@ -28,9 +28,6 @@ public class RequestDAO {
 		
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectRequest(stmt, student, course);
@@ -63,9 +60,6 @@ public class RequestDAO {
 		
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectRequestsByProfessor(stmt, professor);
@@ -102,10 +96,7 @@ public class RequestDAO {
 		
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-
+			
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectRequestsByProfessorAndCourse(stmt, professor, course);
 
@@ -133,95 +124,60 @@ public class RequestDAO {
 		return requests;
 	}
 	
-	public static boolean insertRequest(Request request) {
+	public static void insertRequest(Request request) throws SQLException {
 		
 		Connection conn = null;
 		Statement stmt = null;
 		
-		try {
-			conn = (SingletonDB.getDbInstance()).getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		conn = (SingletonDB.getDbInstance()).getConnection();
+		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			Student student = request.getStudent();
-			Course course = request.getCourse();
+		Student student = request.getStudent();
+		Course course = request.getCourse();
 			
-			Queries.insertRequest(stmt, student.getUsername(), course.getAbbrevation());
-			
-		} catch (SQLException e) {
-			return false;
-		}
-		return true;
+		Queries.insertRequest(stmt, student.getUsername(), course.getAbbrevation());
 	}
 	
-	public static boolean deleteRequest(Request request) {
+	public static void deleteRequest(Request request) throws SQLException {
 		
 		Connection conn = null;
 		Statement stmt = null;
+
+		conn = (SingletonDB.getDbInstance()).getConnection();
+		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		
-		try {
-			conn = (SingletonDB.getDbInstance()).getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		Student student = request.getStudent();
+		Course course = request.getCourse();
 			
-			Student student = request.getStudent();
-			Course course = request.getCourse();
-			
-			Queries.deleteRequest(stmt, student.getUsername(), course.getAbbrevation());
-			
-		} catch (SQLException e) {
-			return false;
-		}
-		return true;
+		Queries.deleteRequest(stmt, student.getUsername(), course.getAbbrevation());
 	}
 	
-	public static boolean insertFollow(Request request) {
+	public static void insertFollow(Request request) throws SQLException {
 		
 		Connection conn = null;
 		Statement stmt = null;
 		
-		try {
-			conn = (SingletonDB.getDbInstance()).getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		conn = (SingletonDB.getDbInstance()).getConnection();
+		
+		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			Student student = request.getStudent();
-			Course course = request.getCourse();
-			
-			Queries.insertFollow(stmt, student.getUsername(), course.getAbbrevation());
-			
-		} catch (SQLException e) {
-			return false;
-		}
-		return true;
+		Student student = request.getStudent();
+		Course course = request.getCourse();
+		
+		Queries.insertFollow(stmt, student.getUsername(), course.getAbbrevation());
 	}
 	
-	public static boolean deleteFollow(Request request) {
+	public static void deleteFollow(Request request) throws SQLException {
 		
 		Connection conn = null;
 		Statement stmt = null;
-		
-		try {
-			conn = (SingletonDB.getDbInstance()).getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+		conn = (SingletonDB.getDbInstance()).getConnection();
+		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			Student student = request.getStudent();
-			Course course = request.getCourse();
+		Student student = request.getStudent();
+		Course course = request.getCourse();
 			
-			Queries.deleteFollow(stmt, student.getUsername(), course.getAbbrevation());
-			
-		} catch (SQLException e) {
-			return false;
-		}
-		return true;
+		Queries.deleteFollow(stmt, student.getUsername(), course.getAbbrevation());
 	}
 }

@@ -1,6 +1,5 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,11 +22,9 @@ import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.JoinCourseController;
 import logic.controller.LoginController;
-import logic.controller.SignupController;
 import logic.exceptions.CancelException;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
-import logic.utilities.AppProperties;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.Role;
@@ -40,18 +37,41 @@ public class ProfilePageView implements Initializable {
 	private VBox vboxScroll;
 	
 	@FXML
-	private Button btnAdd, btnRemove, btnShowPass, btnChangePass, btnAvatar;
+	private Button btnAdd;
+	
+	@FXML
+	private Button btnRemove;
+	
+	@FXML
+	private Button btnShowPass;
+	
+	@FXML
+	private Button btnChangePass;
+	
+	@FXML
+	private Button btnAvatar;
 	
 	@FXML
 	private Rectangle rect;
 	
 	@FXML
-	private Label labelUsername, labelName, labelPassword, labelSurname, labelEmail;
+	private Label labelUsername;
+	
+	@FXML
+	private Label labelName;
+	
+	@FXML
+	private Label labelPassword;
+	
+	@FXML
+	private Label labelSurname;
+	
+	@FXML
+	private Label labelEmail;
 	
 	private Boolean show = false;
 	
 	private LoginController loginController;
-	private SignupController signupController;
 	private JoinCourseController joinCourseController;
 	
 	
@@ -69,14 +89,14 @@ public class ProfilePageView implements Initializable {
 			btnRemove.setVisible(false);
 		}
 		
-		String img = "/res/png/avatar/profile/" + AppProperties.getInstance().getProperty("avatar").toString() + ".png";
+		String img = "/res/png/avatar/profile/avatar1.png";
 		setAvatar(img);
 		
 		loadCourses();
 	}
 	
 	@FXML
-	private void changePass(ActionEvent event) throws ClassNotFoundException, IOException {
+	private void changePass(ActionEvent event) {
 		String password;
 		
 		while (true) {
@@ -97,7 +117,6 @@ public class ProfilePageView implements Initializable {
 				
 			// Clicked Cancel Button
 			} catch (CancelException e) {
-				System.out.println(e.getMessage());
 				return;
 			}
 		}
@@ -107,25 +126,21 @@ public class ProfilePageView implements Initializable {
 		userBean.setPassword(password);
 		
 		if (AlertController.confirmationAlert("Do you want to change your password?\nYou will be logged out.")) {
-			signupController = new SignupController();
+			loginController = new LoginController();
 			
 			try {
-				signupController.changePassword(userBean);
-				logout(event);
+				loginController.changePassword(userBean);
+				logout();
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				
-			} catch (RecordNotFoundException e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
+				AlertController.infoAlert(AlertController.getError());
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE);
 			}
 		}
 	}
 	
 	@FXML
-	private void removeCourse(ActionEvent event) throws SQLException {
+	private void removeCourse(ActionEvent event) {
 		
 		joinCourseController = new JoinCourseController();
 		
@@ -163,18 +178,16 @@ public class ProfilePageView implements Initializable {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
 			
 		} catch (RecordNotFoundException e) {
-			System.out.println(e.getMessage());
 			AlertController.infoAlert("You don't have any courses available.");
-			return;
 		}
 	}
 	
 	@FXML
-	private void addCourse(ActionEvent event) throws SQLException {
+	private void addCourse(ActionEvent event) {
 		
 		joinCourseController = new JoinCourseController();
 		
@@ -186,8 +199,9 @@ public class ProfilePageView implements Initializable {
 			courses = joinCourseController.getAvailableCourses(userBean);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
+			return;
 			
 		} catch (RecordNotFoundException e) {
 			AlertController.infoAlert("You don't have any courses to add.");
@@ -215,7 +229,14 @@ public class ProfilePageView implements Initializable {
 			requestBean.setStudent(studentBean);
 			requestBean.setCourse(courseBean);
 
-			joinCourseController.sendRequest(requestBean);
+			try {
+				joinCourseController.sendRequest(requestBean);
+				
+			} catch (SQLException e) {
+				AlertController.infoAlert(AlertController.getError());
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE);
+				return;
+			}
 			
 			AlertController.infoAlert("Request sended to course's professor.\nYou will receive a notification when the request will be approved");
 			loadCourses();
@@ -240,12 +261,6 @@ public class ProfilePageView implements Initializable {
 		}
 	}
 	
-	@FXML
-	private void changeAvatar(ActionEvent event) throws IOException {
-		AppProperties.getInstance().setProperty("avatar", "avatar10");
-		PageLoader.getInstance().buildPage(Page.PROFILE);
-	}
-	
 	private void setAvatar(String res) {
 		ImagePattern pattern = new ImagePattern(new Image(res, 200, 200, false, false));
 		rect.setFill(pattern);
@@ -261,26 +276,19 @@ public class ProfilePageView implements Initializable {
 		List<ProfessorBean> professors;
 	
 		try {
-			
 			courses = joinCourseController.getCourses(UserBean.getInstance());
 			for (CourseBean courseBean : courses) {
 				professors = joinCourseController.getCourseProfessors(courseBean);
 				CourseCard courseCard = new CourseCard(courseBean, professors, Type.FOLLOW);
-				vboxScroll.getChildren().add(courseCard);
+				vboxScroll.getChildren().add(courseCard.getPane());
 			}
-				
-		} catch (RecordNotFoundException e) {
-			System.out.println(e.getMessage());
-				
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 				
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
+			return;
 		}
-		
 		
 		try {
 			
@@ -289,36 +297,35 @@ public class ProfilePageView implements Initializable {
 				for (CourseBean courseBean : requests) {
 					professors = joinCourseController.getCourseProfessors(courseBean);
 					CourseCard courseCard = new CourseCard(courseBean, professors, Type.REQUEST);
-					vboxScroll.getChildren().add(courseCard);
+					vboxScroll.getChildren().add(courseCard.getPane());
 				}
 			}
-	
-		} catch (RecordNotFoundException e) {
-			System.out.println(e.getMessage());
-				
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 				
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
 		}
 	}
 	
 	public void deleteRequest(RequestBean requestBean) {
 		if (AlertController.confirmationAlert("Do you want to cancel this request?")) {
-			joinCourseController = new JoinCourseController();
-			joinCourseController.deleteRequest(requestBean);
+			
+			try {
+				joinCourseController = new JoinCourseController();
+				joinCourseController.deleteRequest(requestBean);
+			
+			} catch (SQLException e) {
+				AlertController.infoAlert(AlertController.getError());
+				PageLoader.getInstance().buildPage(Page.HOMEPAGE);
+				return;
+			}
 			
 			AlertController.infoAlert("Request of course '" + requestBean.getCourse().getAbbreviation() + "' deleted.");
 			loadCourses();
 		}
 	}
 	
-	private void logout(ActionEvent event) throws IOException, ClassNotFoundException, SQLException {
-		System.out.println("Logout");
-		
+	private void logout() {
 		loginController = new LoginController();
 		loginController.logout();
 		PageLoader.getInstance().buildPage(Page.LOGIN);

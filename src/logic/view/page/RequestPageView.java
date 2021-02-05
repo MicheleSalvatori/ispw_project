@@ -1,6 +1,5 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,18 +16,21 @@ import logic.bean.UserBean;
 import logic.controller.AcceptRequestController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
+import logic.utilities.PageLoader;
 import logic.view.card.element.CourseFilterCard;
 import logic.view.card.element.RequestCard;
 
 public class RequestPageView implements Initializable {
 	
 	@FXML
-	private VBox vboxRequest, vboxCourse;
+	private VBox vboxRequest;
+	
+	@FXML
+	private VBox vboxCourse;
 	
 	private AcceptRequestController acceptRequestController;
 	
 	private List<RequestBean> requests;
-	private List<CourseBean> courses;
 	
 	private List<String> filteredCourses = new ArrayList<>();
 
@@ -38,10 +40,10 @@ public class RequestPageView implements Initializable {
 		acceptRequestController = new AcceptRequestController();
 
 		try {
-			courses = acceptRequestController.getCourses(UserBean.getInstance());
+			List<CourseBean> courses = acceptRequestController.getCourses(UserBean.getInstance());
 			for (CourseBean courseBean : courses) {
 				CourseFilterCard courseFilterCard = new CourseFilterCard(courseBean);
-				vboxCourse.getChildren().add(courseFilterCard);
+				vboxCourse.getChildren().add(courseFilterCard.getPane());
 			}
 			
 			updateRequests();
@@ -50,12 +52,8 @@ public class RequestPageView implements Initializable {
 			vboxCourse.getChildren().add(new Label("No course found"));
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 		}
 	}
 	
@@ -68,19 +66,15 @@ public class RequestPageView implements Initializable {
 			requests = acceptRequestController.getRequests(UserBean.getInstance());
 			for (RequestBean requestBean : requests) {	
 				RequestCard requestCard = new RequestCard(requestBean);
-				vboxRequest.getChildren().add(requestCard);
+				vboxRequest.getChildren().add(requestCard.getPane());
 			}
 			
 		} catch (RecordNotFoundException e) {
 			vboxRequest.getChildren().add(new Label("No request found"));
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 		}
 	}
 	
@@ -99,7 +93,7 @@ public class RequestPageView implements Initializable {
 			for (RequestBean requestBean : requests) {
 				if (filteredCourses.contains(requestBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
 					RequestCard requestCard = new RequestCard(requestBean);
-					vboxRequest.getChildren().add(requestCard);
+					vboxRequest.getChildren().add(requestCard.getPane());
 				}
 			}
 			
@@ -107,28 +101,35 @@ public class RequestPageView implements Initializable {
 				vboxRequest.getChildren().add(new Label("No request found."));
 			}
 			
-		} catch (NullPointerException e) {
+		} catch (NullPointerException e) { //TODO Unchecked Exception
 			vboxRequest.getChildren().add(new Label("No request found"));
-			return;
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	
 	public void acceptRequest(RequestBean requestBean) {
 		acceptRequestController = new AcceptRequestController();
-		if (acceptRequestController.acceptRequest(requestBean)) {
+		
+		try {
+			acceptRequestController.acceptRequest(requestBean);
 			AlertController.infoAlert("Request accepted.\nThe student will be notified");
+			updateRequests();
+			
+		} catch (SQLException e) {
+			AlertController.infoAlert(AlertController.getError());
 			updateRequests();
 		}
 	}
 	
 	public void declineRequest(RequestBean requestBean) {
 		acceptRequestController = new AcceptRequestController();
-		if (acceptRequestController.declineRequest(requestBean)) {
+		
+		try {
+			acceptRequestController.declineRequest(requestBean);
 			AlertController.infoAlert("Request declined.\nThe student will be notified");
+			updateRequests();
+			
+		} catch (SQLException e) {
+			AlertController.infoAlert(AlertController.getError());
 			updateRequests();
 		}
 	}

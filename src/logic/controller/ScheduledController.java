@@ -118,30 +118,20 @@ public class ScheduledController {
 		List<Course> courses;
 		List<CourseBean> coursesBean = new ArrayList<>();
 		
-		// Get user lessons and courses
+		// Student role
 		if (userBean.getRole() == Role.STUDENT) {
 			courses = CourseDAO.getStudentCourses(userBean.getUsername());
 		}
 		
-		else if (userBean.getRole() == Role.PROFESSOR) {
-			courses = CourseDAO.getProfessorCourses(userBean.getUsername());
-		}
-		
+		// Professor role
 		else {
-			// Admin role
-			return null;
+			courses = CourseDAO.getProfessorCourses(userBean.getUsername());
 		}
 		
 		for (Course course : courses) {
 	    	CourseBean courseBean = new CourseBean();
 	    	courseBean.setAbbreviation(course.getAbbrevation());
 	    	courseBean.setName(course.getName());
-	    	courseBean.setYear(course.getYear());
-	    	courseBean.setCredits(course.getCredits());
-	    	courseBean.setSemester(course.getSemester());
-	    	courseBean.setPrerequisites(course.getPrerequisites());
-	    	courseBean.setGoal(course.getGoal());
-	    	courseBean.setReception(course.getReception());
 	    	
 	    	coursesBean.add(courseBean);
 		}

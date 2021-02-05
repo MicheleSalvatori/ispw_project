@@ -1,6 +1,5 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,6 +16,7 @@ import logic.bean.LessonBean;
 import logic.bean.UserBean;
 import logic.controller.ScheduledController;
 import logic.exceptions.RecordNotFoundException;
+import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.CourseFilterCard;
@@ -29,9 +29,10 @@ public class ScheduledPageView implements Initializable {
 	private Label labelPage;
 	
 	@FXML
-	private VBox vboxScroll, vboxCourse;
+	private VBox vboxScroll;
 	
-	private ScheduledController scheduledController;
+	@FXML
+	private VBox vboxCourse;
 	
 	private List<LessonBean> lessons;
 	private List<ExamBean> exams;
@@ -42,7 +43,7 @@ public class ScheduledPageView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		scheduledController = new ScheduledController();
+		ScheduledController scheduledController = new ScheduledController();
 		filteredCourses = new ArrayList<>();
 
 		try {
@@ -65,7 +66,8 @@ public class ScheduledPageView implements Initializable {
 			vboxScroll.getChildren().add(new Label(e.getMessage()));
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 		}
 		
 		
@@ -75,33 +77,32 @@ public class ScheduledPageView implements Initializable {
 			
 		} catch (RecordNotFoundException e) {
 			vboxCourse.getChildren().add(new Label(e.getMessage()));
-			return;
 			
 		} catch (SQLException e) {
-		// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 		}
 	}
 	
-	public void setLessonPage(Object obj) throws IOException {
+	public void setLessonPage(Object obj) {
 		CourseBean course = (CourseBean) obj;
 		setFilters(course);
 		filterLessons(course);
 	}
 	
-	public void setExamPage(Object obj) throws IOException {
+	public void setExamPage(Object obj) {
 		CourseBean course = (CourseBean) obj;
 		setFilters(course);
 		filterExams(course);
 	}
 	
-	public void setFilters(CourseBean course) throws IOException {
+	public void setFilters(CourseBean course) {
 		for (CourseBean courseBean : courses) {	
 			CourseFilterCard courseFilterCard = new CourseFilterCard(courseBean);
 			if (courseBean.getAbbreviation().compareTo(course.getAbbreviation()) == 0) {
 				courseFilterCard.getController().getButton().setSelected(true);
 			}
-			vboxCourse.getChildren().add(courseFilterCard);
+			vboxCourse.getChildren().add(courseFilterCard.getPane());
 		}
 	}
 	
@@ -120,7 +121,7 @@ public class ScheduledPageView implements Initializable {
 			for (LessonBean lessonBean : lessons) {
 				if (filteredCourses.contains(lessonBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
 					LessonCard lessonCard = new LessonCard(lessonBean);
-					vboxScroll.getChildren().add(lessonCard);
+					vboxScroll.getChildren().add(lessonCard.getPane());
 				}
 			}
 			
@@ -128,13 +129,8 @@ public class ScheduledPageView implements Initializable {
 				vboxScroll.getChildren().add(new Label("No lesson found."));
 			}
 			
-		} catch (NullPointerException e) {
+		} catch (NullPointerException e) {	//TODO UNCHECKED
 			vboxScroll.getChildren().add(new Label("No lesson found"));
-			return;
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	
@@ -153,7 +149,7 @@ public class ScheduledPageView implements Initializable {
 			for (ExamBean examBean : exams) {
 				if (filteredCourses.contains(examBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
 					ScheduledExamCard scheduledExamCard = new ScheduledExamCard(examBean);
-					vboxScroll.getChildren().add(scheduledExamCard);
+					vboxScroll.getChildren().add(scheduledExamCard.getPane());
 				}
 			}
 			
@@ -161,13 +157,8 @@ public class ScheduledPageView implements Initializable {
 				vboxScroll.getChildren().add(new Label("No exam found."));
 			}
 			
-		} catch (NullPointerException e) {
+		} catch (NullPointerException e) {	//TODO UNCHECKED
 			vboxScroll.getChildren().add(new Label("No exam found"));
-			return;
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 }

@@ -29,6 +29,7 @@ import logic.controller.ScheduleExamController;
 import logic.controller.ScheduleLessonController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
+import logic.utilities.PageLoader;
 
 public class SchedulePageView implements Initializable {
 	
@@ -108,13 +109,14 @@ public class SchedulePageView implements Initializable {
 				comboCourseLesson.getItems().add(course.getAbbreviation());
 				comboCourseExam.getItems().add(course.getAbbreviation());
 			}
+
+		} catch (SQLException e) {
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 			
 		} catch (RecordNotFoundException e) {
-			System.out.println("No course available");
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert("You don't teach any courses.");
+			PageLoader.getInstance().goBack();
 		}
 	}
 	
@@ -148,7 +150,7 @@ public class SchedulePageView implements Initializable {
 		
 		ScheduleLessonController scheduleLessonController = new ScheduleLessonController();
 		if (!scheduleLessonController.scheduleLesson(lessonBean)) {
-			AlertController.infoAlert("Lesson doesn't added.\nTry later.");
+			AlertController.infoAlert("Lesson was not added.\nTry later.");
 		}
 		
 		AlertController.infoAlert("Lesson succesfully added");
@@ -167,7 +169,6 @@ public class SchedulePageView implements Initializable {
 		examBean.setDate(date);
 		
 		Time time = Time.valueOf(textTimeExam.getText()+":00");
-		System.out.println(time);
 		examBean.setTime(time);
 		
 		CourseBean course = courses.get(comboCourseExam.getSelectionModel().getSelectedIndex());

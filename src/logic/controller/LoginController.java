@@ -1,8 +1,11 @@
 package logic.controller;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import logic.bean.UserBean;
+import logic.exceptions.DuplicatedRecordException;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Admin;
 import logic.model.Professor;
@@ -91,5 +94,30 @@ public class LoginController {
 		
 		// Delete Navigation Bar
 		NavigationBar.setInstance(null);
-	}	
+	}
+	
+	public void signup(UserBean userBean) throws SQLException, DuplicatedRecordException {
+		User user = new User(userBean.getUsername(), userBean.getPassword(), userBean.getName(), userBean.getSurname(), userBean.getEmail());
+		StudentDAO.addStudent(user);
+	}
+	
+	public void changePassword(UserBean userBean) throws SQLException {
+		User user = new User(userBean.getUsername(), userBean.getPassword(), userBean.getName(), userBean.getSurname(), userBean.getEmail());
+		
+		try {
+			
+			// User is a student
+			if (userBean.getRole() == Role.STUDENT) {
+				StudentDAO.changePassword(user);
+			}
+			
+			// User is a professor
+			else if (userBean.getRole() == Role.PROFESSOR) {
+				ProfessorDAO.changePassword(user);
+			}
+			
+		} catch (RecordNotFoundException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+		}
+	}
 }

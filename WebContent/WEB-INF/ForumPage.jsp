@@ -1,6 +1,5 @@
-<%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
 <!doctype html>
 <html lang="en">
 
@@ -9,21 +8,15 @@
 <%@ page import="logic.bean.QuestionBean"%>
 <%@ page import="logic.utilities.SQLConverter"%>
 <%@ page import="logic.utilities.Role"%>
-<%@ page import="javax.servlet.RequestDispatcher"%>
+<%@ page import="java.util.List"%>
 
 <%
-UserBean user = new UserBean();
-if (session.getAttribute("loggedUser") != null) {
-	user = (UserBean) session.getAttribute("loggedUser");
-}
-
-else {
-	user.setUsername("");
-}
+	UserBean user = (UserBean) session.getAttribute("loggedUser");
 %>
+
 <head>
 <meta charset="utf-8">
-<title>App - Forum</title>
+<title>App - ForumPage</title>
 <link rel="stylesheet" href="res/style/ForumPage.css">
 <link rel="stylesheet" href="res/style/NavigationBar.css">
 <link rel="stylesheet" href="res/style/StatusBar.css">
@@ -216,9 +209,9 @@ else {
 	<div class="content-question">
 		<a class="title-label">Questions</a>
 		<!-- Question Table -->
-		<div class="border-table">
-			<table class="table-question" id="tableQuestions">
-				<tbody style="overflow: auto; display: block;">
+		<div class="border-table" style="height: 100%;">
+			<table class="table-question" id="tableQuestions" style="overflow: scroll;">
+				<tbody style="overflow: auto; display: block; border-spacing: 0 10px;">
 					<c:forEach items="${listOfQuestion}" var="question">
 						<tr height="50px" class="question">
 							<td
@@ -308,9 +301,11 @@ else {
 
 	<!-- Buttons -->
 	<div class="content-right">
+		<%if (user.getRole() == Role.STUDENT) { %>
 		<a href="/ispw_project/NewQuestionPageServlet">
-			<button type="button" class="new-question" id="newQuestion">Insert
-				New Question</button>
+			<button type="button" class="new-question" id="newQuestion">
+				Insert New Question
+			</button>
 		</a>
 		<div>
 			<button type="button" class="questions-button" id="myQuestion"
@@ -321,19 +316,25 @@ else {
 				id="allQuestions" name="allQuestion" disabled="disabled" onclick="filterAllQuestions()">All
 				Questions</button>
 		</div>
+		<% } else { %>
+		<a href="/ispw_project/NewAssignmentPageServlet">
+			<button type="button" class="new-question">
+				Insert New Assignment
+			</button>
+		</a>
+		<% } %>
 
 		<div style="margin-top: 30px;">
 			<a class="title-label">Assignments</a>
 			<div class="border-table">
-				<table class="table-question;">
-					<tbody style="overflow: scroll;">
+				<table class="table-question;" style="border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
 						<c:forEach items="${listOfAssignment}" var="assignment">
 							<tr height="30px" class="question">
 								<td
 									style="border-radius: 14px 0 0 14px; white-space: nowrap; padding: 1vw; width: 2vw;">
 									<img class="img" src="res/img/Assignment.png" alt="q">
 								</td>
-								<td class="id">${assignment.getId() }</td>
+								<td class="id">${assignment.getId()}</td>
 								<td align="left" class="question-subject"
 									style="text-align: left;">
 									<table style="display: inline; vertical-align: middle;">
@@ -348,14 +349,16 @@ else {
 									style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left;">
 									${assignment.getCourse()}</td>
 
-								<td align="right"
-									style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
-									<button class="button-view" type="button">View</button>
+								<td align="right" style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
+									<a href="${pageContext.request.contextPath}/AssignmentPageServlet?assignment=${assignment.getId()}" class="button-view">
+										<button class="button-view" type="button">
+											View
+										</button>
+									</a>
 								</td>
 							</tr>
 							
 						</c:forEach>
-					</tbody>
 				</table>
 			</div>
 		</div>

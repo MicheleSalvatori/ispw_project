@@ -1,6 +1,5 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import logic.bean.AssignmentBean;
 import logic.bean.QuestionBean;
 import logic.bean.UserBean;
 import logic.controller.AddAssignmentController;
-import logic.controller.AllQuestionController;
+import logic.controller.QuestionController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
@@ -30,22 +29,33 @@ import logic.view.card.element.QuestionCard;
 public class ForumPageView implements Initializable {
 
 	@FXML
-	private Button btnMyQuestions, btnNewQuestion, btnAllQuestions, btnNewAssignment;
+	private Button btnMyQuestions;
+	
+	@FXML
+	private Button btnNewQuestion;
+	
+	@FXML
+	private Button btnAllQuestions;
+	
+	@FXML
+	private Button btnNewAssignment;
 	
 	@FXML
 	private Label labelLoading;
 	
 	@FXML
-	private VBox vboxQuestion, vboxAssignment;
+	private VBox vboxQuestion;
 	
-	private AllQuestionController allQuestionController;
-	private AddAssignmentController addAssignmentController;
+	@FXML
+	private VBox vboxAssignment;
 	
-	private List<QuestionBean> allQuestions, myQuestions;
-	private List<AssignmentBean> assignments;
+	private QuestionController allQuestionController;
+	
+	private List<QuestionBean> allQuestions;
+	private List<QuestionBean> myQuestions;
 
 	@FXML
-	private void myQuestion(ActionEvent event) throws IOException {
+	private void myQuestion(ActionEvent event) {
 		vboxQuestion.getChildren().clear();
 		
 		if (myQuestions == null) {
@@ -58,15 +68,16 @@ public class ForumPageView implements Initializable {
 					if (userQuestion.equals(userSession)) {
 						myQuestions.add(q);
 						questionCard = new QuestionCard(q);
-						vboxQuestion.getChildren().add(questionCard);
+						vboxQuestion.getChildren().add(questionCard.getPane());
 					}
 				}
-			} else
-				return;
+				
+			} else return;
+			
 		} else {
 			for (QuestionBean q : myQuestions) {
 				QuestionCard questionCard = new QuestionCard(q);
-				vboxQuestion.getChildren().add(questionCard);
+				vboxQuestion.getChildren().add(questionCard.getPane());
 			}
 		}
 		
@@ -82,12 +93,12 @@ public class ForumPageView implements Initializable {
 	}
 
 	@FXML
-	private void newQuestion(ActionEvent event) throws IOException {
+	private void newQuestion(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.NEWQUESTION, event);
 	}
 	
 	@FXML
-	private void newAssignment(ActionEvent event) throws IOException {
+	private void newAssignment(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.NEWASSIGNMENT, event);
 	}
 
@@ -96,7 +107,8 @@ public class ForumPageView implements Initializable {
 			allQuestions = allQuestionController.getAllQuestions(UserBean.getInstance());
 			
 		} catch (SQLException e) {
-			//TODO
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 			
 		} catch (RecordNotFoundException e) {
 			AlertController.infoAlert(e.getMessage());
@@ -120,23 +132,19 @@ public class ForumPageView implements Initializable {
 		labelLoading.setVisible(false);
 		for (QuestionBean q : allQuestions) {
 			QuestionCard questionCard;
-			try {
-				questionCard = new QuestionCard(q);
-				vboxQuestion.getChildren().add(questionCard);
-				
-			} catch (IOException e) {
-				// TODO caricamento fxml card
-			}
+			questionCard = new QuestionCard(q);
+			vboxQuestion.getChildren().add(questionCard.getPane());
 		}
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		allQuestionController = new AllQuestionController();
+		allQuestionController = new QuestionController();
 		int nCourses;
 		try {
 			nCourses = allQuestionController.getNumberCourses(UserBean.getInstance());
+			
 		} catch (SQLException e) {
 			nCourses = 0;
 		}
@@ -178,26 +186,20 @@ public class ForumPageView implements Initializable {
 		});
 		
 		try {
-			
-			addAssignmentController = new AddAssignmentController();
-			
-			assignments = addAssignmentController.getAssignments(UserBean.getInstance());
+			AddAssignmentController addAssignmentController = new AddAssignmentController();
+			List<AssignmentBean> assignments = addAssignmentController.getAssignments(UserBean.getInstance());
 			
 			for (AssignmentBean assignmentBean : assignments) {
 				AssignmentCard assignmentCard = new AssignmentCard(assignmentBean);
-				vboxAssignment.getChildren().add(assignmentCard);
+				vboxAssignment.getChildren().add(assignmentCard.getPane());
 			}
 			
 		} catch (RecordNotFoundException e) {
 			vboxAssignment.getChildren().add(new Label("No assignment found"));
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 		}
 	}
   
@@ -205,4 +207,3 @@ public class ForumPageView implements Initializable {
 		return allQuestionController.setSolved(questionID);
 	}
 }
-

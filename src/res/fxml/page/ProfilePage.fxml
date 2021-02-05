@@ -17,12 +17,8 @@
       
       <AnchorPane layoutY="83.0" prefHeight="465.0" prefWidth="345.0" styleClass="anchor-pane">
          <children>
-         
-            <Button fx:id="btnAvatar" onAction="#changeAvatar" layoutX="66.0" layoutY="25.0" mnemonicParsing="false" styleClass="button-avatar" AnchorPane.leftAnchor="63.5" AnchorPane.rightAnchor="63.5" AnchorPane.topAnchor="25.0">
-               <graphic>
-                  <Rectangle fx:id="rect" arcHeight="200.0" arcWidth="200.0" fill="WHITE" height="200.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="200.0" />
-               </graphic>
-            </Button>
+
+            <Rectangle fx:id="rect" arcHeight="200.0" arcWidth="200.0" fill="WHITE" height="200.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="200.0" />
             
             <Label layoutX="23.0" layoutY="231.0" text="Username:" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="245.0" />
             

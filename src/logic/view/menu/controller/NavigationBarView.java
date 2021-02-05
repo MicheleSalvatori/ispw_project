@@ -1,6 +1,5 @@
 package logic.view.menu.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -54,49 +53,42 @@ public class NavigationBarView implements Initializable {
 	}
 
 	@FXML
-	public void homeButton(ActionEvent event) throws IOException {
-		System.out.println("HomeButton");
+	public void homeButton(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
 	}
 
 	@FXML
-	public void newsButton(ActionEvent event) throws IOException {
-		System.out.println("NewsButton");
+	public void newsButton(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.NEWS, event);
 	}
 
 	@FXML
-	public void profileButton(ActionEvent event) throws IOException {
-		System.out.println("ProfileButton");
+	public void profileButton(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.PROFILE, event);
 	}
 
 	@FXML
-	public void examsButton(ActionEvent event) throws IOException {
-		System.out.println("ExamsButton");
+	public void examsButton(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.EXAM, event);
 	}
 
 	@FXML
-	public void forumButton(ActionEvent event) throws IOException {
+	public void forumButton(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.FORUM, event);
 	}
 
 	@FXML
-	public void backButton(ActionEvent event) throws IOException {
-		System.out.println("Back");
+	public void backButton(ActionEvent event) {
 		PageLoader.getInstance().goBack();
 	}
 	
 	@FXML
-	public void requestButton(ActionEvent event) throws IOException {
-		System.out.println("Request");
+	public void requestButton(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.REQUEST, event);
 	}
 	
 	@FXML
-	public void scheduleButton(ActionEvent event) throws IOException {
-		System.out.println("Schedule");
+	public void scheduleButton(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.SCHEDULE, event);
 	}
 }

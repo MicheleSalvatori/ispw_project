@@ -77,7 +77,7 @@ public class RoleDAO {
 			rs = Queries.selectUserByEmail(stmt, email);
 			
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No User found matching with email: '" + email + "'.");
+				throw new RecordNotFoundException("No user found matching with email: '" + email + "'.");
 				
 			}else {
 				rs.first();				// mi riposiziono alla prima riga 

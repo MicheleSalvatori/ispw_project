@@ -1,12 +1,8 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +15,7 @@ import logic.bean.AssignmentBean;
 import logic.bean.CourseBean;
 import logic.bean.UserBean;
 import logic.controller.AddAssignmentController;
-import logic.exceptions.RecordNotFoundException;
+import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.Role;
@@ -28,34 +24,31 @@ import logic.utilities.SQLConverter;
 public class AssignmentPageView implements Initializable {
 
 	@FXML
-	private Label labelDeadline, labelTitle;
+	private Label labelDeadline;
+	
+	@FXML
+	private Label labelTitle;
 	
 	@FXML
 	private TextArea textDesc;
 	
 	@FXML
-	private Button btnCourse, btnAdd, btnRemove;
+	private Button btnCourse;
+	
+	@FXML
+	private Button btnAdd;
+	
+	@FXML
+	private Button btnRemove;
 	
 	@FXML
 	private AnchorPane anchorDeliver;
 	
 	private AssignmentBean assignment;
+
 	
 	@FXML
-	private void addFile(ActionEvent event) {
-		
-		// TODO vedere se salvare file (penso di no)
-		JFileChooser chooser = new JFileChooser();
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("*.pdf", "pdf");
-		chooser.setFileFilter(filter);
-		int returnVal = chooser.showOpenDialog(null);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
-		}
-	}
-	
-	@FXML
-	private void course(ActionEvent event) throws IOException {
+	private void course(ActionEvent event) {
 		CourseBean courseBean = new CourseBean();
 		courseBean.setAbbreviation(assignment.getCourse());
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
@@ -63,7 +56,6 @@ public class AssignmentPageView implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
 		if (UserBean.getInstance().getRole() == Role.PROFESSOR) {
 			anchorDeliver.setVisible(false);
 			btnAdd.setVisible(false);
@@ -82,12 +74,8 @@ public class AssignmentPageView implements Initializable {
 			this.assignment = controller.getAssignmentByID(((AssignmentBean) obj).getId());
 		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		
-		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
 		}
 
 		//this.assignment = (AssignmentBean) obj;		// TODO Forse high coupling

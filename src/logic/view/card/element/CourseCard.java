@@ -1,26 +1,21 @@
 package logic.view.card.element;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
 import java.util.List;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
 import logic.bean.CourseBean;
 import logic.bean.ProfessorBean;
 import logic.view.card.controller.CourseCardView;
+import logic.view.graphic.GraphicElement;
 
-public class CourseCard extends AnchorPane {
+public class CourseCard extends GraphicElement {
 	
 	private CourseCardView courseCardView = new CourseCardView();
 	
-	public CourseCard(CourseBean courseBean, List<ProfessorBean> professorsBean, Type type) throws IOException, SQLException {
-		URL url = new File("src/res/fxml/card/CourseCard.fxml").toURI().toURL();
-		FXMLLoader loader = new FXMLLoader(url);
+	public CourseCard(CourseBean courseBean, List<ProfessorBean> professorsBean, Type type) {
+		FXMLLoader loader = getLoader("src/res/fxml/card/CourseCard.fxml");
 		loader.setController(courseCardView);
-		this.getChildren().add(loader.load());
+		load(loader);
 
 		courseCardView.setCourse(courseBean, professorsBean, type);
 	}

@@ -12,23 +12,15 @@
 <%@ page import="logic.utilities.Role"%>
 <%@ page import="javax.servlet.RequestDispatcher"%>
 
-<jsp:useBean id="question" class="logic.bean.QuestionBean"
-	scope="request" />
+<jsp:useBean id="question" class="logic.bean.QuestionBean" scope="request" />
 
 <%
-UserBean user = new UserBean();
-if (session.getAttribute("loggedUser") != null) {
-	user = (UserBean) session.getAttribute("loggedUser");
-}
-
-else {
-	user.setUsername("");
-}
-question = (QuestionBean) request.getAttribute("question");
+	UserBean user = (UserBean) session.getAttribute("loggedUser");
+	question = (QuestionBean) request.getAttribute("question");
 %>
 <head>
 <meta charset="utf-8">
-<title>App - HomePage</title>
+<title>App - QuestionPage</title>
 <link rel="stylesheet" href="res/style/ModalBox.css">
 <link rel="stylesheet" href="res/style/QuestionPage.css">
 <link rel="stylesheet" href="res/style/NavigationBar.css">

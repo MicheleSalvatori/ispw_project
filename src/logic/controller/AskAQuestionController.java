@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
@@ -15,16 +17,13 @@ import logic.model.Student;
 import logic.model.dao.CourseDAO;
 import logic.model.dao.QuestionDAO;
 
-public class InsertQuestionController {
+public class AskAQuestionController {
 
-	public InsertQuestionController() {
-		
-	}
-
-	public List<CourseBean> getCoursesOfStudent(UserBean user) throws RecordNotFoundException {
+	public List<CourseBean> getCoursesOfStudent(UserBean user) throws SQLException {
 		List<Course> courses = new ArrayList<>();
-		List<CourseBean> courseBeans;
+		List<CourseBean> courseBeans = null;
 		String username = user.getUsername();
+		
 		try {
 			courses = CourseDAO.getStudentCourses(username);
 
@@ -34,8 +33,8 @@ public class InsertQuestionController {
 				courseBeans.add(cb);
 			}
 			
-		} catch (SQLException e) {
-			courseBeans = null;
+		} catch (RecordNotFoundException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
 		}
 		
 		return courseBeans;

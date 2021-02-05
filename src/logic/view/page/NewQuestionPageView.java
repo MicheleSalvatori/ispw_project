@@ -1,6 +1,5 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -18,13 +17,12 @@ import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
 import logic.bean.StudentBean;
 import logic.bean.UserBean;
-import logic.controller.InsertQuestionController;
-import logic.exceptions.RecordNotFoundException;
+import logic.controller.AskAQuestionController;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
-public class NewQuestionView implements Initializable {
+public class NewQuestionPageView implements Initializable {
 
 	@FXML
 	private TextArea textQuestion;
@@ -38,36 +36,31 @@ public class NewQuestionView implements Initializable {
 	@FXML
 	private ComboBox<String> courseComboBox;
 	
-	private String questionText, questionSubject;
-	private QuestionBean questionBean;
-	private InsertQuestionController controller;
-	private List<CourseBean> courses;
+	AskAQuestionController controller;
 
-	// TODO mettere il controllo sui numeri dei corso nel forum page e bloccare nel
-	// caso il tasto new question
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		controller = new InsertQuestionController();
+		controller = new AskAQuestionController();
 		btnSubmit.disableProperty().bind(Bindings.isEmpty(textQuestion.textProperty())
 				.or(Bindings.isEmpty(textSubject.textProperty())).or((courseComboBox.valueProperty().isNull())));
 		
 		try {
-			courses = controller.getCoursesOfStudent(UserBean.getInstance());
+			List<CourseBean> courses = controller.getCoursesOfStudent(UserBean.getInstance());
 			for (CourseBean c : courses) {
 				courseComboBox.getItems().add(c.getAbbreviation());
 			}
 			
-		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException e) {
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 		}
 	}
 
 	@FXML
 	private void saveQuestion(ActionEvent event) {
-		questionBean = new QuestionBean();
-		this.questionSubject = textSubject.getText();
-		this.questionText = textQuestion.getText();
+		QuestionBean questionBean = new QuestionBean();
+		String questionSubject = textSubject.getText();
+		String questionText = textQuestion.getText();
 		
 		StudentBean studentBean = new StudentBean();
 		studentBean.setEmail(UserBean.getInstance().getEmail());
@@ -79,22 +72,17 @@ public class NewQuestionView implements Initializable {
 		questionBean.setStudent(studentBean);
 		questionBean.setText(questionText);
 		questionBean.setTitle(questionSubject);
-//		questionBean.setCourseByAbbr(courseComboBox.getValue());
 		questionBean.setCourse(courseComboBox.getValue());
 		
 		try {
 			controller.save(questionBean);
 			AlertController.infoAlert("Your question has been correctly entered");
+			
 		} catch (SQLException e) {
 			AlertController.infoAlert("Something happened, your question was not acquired..");
+			
 		} finally {
-			try {
-				PageLoader.getInstance().buildPage(Page.FORUM, event);
-				
-			} catch (IOException e) {
-				// errore caricamento fxml capire come gestirla. Conviene gestirla nel
-				// pageLoader
-			}
+			PageLoader.getInstance().buildPage(Page.FORUM);
 		}
 	}
 

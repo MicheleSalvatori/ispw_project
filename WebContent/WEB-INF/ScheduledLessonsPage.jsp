@@ -196,7 +196,7 @@
 							</td>
 
 							<td align="right" class="course" style="width: 8vw; text-align: center;">
-								<a href="/ispw_project/CoursePageServlet?course=${request.getCourse().getAbbreviation()}">
+								<a href="/ispw_project/CoursePageServlet?course=${lesson.getCourse().getAbbreviation()}">
 									${lesson.getCourse().getAbbreviation()}
 								</a>
 							</td>

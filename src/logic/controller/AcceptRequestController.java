@@ -17,41 +17,42 @@ import logic.model.dao.RequestDAO;
 
 public class AcceptRequestController {
 
-	public boolean acceptRequest(RequestBean requestBean) {
-		if (deleteRequest(requestBean)) {
-			
-			StudentBean studentBean = requestBean.getStudent();
-			Student student = new Student();
-			student.setUsername(studentBean.getUsername());
-			
-			CourseBean courseBean = requestBean.getCourse();
-			Course course = new Course();
-			course.setAbbrevation(courseBean.getAbbreviation());
-			
-			Request request = new Request(student, course);
-			return RequestDAO.insertFollow(request);
-		}
-		return false;
-	}
-	
-	public boolean declineRequest(RequestBean requestBean) {
-		return deleteRequest(requestBean);
-	}
-	
-	public boolean deleteRequest(RequestBean requestBean) {
+	public void acceptRequest(RequestBean requestBean) throws SQLException {
+
+		deleteRequest(requestBean);
+		
 		StudentBean studentBean = requestBean.getStudent();
 		Student student = new Student();
 		student.setUsername(studentBean.getUsername());
-		
+				
 		CourseBean courseBean = requestBean.getCourse();
 		Course course = new Course();
 		course.setAbbrevation(courseBean.getAbbreviation());
-		
+				
 		Request request = new Request(student, course);
-		return RequestDAO.deleteRequest(request);
+				
+		RequestDAO.insertFollow(request);
 	}
 	
-	public List<CourseBean> getCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
+	public void declineRequest(RequestBean requestBean) throws SQLException {
+		deleteRequest(requestBean);
+	}
+	
+	public void deleteRequest(RequestBean requestBean) throws SQLException {
+
+		StudentBean studentBean = requestBean.getStudent();
+		Student student = new Student();
+		student.setUsername(studentBean.getUsername());
+			
+		CourseBean courseBean = requestBean.getCourse();
+		Course course = new Course();
+		course.setAbbrevation(courseBean.getAbbreviation());
+			
+		Request request = new Request(student, course);
+		RequestDAO.deleteRequest(request);
+	}
+	
+	public List<CourseBean> getCourses(UserBean userBean) throws RecordNotFoundException, SQLException {
 		
 		List<Course> courses = CourseDAO.getProfessorCourses(userBean.getUsername());
 		List<CourseBean> coursesBean = new ArrayList<>();

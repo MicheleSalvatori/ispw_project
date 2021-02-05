@@ -1,25 +1,19 @@
 package logic.view.card.element;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import logic.view.card.controller.WeatherCardView;
+import logic.view.graphic.GraphicElement;
 
-public class WeatherCard extends AnchorPane {
+public class WeatherCard extends GraphicElement {
 	
 	private WeatherCardView weatherCardView = new WeatherCardView();
 	
-	public WeatherCard(String temp, Image img, String time) throws IOException {
-		URL url = new File("src/res/fxml/card/WeatherCard.fxml").toURI().toURL();
-		FXMLLoader loader = new FXMLLoader(url);
+	public WeatherCard(String temp, Image img, String time) {
+		FXMLLoader loader = getLoader("src/res/fxml/card/WeatherCard.fxml");
 		loader.setController(weatherCardView);
-		this.getChildren().add(loader.load());
+		load(loader);
 		
 		weatherCardView.setCard(temp, img, time);
 	}
-
 }

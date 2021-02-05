@@ -1,12 +1,9 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Time;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,14 +25,13 @@ import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.SeatBean;
 import logic.bean.UserBean;
-import logic.controller.BookSeatController;
-import logic.exceptions.DuplicatedRecordException;
-import logic.exceptions.RecordNotFoundException;
+import logic.controller.BookASeatController;
+import logic.controller.CheckWeatherController;
+import logic.exceptions.SeatAlreadyBookedException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
-import logic.utilities.Weather;
 import logic.view.card.element.WeatherCard;
 
 public class LessonPageView {
@@ -44,7 +40,16 @@ public class LessonPageView {
 	private Button btnCourse;
 
 	@FXML
-	private Label labelProfessor, labelClassroom, labelTime, labelDate;
+	private Label labelProfessor;
+	
+	@FXML
+	private Label labelClassroom;
+	
+	@FXML
+	private Label labelTime;
+	
+	@FXML
+	private Label labelDate;
 
 	@FXML
 	private TextArea textTopic;
@@ -61,7 +66,7 @@ public class LessonPageView {
 	private LessonBean lesson;
 	private ClassroomBean classroom;
 	private EventHandler<ActionEvent> seatEvent;
-	private BookSeatController controlSeat;
+	private BookASeatController controlSeat;
 	private GridPane gridSeat;
 	private SeatBean mySeat;
 	private ObservableList<Node> buttonList;
@@ -71,14 +76,14 @@ public class LessonPageView {
 	}
 
 	@FXML
-	private void course(ActionEvent event) throws IOException {
+	private void course(ActionEvent event) {
 		CourseBean courseBean = lesson.getCourse();
 		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 
 	public void setBean(Object lesson) {
 		
-		controlSeat = new BookSeatController();
+		controlSeat = new BookASeatController();
 
 		try {
 			this.lesson = controlSeat.getLesson((LessonBean) lesson);
@@ -88,10 +93,8 @@ public class LessonPageView {
 			setPage();
 			
 		} catch (SQLException e) {
-			System.out.println("CATCH");
-			
-		} catch (RecordNotFoundException e) {
-			// nothing
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 		}
 	}
 
@@ -151,9 +154,11 @@ public class LessonPageView {
 			}
 			mySeat = newSeat;
 			changeState(mySeat, SeatState.YOUR);
+			
 		} catch (SQLException e) {
 			AlertController.infoAlert("Something bad happened, booking failed, please try again!");
-		} catch (DuplicatedRecordException e) {
+
+		} catch (SeatAlreadyBookedException e) {
 			AlertController.infoAlert(e.getMessage());
 			changeState(seatToBook, SeatState.BOOKED);
 		}
@@ -211,13 +216,11 @@ public class LessonPageView {
 		}
 	}
 
-
 	private SeatBean getSeat(Button button) {
 		int row = GridPane.getRowIndex(button) * classroom.getSeatColumn();
 		int col = GridPane.getColumnIndex(button) + 1;
 		System.out.println(row + col);
-		SeatBean seat = new SeatBean(row + col, lesson.getClassroom().getName());
-		return seat;
+		return new SeatBean(row + col, lesson.getClassroom().getName());
 	}
 
 	private void changeState(SeatBean seat, SeatState state) {
@@ -240,35 +243,12 @@ public class LessonPageView {
 	}
 
 	private void setWeatherCard(Time time) {
+		int hour = (int) TimeUnit.MILLISECONDS.toHours(time.getTime());
+		CheckWeatherController controller = new CheckWeatherController();
 
-		Image image;
-		JSONArray info = Weather.getInfo();
-		int hour = time.toLocalTime().getHour();
-
-		JSONArray hourly = info.getJSONObject(hour).getJSONArray("weather");
-		JSONObject weather = hourly.getJSONObject(0);
-
-		int hourMod = (hour) % 24;
-		image = Weather.weatherImage(hourMod, weather.getString("main"));
-
-		String h;
-		if ((hourMod) < 10) {
-			h = "0" + (hourMod);
-		} else {
-			h = Integer.toString(hour);
-		}
-
-		WeatherCard a;
-		try {
-			a = new WeatherCard(Weather.kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "°C", image,
-					h + ":00");
-			weatherCard.getChildren().add(a);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		List<String> info = controller.getWeather(hour);
+		Image image = new Image(info.get(1));
+		WeatherCard w = new WeatherCard(info.get(0), image, info.get(2));
+		weatherCard.getChildren().add(w.getPane());
 	}
 }

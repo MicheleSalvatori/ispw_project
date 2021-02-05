@@ -8,7 +8,7 @@ import logic.model.Answer;
 import logic.model.User;
 import logic.model.dao.AnswerDAO;
 
-public class InsertAnswerController {
+public class AnswerAQuestionController {
 
 	public void save(AnswerBean answerBean) throws SQLException {
 		

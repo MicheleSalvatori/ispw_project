@@ -88,7 +88,12 @@ public class RequestPageServlet extends HttpServlet {
 			requestBean.setCourse(courseBean);
 			requestBean.setStudent(studentBean);
 			
-			controller.acceptRequest(requestBean);
+			try {
+				controller.acceptRequest(requestBean);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		else if (request.getParameter("btnDecline") != null) {
@@ -105,7 +110,12 @@ public class RequestPageServlet extends HttpServlet {
 			requestBean.setCourse(courseBean);
 			requestBean.setStudent(studentBean);
 			
-			controller.declineRequest(requestBean);
+			try {
+				controller.declineRequest(requestBean);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		response.sendRedirect("/ispw_project/RequestPageServlet");

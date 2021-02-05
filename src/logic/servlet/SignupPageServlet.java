@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import logic.bean.UserBean;
-import logic.controller.SignupController;
+import logic.controller.LoginController;
 import logic.exceptions.DuplicatedRecordException;
 
 @WebServlet("/SignupServlet")
-public class SignupServlet extends HttpServlet {
+public class SignupPageServlet extends HttpServlet {
 
 	/**
 	 * 
@@ -49,7 +49,7 @@ public class SignupServlet extends HttpServlet {
         userBean.setEmail(req.getParameter("email"));
         userBean.setName(req.getParameter("name"));
         userBean.setSurname(req.getParameter("surname"));
-        SignupController controller = new SignupController();
+        LoginController controller = new LoginController();
         
 		try {
 			controller.signup(userBean);

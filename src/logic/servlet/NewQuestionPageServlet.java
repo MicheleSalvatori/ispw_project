@@ -15,7 +15,7 @@ import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
 import logic.bean.StudentBean;
 import logic.bean.UserBean;
-import logic.controller.InsertQuestionController;
+import logic.controller.AskAQuestionController;
 import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/NewQuestionPageServlet")
@@ -26,15 +26,20 @@ public class NewQuestionPageServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		InsertQuestionController controller = new InsertQuestionController();
+		
+		if (session.getAttribute("loggedUser") == null) {
+	        resp.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
+	        return;
+		}
+		
+		AskAQuestionController controller = new AskAQuestionController();
 		try {
 			List<CourseBean> courses = controller.getCoursesOfStudent((UserBean) session.getAttribute("loggedUser"));
 			req.setAttribute("listOfCourses", courses);
-
-		} catch (RecordNotFoundException e) {
-			// TODO se non ci sono corsi significa che non sei iscritto in nessun corso e
-			// quindi già nella forum page non hai accesso al tasto new question (nell'app
-			// desktop è già implmentato)
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		req.getRequestDispatcher("/WEB-INF/NewQuestionPage.jsp").forward(req, resp);
@@ -45,7 +50,7 @@ public class NewQuestionPageServlet extends HttpServlet {
 		System.out.println(req.getParameter("courses"));
 		System.out.println(req.getParameter("question-subject"));
 		System.out.println(req.getParameter("question-text"));
-		InsertQuestionController controller = new InsertQuestionController();
+		AskAQuestionController controller = new AskAQuestionController();
 		QuestionBean newQuestion = new QuestionBean();
 //		CourseBean course = new CourseBean();
 		StudentBean student = new StudentBean();

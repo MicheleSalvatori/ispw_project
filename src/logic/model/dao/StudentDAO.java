@@ -71,13 +71,13 @@ public class StudentDAO {
 			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
 			if (rs.first()) {
 				// Raise duplicate entry exception
-				throw new DuplicatedRecordException("Duplicated Instance Username. Username '" + user.getUsername() + "' already in use.");   
+				throw new DuplicatedRecordException("Username '" + user.getUsername() + "' already in use.");   
 			}
 			
 			rs = Queries.selectUserByEmail(stmt, user.getEmail());
 			if (rs.first()) {
 				// Raise duplicate entry exception
-				throw new DuplicatedRecordException("Duplicated Instance Email. Email '" + user.getEmail() + "' already in use.");
+				throw new DuplicatedRecordException("Email '" + user.getEmail() + "' already in use.");
 			}
 			
 			// If there are no entry then insert a new User
@@ -112,9 +112,6 @@ public class StudentDAO {
 		
 		try {
 			conn = (SingletonDB.getDbInstance()).getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
 			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
@@ -139,18 +136,14 @@ public class StudentDAO {
 		
 		try {
 			conn = (SingletonDB.getDbInstance()).getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			resultSet = Queries.selectStudentByUsername(stmt, username);
 			
+			resultSet = Queries.selectStudentByUsername(stmt, username);
 			if (!resultSet.first()) {
 				throw new RecordNotFoundException("No student found.");
             	
-			}else {
-				resultSet.first();				// mi riposiziono alla prima riga 
-				System.out.println("findStudentByUsername("+resultSet.getString("username")+")");
+			} else {
+				resultSet.first();
 				String u = resultSet.getString("username");
 				String n = resultSet.getString("name");
 				String s = resultSet.getString("surname");

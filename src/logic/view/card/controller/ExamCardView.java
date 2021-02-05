@@ -1,7 +1,5 @@
 package logic.view.card.controller;
 
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -47,13 +45,13 @@ public class ExamCardView {
 	}
 	
 	@FXML
-	private void course(ActionEvent event) throws IOException {
+	private void course(ActionEvent event) {
     	CourseBean courseBean = verb.getCourse();
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
 	@FXML
-	private void deleteExam(ActionEvent event) throws IOException {
+	private void deleteExam(ActionEvent event) {
 		ExamPageView examPageView = (ExamPageView) PageLoader.getInstance().getController();
 		examPageView.deleteVerbalizedExam(verb);
 	}

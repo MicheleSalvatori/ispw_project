@@ -1,6 +1,5 @@
 package logic.view.menu.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -14,7 +13,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
-import logic.utilities.AppProperties;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
@@ -36,14 +34,12 @@ public class StatusBarView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		labelName.setText(UserBean.getInstance().getName());
 		
-		String img = "/res/png/avatar/status/" + AppProperties.getInstance().getProperty("avatar") + ".png";
+		String img = "/res/png/avatar/status/avatar1.png";
 		setAvatar(img);
 	}
 	
 	@FXML
-	public void logout(ActionEvent event) throws IOException {
-		System.out.println("Logout");
-		
+	public void logout(ActionEvent event) {
 		LoginController loginController = new LoginController();
 		loginController.logout();
 		PageLoader.getInstance().buildPage(Page.LOGIN);
@@ -55,8 +51,7 @@ public class StatusBarView implements Initializable {
 	}
 	
 	@FXML
-	public void profile(ActionEvent event) throws IOException {
-		System.out.println("Profile");
+	public void profile(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.PROFILE);
 	}
 	

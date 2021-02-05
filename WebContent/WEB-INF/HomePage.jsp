@@ -379,15 +379,4 @@
 			
 		</div>
 	</body>
-	
-	<script>
-	function fun(){
-		request.setAttribute("lessonBean", ${lesson});
-	}
-	
-	function f(var a) {
-		<c:set var="lesson" value="a" scope="session" />
-		
-	}
-	</script>
 </html>

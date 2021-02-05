@@ -1,6 +1,5 @@
 package logic.view.card.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import javafx.event.ActionEvent;
@@ -44,12 +43,12 @@ public class CourseCardView {
 	private CourseBean courseBean;
 	
 	@FXML
-	private void course(ActionEvent event) throws IOException {
+	private void course(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
 	@FXML
-	private void professor(ActionEvent event) throws IOException {
+	private void professor(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.PROFESSOR);
 	}
 	

@@ -1,6 +1,8 @@
 package logic.utilities;
 
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -15,22 +17,27 @@ public class Email {
 
 	private static final String FROM = AppProperties.getInstance().getProperty("email");
 	private static final String PASS = AppProperties.getInstance().getProperty("emailpasswd");
-	private static String TO;
+	private static String to;
 	
 	private Email() {
 		
 	}
 	
-	public static void password(String TO, String password) throws MessagingException {
+	public static void password(String to, String password) {
 		
-		Email.TO = TO;
-		if (TO == null) return;
+		Email.to = to;
+		if (to == null) return;
 		
 		Properties prop = setProperties();
 		Session session = Session.getInstance(prop, auth());
 		MimeMessage message = setMessage(session, password);
 		
-		Transport.send(message);
+		try {
+			Transport.send(message);
+			
+		} catch (MessagingException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+		}
 	}
 	
 	private static Properties setProperties() {
@@ -43,14 +50,21 @@ public class Email {
         return prop;
 	}
 	
-	private static MimeMessage setMessage(Session session, String password) throws MessagingException {
-		MimeMessage message = new MimeMessage(session);
-		message.setFrom(new InternetAddress(FROM));
-		message.setRecipient(Message.RecipientType.TO, new InternetAddress(TO));
-		message.setSubject("Account password");
-		message.setText("Your password is: " + password);
+	private static MimeMessage setMessage(Session session, String password) {
 		
-		return message;
+		try {
+			MimeMessage message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(FROM));
+			message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			message.setSubject("Account password");
+			message.setText("Your password is: " + password);
+			return message;
+			
+		} catch (MessagingException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+		}
+
+		return null;
 	}
 	
 	private static Authenticator auth() {

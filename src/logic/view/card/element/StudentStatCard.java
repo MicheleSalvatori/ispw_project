@@ -1,22 +1,17 @@
 package logic.view.card.element;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
 import logic.view.card.controller.StudentStatCardView;
+import logic.view.graphic.GraphicElement;
 
-public class StudentStatCard extends AnchorPane {
+public class StudentStatCard extends GraphicElement {
 	
 	private StudentStatCardView studentCardView = new StudentStatCardView();
 	
-	public StudentStatCard(int num, String first, String second) throws IOException {
-		URL url = new File("src/res/fxml/card/StudentCard.fxml").toURI().toURL();
-		FXMLLoader loader = new FXMLLoader(url);
+	public StudentStatCard(int num, String first, String second) {
+		FXMLLoader loader = getLoader("src/res/fxml/card/StudentCard.fxml");
 		loader.setController(studentCardView);
-		this.getChildren().add(loader.load());
+		load(loader);
 		
 		studentCardView.setCard(num, first, second);
 	}

@@ -14,36 +14,37 @@ import javax.servlet.http.HttpSession;
 
 import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
-import logic.controller.AllQuestionController;
-import logic.controller.InsertAnswerController;
+import logic.controller.QuestionController;
+import logic.controller.AnswerAQuestionController;
 import logic.exceptions.RecordNotFoundException;
+
 @WebServlet("/QuestionPageServlet")
 public class QuestionPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		QuestionBean questionBean = new QuestionBean();
-//		StudentBean student = new StudentBean();
-//		questionBean.setDate(Date.valueOf(req.getParameter("questionDate")));
-//		questionBean.setTitle(req.getParameter("questionTitle"));
-//		questionBean.setText(req.getParameter("questionText"));
-//		student.setName(req.getParameter("authorName"));
-//		student.setSurname(req.getParameter("authorSurname"));
-//		questionBean.setStudent(student);
-
-		AllQuestionController controller = new AllQuestionController();
+		HttpSession session = req.getSession();
+		
+		if (session.getAttribute("loggedUser") == null) {
+	        resp.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
+	        return;
+		}
+		
+		QuestionController controller = new QuestionController();
 		List<AnswerBean> answers = null;
 		QuestionBean questionBean = null;
 		try {
 			questionBean = controller.getQuestionByID(Integer.valueOf(req.getParameter("questionID")));
 			answers = controller.getAnswersOf(Integer.valueOf(req.getParameter("questionID")));
+			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
+			
 		} catch (RecordNotFoundException e) {
 			answers = null;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -60,7 +61,7 @@ public class QuestionPageServlet extends HttpServlet {
 		System.out.print("QuestionPageServletPOST: ");
 		HttpSession session = req.getSession();
 		if (req.getParameter("submitAdd") != null) {
-			InsertAnswerController controller = new InsertAnswerController();
+			AnswerAQuestionController controller = new AnswerAQuestionController();
 			AnswerBean answerBean = new AnswerBean();
 			answerBean.setUser((UserBean) session.getAttribute("loggedUser"));
 			answerBean.setText(req.getParameter("answer-text"));

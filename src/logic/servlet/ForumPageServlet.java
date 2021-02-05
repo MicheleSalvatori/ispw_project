@@ -15,7 +15,7 @@ import logic.bean.AssignmentBean;
 import logic.bean.QuestionBean;
 import logic.bean.UserBean;
 import logic.controller.AddAssignmentController;
-import logic.controller.AllQuestionController;
+import logic.controller.QuestionController;
 import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/ForumPageServlet")
@@ -27,7 +27,7 @@ public class ForumPageServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 
-		AllQuestionController controller = new AllQuestionController();
+		QuestionController controller = new QuestionController();
 		List<QuestionBean> questions = null;
 		try {
 			questions = controller.getAllQuestions((UserBean) session.getAttribute("loggedUser"));
@@ -61,7 +61,7 @@ public class ForumPageServlet extends HttpServlet {
 		
 		if (req.getParameter("set-solved") != null) {
 			int questionID = Integer.valueOf(req.getParameter("set-solved"));
-			AllQuestionController controller = new AllQuestionController();
+			QuestionController controller = new QuestionController();
 			controller.setSolved(questionID);
 		}
 		

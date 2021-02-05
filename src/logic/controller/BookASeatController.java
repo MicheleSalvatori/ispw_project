@@ -3,6 +3,8 @@ package logic.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
@@ -12,18 +14,26 @@ import logic.bean.LessonBean;
 import logic.bean.ProfessorBean;
 import logic.bean.SeatBean;
 import logic.bean.UserBean;
-import logic.exceptions.DuplicatedRecordException;
 import logic.exceptions.RecordNotFoundException;
+import logic.exceptions.SeatAlreadyBookedException;
 import logic.model.Lesson;
 import logic.model.Seat;
 import logic.model.dao.LessonDAO;
 import logic.model.dao.SeatDAO;
 
-public class BookSeatController {
+public class BookASeatController {
 	
-	public LessonBean getLesson(LessonBean lesson) throws SQLException, RecordNotFoundException {
+	public LessonBean getLesson(LessonBean lesson) throws SQLException {
 
-		Lesson l = LessonDAO.getLesson(lesson.getDate(), lesson.getTime(), lesson.getCourse().getAbbreviation());
+		Lesson l = null;
+		
+		try {
+			l = LessonDAO.getLesson(lesson.getDate(), lesson.getTime(), lesson.getCourse().getAbbreviation());
+
+		} catch (RecordNotFoundException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+			return null;
+		}
 		
 		ClassroomBean classroom = new ClassroomBean();
 		classroom.setName(l.getClassroom().getName());
@@ -48,7 +58,7 @@ public class BookSeatController {
 		return lessonBean;
 	}
 
-	public SeatBean occupateSeat(SeatBean seat, LessonBean lesson, UserBean user) throws SQLException, DuplicatedRecordException {
+	public SeatBean occupateSeat(SeatBean seat, LessonBean lesson, UserBean user) throws SQLException, SeatAlreadyBookedException {
 		SeatBean mySeat = null;
 		try {
 			mySeat = getMySeat(lesson, user);
@@ -57,9 +67,11 @@ public class BookSeatController {
 				freeSeat(mySeat, lesson, user);
 			}
 			mySeat = new SeatBean(seat.getId(), lesson.getClassroom().getName());
+			
 		} catch (MySQLIntegrityConstraintViolationException e) {
-			throw new DuplicatedRecordException("Looks like someone was faster, choose another seat!");
+			throw new SeatAlreadyBookedException("Looks like someone was faster, choose another seat!");
 		} 
+		
 		return mySeat;
 	}
 
@@ -71,11 +83,7 @@ public class BookSeatController {
 		List<Seat> seats = SeatDAO.getOccupiedSeat(lessonBean);
 		List<SeatBean> seatsBean = new ArrayList<>();
 
-		for (int i = 1; i<=lessonBean.getClassroom().getSeatColumn() * lessonBean.getClassroom().getSeatRow(); i++) {
-//			SeatBean sBean = new SeatBean(s.getIndex());
-//			sBean.setFree(s.getState());
-//			seatsBean.add(sBean);
-				
+		for (int i = 1; i<=lessonBean.getClassroom().getSeatColumn() * lessonBean.getClassroom().getSeatRow(); i++) {		
 			SeatBean sBean = new SeatBean(i);
 			sBean.setFree(true);
 			seatsBean.add(sBean);
@@ -93,7 +101,6 @@ public class BookSeatController {
 
 	public SeatBean getMySeat(LessonBean lesson, UserBean user) throws SQLException {
 		String username = user.getUsername();
-		SeatBean mySeat = SeatDAO.getMySeatIn(username, lesson);
-		return mySeat;
+		return SeatDAO.getMySeatIn(username, lesson);
 	}
 }

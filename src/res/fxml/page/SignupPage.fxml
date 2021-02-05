@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" stylesheets="@../../style/page/SignupPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.SignupView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" stylesheets="@../../style/page/SignupPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.SignupPageView">
    <children>
    
       <ImageView fitHeight="129.0" fitWidth="132.0" layoutX="654.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
@@ -34,7 +34,7 @@
       
       <Button fx:id="btnLogin" layoutX="590.0" layoutY="791.0" mnemonicParsing="false" onAction="#gotoLogin" styleClass="login-button" text="Already have an account? Log In" AnchorPane.leftAnchor="570.0" AnchorPane.rightAnchor="570.0" />
     
-      <Button fx:id="btnGoogle" layoutX="726.0" layoutY="714.0" mnemonicParsing="false" styleClass="image-button">
+      <Button fx:id="btnGoogle" onAction="#googleSignup" layoutX="726.0" layoutY="714.0" mnemonicParsing="false" styleClass="image-button">
       	<graphic>
       		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true">
       			<children>
@@ -52,7 +52,7 @@
       	</graphic>
       </Button>
       
-      <Button fx:id="btnFacebook" layoutX="532.0" layoutY="714.0" mnemonicParsing="false" styleClass="image-button">
+      <Button fx:id="btnFacebook" onAction="#facebookSignup" layoutX="532.0" layoutY="714.0" mnemonicParsing="false" styleClass="image-button">
       	<graphic>
       		<HBox alignment="CENTER" maxHeight="100" maxWidth="237.0" mouseTransparent="true">
       			<children>

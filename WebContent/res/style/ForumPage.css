@@ -1,18 +1,18 @@
 @font-face {
 	font-family: 'Baloo Bhai';
-	src: url("BalooBhai-Regular.ttf");
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: 'Overpass';
-	src: url("Overpass-Regular.ttf");
+	src: url("../font/Overpass/Overpass-Regular.ttf");
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: 'Roboto';
-	src: url("Roboto/Roboto-Regular.ttf");
+	src: url("../font/Roboto/Roboto-Regular.ttf");
 	font-weight: normal;
 }
 
@@ -24,14 +24,21 @@
 }
 
 .content-question {
-	display: inline-block;
-	width: 70%;
+	width: 65%;
+	height: 90%;
+}
+
+.question {
+	background-color: #F0F0F2;
+	border-radius: 14px;
+	min-width: 100%;
 }
 
 .content-right{
 	float:rigth;
 	margin-top : 70px;
 	margin-left : 40px;
+	width: 30%;
 }
 
 .content-assignment {
@@ -50,7 +57,6 @@
 
 .table-question {
 	border-collapse: separate;
-	border-spacing: 0;
 	width: 100%;
 	border: 15px solid transparent;
 }
@@ -63,6 +69,7 @@
 	border: 0;
 	background-color: #F0F0F2;
 	padding: 18px;
+	width: 100%;
 }
 
 .questions-button {

@@ -3,6 +3,8 @@ package logic.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import logic.bean.CourseBean;
 import logic.bean.ProfessorBean;
@@ -21,28 +23,28 @@ import logic.utilities.Role;
 
 public class JoinCourseController {
 
-	public boolean sendRequest(RequestBean requestBean) {
+	public void sendRequest(RequestBean requestBean) throws SQLException {
 		Student student = getStudent(requestBean);
 		Course course = getCourse(requestBean);
 			
 		Request request = new Request(student, course);
-		return RequestDAO.insertRequest(request);
+		RequestDAO.insertRequest(request);
 	}
 	
-	public boolean removeCourse(RequestBean requestBean) {
+	public void removeCourse(RequestBean requestBean) throws SQLException {
 		Student student = getStudent(requestBean);
 		Course course = getCourse(requestBean);
 		
 		Request request = new Request(student, course);
-		return RequestDAO.deleteFollow(request);
+		RequestDAO.deleteFollow(request);
 	}
 	
-	public boolean deleteRequest(RequestBean requestBean) {
+	public void deleteRequest(RequestBean requestBean) throws SQLException {
 		Student student = getStudent(requestBean);
 		Course course = getCourse(requestBean);
 		
 		Request request = new Request(student, course);
-		return RequestDAO.deleteRequest(request);
+		RequestDAO.deleteRequest(request);
 	}
 	
 	public List<CourseBean> getStudentCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -55,31 +57,39 @@ public class JoinCourseController {
 		return getBeans(courses);
 	}
 	
-	public List<CourseBean> getCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
+	public List<CourseBean> getCourses(UserBean userBean) throws SQLException {
 		
-		List<Course> courses;
+		List<Course> courses = null;
 		
-		// User is a student
-		if (userBean.getRole() == Role.STUDENT) {
-			courses = CourseDAO.getStudentCourses(userBean.getUsername());
-		}
+		try {
+			
+			// User is a student
+			if (userBean.getRole() == Role.STUDENT) {
+				courses = CourseDAO.getStudentCourses(userBean.getUsername());
+			}
+			
+			// User is a professor
+			else {
+				courses = CourseDAO.getProfessorCourses(userBean.getUsername());
+			}
 		
-		// User is a professor
-		else if (userBean.getRole() == Role.PROFESSOR) {
-			courses = CourseDAO.getProfessorCourses(userBean.getUsername());
-		}
-		
-		// User is an admin
-		else {
-			return null;
+		} catch (RecordNotFoundException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
 		}
 		
 		return getBeans(courses);
 	}
 	
-	public List<CourseBean> getRequestedCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
-		List<Course> courses = CourseDAO.getStudentCoursesByRequest(userBean.getUsername());
-		return getBeans(courses);
+	public List<CourseBean> getRequestedCourses(UserBean userBean) throws SQLException {
+
+		try {
+			List<Course> courses = CourseDAO.getStudentCoursesByRequest(userBean.getUsername());
+			return getBeans(courses);
+
+		} catch (RecordNotFoundException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+			return new ArrayList<>();
+		}
 	}
 	
 	private List<CourseBean> getBeans(List<Course> courses) {
@@ -103,8 +113,18 @@ public class JoinCourseController {
 		return coursesBean;
 	}
 	
-	public List<ProfessorBean> getCourseProfessors(CourseBean courseBean) throws SQLException, RecordNotFoundException {
-		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbreviation());
+	public List<ProfessorBean> getCourseProfessors(CourseBean courseBean) throws SQLException {
+		
+		List<Professor> professors = null;
+		
+		try {
+			professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbreviation());
+		
+		} catch (RecordNotFoundException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+			return new ArrayList<>();
+		}
+		
 		List<ProfessorBean> professorsBean = new ArrayList<>();
 		
 		for (Professor professor : professors) {

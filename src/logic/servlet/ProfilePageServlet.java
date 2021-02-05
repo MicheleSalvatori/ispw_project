@@ -18,7 +18,7 @@ import logic.bean.RequestBean;
 import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.JoinCourseController;
-import logic.controller.SignupController;
+import logic.controller.LoginController;
 import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/ProfilePageServlet")
@@ -54,9 +54,6 @@ public class ProfilePageServlet extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
-		} catch (RecordNotFoundException e) {
-			//
 		}
 		
 		try {
@@ -68,10 +65,6 @@ public class ProfilePageServlet extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		
-		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			//e1.printStackTrace();
 		}
 		
 		try {
@@ -116,7 +109,13 @@ public class ProfilePageServlet extends HttpServlet {
 			requestBean.setStudent(studentBean);
 			requestBean.setCourse(courseBean);
 
-			controller.sendRequest(requestBean);
+			try {
+				controller.sendRequest(requestBean);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		else if (request.getParameter("submitRemove") != null) {
@@ -137,7 +136,13 @@ public class ProfilePageServlet extends HttpServlet {
 			requestBean.setStudent(studentBean);
 			requestBean.setCourse(courseBean);
 
-			controller.removeCourse(requestBean);
+			try {
+				controller.removeCourse(requestBean);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		else if (request.getParameter("deleteRequest") != null) {
@@ -154,7 +159,13 @@ public class ProfilePageServlet extends HttpServlet {
 			requestBean.setStudent(studentBean);
 			requestBean.setCourse(courseBean);
 			
-			controller.deleteRequest(requestBean);
+			try {
+				controller.deleteRequest(requestBean);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		else if (request.getParameter("changePassword") != null) {
@@ -171,19 +182,15 @@ public class ProfilePageServlet extends HttpServlet {
 					UserBean userBean = (UserBean) session.getAttribute("loggedUser");
 					userBean.setPassword(password);
 					
-					SignupController signupController = new SignupController();
+					LoginController loginController = new LoginController();
 					try {
-						signupController.changePassword(userBean);
+						loginController.changePassword(userBean);
 						session.invalidate();
 						session.setAttribute("alertMsg", "You will be redirected to Login page.");
 						response.sendRedirect("/ispw_project/LoginServlet");
 						return;
 						
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						
-					} catch (RecordNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}

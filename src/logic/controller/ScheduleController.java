@@ -3,6 +3,8 @@ package logic.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
@@ -15,9 +17,17 @@ import logic.model.dao.CourseDAO;
 
 public class ScheduleController {
 
-	public List<ClassroomBean> getClassrooms() throws SQLException, RecordNotFoundException {
+	public List<ClassroomBean> getClassrooms() throws SQLException {
 		
-		List<Classroom> classrooms = ClassroomDAO.getAllClassrooms();
+		List<Classroom> classrooms = null;
+		
+		try {
+			classrooms = ClassroomDAO.getAllClassrooms();
+
+		} catch (RecordNotFoundException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+		}
+		
 		List<ClassroomBean> classroomsBean = new ArrayList<>();
 		
 		for (Classroom classroom : classrooms) {

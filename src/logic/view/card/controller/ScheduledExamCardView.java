@@ -1,6 +1,5 @@
 package logic.view.card.controller;
 
-import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,7 +27,7 @@ public class ScheduledExamCardView {
 	private ExamBean exam;
 	
 	@FXML
-	private void course(ActionEvent event) throws IOException {
+	private void course(ActionEvent event) {
     	CourseBean courseBean = exam.getCourse();
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}

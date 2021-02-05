@@ -41,9 +41,9 @@ import logic.exceptions.CancelException;
 public class AlertController {
 	
 	private static Stage stage;
+	private static String error = "An error as occured.\nTry later.";
 	
 	private static ColorAdjust adj;
-    private static GaussianBlur blur;
 	
 	private AlertController() {
 		
@@ -51,9 +51,13 @@ public class AlertController {
 	
 	public static void setStage(Stage stage) {
 		adj = new ColorAdjust(0, -0.9, -0.5, 0);
-		blur = new GaussianBlur(55);
+		GaussianBlur blur = new GaussianBlur(55);
 		adj.setInput(blur);
 		AlertController.stage = stage;
+	}
+	
+	public static String getError() {
+		return error;
 	}
 	
 	public static void infoAlert(String message) {
@@ -192,9 +196,7 @@ public class AlertController {
 		stage.getScene().getRoot().setEffect(null);
 		
 		Node comboBox = choiceDialog.getDialogPane().lookup(".combo-box");
-		int index = ((ComboBox<?>) comboBox).getSelectionModel().getSelectedIndex();
-		
-		return index;
+		return ((ComboBox<?>) comboBox).getSelectionModel().getSelectedIndex();
 	}
 	
 	public static Pair<String, String> timeSelector() {

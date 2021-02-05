@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -81,10 +84,10 @@ public class PageLoader {
 		return stack.removeFirst();
 	}
 	
-	public void goBack() throws IOException {
+	public void goBack(){
 		
 		if (stack.peek().getKey() == null || stack.isEmpty()) {
-			System.out.println("usa logout");
+			AlertController.infoAlert("Use logout to exit.");
 			return;
 		}
 		
@@ -105,7 +108,7 @@ public class PageLoader {
 	}
 
 	// BuildPage and pass a bean to the page controller
-	public void buildPage(Page page, Object obj) throws IOException {
+	public void buildPage(Page page, Object obj){
 		
 		addFirst(new Pair<>(PageLoader.getPage(), PageLoader.getObject()));
 		
@@ -118,7 +121,7 @@ public class PageLoader {
 			loadPage();
 			CoursePageView coursePageView = new CoursePageView();
 			loader.setController(coursePageView);
-			configPage(loader.load());
+			configPage(load());
 			coursePageView.setBean(obj);
 			break;
 
@@ -126,7 +129,7 @@ public class PageLoader {
 			loadPage();
 			ScheduledPageView scheduledPageView = new ScheduledPageView();
 			loader.setController(scheduledPageView);
-			configPage(loader.load());
+			configPage(load());
 			scheduledPageView.setLessonPage(obj);
 			break;
 
@@ -134,7 +137,7 @@ public class PageLoader {
 			loadPage();
 			ScheduledPageView scheduledExamPageView = new ScheduledPageView();
 			loader.setController(scheduledExamPageView);
-			configPage(loader.load());
+			configPage(load());
 			scheduledExamPageView.setExamPage(obj);
 			break;
 
@@ -142,7 +145,7 @@ public class PageLoader {
 			loadPage();
 			LessonPageView lessonPageView = new LessonPageView();
 			loader.setController(lessonPageView);
-			configPage(loader.load());
+			configPage(load());
 			lessonPageView.setBean(obj);
 			break;
 
@@ -150,7 +153,7 @@ public class PageLoader {
 			loadPage();
 			QuestionPageView questionPageView = new QuestionPageView();
 			loader.setController(questionPageView);
-			configPage(loader.load());
+			configPage(load());
 			questionPageView.setBean(obj);
 			break;
 			
@@ -158,19 +161,19 @@ public class PageLoader {
 			loadPage();
 			AssignmentPageView assignmentPageView = new AssignmentPageView();
 			loader.setController(assignmentPageView);
-			configPage(loader.load());
+			configPage(load());
 			assignmentPageView.setBean(obj);
 			break;
 
 		default:
 			loadPage();
-			configPage(loader.load());
+			configPage(load());
 			break;
 		}
 	}
 
 	// Build a page without pass a bean
-	public void buildPage(Page page) throws IOException {
+	public void buildPage(Page page) {
 		
 		addFirst(new Pair<>(PageLoader.getPage(), PageLoader.getObject()));
 		
@@ -189,34 +192,40 @@ public class PageLoader {
 			
 		default:
 			loadPage();
-			configPage(loader.load());
+			configPage(load());
 			break;
 		}
 	}
 
-	private void loadPage() throws IOException {
-		URL url = new File(page.getRes()).toURI().toURL();
-		loader = new FXMLLoader(url);
+	private void loadPage() {
+		
+		try {
+			URL url = new File(page.getRes()).toURI().toURL();
+			loader = new FXMLLoader(url);
+			
+		} catch (IOException e) {
+			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+		}	
 	}
 
-	private NavigationBar configNavBar() throws IOException {
-		return NavigationBar.getInstance();
+	private VBox configNavBar() {
+		return NavigationBar.getInstance().getPane();
 	}
 
-	private HBox configStatusBar() throws IOException {
+	private HBox configStatusBar() {
 		// Reset StatusBar instance every time in order to set label and user avatar properly
 		StatusBar.reset();
-		HBox statusBarHBox = new HBox(StatusBar.getInstance());
+		HBox statusBarHBox = new HBox(StatusBar.getInstance().getPane());
 		statusBarHBox.setAlignment(Pos.TOP_RIGHT);
-		HBox.setMargin(StatusBar.getInstance(), new Insets(54.0, 80.0, 0, 0));
+		HBox.setMargin(StatusBar.getInstance().getPane(), new Insets(54.0, 80.0, 0, 0));
 		return statusBarHBox;
 	}
 
-	private void configPage(Parent pageView) throws IOException {
+	private void configPage(Parent pageView) {
 		VBox vBox = new VBox();
 		vBox.getChildren().addAll(configStatusBar(), pageView);
 		HBox mainLayoutHBox = new HBox(configNavBar(), vBox);
-		HBox.setMargin(NavigationBar.getInstance(), new Insets(24.0, 72.0, 24.0, 32.0));
+		HBox.setMargin(NavigationBar.getInstance().getPane(), new Insets(24.0, 72.0, 24.0, 32.0));
 		mainLayoutHBox.setBackground(background); // Set white color to the scene
 
 		Scene scene = new Scene(mainLayoutHBox);
@@ -225,15 +234,32 @@ public class PageLoader {
 		stage.show();
 	}
 
-	private void loadPageNoNavBar() throws IOException {
-		URL url = new File(page.getRes()).toURI().toURL();
-		loader = new FXMLLoader(url);
-		Parent parent = loader.load();
+	private void loadPageNoNavBar() {
 
-		Scene scene = new Scene(parent);
-		stage.setScene(scene);
-		stage.setTitle(page.getStageTitle());
-		stage.show();
+		try {
+			URL url = new File(page.getRes()).toURI().toURL();
+			loader = new FXMLLoader(url);
+			Parent parent = loader.load();
+			
+			Scene scene = new Scene(parent);
+			stage.setScene(scene);
+			stage.setTitle(page.getStageTitle());
+			stage.show();
+			
+		} catch (IOException e) {
+			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+		}
+	}
+	
+	private Parent load() {
+		
+		try {
+			return loader.load();
+			
+		} catch (IOException e) {
+			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+			return null;
+		}
 	}
 
 	public Object getController() {

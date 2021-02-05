@@ -39,11 +39,11 @@
 						LOG IN
 					</button>
 					
-					<button class="button" type="button" name="facebook">
+					<button class="button" type="button" name="facebook" onclick="alert('Functionality not yet implemented.')">
 						<img src="res/img/Facebook.png" alt="Facebook">
 					</button>
 					
-					<button class="button" type="button" name="google">
+					<button class="button" type="button" name="google" onclick="alert('Functionality not yet implemented.')">
 						<img src="res/img/Google.png" alt="Google">
 					</button>
 				</td>			

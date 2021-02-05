@@ -1,6 +1,5 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,24 +22,13 @@ public class NewsPageView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		for (int i=0; i<10; i++) {
-			try {
-				CommunicationCard communicationCard = new CommunicationCard(i+"",i+"",i+"");
-				vboxComm.getChildren().add(communicationCard);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			CommunicationCard communicationCard = new CommunicationCard(i+"",i+"",i+"");
+			vboxComm.getChildren().add(communicationCard.getPane());
 		}
 		
 		for (int i=0; i<10; i++) {
-			try {
-				NewsCard newsCard = new NewsCard(i+"",i+"",i+"");
-				vboxNews.getChildren().add(newsCard);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			NewsCard newsCard = new NewsCard(i+"",i+"",i+"");
+			vboxNews.getChildren().add(newsCard.getPane());
 		}
 	}
-
 }

@@ -62,7 +62,7 @@
 			  
 			<tr>
 			  	<td style="text-align: right; padding-right: 3px; padding-bottom: 18px;">
-					<button class="signupwith" type="button">
+					<button class="signupwith" type="button" onclick="alert('Functionality not yet implemented.')">
 						<table>	
 							<tr>
 								<td style="text-align: left; padding-right: 10px;">
@@ -78,7 +78,7 @@
 				</td>
 				
 			  	<td style="text-align: left; padding-left: 3px; padding-bottom: 18px;">
-					<button class="signupwith" type="button">
+					<button class="signupwith" type="button" onclick="alert('Functionality not yet implemented.')">
 						<table>				
 							<tr>
 								<td style="text-align: left; padding-right: 10px;">
@@ -117,13 +117,5 @@
    		<%} %>
    		
 	</body>
-	
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script>
-	function myFunction() {
-  		alert("Functionality not implemented.");
-	}
-</script>
 
 </html>

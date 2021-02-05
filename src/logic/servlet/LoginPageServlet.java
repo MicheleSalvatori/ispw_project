@@ -16,7 +16,7 @@ import logic.controller.LoginController;
 import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+public class LoginPageServlet extends HttpServlet {
 
 	/**
 	 * 

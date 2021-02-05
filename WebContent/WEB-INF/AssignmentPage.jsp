@@ -5,11 +5,15 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="logic.bean.UserBean" %>
+<%@ page import="logic.bean.AssignmentBean" %>
 <%@ page import="logic.utilities.SQLConverter" %>
 <%@ page import="logic.utilities.Role" %>
 
+<jsp:useBean id="assignment" class="logic.bean.AssignmentBean" scope="request" />
+
 <%	
 	UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
+	assignment = (AssignmentBean) request.getAttribute("assignment");
 %>
 	
 	<head>
@@ -170,7 +174,7 @@
 						</td>
 						
 						<td class="primary-text-info" style="text-align: right; padding-right: 1.5vw;">
-							ISPW
+							<%=assignment.getCourse()%>
 						</td>
 					</tr>
 					
@@ -180,14 +184,14 @@
 						</td>
 						
 						<td class="secondary-text-info" style="text-align: right; padding-right: 1.5vw;">
-							03/01/2020
+							<%=SQLConverter.date(assignment.getDate())%>
 						</td>
 					</tr>
 				</table>
 			</div>
 			
 			<!-- Second Row -->
-			<div class="row" style="padding-top: 25px;">
+			<div class="row" style="padding-top: 25px; width: 47%;">
 				
 				<!-- Hello -->
 				<div class="hello col">
@@ -198,72 +202,18 @@
 							</td>
 							
 							<td class="primary-text-info" style="text-align: right; padding-right: 2vw;">
-								Story Board
+								<%=assignment.getTitle()%>
 							</td>
 						</tr>
 					</table>
 				</div>
-
-				<!-- Stats -->
-				<div class="background col" style="float: right;">
-					<table style="width: 100%; height: 100%;">
-						<tr>
-							<td class="primary-text">
-								Delivered:
-							</td>
-							
-							<td class="primary-text-info" style="text-align: right; padding-right: 2vw;">
-								Story Board
-							</td>
-						</tr>
-						
-						<tr>
-							<td class="secondary-text">
-								Date:
-							</td>
-							
-							<td class="secondary-text-info" style="text-align: right; padding-right: 2vw;">
-								Story Board
-							</td>
-						</tr>
-						
-						<tr>
-							<td class="secondary-text">
-								File name:
-							</td>
-							
-							<td class="secondary-text-info" style="text-align: right; padding-right: 2vw;">
-								Story Board
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			
-			<div style="float: right; width: 40%;">
-				<table style="text-align: center; width: 100%;">
-					<tr>
-						<td style="text-align: right; padding-right: 2vw;">
-							<button class="button-add" style="width: 50%;">
-								<img class="img" src="res/img/Plus.png" alt="plus">
-								Add
-							</button>
-						</td>
-						
-						<td style="text-align: left; padding-left: 2vw;">
-							<button class="button-add" style="width: 35%;">
-								<img class="img" src="res/img/Minus.png" alt="min">
-								Remove
-							</button>
-						</td>
-					</tr>
-				</table>
+				
 			</div>
 		
 			<!-- Third Row -->
 			<div style="padding-top: 25px; height: 60%; width: 46%;">
 				<a class="secondary-text" style="padding-left: 0;">Assignment</a><br>
-				<textarea class="text-area" readonly style="height: 100%;">lutz</textarea>
+				<textarea class="text-area" readonly style="height: 100%;"><%=assignment.getText()%></textarea>
 			</div>
 		</div>
 	

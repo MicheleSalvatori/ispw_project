@@ -7,7 +7,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -19,7 +20,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -37,21 +37,27 @@ import javafx.util.Duration;
 import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
 import logic.bean.UserBean;
-import logic.controller.AllQuestionController;
-import logic.controller.InsertAnswerController;
+import logic.controller.QuestionController;
+import logic.controller.AnswerAQuestionController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
 import logic.view.card.element.AnswerCard;
 
-public class QuestionPageView implements Initializable{
+public class QuestionPageView {
 
 	@FXML
 	private ScrollPane scrollAnswers;
 	
 	@FXML
-	private Label labelSubjectQuestion, labelAuthor, labelDate;
+	private Label labelSubjectQuestion;
+	
+	@FXML
+	private Label labelAuthor;
+	
+	@FXML
+	private Label labelDate;
 	
 	@FXML
 	private TextArea textQuestion;
@@ -65,24 +71,24 @@ public class QuestionPageView implements Initializable{
 	private QuestionBean question;
 	
 	private Stage dialogStage;
-	private EventHandler<ActionEvent> addAnswerEvent, cancAddAnswerEvent;
+	private EventHandler<ActionEvent> addAnswerEvent;
+	private EventHandler<ActionEvent> cancAddAnswerEvent;
 	private TextArea textAnswer;
-	private Button btnSubmit, btnCancel;
-	private AllQuestionController controller; //TODO forse getAnswer non deve rientrare tra le funzionalità di AllQuestionController?
-	private List<AnswerBean> answersList;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		labelAuthor.setText("");
-	}
+	private QuestionController controller;
+	private List<AnswerBean> answersList;
 	
 	public void setBean(Object obj) {
-		controller = new AllQuestionController();
+		controller = new QuestionController();
+		
 		try {
 			this.question = controller.getQuestionByID(((QuestionBean) obj).getId());
-		} catch (SQLException | RecordNotFoundException e) {
-			System.out.println("CATCHHHH");
+			
+		} catch (SQLException e) {
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 		}
+		
 		textQuestion.setText(question.getText());
 		labelSubjectQuestion.setText(question.getTitle());
 		labelAuthor.setText(question.getStudent().getName() + " " + question.getStudent().getSurname());
@@ -92,43 +98,41 @@ public class QuestionPageView implements Initializable{
 
 	private void loadAnswer() {
 		vboxAnswer.getChildren().clear();
+		
 		try {
 			answersList = controller.getAnswersOf(question.getId());
-		} catch (RecordNotFoundException e1) {
-			System.out.println("ENTRO");
+			
+		} catch (RecordNotFoundException e) {
 			vboxAnswer.getChildren().add(new Label("No one seems to have a solution. Be the first!"));
 			return;
 		}
 		
 		for (AnswerBean answer : answersList) {
 			AnswerCard answerCard;
-			try {
-				
-				answerCard = new AnswerCard(answer);
-				vboxAnswer.getChildren().add(answerCard.getPane());
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			answerCard = new AnswerCard(answer);
+			vboxAnswer.getChildren().add(answerCard.getPane());
 		}
 	}
 
 	@FXML
-	private void addAnswer(ActionEvent ae) throws IOException {
-		try {
-			setupAnswerDialog();
-			
-		} catch (IOException e) {
-			// TODO 
-			e.printStackTrace();
-		}
+	private void addAnswer(ActionEvent event) {
+		setupAnswerDialog();
 	}
 
-	private void setupAnswerDialog() throws IOException {
+	private void setupAnswerDialog() {
 		dialogStage = new Stage();
 		
-		URL url = new File("src/res/fxml/dialog/AnswerDialog.fxml").toURI().toURL();
-		Parent root = FXMLLoader.load(url);
+		URL url;
+		Parent root = null;
+		
+		try {
+			url = new File("src/res/fxml/dialog/AnswerDialog.fxml").toURI().toURL();
+			root = FXMLLoader.load(url);
+			
+		} catch (IOException e) {
+			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+		}
+		
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(QuestionPageView.class.getResource("/res/style/dialog/AnswerDialog.css").toExternalForm());
 		scene.setFill(Color.TRANSPARENT);
@@ -147,8 +151,8 @@ public class QuestionPageView implements Initializable{
 		dialogStage.show();
 		animation(dialogStage);
 		
-		btnSubmit = (Button) scene.lookup("#btnSubmit");
-		btnCancel = (Button) scene.lookup("#btnCancel");
+		Button btnSubmit = (Button) scene.lookup("#btnSubmit");
+		Button btnCancel = (Button) scene.lookup("#btnCancel");
 		
 		textAnswer = (TextArea) scene.lookup("#textAnswer");
 		
@@ -187,7 +191,7 @@ public class QuestionPageView implements Initializable{
 	}
 
 	private void saveAnswer(String text) {
-		InsertAnswerController controller = new InsertAnswerController();
+		AnswerAQuestionController answerController = new AnswerAQuestionController();
 		
 		AnswerBean answer = new AnswerBean();
 		answer.setId(question.getId());
@@ -196,7 +200,7 @@ public class QuestionPageView implements Initializable{
 		answer.setDate(new Date(System.currentTimeMillis()));
 		
 		try {
-			controller.save(answer);
+			answerController.save(answer);
 			closeStage(dialogStage);
 			AlertController.infoAlert("The answer has been entered correctly!");
 			if (answersList == null) {
@@ -207,7 +211,7 @@ public class QuestionPageView implements Initializable{
 			
 		} catch (SQLException e) {
 			closeStage(dialogStage);
-			AlertController.infoAlert("Something happened, the answer was not acquired..");
+			AlertController.infoAlert("Something happened, the answer was not acquired.");
 		}
 	}
 

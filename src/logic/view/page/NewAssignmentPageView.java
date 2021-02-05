@@ -1,6 +1,5 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -17,7 +16,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import logic.bean.AssignmentBean;
 import logic.bean.CourseBean;
-import logic.bean.ProfessorBean;
 import logic.bean.UserBean;
 import logic.controller.AddAssignmentController;
 import logic.exceptions.RecordNotFoundException;
@@ -25,7 +23,7 @@ import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 
-public class NewAssignmentView implements Initializable {
+public class NewAssignmentPageView implements Initializable {
 
 	@FXML
 	private TextArea textDesc;
@@ -48,8 +46,6 @@ public class NewAssignmentView implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
 		addAssignmentController = new AddAssignmentController();
 		
 		btnSubmit.disableProperty().bind(textDesc.textProperty().isEmpty()
@@ -58,23 +54,18 @@ public class NewAssignmentView implements Initializable {
 				.or(dateDeadline.valueProperty().isNull()));
 		
 		try {
-			ProfessorBean professorBean = new ProfessorBean();
-			professorBean.setUsername(UserBean.getInstance().getUsername());
-			
-			courses = addAssignmentController.getCoursesOfProfessor(professorBean);
+			courses = addAssignmentController.getCoursesOfProfessor(UserBean.getInstance());
 			for (CourseBean course : courses) {
 				comboCourse.getItems().add(course.getAbbreviation());
 			}
 			
-			
 		} catch (RecordNotFoundException e) {
 			comboCourse.getItems().add(e.getMessage());
 		}
-		
 	}
 	
 	@FXML
-	private void saveAssignment(ActionEvent event) throws SQLException, IOException {
+	private void saveAssignment(ActionEvent event) {
 		AssignmentBean assignmentBean = new AssignmentBean();
 		assignmentBean.setTitle(textTitle.getText());
 		assignmentBean.setText(textDesc.getText());
@@ -82,11 +73,18 @@ public class NewAssignmentView implements Initializable {
 		assignmentBean.setCourse(courses.get(comboCourse.getSelectionModel().getSelectedIndex()).getAbbreviation());
 	
 		addAssignmentController = new AddAssignmentController();
-		if (addAssignmentController.saveAssignment(assignmentBean)) {
-			AlertController.infoAlert("Assignment Added Correctly");
-		}
-		else {
-			AlertController.infoAlert("Can't add assignment");
+		
+		try {
+			if (addAssignmentController.saveAssignment(assignmentBean)) {
+				AlertController.infoAlert("Assignment Added Correctly");
+			}
+			else {
+				AlertController.infoAlert("Can't add assignment");
+			}
+		
+		} catch (SQLException e) {
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 		}
 		
 		PageLoader.getInstance().buildPage(Page.FORUM, event);

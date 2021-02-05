@@ -1,7 +1,5 @@
 package logic.view.card.controller;
 
-import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -56,6 +54,7 @@ public class QuestionCardView {
 			btnSolved.setDisable(true);
 			btnSolved.setText("Solved");
 			btnSolved.setStyle("-fx-text-fill: green");
+			
 		} else {
 //			Only the author of this question can be set it to solved
 			if (question.getStudent().getUsername().equals(UserBean.getInstance().getUsername())) {
@@ -69,7 +68,7 @@ public class QuestionCardView {
 	}
 
 	@FXML
-	private void viewQuestion(ActionEvent event) throws IOException {
+	private void viewQuestion(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.QUESTION, question);
 	}
 
@@ -83,8 +82,7 @@ public class QuestionCardView {
 	}
 
 	@FXML
-	private void course(ActionEvent event) throws IOException {
-//    	CourseBean courseBean = question.getCourse();
+	private void course(ActionEvent event) {
     	CourseBean courseBean = new CourseBean();
     	courseBean.setAbbreviation(question.getCourse());
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);

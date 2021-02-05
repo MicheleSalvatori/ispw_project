@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -50,7 +52,13 @@ import logic.view.card.element.ExamCard;
 public class ExamPageView implements Initializable {
 
 	@FXML
-	private Label labelVE, labelGPA, labelWPA;
+	private Label labelVE;
+	
+	@FXML
+	private Label labelGPA;
+	
+	@FXML
+	private Label labelWPA;
 
 	@FXML
 	private VBox vboxExam;
@@ -64,36 +72,32 @@ public class ExamPageView implements Initializable {
 	private List<VerbalizedBean> verbs;
 	private List<CourseBean> courses;
 	
-	private EventHandler<ActionEvent> addExamEvent, cancAddExamEvent;
+	private EventHandler<ActionEvent> addExamEvent;
+	private EventHandler<ActionEvent> cancAddExamEvent;
+	
 	private ComboBox<Integer> comboGrade;
 	private ComboBox<String> comboCourse;
-	private Button btnSubmit, btnCancel;
 	private DatePicker dateVerb;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		controller = new ViewVerbalizedExamsController();
-
 		try {
 			verbs = controller.getVerbalizedExams(UserBean.getInstance());
 			for (VerbalizedBean verbBean : verbs) {
 				ExamCard examCard = new ExamCard(verbBean, verbs.indexOf(verbBean) + 1);
-				vboxExam.getChildren().add(examCard);
+				vboxExam.getChildren().add(examCard.getPane());
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 
 		} catch (RecordNotFoundException e) {
 			verbs = new ArrayList<>();
 			vboxExam.getChildren().add(new Label("No exam found"));
 			return;
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 		// Setup media
@@ -103,15 +107,15 @@ public class ExamPageView implements Initializable {
 	}
 	
 	@FXML
-	private void addExam(ActionEvent event) throws IOException, SQLException {
+	private void addExam(ActionEvent event) {
 		controller = new ViewVerbalizedExamsController();
 		
 		try {
 			courses = controller.getCourses(UserBean.getInstance());
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 			
 		} catch (RecordNotFoundException e) {
 			courses = new ArrayList<>();
@@ -122,11 +126,18 @@ public class ExamPageView implements Initializable {
 		setupExamDialog(courses, grades);
 	}
 	
-	private void setupExamDialog(List<CourseBean> courses, List<Integer> grades) throws IOException {
+	private void setupExamDialog(List<CourseBean> courses, List<Integer> grades) {
 		dialogStage = new Stage();
 		
-		URL url = new File("src/res/fxml/dialog/ExamDialog.fxml").toURI().toURL();
-		Parent root = FXMLLoader.load(url);
+		Parent root = null;
+		try {
+			URL url = new File("src/res/fxml/dialog/ExamDialog.fxml").toURI().toURL();
+			root = FXMLLoader.load(url);
+			
+		} catch (IOException e) {
+			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+		}
+		
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(QuestionPageView.class.getResource("/res/style/dialog/ExamDialog.css").toExternalForm());
 		scene.setFill(Color.TRANSPARENT);
@@ -145,14 +156,14 @@ public class ExamPageView implements Initializable {
 		dialogStage.show();
 		animation(dialogStage);
 		
-		btnSubmit = (Button) scene.lookup("#btnSubmit");
-		btnCancel = (Button) scene.lookup("#btnCancel");
+		Button btnSubmit = (Button) scene.lookup("#btnSubmit");
+		Button btnCancel = (Button) scene.lookup("#btnCancel");
 		
 		AnchorPane course = (AnchorPane) scene.lookup("#paneCourse");
 		AnchorPane grade = (AnchorPane) scene.lookup("#paneGrade");
 		
-		comboCourse = new ComboBox<String>();
-		comboGrade = new ComboBox<Integer>();
+		comboCourse = new ComboBox<>();
+		comboGrade = new ComboBox<>();
 		
 		comboCourse.setPromptText("Course");
 		comboGrade.setPromptText("Grade");
@@ -202,7 +213,7 @@ public class ExamPageView implements Initializable {
 		this.cancAddExamEvent = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				dialogStage.close();
-				PageLoader.getStage().getScene().getRoot().setEffect(null);	//TODO
+				PageLoader.getStage().getScene().getRoot().setEffect(null);
 			}
 		};
 	}
@@ -226,27 +237,21 @@ public class ExamPageView implements Initializable {
 		verb.setGrade(comboGrade.getValue());
 		verb.setStudent(studentBean);
 		
-		try {
-			controller.saveVerbalizedExam(verb);
-			dialogStage.close();
-			AlertController.infoAlert("The exam has been entered correctly!");
-			verbs.add(verb);
-			updateVerbalizedExams();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		controller.saveVerbalizedExam(verb);
+		dialogStage.close();
+		AlertController.infoAlert("The exam has been entered correctly!");
+		verbs.add(verb);
+		updateVerbalizedExams();
 	}
 	
-	public void deleteVerbalizedExam(VerbalizedBean verb) throws IOException {
+	public void deleteVerbalizedExam(VerbalizedBean verb) {
 		controller = new ViewVerbalizedExamsController();
 		controller.deleteVerbalizedExam(verb);
 		verbs.remove(verb);
 		updateVerbalizedExams();
 	}
 	
-	private void updateVerbalizedExams() throws IOException {
+	private void updateVerbalizedExams() {
 		vboxExam.getChildren().clear();
 		
 		if (verbs.isEmpty()) {
@@ -259,7 +264,7 @@ public class ExamPageView implements Initializable {
 		
 		for (VerbalizedBean verbBean : verbs) {
 			ExamCard examCard = new ExamCard(verbBean, verbs.indexOf(verbBean) + 1);
-			vboxExam.getChildren().add(examCard);
+			vboxExam.getChildren().add(examCard.getPane());
 		}
 		
 		controller = new ViewVerbalizedExamsController();

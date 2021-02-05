@@ -1,6 +1,5 @@
 package logic.view.card.controller;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
@@ -52,7 +51,7 @@ public class LessonCardView {
 			labelTime.setText(SQLConverter.time(lesson.getTime()));
 		}
 		
-		else if (PageLoader.getPage() == Page.COURSE){
+		else if (PageLoader.getPage() == Page.COURSE) {
 			line1.setVisible(false);
 			line2.setVisible(false);
 			btnCourse.setVisible(false);
@@ -77,13 +76,13 @@ public class LessonCardView {
 	}
 	
 	@FXML
-	public void course(ActionEvent event) throws IOException {
+	public void course(ActionEvent event) {
     	CourseBean courseBean = lesson.getCourse();
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
 	@FXML
-	public void viewLesson(ActionEvent event) throws IOException {
+	public void viewLesson(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.LESSON, lesson);
 	}
 }

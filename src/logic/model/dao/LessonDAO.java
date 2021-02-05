@@ -30,10 +30,6 @@ public class LessonDAO {
 		
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectLesson(stmt, date, time);
 
@@ -68,10 +64,6 @@ public class LessonDAO {
 		
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectLessonsByCourse(stmt, date, time, course);
 
@@ -110,10 +102,6 @@ public class LessonDAO {
 		
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectNextLessonByCourse(stmt, date, time, course);
 
@@ -147,10 +135,6 @@ public class LessonDAO {
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectNextLessonsByProfessor(stmt, date, professor);
 
@@ -188,10 +172,6 @@ public class LessonDAO {
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectTodayNextLessonsByProfessor(stmt, date, time, professor);
 
@@ -227,10 +207,6 @@ public class LessonDAO {
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectNextLessonsByStudent(stmt, date, student);
 
@@ -268,10 +244,6 @@ public class LessonDAO {
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectTodayNextLessonsByStudent(stmt, date, time, student);
 
@@ -309,10 +281,6 @@ public class LessonDAO {
 		
 		try {
 			conn = (SingletonDB.getDbInstance()).getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-			
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
 			Date date = lesson.getDate();
@@ -338,10 +306,6 @@ public class LessonDAO {
 		
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectLesson(stmt, date, time, course);
 

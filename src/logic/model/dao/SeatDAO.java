@@ -15,6 +15,10 @@ import logic.utilities.SQLConverter;
 import logic.utilities.SingletonDB;
 
 public class SeatDAO {
+	
+	private SeatDAO() {
+		
+	}
 
 	public static void occupateSeat(String username, LessonBean lesson, int seatID) throws SQLException {
 		Statement stmt = null;

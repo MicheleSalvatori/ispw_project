@@ -1,22 +1,17 @@
 package logic.view.card.element;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
 import logic.view.card.controller.CommunicationCardView;
+import logic.view.graphic.GraphicElement;
 
-public class CommunicationCard extends AnchorPane {
+public class CommunicationCard extends GraphicElement {
 	
 	private CommunicationCardView communicationCardView = new CommunicationCardView();
 	
-	public CommunicationCard(String title, String date, String number) throws IOException {
-		URL url = new File("src/res/fxml/card/CommunicationCard.fxml").toURI().toURL();
-		FXMLLoader loader = new FXMLLoader(url);
+	public CommunicationCard(String title, String date, String number) {
+		FXMLLoader loader = getLoader("src/res/fxml/card/CommunicationCard.fxml");
 		loader.setController(communicationCardView);
-		this.getChildren().add(loader.load());
+		load(loader);
 
 		communicationCardView.setLabel(title, date, number);
 	}

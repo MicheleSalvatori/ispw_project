@@ -16,9 +16,10 @@ import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.SeatBean;
 import logic.bean.UserBean;
-import logic.controller.BookSeatController;
+import logic.controller.BookASeatController;
 import logic.exceptions.DuplicatedRecordException;
 import logic.exceptions.RecordNotFoundException;
+import logic.exceptions.SeatAlreadyBookedException;
 
 @WebServlet("/LessonPageServlet")
 public class LessonPageServlet extends HttpServlet {
@@ -45,7 +46,7 @@ public class LessonPageServlet extends HttpServlet {
 		l.setDate(Date.valueOf(date));
 		l.setTime(Time.valueOf(time));
 		
-		BookSeatController controller = new BookSeatController();
+		BookASeatController controller = new BookASeatController();
 		UserBean user = (UserBean) req.getSession().getAttribute("loggedUser");
 		
 		try {
@@ -62,8 +63,6 @@ public class LessonPageServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			
-		} catch (RecordNotFoundException e1) {
-			// TODO
 		}
 		
 		req.getRequestDispatcher("/WEB-INF/LessonPage.jsp").forward(req, resp);
@@ -84,11 +83,11 @@ public class LessonPageServlet extends HttpServlet {
 		l.setDate(Date.valueOf(date));
 		l.setTime(Time.valueOf(time));
 		
-		BookSeatController controller = new BookSeatController();
+		BookASeatController controller = new BookASeatController();
 		UserBean user = (UserBean) req.getSession().getAttribute("loggedUser");
 		
 		if (req.getParameter("bookSeat")!=null) {
-			controller = new BookSeatController();
+			controller = new BookASeatController();
 			try {
 				LessonBean lesson = controller.getLesson(l);
 				SeatBean seat = new SeatBean(Integer.valueOf(req.getParameter("bookSeat")));
@@ -96,10 +95,10 @@ public class LessonPageServlet extends HttpServlet {
 				
 				// TODO POSTO GIA OCCUPATO EXCEPTION
 				
-			} catch (SQLException | DuplicatedRecordException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				
-			} catch (RecordNotFoundException e) {
+			} catch (SeatAlreadyBookedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -114,9 +113,6 @@ public class LessonPageServlet extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				
-			} catch (RecordNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 		

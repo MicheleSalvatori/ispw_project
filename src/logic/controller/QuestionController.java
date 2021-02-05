@@ -3,6 +3,8 @@ package logic.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
@@ -17,7 +19,7 @@ import logic.model.dao.CourseDAO;
 import logic.model.dao.QuestionDAO;
 import logic.utilities.Role;
 
-public class AllQuestionController {
+public class QuestionController {
 
 	public int getNumberCourses(UserBean userBean) throws SQLException {
 		int courses;
@@ -35,12 +37,22 @@ public class AllQuestionController {
 		return courses;
 	}
 	
-	public QuestionBean getQuestionByID(int id) throws SQLException, RecordNotFoundException {
-		Question question = QuestionDAO.getQuestion(id);
+	public QuestionBean getQuestionByID(int id) throws SQLException {
+		
+		Question question = null;
+		try {
+			question = QuestionDAO.getQuestion(id);
+			
+		} catch (RecordNotFoundException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+			return null;
+		}
+		
 		StudentBean studentBean = new StudentBean();
 		studentBean.setName(question.getStudent().getName());
 		studentBean.setSurname(question.getStudent().getSurname());
 		studentBean.setUsername(question.getStudent().getUsername());
+		
 		QuestionBean questionBean = new QuestionBean();
 		questionBean.setCourse(question.getCourse().getAbbrevation());
 		questionBean.setId(question.getId());
@@ -49,8 +61,8 @@ public class AllQuestionController {
 		questionBean.setStudent(studentBean);
 		questionBean.setText(question.getText());
 		questionBean.setTitle(question.getTitle());
-		return questionBean;
 		
+		return questionBean;
 	}
 
 	public List<QuestionBean> getAllQuestions(UserBean userBean) throws SQLException, RecordNotFoundException {
