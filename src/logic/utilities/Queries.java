@@ -553,7 +553,7 @@ public class Queries {
 	
 	//Comunication Queries
     public static ResultSet getComunication(Statement stmt) throws SQLException {
-        String sql = "SELECT * FROM comunications;";
+        String sql = "SELECT * FROM communications;";
         System.out.println(sql);
         return stmt.executeQuery(sql);
     }

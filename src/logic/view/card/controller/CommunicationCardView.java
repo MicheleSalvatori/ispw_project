@@ -1,10 +1,8 @@
 package logic.view.card.controller;
 
-import java.awt.TextArea;
-
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 
 public class CommunicationCardView {
 
@@ -16,9 +14,6 @@ public class CommunicationCardView {
 	
 	@FXML
 	private Label labelNumber;
-	
-	@FXML
-	private Button btnView;
 	
 	@FXML
 	private TextArea textArea;

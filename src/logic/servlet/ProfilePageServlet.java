@@ -54,6 +54,10 @@ public class ProfilePageServlet extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		try {
@@ -63,6 +67,10 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (RecordNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

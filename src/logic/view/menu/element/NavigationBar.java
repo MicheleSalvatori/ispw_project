@@ -13,7 +13,7 @@ import logic.view.menu.controller.NavigationBarView;
 public class NavigationBar {
 	
 	private static NavigationBar instance = null;
-	private static VBox vbox = new VBox();
+	private VBox vbox = new VBox();
 	
 	private NavigationBar() {
 		
@@ -32,7 +32,7 @@ public class NavigationBar {
 			URL url = new File("src/res/fxml/menu/NavigationBar.fxml").toURI().toURL();
 			FXMLLoader loader = new FXMLLoader(url);
 			loader.setController(new NavigationBarView());
-			vbox.getChildren().add(loader.load());
+			instance.vbox.getChildren().add(loader.load());
 		
 		} catch (IOException e) {
 			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
