@@ -38,13 +38,9 @@ public class AdministrationPageView implements Initializable {
 		try {
 			communications = controller.getCommunications();
 			for (CommunicationBean c : communications) {
-				try {
-					CommunicationCard communicationCard = new CommunicationCard(c.getText(), c.getTitle(),
-							SQLConverter.date(c.getDate()), c.getId() + "");
-					vboxComm.getChildren().add(communicationCard);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				CommunicationCard communicationCard = new CommunicationCard(c.getText(), c.getTitle(),
+						SQLConverter.date(c.getDate()), c.getId() + "");
+				vboxComm.getChildren().add(communicationCard.getPane());
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();

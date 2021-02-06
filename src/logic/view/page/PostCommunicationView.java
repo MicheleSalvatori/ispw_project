@@ -1,6 +1,5 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -58,9 +57,6 @@ public class PostCommunicationView implements Initializable {
 			PageLoader.getInstance().buildPage(Page.ADMINISTRATION_PAGE);
 		} catch (SQLException e) {
 			AlertController.infoAlert("Somethings gone wrong!");
-		} catch (IOException e) {
-			// Viene dal pageloader
-			e.printStackTrace();
 		} 
 	}
 

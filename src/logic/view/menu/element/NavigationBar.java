@@ -38,10 +38,7 @@ public class NavigationBar {
 			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
 		}
 	}
-	
-	public static void setInstance(NavigationBar navBar) {
-		instance = navBar;
-	}
+
 	
 	public VBox getPane() {
 		return vbox;

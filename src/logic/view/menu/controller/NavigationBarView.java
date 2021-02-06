@@ -50,8 +50,8 @@ public class NavigationBarView implements Initializable {
 			btnRequest.setVisible(false);
 			btnSchedule.setVisible(false);
 			btnSettings.setVisible(false);
-			
 			break;
+			
 		case PROFESSOR:
 			// User logged as Professor
 			btnExams.setVisible(false);
