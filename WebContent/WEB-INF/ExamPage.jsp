@@ -166,7 +166,7 @@
 			<!-- Exam table	-->
 			<div width="100%" style="height: 100%; border: 2px solid #0C0B0B; border-radius: 14px;">
 			
-				<table style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
+			<table style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
 					<c:if test="${empty listOfExam}">
 						<tr>
 							<td colspan="7" class="exam-text">
