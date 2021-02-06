@@ -87,10 +87,10 @@ LessonBean lesson = (LessonBean) request.getAttribute("lesson");
 		</div>
 
 		<div
-			style="margin-top: 15px; height: 90%; border: 2px solid #0C0B0B; border-radius: 14px;">
+			style="margin-top: 15px; border: 2px solid #0C0B0B; border-radius: 14px;">
 
 			<table
-				style="height: 100px; border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
+				style="overflow:scroll; height: 100px; border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
 				<c:if test="${empty listOfCommunications}">
 					<tr>
 						<td colspan="3" class="title-label" align="center">No
@@ -131,7 +131,7 @@ LessonBean lesson = (LessonBean) request.getAttribute("lesson");
 		</div>
 
 		<a href="/ispw_project/PostCommunicationServlet"
-						class="nav-button" type="button">
+						type="button">
 				<button type="button" class="button" id="postCommunication"
 					name="postCommunication" style = "margin-top:15px;">
 					<img style="vertical-align: middle;" class="plus-img"

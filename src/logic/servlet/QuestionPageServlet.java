@@ -48,7 +48,6 @@ public class QuestionPageServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		req.setAttribute("listOfAnswers", answers);
 		req.setAttribute("question", questionBean);
 		req.setAttribute("questionID", req.getParameter("questionID"));
