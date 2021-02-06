@@ -45,10 +45,10 @@ public class AdministrationPageView implements Initializable {
 				vboxComm.getChildren().add(communicationCard.getPane());
 			}
 
+
 		} catch (SQLException e1) {
 			AlertController.infoAlert(AlertController.getError());
 			PageLoader.getInstance().goBack();
-
 		} catch (RecordNotFoundException e1) {
 			communications = new ArrayList<>();
 			vboxComm.getChildren().add(new Label("No exam found"));
