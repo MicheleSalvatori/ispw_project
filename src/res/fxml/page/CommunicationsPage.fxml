@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" styleClass="root" stylesheets="@../../style/page/NewsPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.NewsPageView">
+   <children>
+      
+      <ScrollPane fx:id="scroll" fitToWidth="true" layoutY="45.0" prefHeight="627.0" prefWidth="1144.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="45.0">
+        <content> 
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="543.0">
+               <children>
+                  <VBox fx:id="vboxComm" prefWidth="100.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="13.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      
+      <Label layoutY="5.0" text="Communications" />
+      
+   </children>
+</AnchorPane>

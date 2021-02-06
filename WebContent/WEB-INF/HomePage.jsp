@@ -83,11 +83,11 @@
 				  
 				<tr>
 					<td style="padding-bottom: 20px;" align="center">
-						<button class="nav-button" type="button" name="news">
+						<a href="/ispw_project/CommunicatiosnPageServlet" class="nav-button" type="button">
 							<svg class="nav-icon" width="27" height="22" viewBox="0 0 27 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M22.6717 5.03109L21.9937 4.95841V4.25C21.9937 2.41389 20.4441 1 18.6366 1H5.01754C3.21004 1 1.6604 2.41389 1.6604 4.25V16.75C1.6604 19.1376 3.67989 21 6.06516 21H21.2556C23.6409 21 25.6604 19.1376 25.6604 16.75V8.25C25.6604 6.53348 24.3035 5.206 22.6717 5.03109Z" stroke="white" stroke-width="2"/>
 							</svg>
-						</button>
+						</a>
 					</td>
 				</tr>
 				 	

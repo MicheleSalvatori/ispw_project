@@ -17,63 +17,66 @@
 }
  
 .root {
-	-fx-background-color: #E5E5EB;
-	-fx-background-radius: 14px;
-	
-	-width: 517;
-	-height: 80;
+	-fx-background-color: FFFFFF;
+    -fx-border-color: #0C0B0B;
+    -fx-background-radius: 14.0px;
+    -fx-border-radius: 14.0px;
+    -fx-border-width: 2px;
+    -width: 1100;
+	-height: 200;
 	-fx-min-width: -width;
 	-fx-min-height: -height;
 	-fx-pref-width: -width;
 	-fx-pref-height: -height;
 	-fx-max-width: -width;
-	-fx-max-height: -height;	
+	-fx-max-height: -height;
 }
  
 .label_title {
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Baloo Bhai";
-	-fx-font-size: 20px;
+	-fx-font-size: 26px;
 }
 
 .label_number{
 	-fx-text-fill: #0C0B0B;
 	-fx-font-family: "Baloo Bhai";
-	-fx-font-size: 24px;
-}
-
-.label_expires {
-	-fx-text-fill: #0C0B0B;
-	-fx-font-family: "Roboto";
-	-fx-font-weight: bold;
-	-fx-font-size: 13px;
+	-fx-font-size: 36px;
 }
 
 .label_date {
 	-fx-text-fill: #0C0B0B;
-	-fx-font-family: "Roboto";
-	-fx-font-size: 13px;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 16px;
 }
 
-.button {
-	-fx-background-color: #0C0B0B;
-	-fx-background-radius: 8px;
-	
-	-fx-text-fill: white;
-	-fx-font-family: "Roboto";
-	-fx-font-weight: bold;
-	-fx-font-size: 13;
-	
-	-width: 61.28;
-	-height: 32;
+.text-area{
+	-fx-background-color: #FFFFFF;
+    -fx-background-radius: 14.0px;
+    -fx-border-radius: 14.0px;
+    -fx-border: 0;
+    -fx-font-size: 18.0;
+    -fx-font-family: "Roboto";
+    -width: 910;
+	-height: 132;
 	-fx-min-width: -width;
 	-fx-min-height: -height;
 	-fx-pref-width: -width;
 	-fx-pref-height: -height;
 	-fx-max-width: -width;
-	-fx-max-height: -height;	
+	-fx-max-height: -height;
 }
 
-.button:hover {
-	-fx-cursor: hand;
+.text-area .scroll-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 14.0px;
 }
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+

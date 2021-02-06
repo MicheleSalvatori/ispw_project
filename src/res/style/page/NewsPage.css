@@ -7,6 +7,51 @@
 	-fx-background-color: white;
 }
 
+.scroll-pane {
+	-fx-background-color: transparent;
+    -fx-fit-to-width: true;
+}
+
+.scroll-pane > .viewport {
+   	-fx-background-color: transparent;
+    -fx-background-radius: 14px;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-color: white;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: #E5E5EB;
+    -fx-border-color: transparent;
+    -fx-background-radius: 10px;
+}
+
+.scroll-bar:vertical:hover .thumb {
+    -fx-background-color: grey;
+}
+
+.scroll-bar:vertical:pressed .thumb {
+	-fx-background-color: black;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #0C0B0B;
+    -fx-background-radius: 5em;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+
 .anchor-pane {
 	-fx-background-color: transparent;
 	-fx-border-color: #0C0B0B;
@@ -18,4 +63,22 @@
 	-fx-font-family: "Baloo Bhai";
 	-fx-font-size: 24;
 	-fx-text-fill: #0C0B0B;
+}
+
+.title-label{
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 36;
+	-fx-text-fill: #0C0B0B;
+}
+.button {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24;
+	-fx-text-fill: #0C0B0B;
+	
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 8px;
+}
+
+.button:hover {
+	-fx-cursor: hand;
 }

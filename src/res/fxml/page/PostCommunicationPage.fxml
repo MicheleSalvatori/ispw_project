@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../../style/page/NewQuestionPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.PostCommunicationView">
+   <children>
+      
+      <Label layoutX="6.0" layoutY="14.0" text="Post new communication" />
+      
+      <TextArea fx:id="textCommunication" layoutX="7.0" layoutY="142.0" promptText="Communication" styleClass="text-area" wrapText="true" AnchorPane.rightAnchor="73.0" />
+      
+      <TextField fx:id="titleCommunication" layoutX="7.0" layoutY="69.0" prefWidth="532.0" promptText="Title" styleClass="text-field" />
+      
+      <Button fx:id="btnSubmit" layoutX="901.0" layoutY="371.0" mnemonicParsing="false" onAction="#submitCommunication" text="Submit" />
+      
+   </children>
+</AnchorPane>

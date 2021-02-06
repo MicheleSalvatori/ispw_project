@@ -1,0 +1,82 @@
+@font-face {
+	font-family: 'Baloo Bhai';
+	src: url("BalooBhai-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Overpass';
+	src: url("Overpass-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+	src: url("Roboto/Roboto-Regular.ttf");
+	font-weight: normal;
+}
+
+/* Style page content */
+.content {
+	margin-left: 200px; /* Same as the width of the sidebar */
+	margin-top: 70px;
+	margin-right: 70px;
+}
+
+.tr{
+	background-color: #F0F0F2;
+	border-radius: 14px;
+}
+
+
+.table{
+	white-space: normal; 
+	border-spacing: 0 10px; 
+	width: 100%; 
+	border: 15px solid transparent;
+	word-wrap: break-word;	
+	overflow: auto;
+}
+
+td{
+	word-wrap: break-word;	
+	overflow: auto;
+}
+
+.img {
+	width: 100%;
+	height: auto;
+	max-width: 50px;
+	min-width: 15px;
+}
+
+.title-label {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.8vw;
+}
+
+
+.communication-title{
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.4vw;
+}
+
+.communication-text{
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 1.2vw;
+}
+
+.communication-date {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 0.9vw;
+}
+
+.id {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.3vw;
+}
