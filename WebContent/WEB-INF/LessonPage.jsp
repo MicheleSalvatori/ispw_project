@@ -15,7 +15,6 @@
 	LessonBean lesson = (LessonBean) request.getAttribute("lesson");
 	int seatColumn = lesson.getClassroom().getSeatColumn();
 	int row = lesson.getClassroom().getSeatRow();
-	System.out.println("ROW: " + row);
 %>
 
 <head>

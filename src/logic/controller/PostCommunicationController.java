@@ -35,4 +35,5 @@ public class PostCommunicationController {
 
 		return comunicationBeans;
 	}
+	
 }

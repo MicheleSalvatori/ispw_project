@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import logic.bean.AssignmentBean;
 import logic.controller.AddAssignmentController;
-import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/AssignmentPageServlet")
 public class AssignmentPageServlet extends HttpServlet {

@@ -16,7 +16,6 @@ import logic.bean.QuestionBean;
 import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.AskAQuestionController;
-import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/NewQuestionPageServlet")
 public class NewQuestionPageServlet extends HttpServlet {
@@ -52,10 +51,8 @@ public class NewQuestionPageServlet extends HttpServlet {
 		System.out.println(req.getParameter("question-text"));
 		AskAQuestionController controller = new AskAQuestionController();
 		QuestionBean newQuestion = new QuestionBean();
-//		CourseBean course = new CourseBean();
 		StudentBean student = new StudentBean();
 		student.setUsername(((UserBean) req.getSession().getAttribute("loggedUser")).getUsername());
-//		course.setAbbreviation(req.getParameter("courses"));
 		newQuestion.setCourse(req.getParameter("courses"));
 		newQuestion.setStudent(student);
 		newQuestion.setText(req.getParameter("question-text"));

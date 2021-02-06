@@ -1,8 +1,8 @@
 package logic.view.page;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -10,11 +10,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import logic.bean.CommunicationBean;
 import logic.controller.PostCommunicationController;
 import logic.exceptions.RecordNotFoundException;
+import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
@@ -42,12 +44,15 @@ public class AdministrationPageView implements Initializable {
 						SQLConverter.date(c.getDate()), c.getId() + "");
 				vboxComm.getChildren().add(communicationCard.getPane());
 			}
-			
+
+
 		} catch (SQLException e1) {
-			e1.printStackTrace();
-			
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 		} catch (RecordNotFoundException e1) {
-			e1.printStackTrace();
+			communications = new ArrayList<>();
+			vboxComm.getChildren().add(new Label("No exam found"));
+			return;
 		}
 	}
 
@@ -61,7 +66,7 @@ public class AdministrationPageView implements Initializable {
 	public void assignProfessor(ActionEvent event) {
 		System.out.println("Professor Credentials");
 	}
-	
+
 	@FXML
 	public void addCourse(ActionEvent event) {
 		System.out.println("Add Course");
