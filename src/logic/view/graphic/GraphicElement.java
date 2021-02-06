@@ -20,7 +20,7 @@ public class GraphicElement {
 			return new FXMLLoader(url);
 		
 		} catch (IOException e) {
-			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+			Logger.getGlobal().log(Level.SEVERE, "Element loading error");
 			return null;
 		}
 	}
@@ -34,7 +34,7 @@ public class GraphicElement {
 			getPane().getChildren().add(loader.load());
 			
 		} catch (IOException e) {
-			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+			Logger.getGlobal().log(Level.SEVERE, "Element loading error");
 		}
 	}
 }

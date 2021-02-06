@@ -274,6 +274,8 @@ public class ProfilePageView implements Initializable {
 		List<CourseBean> courses;
 		List<CourseBean> requests;
 		List<ProfessorBean> professors;
+		
+		boolean course = true;
 	
 		try {
 			courses = joinCourseController.getCourses(UserBean.getInstance());
@@ -288,6 +290,9 @@ public class ProfilePageView implements Initializable {
 			AlertController.infoAlert(AlertController.getError());
 			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
 			return;
+			
+		} catch (RecordNotFoundException e) {
+			course = false;
 		}
 		
 		try {
@@ -304,6 +309,11 @@ public class ProfilePageView implements Initializable {
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
 			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
+			
+		} catch (RecordNotFoundException e) {
+			if (!course) {
+				vboxScroll.getChildren().add(new Label("No course found."));
+			}
 		}
 	}
 	

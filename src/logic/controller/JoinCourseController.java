@@ -57,39 +57,26 @@ public class JoinCourseController {
 		return getBeans(courses);
 	}
 	
-	public List<CourseBean> getCourses(UserBean userBean) throws SQLException {
+	public List<CourseBean> getCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
 		
 		List<Course> courses = null;
-		
-		try {
+
+		// User is a student
+		if (userBean.getRole() == Role.STUDENT) {
+			courses = CourseDAO.getStudentCourses(userBean.getUsername());
+		}
 			
-			// User is a student
-			if (userBean.getRole() == Role.STUDENT) {
-				courses = CourseDAO.getStudentCourses(userBean.getUsername());
-			}
-			
-			// User is a professor
-			else {
-				courses = CourseDAO.getProfessorCourses(userBean.getUsername());
-			}
-		
-		} catch (RecordNotFoundException e) {
-			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+		// User is a professor
+		else {
+			courses = CourseDAO.getProfessorCourses(userBean.getUsername());
 		}
 		
 		return getBeans(courses);
 	}
 	
-	public List<CourseBean> getRequestedCourses(UserBean userBean) throws SQLException {
-
-		try {
-			List<Course> courses = CourseDAO.getStudentCoursesByRequest(userBean.getUsername());
-			return getBeans(courses);
-
-		} catch (RecordNotFoundException e) {
-			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
-			return new ArrayList<>();
-		}
+	public List<CourseBean> getRequestedCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
+		List<Course> courses = CourseDAO.getStudentCoursesByRequest(userBean.getUsername());
+		return getBeans(courses);
 	}
 	
 	private List<CourseBean> getBeans(List<Course> courses) {

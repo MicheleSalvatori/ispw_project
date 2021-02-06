@@ -14,7 +14,7 @@
 
       <Label fx:id="labelTitle" layoutX="203.0" layoutY="5.0" styleClass="label_title" text="Title" AnchorPane.leftAnchor="190.0" AnchorPane.topAnchor="5.0" />
       
-            <Label fx:id="labelDate" layoutX="57.0" layoutY="142.0" nodeOrientation="RIGHT_TO_LEFT" styleClass="label_date" text="date" AnchorPane.leftAnchor="57.0" />
+      <Label fx:id="labelDate" layoutX="57.0" layoutY="142.0" nodeOrientation="RIGHT_TO_LEFT" styleClass="label_date" text="date" AnchorPane.leftAnchor="57.0" />
       
       <Line endX="561.0" endY="-40.0" layoutX="-385.0" layoutY="59.0" startX="561.0" startY="123.0" />
       <ImageView fitHeight="80.0" fitWidth="116.0" layoutX="27.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">

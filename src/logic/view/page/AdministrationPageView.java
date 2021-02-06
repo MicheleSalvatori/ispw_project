@@ -42,26 +42,28 @@ public class AdministrationPageView implements Initializable {
 						SQLConverter.date(c.getDate()), c.getId() + "");
 				vboxComm.getChildren().add(communicationCard.getPane());
 			}
+			
 		} catch (SQLException e1) {
 			e1.printStackTrace();
+			
 		} catch (RecordNotFoundException e1) {
 			e1.printStackTrace();
 		}
 	}
 
 	@FXML
-	public void postCommunication(ActionEvent event) throws IOException {
+	public void postCommunication(ActionEvent event) {
 		System.out.println("Post Communication");
 		PageLoader.getInstance().buildPage(Page.POST_COMMUNICATION);
 	}
 
 	@FXML
-	public void assignProfessor(ActionEvent event) throws IOException {
+	public void assignProfessor(ActionEvent event) {
 		System.out.println("Professor Credentials");
 	}
 	
 	@FXML
-	public void addCourse(ActionEvent event) throws IOException {
+	public void addCourse(ActionEvent event) {
 		System.out.println("Add Course");
 	}
 }

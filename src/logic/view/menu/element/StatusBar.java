@@ -13,7 +13,7 @@ import logic.view.menu.controller.StatusBarView;
 public class StatusBar {
 	
 	private static StatusBar instance = null;
-	private static HBox hbox = new HBox();
+	private HBox hbox = new HBox();
 	
 	private StatusBar() {
 		
@@ -32,7 +32,7 @@ public class StatusBar {
 			URL url = new File("src/res/fxml/menu/StatusBar.fxml").toURI().toURL();
 			FXMLLoader loader = new FXMLLoader(url);
 			loader.setController(new StatusBarView());
-			hbox.getChildren().add(loader.load());
+			instance.hbox.getChildren().add(loader.load());
 			
 		} catch (IOException e) {
 			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
