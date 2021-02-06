@@ -140,4 +140,12 @@ LessonBean lesson = (LessonBean) request.getAttribute("lesson");
 		</a>
 	</div>
 </body>
+
+<%String message = (String)request.getAttribute("alertMsg");
+  if(message != null){ 
+  System.out.println(message);%>
+  	<script type="text/javascript">
+    	alert("${alertMsg}");
+  	</script>
+<%} %>
 </html>

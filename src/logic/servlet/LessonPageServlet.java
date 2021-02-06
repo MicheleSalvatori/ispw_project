@@ -17,8 +17,6 @@ import logic.bean.LessonBean;
 import logic.bean.SeatBean;
 import logic.bean.UserBean;
 import logic.controller.BookASeatController;
-import logic.exceptions.DuplicatedRecordException;
-import logic.exceptions.RecordNotFoundException;
 import logic.exceptions.SeatAlreadyBookedException;
 
 @WebServlet("/LessonPageServlet")

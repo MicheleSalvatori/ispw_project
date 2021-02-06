@@ -2,22 +2,18 @@ package logic.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import logic.bean.CommunicationBean;
-import logic.bean.UserBean;
-import logic.controller.LoginController;
 import logic.controller.PostCommunicationController;
 import logic.exceptions.RecordNotFoundException;
-import logic.utilities.Role;
 
 @WebServlet("/AdministrationPageServlet")
 public class AdministrationPageServlet extends HttpServlet {
@@ -33,21 +29,21 @@ public class AdministrationPageServlet extends HttpServlet {
 			return;
 		}
 
-		HttpSession session = request.getSession();
-
 		PostCommunicationController controller = new PostCommunicationController();
 		List<CommunicationBean> communications = null;
 		try {
 			communications = controller.getCommunications();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(request, response);
+			return;
 		} catch (RecordNotFoundException e) {
+			communications = new ArrayList<>();
 		}
 
 		request.setAttribute("listOfCommunications", communications);
 		request.getRequestDispatcher("/WEB-INF/AdministrationPage.jsp").forward(request, response);
 	}
-	
+
 }

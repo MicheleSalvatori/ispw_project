@@ -12,7 +12,6 @@
 <%	
 	UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
 	LessonBean lesson = (LessonBean) request.getAttribute("lesson");
-	//session.setAttribute("lesson", lesson);
 %>
 	
 	<head>
