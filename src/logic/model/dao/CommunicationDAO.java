@@ -56,7 +56,6 @@ public class CommunicationDAO {
 	}
 
 	public void postCommunication() {
-		
 	}
 
 	public static void saveCommunication(Communication communication) throws SQLException{

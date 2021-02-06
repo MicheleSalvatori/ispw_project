@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import logic.bean.UserBean;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
-import logic.utilities.Role;
 
 public class NavigationBarView implements Initializable {
 
@@ -30,6 +29,9 @@ public class NavigationBarView implements Initializable {
 	private Button btnNews;
 	
 	@FXML
+	private Button btnSettings;
+	
+	@FXML
 	private Button btnBack;
 	
 	@FXML
@@ -40,16 +42,41 @@ public class NavigationBarView implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// User logged as Student
-		if (UserBean.getInstance().getRole() == Role.STUDENT) {
+		
+		switch (UserBean.getInstance().getRole()) {
+		
+		case STUDENT:
+			// User logged as Student
 			btnRequest.setVisible(false);
 			btnSchedule.setVisible(false);
-		}
-		
-		// User logged as Professor
-		else if (UserBean.getInstance().getRole() == Role.PROFESSOR){
+			btnSettings.setVisible(false);
+			
+			break;
+		case PROFESSOR:
+			// User logged as Professor
 			btnExams.setVisible(false);
+			btnSettings.setVisible(false);
+			break;
+			
+		case ADMIN:
+			// User logged as Professor
+			btnRequest.setVisible(false);
+			btnSchedule.setVisible(false);
+			btnExams.setVisible(false);
+			btnHome.setVisible(false);
+			btnForum.setVisible(false);
+			btnProfile.setVisible(false);
+			btnNews.setVisible(false);
+			break;
+			
+		default:
+			break;
 		}
+	}
+	
+	@FXML
+	public void settingsButton(ActionEvent event) {
+		PageLoader.getInstance().buildPage(Page.ADMINISTRATION_PAGE, event);
 	}
 
 	@FXML

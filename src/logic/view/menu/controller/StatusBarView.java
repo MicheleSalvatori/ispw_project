@@ -15,6 +15,7 @@ import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.utilities.Role;
 
 public class StatusBarView implements Initializable {
 	
@@ -33,6 +34,14 @@ public class StatusBarView implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		labelName.setText(UserBean.getInstance().getName());
+		
+		if (UserBean.getInstance().getRole() == Role.ADMIN) {
+			btnNotifications.setVisible(false);
+			rectAvatar.setVisible(false);
+			btnNotifications.setDisable(true);
+			rectAvatar.setDisable(true);
+			return;
+		}
 		
 		String img = "/res/png/avatar/status/avatar1.png";
 		setAvatar(img);

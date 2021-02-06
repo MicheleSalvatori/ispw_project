@@ -20,6 +20,7 @@ import logic.utilities.AlertController;
 import logic.utilities.Email;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.utilities.Role;
 
 public class LoginPageView implements Initializable {
 
@@ -82,7 +83,11 @@ public class LoginPageView implements Initializable {
 			return;
 		}
 			
-		PageLoader.getInstance().buildPage(Page.HOMEPAGE);
+		if (userBean.getRole() == Role.ADMIN) {
+			PageLoader.getInstance().buildPage(Page.ADMINISTRATION_PAGE);
+		} else {
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
+		}
 	}
 
 	@FXML

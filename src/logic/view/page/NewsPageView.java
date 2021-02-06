@@ -19,10 +19,10 @@ public class NewsPageView implements Initializable {
 
 	@FXML
 	private VBox vboxComm, vboxNews;
-	
+
 	@FXML
 	private ScrollPane scroll;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -35,12 +35,11 @@ public class NewsPageView implements Initializable {
 						SQLConverter.date(c.getDate()), c.getId() + "");
 				vboxComm.getChildren().add(communicationCard.getPane());
 			}
-			
 		} catch (SQLException e1) {
 			e1.printStackTrace();
-			
 		} catch (RecordNotFoundException e1) {
 			e1.printStackTrace();
 		}
 	}
+
 }

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.exceptions.RecordNotFoundException;
+import logic.utilities.Role;
 
 @WebServlet("/LoginServlet")
 public class LoginPageServlet extends HttpServlet {
@@ -52,6 +53,10 @@ public class LoginPageServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         session.setAttribute("loggedUser", userBean);
-        resp.sendRedirect(req.getContextPath() + "/HomePageServlet"); 
+        if (userBean.getRole() == Role.ADMIN) {
+			resp.sendRedirect(req.getContextPath() + "/AdministrationPageServlet");
+		} else {
+			resp.sendRedirect(req.getContextPath() + "/HomePageServlet");
+		}
     }
 }
