@@ -52,6 +52,7 @@ public class CommunicationDAO {
 				stmt.close();
 			}
 		}
+		
 		return communications;
 	}
 

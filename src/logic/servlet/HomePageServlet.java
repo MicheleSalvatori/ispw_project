@@ -2,6 +2,7 @@ package logic.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -25,12 +26,13 @@ public class HomePageServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getSession().getAttribute("loggedUser") == null) {
+		HttpSession session = request.getSession();
+		
+		if (session.getAttribute("loggedUser") == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
 		
-		HttpSession session = request.getSession();
 		UserBean loggedUser = (UserBean) session.getAttribute("loggedUser");
 
 		ViewNextLessonController viewNextLessonController = new ViewNextLessonController();
@@ -42,11 +44,13 @@ public class HomePageServlet extends HttpServlet {
 			lessons.remove(0);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 		
 		} catch (RecordNotFoundException e) {
-			//lesson = null;
+			lesson = null;
+			lessons = new ArrayList<>();
 		}
 		
 		request.setAttribute("lesson", lesson);

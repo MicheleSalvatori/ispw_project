@@ -75,39 +75,21 @@ UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
 	<!-- Page info -->
 	<div class="content">
 		<a class="title-label">Post new communication</a>
-		<div style="margin-top: 20px;">
-			<input class="input-subject" type="text" id="communicationTitle"
-				name="communication-title" placeholder="Title" onkeyup="fun()"
-				onclick="fun()" form="communication-form">
-		</div>
-		<div style="margin-top: 20px;">
-			<textarea id="communicationText" onkeyup="fun()" onclick="fun()"
-				placeholder="Communication" name="communication-text" form="communication-form"></textarea>
-		</div>
-		<form
-			action="${pageContext.request.contextPath}/PostCommunicationServlet"
-			method="post" id="communication-form">
-			<button class="button-submit" id="submit" name="submit"
-				disabled="disabled"
-				onclick="return confirm('Are you sure you want to post this communication?')">Submit</button>
+		<form action="${pageContext.request.contextPath}/PostCommunicationServlet" method="post">
+		
+			<div style="margin-top: 20px;">
+				<input class="input-subject" type="text" name="communication-title" placeholder="Title" required>
+			</div>
+			
+			<div style="margin-top: 20px;">
+				<textarea placeholder="Communication" name="communication-text" required></textarea>
+			</div>
+			
+			<button class="button-submit" type="submit" name="submit" onclick="return confirm('Are you sure you want to post this communication?')">Submit</button>
+		
 		</form>
 	</div>
 </body>
-
-<script>
-	function fun() {
-		var text = document.getElementById("communicationText").value.length;
-		var subject = document.getElementById("communicationTitle").value.length;
-
-		if (text > 0 && subject > 0) {
-			document.getElementById("submit").disabled = false;
-		} else {
-			document.getElementById("submit").disabled = true;
-		}
-
-	}
-</script>
-
 
 </body>
 </html>

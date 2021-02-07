@@ -37,8 +37,9 @@ public class NewQuestionPageServlet extends HttpServlet {
 			req.setAttribute("listOfCourses", courses);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+			return;
 		}
 
 		req.getRequestDispatcher("/WEB-INF/NewQuestionPage.jsp").forward(req, resp);
@@ -57,12 +58,16 @@ public class NewQuestionPageServlet extends HttpServlet {
 		newQuestion.setStudent(student);
 		newQuestion.setText(req.getParameter("question-text"));
 		newQuestion.setTitle(req.getParameter("question-subject"));
+		
 		try {
 			controller.save(newQuestion);
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+			return;
 		}
+		
 		System.out.println(student.getUsername());
 		resp.sendRedirect("/ispw_project/ForumPageServlet");
 	}

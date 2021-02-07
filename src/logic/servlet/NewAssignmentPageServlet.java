@@ -3,6 +3,7 @@ package logic.servlet;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -41,8 +42,7 @@ public class NewAssignmentPageServlet extends HttpServlet {
 			courses = controller.getCoursesOfProfessor((UserBean) session.getAttribute("loggedUser"));
 		
 		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			courses = new ArrayList<>();
 		}
 		
 		req.setAttribute("listOfCourses", courses);
@@ -63,8 +63,9 @@ public class NewAssignmentPageServlet extends HttpServlet {
 			controller.saveAssignment(assignmentBean);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+			return;
 		}
 		
 		resp.sendRedirect("/ispw_project/ForumPageServlet");

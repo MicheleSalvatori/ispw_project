@@ -21,6 +21,7 @@
 	margin-left: 200px; /* Same as the width of the sidebar */
 	margin-top: 70px;
 	margin-right: 70px;
+	height: 80vh;
 }
 
 .tr{
@@ -34,8 +35,8 @@
 	border-spacing: 0 10px; 
 	width: 100%; 
 	border: 15px solid transparent;
-	word-wrap: break-word;	
-	overflow: auto;
+	word-wrap: break-word;
+	height: 50px;
 }
 
 td{

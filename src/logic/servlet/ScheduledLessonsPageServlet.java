@@ -2,6 +2,7 @@ package logic.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -43,11 +44,12 @@ public class ScheduledLessonsPageServlet extends HttpServlet {
 			lessons = controller.getLessons((UserBean) session.getAttribute("loggedUser"));
 		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 		
 		} catch (RecordNotFoundException e) {
-			//
+			lessons = new ArrayList<>();
 		}
 		
 		try {
@@ -55,11 +57,12 @@ public class ScheduledLessonsPageServlet extends HttpServlet {
 			courses = controller.getCourses((UserBean) session.getAttribute("loggedUser"));
 			
 		} catch (RecordNotFoundException e) {
-			//
+			courses = new ArrayList<>();
 			
 		} catch (SQLException e) {
-		// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 		}
 		
 		request.setAttribute("listOfLesson", lessons);

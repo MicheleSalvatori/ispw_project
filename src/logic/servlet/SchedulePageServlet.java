@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -51,11 +52,12 @@ public class SchedulePageServlet extends HttpServlet {
 			courses = controller.getCourses((UserBean) session.getAttribute("loggedUser"));
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 			
 		} catch (RecordNotFoundException e) {
-			//
+			courses = new ArrayList<>();
 		}
 		
 		request.setAttribute("listOfClass", classrooms);

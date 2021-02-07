@@ -2,6 +2,7 @@ package logic.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -23,8 +24,7 @@ public class ForumPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 
 		QuestionController controller = new QuestionController();
@@ -33,10 +33,12 @@ public class ForumPageServlet extends HttpServlet {
 			questions = controller.getAllQuestions((UserBean) session.getAttribute("loggedUser"));
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 			
 		} catch (RecordNotFoundException e) {
-			//
+			questions = new ArrayList<>();
 		}
 		
 		request.setAttribute("listOfQuestion", questions);
@@ -45,10 +47,14 @@ public class ForumPageServlet extends HttpServlet {
 		List<AssignmentBean> assignments = null;
 		try {
 			assignments = assignmentController.getAssignments((UserBean) session.getAttribute("loggedUser"));
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
+			
 		} catch (RecordNotFoundException e) {
-			e.printStackTrace();
+			assignments = new ArrayList<>();
 		}
 		request.setAttribute("listOfAssignment", assignments);
 		request.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(request, response);

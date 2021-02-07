@@ -2,6 +2,7 @@ package logic.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -28,16 +29,15 @@ public class CommunicationsPageServlet extends HttpServlet {
 			communications = controller.getCommunications();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 
 		} catch (RecordNotFoundException e) {
+			communications = new ArrayList<>();
 		}
 
 		request.setAttribute("listOfCommunications", communications);
 		request.getRequestDispatcher("/WEB-INF/CommunicationsPage.jsp").forward(request, response);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	}
 }

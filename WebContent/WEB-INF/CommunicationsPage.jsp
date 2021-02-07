@@ -12,15 +12,9 @@
 <%@ page import="javax.servlet.RequestDispatcher"%>
 
 <%
-UserBean user = new UserBean();
-if (session.getAttribute("loggedUser") != null) {
-	user = (UserBean) session.getAttribute("loggedUser");
-}
-
-else {
-	user.setUsername("");
-}
+	UserBean user = (UserBean) session.getAttribute("loggedUser");
 %>
+
 <head>
 <meta charset="utf-8">
 <title>App - Communications</title>
@@ -213,7 +207,7 @@ else {
 		<a class="title-label">Communications</a>
 	</div>
 
-	<div>
+	<div style="border: 2px solid #0C0B0B; border-radius: 14px; overflow: scroll; height: 100%; overflow-x: hidden; border">
 		<table class="table">
 			<c:if test="${empty listOfCommunications}">
 				<tr>

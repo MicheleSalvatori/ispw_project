@@ -2,6 +2,7 @@ package logic.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -49,46 +50,49 @@ public class CoursePageServlet extends HttpServlet {
 		try {
 			course = controller.getCourse(courseBean);
 			
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (SQLException e) {
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 			
-		} catch (RecordNotFoundException e1) {
-			// TODO Auto-generated catch block
-			//e1.printStackTrace();
+		} catch (RecordNotFoundException e) {
+			course = null;
 		}
 		
 		try {
 			lesson = controller.getNextLesson(courseBean);
 				
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 			
 		} catch (RecordNotFoundException e) {
-			//e.printStackTrace();
+			lesson = null;
 		}
 		
 		try {
 			professors = controller.getCourseProfessors(courseBean);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 			
 		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
+			professors = new ArrayList<>();
 		}
 		
 		try {
 			weeklyLessons = controller.getWeeklyLessons(courseBean);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 			
 		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
+			weeklyLessons = new ArrayList<>();
 		}
 		
 		request.setAttribute("courseBean", course);
