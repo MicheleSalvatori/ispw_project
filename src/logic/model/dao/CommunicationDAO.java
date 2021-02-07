@@ -52,8 +52,8 @@ public class CommunicationDAO {
 				stmt.close();
 			}
 		}
-		throw new SQLException();
-//		return communications;
+		
+		return communications;
 	}
 
 	public void postCommunication() {

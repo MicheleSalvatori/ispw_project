@@ -57,10 +57,10 @@ public class LessonPageServlet extends HttpServlet {
 			req.setAttribute("occupiedSeats", occupiedSeats);
 			req.setAttribute("mySeat", mySeat);
 			
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			
+		} catch (SQLException e) {
+			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+			return;	
 		}
 		
 		req.getRequestDispatcher("/WEB-INF/LessonPage.jsp").forward(req, resp);
@@ -91,14 +91,15 @@ public class LessonPageServlet extends HttpServlet {
 				SeatBean seat = new SeatBean(Integer.valueOf(req.getParameter("bookSeat")));
 				controller.occupateSeat(seat, lesson, user);
 				
-				// TODO POSTO GIA OCCUPATO EXCEPTION
-				
 			} catch (SQLException e) {
-				e.printStackTrace();
+				req.setAttribute("alertMsg", "An error as occured. Try later.");
+				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+				return;
 				
 			} catch (SeatAlreadyBookedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				req.setAttribute("alertMsg", "An error as occured. Try later.");
+				req.getRequestDispatcher("/WEB-INF/LessonPage.jsp").include(req, resp);
+				return;
 			}
 		}
 		
@@ -109,8 +110,9 @@ public class LessonPageServlet extends HttpServlet {
 				controller.freeSeat(seat, lesson, user);
 				
 			} catch (SQLException e) {
-				e.printStackTrace();
-				
+				req.setAttribute("alertMsg", "An error as occured. Try later.");
+				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+				return;
 			}
 		}
 		

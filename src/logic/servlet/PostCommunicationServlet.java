@@ -18,8 +18,7 @@ public class PostCommunicationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/PostCommunicationPage.jsp").forward(request, response);
 	}
 
@@ -33,9 +32,13 @@ public class PostCommunicationServlet extends HttpServlet {
 		
 		try {
 			controller.postCommunication(communication);
-			} catch (SQLException e) {
-			e.printStackTrace();
+			
+		} catch (SQLException e) {
+			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+			return;
 		}
+		
 		resp.sendRedirect("/ispw_project/AdministrationPageServlet");
 	}
 }

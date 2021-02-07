@@ -148,4 +148,5 @@ LessonBean lesson = (LessonBean) request.getAttribute("lesson");
     	alert("${alertMsg}");
   	</script>
 <%} %>
+
 </html>

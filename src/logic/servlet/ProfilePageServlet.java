@@ -52,12 +52,12 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 			
 		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			courses = new ArrayList<>();
 		}
 		
 		try {
@@ -67,24 +67,24 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 			
 		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			requests = new ArrayList<>();
 		}
 		
 		try {
 			available = controller.getAvailableCourses((UserBean) session.getAttribute("loggedUser"));
 		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 		
 		} catch (RecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			available = new ArrayList<>();
 		}
 
 		request.setAttribute("listOfCourse", courses);
@@ -121,8 +121,9 @@ public class ProfilePageServlet extends HttpServlet {
 				controller.sendRequest(requestBean);
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				request.setAttribute("alertMsg", "An error as occured. Try later.");
+				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				return;
 			}
 		}
 		
@@ -148,8 +149,9 @@ public class ProfilePageServlet extends HttpServlet {
 				controller.removeCourse(requestBean);
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				request.setAttribute("alertMsg", "An error as occured. Try later.");
+				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				return;
 			}
 		}
 		
@@ -171,8 +173,9 @@ public class ProfilePageServlet extends HttpServlet {
 				controller.deleteRequest(requestBean);
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				request.setAttribute("alertMsg", "An error as occured. Try later.");
+				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				return;
 			}
 		}
 		
@@ -199,8 +202,9 @@ public class ProfilePageServlet extends HttpServlet {
 						return;
 						
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						request.setAttribute("alertMsg", "An error as occured. Try later.");
+						request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+						return;
 					}
 				}
 			}		

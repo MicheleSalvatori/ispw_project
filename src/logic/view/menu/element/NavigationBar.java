@@ -43,4 +43,8 @@ public class NavigationBar {
 	public VBox getPane() {
 		return vbox;
 	}
+
+	public static void setInstance(Object object) {
+		instance = null;
+	}
 }

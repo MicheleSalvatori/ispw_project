@@ -3,6 +3,7 @@ package logic.servlet;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -39,14 +40,13 @@ public class QuestionPageServlet extends HttpServlet {
 			questionBean = controller.getQuestionByID(Integer.valueOf(req.getParameter("questionID")));
 			answers = controller.getAnswersOf(Integer.valueOf(req.getParameter("questionID")));
 			
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			
 		} catch (RecordNotFoundException e) {
-			answers = null;
+			answers = new ArrayList<>();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+			return;
 		}
 		
 		req.setAttribute("listOfAnswers", answers);
@@ -67,13 +67,18 @@ public class QuestionPageServlet extends HttpServlet {
 			answerBean.setText(req.getParameter("answer-text"));
 			answerBean.setDate(new Date(System.currentTimeMillis()));
 			answerBean.setId(Integer.valueOf(req.getParameter("id")));
+			
 			try {
 				controller.save(answerBean);
-				resp.sendRedirect("/ispw_project/ForumPageServlet");			//TODO lanciare popuop di avvenuto inserimento. Problema: non possiamo ricaricare QuestionPage perchè non abbiamo i dati della domanda
+				//TODO lanciare popuop di avvenuto inserimento. Problema: non possiamo ricaricare QuestionPage perchè non abbiamo i dati della domanda
+			
 			} catch (SQLException e) {
-				// TODO
-				e.printStackTrace();
+				req.setAttribute("alertMsg", "An error as occured. Try later.");
+				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+				return;
 			}
+			
+			resp.sendRedirect("/ispw_project/ForumPageServlet");
 		}
 	}
 }

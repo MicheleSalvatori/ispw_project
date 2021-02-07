@@ -12,15 +12,9 @@
 <%@ page import="javax.servlet.RequestDispatcher"%>
 
 <%
-UserBean user = new UserBean();
-if (session.getAttribute("loggedUser") != null) {
-	user = (UserBean) session.getAttribute("loggedUser");
-}
-
-else {
-	user.setUsername("");
-}
+	UserBean user = (UserBean) session.getAttribute("loggedUser");
 %>
+
 <head>
 <meta charset="utf-8">
 <title>App - Communications</title>

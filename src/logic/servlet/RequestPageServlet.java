@@ -2,6 +2,7 @@ package logic.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -44,11 +45,12 @@ public class RequestPageServlet extends HttpServlet {
 			requests = controller.getRequests((UserBean) request.getSession().getAttribute("loggedUser"));
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 			
 		} catch (RecordNotFoundException e) {
-			//requests = null;
+			requests = new ArrayList<>();
 		}
 		
 		
@@ -56,11 +58,12 @@ public class RequestPageServlet extends HttpServlet {
 			courses = controller.getCourses((UserBean) request.getSession().getAttribute("loggedUser"));
 		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
 		
 		} catch (RecordNotFoundException e) {
-			//courses = null;
+			courses = new ArrayList<>();
 		}
 
 		session.setAttribute("listOfRequest", requests);
@@ -90,9 +93,11 @@ public class RequestPageServlet extends HttpServlet {
 			
 			try {
 				controller.acceptRequest(requestBean);
+				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				request.setAttribute("alertMsg", "An error as occured. Try later.");
+				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				return;
 			}
 		}
 		
@@ -112,9 +117,11 @@ public class RequestPageServlet extends HttpServlet {
 			
 			try {
 				controller.declineRequest(requestBean);
+				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				request.setAttribute("alertMsg", "An error as occured. Try later.");
+				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				return;
 			}
 		}
 		

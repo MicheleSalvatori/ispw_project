@@ -34,23 +34,12 @@ public class AssignmentPageServlet extends HttpServlet {
 		AssignmentBean assignmentBean = null;
 		try {
 			assignmentBean = controller.getAssignmentByID(Integer.valueOf(req.getParameter("assignment")));
-			
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		
+			assignmentBean = null;
 		}
 		
 		req.setAttribute("assignment", assignmentBean);
 		req.getRequestDispatcher("/WEB-INF/AssignmentPage.jsp").forward(req, resp);	
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 	}
 }

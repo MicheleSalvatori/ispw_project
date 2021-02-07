@@ -16,6 +16,7 @@ import logic.model.dao.ProfessorDAO;
 import logic.model.dao.RoleDAO;
 import logic.model.dao.StudentDAO;
 import logic.utilities.Role;
+import logic.view.menu.element.NavigationBar;
 
 public class LoginController {
 
@@ -92,7 +93,7 @@ public class LoginController {
 		UserBean.setInstance(null);
 
 		// Delete Navigation Bar
-		// NavigationBar.setInstance(null);
+		NavigationBar.setInstance(null);
 	}
 
 	public void signup(UserBean userBean) throws SQLException, DuplicatedRecordException {

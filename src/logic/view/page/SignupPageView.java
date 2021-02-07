@@ -122,6 +122,7 @@ public class SignupPageView implements Initializable {
 		try {
 			InternetAddress emailAddr = new InternetAddress(email);
 			emailAddr.validate();
+			
 		} catch (AddressException e) {
 			throw new InvalidInputException(e.getMessage());
 		}

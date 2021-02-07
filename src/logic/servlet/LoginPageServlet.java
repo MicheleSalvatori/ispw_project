@@ -3,7 +3,6 @@ package logic.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,21 +40,23 @@ public class LoginPageServlet extends HttpServlet {
 			userBean = controller.login(userBean);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(req, resp);
+			return;
 			
 		} catch (RecordNotFoundException e) {
-			req.setAttribute("alertMsg", "Not valid login credentials.");
-            RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/LoginPage.jsp");
-            rd.include(req, resp);
-            return;
+            req.setAttribute("alertMsg", "Not valid login credentials.");
+			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(req, resp);
+			return;
 		}
 
         HttpSession session = req.getSession();
         session.setAttribute("loggedUser", userBean);
+        
         if (userBean.getRole() == Role.ADMIN) {
 			resp.sendRedirect(req.getContextPath() + "/AdministrationPageServlet");
-		} else {
+		}
+        else {
 			resp.sendRedirect(req.getContextPath() + "/HomePageServlet");
 		}
     }

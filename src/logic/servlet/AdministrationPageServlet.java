@@ -36,8 +36,9 @@ public class AdministrationPageServlet extends HttpServlet {
 
 		} catch (SQLException e) {
 			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(request, response);
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
 			return;
+			
 		} catch (RecordNotFoundException e) {
 			communications = new ArrayList<>();
 		}
