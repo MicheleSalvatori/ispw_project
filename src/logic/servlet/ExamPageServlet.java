@@ -45,8 +45,8 @@ public class ExamPageServlet extends HttpServlet {
 		
 		try {
 			exams = controller.getVerbalizedExams((UserBean) session.getAttribute("loggedUser"));
-			GPA = controller.GPA(exams);
-			WPA = controller.WPA(exams);
+			GPA = controller.gpa(exams);
+			WPA = controller.wpa(exams);
 			
 		} catch (SQLException e) {
 			request.setAttribute("alertMsg", "An error as occured. Try later.");

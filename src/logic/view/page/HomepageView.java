@@ -108,7 +108,7 @@ public class HomepageView implements Initializable {
 				
 				ViewVerbalizedExamsController controller = new ViewVerbalizedExamsController();
 				StudentStatCard studentCard1 = new StudentStatCard(controller.countVerbalizedExams(UserBean.getInstance()), "Verbalized", "Grades");
-				StudentStatCard studentCard2 = new StudentStatCard((int)controller.WPA(controller.getVerbalizedExams(UserBean.getInstance())), "Average", "Grade");
+				StudentStatCard studentCard2 = new StudentStatCard((int)controller.wpa(controller.getVerbalizedExams(UserBean.getInstance())), "Average", "Grade");
 				
 				hboxStats.getChildren().add(studentCard1.getPane());
 				hboxStats.getChildren().add(studentCard2.getPane());

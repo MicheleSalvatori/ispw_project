@@ -30,19 +30,10 @@ public class ViewVerbalizedExamsController {
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course.getAbbrevation());
 			courseBean.setCredits(course.getCredits());
-			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
-			courseBean.setPrerequisites(course.getPrerequisites());
-			courseBean.setReception(course.getReception());
-			courseBean.setSemester(course.getSemester());
-			courseBean.setYear(course.getYear());
 			
 			Student student = verb.getStudent();
 			StudentBean studentBean = new StudentBean();
-			studentBean.setEmail(student.getEmail());
-			studentBean.setName(student.getName());
-			studentBean.setPassword(student.getPassword());
-			studentBean.setSurname(student.getSurname());
 			studentBean.setUsername(student.getUsername());
 
 			VerbalizedBean verbBean = new VerbalizedBean();
@@ -62,7 +53,7 @@ public class ViewVerbalizedExamsController {
 	}
 	
 	// Calculate GPA
-	public double GPA(List<VerbalizedBean> verbs) {
+	public double gpa(List<VerbalizedBean> verbs) {
 		double tot = 0;
 		for (VerbalizedBean verbBean : verbs) {
 			tot += verbBean.getGrade();
@@ -72,7 +63,7 @@ public class ViewVerbalizedExamsController {
 	}
 
 	// Calculate WPA
-	public double WPA(List<VerbalizedBean> verbs) {
+	public double wpa(List<VerbalizedBean> verbs) {
 		double tot = 0;
 		int credits = 0;
 		for (VerbalizedBean verbBean : verbs) {

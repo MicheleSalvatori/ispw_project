@@ -9,7 +9,7 @@ import java.io.Reader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import logic.utilities.AppProperties;
 
 public class CheckWeatherController {
 	
@@ -104,7 +106,7 @@ public class CheckWeatherController {
 	private JSONObject readJsonFromUrl(String url) {
 		try {
 			InputStream is = new URL(url).openStream();
-		    BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+		    BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 		    String jsonText = readAll(rd);
 		    JSONObject json = new JSONObject(jsonText);
 		    is.close();
@@ -112,31 +114,29 @@ public class CheckWeatherController {
 	    
 		} catch (IOException e) {
 			Logger.getGlobal().log(Level.SEVERE, "JSON loading error");
-			return null;
+			throw new NullPointerException();
 		}
 	}
 	
 	private JSONArray getInfo() {
+		
+		String api = AppProperties.getInstance().getProperty("weatherapi");
+		String lat = AppProperties.getInstance().getProperty("weatherlat");
+		String lon = AppProperties.getInstance().getProperty("weatherlon");
 
-		// TODO STRING IN PROPERTIES
-		String API_KEY = "a4f22e032f9d48ee8fd3a2dfe5101878";
-		//String LOCATION = "Rome, IT";
-		String LAT = "41.89";
-		String LON = "12.48";
-		//String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + LOCATION + "&appid=" + API_KEY + "&units=imperial";
-		String urlString = "https://api.openweathermap.org/data/2.5/onecall?lat=" + LAT + "&lon=" + LON +"&exclude=daily,minutely,current,alerts&appid=" + API_KEY;
+		String urlString = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon +"&exclude=daily,minutely,current,alerts&appid=" + api;
 
 		JSONObject json;
+		JSONArray array = null;
 		
 		json = readJsonFromUrl(urlString);
-		JSONArray array = null;
 		try {
 			array = json.getJSONArray("hourly");
-			
-		} catch (NullPointerException e) {
-			return null;
-		}
 		
+		} catch (Exception e) {
+			array = null;
+		}
+
 		return array;
 	}
 	
@@ -144,6 +144,9 @@ public class CheckWeatherController {
 		
 		String image = null;
 		JSONArray info = getInfo();
+		if (info == null) {
+			return new ArrayList<>();
+		}
 		
 		JSONArray hourly = info.getJSONObject(hour).getJSONArray("weather");
 		JSONObject weather = hourly.getJSONObject(0);

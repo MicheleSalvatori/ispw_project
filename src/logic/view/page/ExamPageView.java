@@ -102,8 +102,8 @@ public class ExamPageView implements Initializable {
 
 		// Setup media
 		labelVE.setText(Integer.toString(verbs.size()));
-		labelGPA.setText(Double.toString(controller.GPA(verbs)));
-		labelWPA.setText(Double.toString(controller.WPA(verbs)));
+		labelGPA.setText(Double.toString(controller.gpa(verbs)));
+		labelWPA.setText(Double.toString(controller.wpa(verbs)));
 	}
 	
 	@FXML
@@ -271,7 +271,7 @@ public class ExamPageView implements Initializable {
 		
 		// Setup media
 		labelVE.setText(Integer.toString(verbs.size()));
-		labelGPA.setText(Double.toString(controller.GPA(verbs)));
-		labelWPA.setText(Double.toString(controller.WPA(verbs)));
+		labelGPA.setText(Double.toString(controller.gpa(verbs)));
+		labelWPA.setText(Double.toString(controller.wpa(verbs)));
 	}
 }
