@@ -76,32 +76,32 @@ public class NavigationBarView implements Initializable {
 	
 	@FXML
 	public void settingsButton(ActionEvent event) {
-		PageLoader.getInstance().buildPage(Page.ADMINISTRATION_PAGE, event);
+		PageLoader.getInstance().buildPage(Page.ADMINISTRATION_PAGE);
 	}
 
 	@FXML
 	public void homeButton(ActionEvent event) {
-		PageLoader.getInstance().buildPage(Page.HOMEPAGE, event);
+		PageLoader.getInstance().buildPage(Page.HOMEPAGE);
 	}
 
 	@FXML
 	public void newsButton(ActionEvent event) {
-		PageLoader.getInstance().buildPage(Page.NEWS, event);
+		PageLoader.getInstance().buildPage(Page.COMMUNICATIONS);
 	}
 
 	@FXML
 	public void profileButton(ActionEvent event) {
-		PageLoader.getInstance().buildPage(Page.PROFILE, event);
+		PageLoader.getInstance().buildPage(Page.PROFILE);
 	}
 
 	@FXML
 	public void examsButton(ActionEvent event) {
-		PageLoader.getInstance().buildPage(Page.EXAM, event);
+		PageLoader.getInstance().buildPage(Page.EXAM);
 	}
 
 	@FXML
 	public void forumButton(ActionEvent event) {
-		PageLoader.getInstance().buildPage(Page.FORUM, event);
+		PageLoader.getInstance().buildPage(Page.FORUM);
 	}
 
 	@FXML
@@ -111,11 +111,11 @@ public class NavigationBarView implements Initializable {
 	
 	@FXML
 	public void requestButton(ActionEvent event) {
-		PageLoader.getInstance().buildPage(Page.REQUEST, event);
+		PageLoader.getInstance().buildPage(Page.REQUEST);
 	}
 	
 	@FXML
 	public void scheduleButton(ActionEvent event) {
-		PageLoader.getInstance().buildPage(Page.SCHEDULE, event);
+		PageLoader.getInstance().buildPage(Page.SCHEDULE);
 	}
 }

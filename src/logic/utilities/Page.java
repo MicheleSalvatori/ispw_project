@@ -10,7 +10,7 @@ public enum Page {
 	NEWASSIGNMENT("src/res/fxml/page/NewAssignmentPage.fxml", "App - Insert new assignment"),
 	QUESTION("src/res/fxml/page/QuestionPage.fxml", "App - Question"),
 	ANSWER_QUESTION("src/res/fxml/page/AnswerPage.fxml", "App - Answer a Question"),
-	NEWS("src/res/fxml/page/NewsPage.fxml", "App - News"),
+	COMMUNICATIONS("src/res/fxml/page/CommunicationsPage.fxml", "App - News"),
 	PROFILE("src/res/fxml/page/ProfilePage.fxml", "App - Profile"),
 	PROFESSOR("src/res/fxml/page/ProfessorPage.fxml", "App - Professor"),
 	EXAM("src/res/fxml/page/ExamPage.fxml", "App - Exams"), 
