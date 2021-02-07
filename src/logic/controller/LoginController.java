@@ -16,7 +16,6 @@ import logic.model.dao.ProfessorDAO;
 import logic.model.dao.RoleDAO;
 import logic.model.dao.StudentDAO;
 import logic.utilities.Role;
-import logic.view.menu.element.NavigationBar;
 
 public class LoginController {
 

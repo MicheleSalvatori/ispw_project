@@ -48,7 +48,6 @@ public class QuestionPageServlet extends HttpServlet {
 			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
 			return;
 		}
-		
 		req.setAttribute("listOfAnswers", answers);
 		req.setAttribute("question", questionBean);
 		req.setAttribute("questionID", req.getParameter("questionID"));

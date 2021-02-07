@@ -269,7 +269,7 @@
 									</tr>
 								</table>
 						<td align="right" class="course"
-							style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left; flex: 1">
+							style="white-space: nowrap; text-decoration: underline; text-align: left; flex: 1">
 							${question.getCourse()}</td>
 						<td align="right"
 							style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%; flex: 1">
@@ -277,19 +277,11 @@
 								action="${pageContext.request.contextPath}/QuestionPageServlet"
 								method="get">
 								<input type="hidden" name="questionID"
-									value="${question.getId()}" /> <input type="hidden"
-									name="questionTitle" value="${question.getTitle()}" /> <input
-									type="hidden" name="questionText" value="${question.getText()}" />
-								<input type="hidden" name="authorName"
-									value="${question.getStudent().getName()}" /> <input
-									type="hidden" name="authorSurname"
-									value="${question.getStudent().getSurname()}" /> <input
-									type="hidden" name="questionDate"
-									value="${question.getDate().toString()}" />
+									value="${question.getId()}" /> 
 								<button name="viewQuestion" class="button-view" type="submit">View</button>
 							</form>
 						</td>
-						<td>
+						<td style = "border-radius: 0 14px 14px 0;">
 							<input type="hidden" id = "question-username" name="question-username" value="${question.getStudent().getUsername()}">
 							</td>
 						</tr>
