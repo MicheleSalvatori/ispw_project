@@ -59,6 +59,7 @@
         <path refid="EAR Libraries.libraryclasspath"/>
         <path refid="Apache Tomcat v9.0 [Apache Tomcat v9.0].libraryclasspath"/>
         <pathelement location="lib/javax.servlet-api-4.0.1.jar"/>
+        <pathelement location="lib/jfxrt.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
