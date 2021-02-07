@@ -11,6 +11,7 @@
     <property name="source" value="1.8"/>
     <path id="Web App Libraries.libraryclasspath">
         <pathelement location="WebContent/WEB-INF/lib/javax.mail.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/javax.servlet-api-4.0.1.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/jstl-1.2.jar"/>
         <pathelement location="WebContent/WEB-INF/lib/mysql-connector-java-5.1.46-bin.jar"/>
     </path>
@@ -57,6 +58,7 @@
         <path refid="Web App Libraries.libraryclasspath"/>
         <path refid="EAR Libraries.libraryclasspath"/>
         <path refid="Apache Tomcat v9.0 [Apache Tomcat v9.0].libraryclasspath"/>
+        <pathelement location="lib/javax.servlet-api-4.0.1.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
