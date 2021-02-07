@@ -154,7 +154,7 @@ public class CheckWeatherController {
 		}
 		h = h + ":00";
 		
-		String temp = kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "°C";
+		String temp = kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "\u00B0" + "C";
 		
 		List<String> w = new ArrayList<>();
 		w.add(temp);

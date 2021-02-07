@@ -104,7 +104,6 @@ public class SeatDAO {
 				throw new SQLException();
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//			String dateLesson = SQLConverter.date(lesson.getDate());		// Non funziona, sul db è yyyy/mm/gg
 			String dateLesson = lesson.getDate().toString();
 			String timeLesson = SQLConverter.time(lesson.getTime());
 			ResultSet rs = Queries.getOccupateSeats(stmt, lesson.getCourse().getAbbreviation(), dateLesson, timeLesson);

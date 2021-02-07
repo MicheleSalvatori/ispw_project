@@ -69,7 +69,7 @@ public class QuestionPageServlet extends HttpServlet {
 			
 			try {
 				controller.save(answerBean);
-				//TODO lanciare popuop di avvenuto inserimento. Problema: non possiamo ricaricare QuestionPage perchè non abbiamo i dati della domanda
+				//TODO lanciare popuop di avvenuto inserimento. Problema: non possiamo ricaricare QuestionPage perche non abbiamo i dati della domanda
 			
 			} catch (SQLException e) {
 				req.setAttribute("alertMsg", "An error as occured. Try later.");
