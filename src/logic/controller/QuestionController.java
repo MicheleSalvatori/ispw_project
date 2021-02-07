@@ -92,7 +92,6 @@ public class QuestionController {
 			bean.setStudent(studentBean);
 			bean.setText(q.getText());
 			bean.setTitle(q.getTitle());
-//			bean.setCourseByAbbr(q.getCourse().getAbbrevation());
 			bean.setCourse(q.getCourse().getAbbrevation());
 			bean.setSolved(q.isSolved());
 			bean.setDate(q.getDate());
@@ -111,7 +110,7 @@ public class QuestionController {
 			QuestionDAO.setSolved(questionID);
 
 		} catch (SQLException e) {
-			// AlertControl
+			// TODO AlertControl
 			return false;
 		}
 
@@ -136,8 +135,11 @@ public class QuestionController {
 				answerBean.setUser(usrBean);
 				answerList.add(answerBean);
 			}
+			
 		} catch (SQLException e) {
+			//TODO
 			e.printStackTrace();
+			
 		} catch (RecordNotFoundException e) {
 			throw new RecordNotFoundException("no answer founded");
 		}

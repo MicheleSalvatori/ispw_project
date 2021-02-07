@@ -9,10 +9,6 @@ public class AnswerBean {
 	private UserBean user;
 	private Date date;
 
-	public AnswerBean() {
-		
-	}
-
 	public int getId() {
 		return id;
 	}

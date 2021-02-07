@@ -8,10 +8,6 @@ public class ClassroomBean {
 	private int seatRow;
 	private int seatColumn;
 	List<SeatBean> seat;
-	
-	public ClassroomBean() {
-	
-	}
 
 	public String getName() {
 		return name;

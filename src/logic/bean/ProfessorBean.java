@@ -8,8 +8,6 @@ public class ProfessorBean {
 	private String surname;
 	private String email;
 	
-	public ProfessorBean() {}
-	
 	public String getUsername() {
 		return username;
 	}

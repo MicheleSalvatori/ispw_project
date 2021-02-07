@@ -5,10 +5,6 @@ public class RequestBean {
 	private StudentBean student;
 	private CourseBean course;
 	
-	public RequestBean() {
-		
-	}
-	
 	public StudentBean getStudent() {
 		return student;
 	}

@@ -36,15 +36,7 @@ public enum Page {
 		return res;
 	}
 
-	public void setRes(String res) {
-		this.res = res;
-	}
-
 	public String getStageTitle() {
 		return stageTitle;
-	}
-
-	public void setStageTitle(String stageTitle) {
-		this.stageTitle = stageTitle;
 	}
 }

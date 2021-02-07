@@ -37,6 +37,9 @@ public class LoginController {
 		case ADMIN:
 			loginAsAdmin(userBean);
 			break;
+			
+		default:
+			break;
 		}
 
 		userBean.setRole(role);

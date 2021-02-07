@@ -9,10 +9,6 @@ public class VerbalizedBean {
 	private int grade;
 	private Date date;
 	
-	public VerbalizedBean() {
-		
-	}
-	
 	public StudentBean getStudent() {
 		return student;
 	}

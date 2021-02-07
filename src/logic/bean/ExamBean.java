@@ -11,10 +11,6 @@ public class ExamBean {
 	private ClassroomBean classroom;
 	private String note;
 	
-	public ExamBean() {
-		
-	}
-	
 	public Date getDate() {
 		return date;
 	}
