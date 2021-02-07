@@ -207,7 +207,7 @@
 		<a class="title-label">Communications</a>
 	</div>
 
-	<div>
+	<div style="border: 2px solid #0C0B0B; border-radius: 14px; overflow: scroll; height: 100%; overflow-x: hidden; border">
 		<table class="table">
 			<c:if test="${empty listOfCommunications}">
 				<tr>
