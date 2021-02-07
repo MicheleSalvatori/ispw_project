@@ -80,7 +80,10 @@ public class ViewVerbalizedExamsController {
 			credits += Integer.parseInt(verbBean.getCourse().getCredits());
 		}
 
-		return round(tot / credits);
+		if (credits != 0) {
+			return round(tot / credits);
+		}
+		return 0;
 	}
 
 	// Round double by 2 decimal places

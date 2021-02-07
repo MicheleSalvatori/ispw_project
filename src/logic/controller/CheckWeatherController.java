@@ -21,7 +21,7 @@ import org.json.JSONObject;
 public class CheckWeatherController {
 	
 	private double kelvinToCelsius(double kelvin) {
-		BigDecimal bd = new BigDecimal(kelvin-273.15).setScale(1, RoundingMode.HALF_UP);
+		BigDecimal bd = BigDecimal.valueOf(kelvin-273.15).setScale(1, RoundingMode.HALF_UP);
 		return bd.doubleValue();
 	}
 	
@@ -129,7 +129,14 @@ public class CheckWeatherController {
 		JSONObject json;
 		
 		json = readJsonFromUrl(urlString);
-		JSONArray array = json.getJSONArray("hourly");
+		JSONArray array = null;
+		try {
+			array = json.getJSONArray("hourly");
+			
+		} catch (NullPointerException e) {
+			return null;
+		}
+		
 		return array;
 	}
 	
