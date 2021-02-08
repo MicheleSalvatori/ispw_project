@@ -111,7 +111,7 @@ public class RequestPageView implements Initializable {
 		
 		try {
 			acceptRequestController.acceptRequest(requestBean);
-			AlertController.infoAlert("Request accepted.\nThe student will be notified");
+			AlertController.infoAlert("Request accepted.");
 			updateRequests();
 			
 		} catch (SQLException e) {
@@ -125,7 +125,7 @@ public class RequestPageView implements Initializable {
 		
 		try {
 			acceptRequestController.declineRequest(requestBean);
-			AlertController.infoAlert("Request declined.\nThe student will be notified");
+			AlertController.infoAlert("Request declined.");
 			updateRequests();
 			
 		} catch (SQLException e) {

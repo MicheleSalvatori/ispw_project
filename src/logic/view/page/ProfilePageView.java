@@ -238,7 +238,7 @@ public class ProfilePageView implements Initializable {
 				return;
 			}
 			
-			AlertController.infoAlert("Request sended to course's professor.\nYou will receive a notification when the request will be approved");
+			AlertController.infoAlert("Request sended to course's professor.");
 			loadCourses();
 		}	
 	}
