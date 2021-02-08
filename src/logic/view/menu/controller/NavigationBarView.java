@@ -17,6 +17,9 @@ public class NavigationBarView implements Initializable {
 	private Button btnHome;
 	
 	@FXML
+	private Button btnRefresh;
+	
+	@FXML
 	private Button btnExams;
 	
 	@FXML
@@ -117,5 +120,11 @@ public class NavigationBarView implements Initializable {
 	@FXML
 	public void scheduleButton(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.SCHEDULE);
+	}
+	
+	@FXML
+	public void refreshPage(ActionEvent event) {
+		System.out.println("Refresh");
+		PageLoader.getInstance().refreshPage();
 	}
 }

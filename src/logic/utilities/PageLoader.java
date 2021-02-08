@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
@@ -36,7 +37,7 @@ public class PageLoader {
 	private static Page page = null;
 	private static Object obj = null;
 	private static Deque<Pair<Page, Object>> stack = new ArrayDeque<>();
-	
+
 	private FXMLLoader loader;
 
 	private Background background = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
@@ -55,11 +56,11 @@ public class PageLoader {
 	public static Page getPage() {
 		return page;
 	}
-	
+
 	public static void setPage(Page page) {
 		PageLoader.page = page;
 	}
-	
+
 	public static Stage getStage() {
 		return stage;
 	}
@@ -67,55 +68,55 @@ public class PageLoader {
 	public static Object getObject() {
 		return obj;
 	}
-	
+
 	public static void setObject(Object obj) {
 		PageLoader.obj = obj;
 	}
-	
+
 	public static void setStage(Stage stage) {
 		PageLoader.stage = stage;
 	}
-	
+
 	public static void addFirst(Pair<Page, Object> pair) {
 		stack.addFirst(pair);
 	}
-	
+
 	public static Pair<Page, Object> getFirst() {
 		return stack.removeFirst();
 	}
-	
-	public void goBack(){
-		
+
+	public void goBack() {
+
 		if (stack.peek().getKey() == null || stack.isEmpty()) {
 			AlertController.infoAlert("Use logout to exit.");
 			return;
 		}
-		
+
 		Pair<Page, Object> last = getFirst();
-		
+
 		if (last.getValue() == null) {
 			buildPage(last.getKey());
 		}
-		
+
 		else {
 			buildPage(last.getKey(), last.getValue());
-			
+
 		}
-		
+
 		if (!stack.isEmpty()) {
 			getFirst();
 		}
 	}
 
 	// BuildPage and pass a bean to the page controller
-	public void buildPage(Page page, Object obj){
-		
+	public void buildPage(Page page, Object obj) {
+
 		addFirst(new Pair<>(PageLoader.getPage(), PageLoader.getObject()));
-		
+
 		PageLoader.setPage(page);
 		PageLoader.setObject(obj);
-		
-		switch (page) {		// TODO high coupling (cast dal pageloader)
+
+		switch (page) { // TODO high coupling (cast dal pageloader)
 
 		case COURSE:
 			loadPage();
@@ -156,7 +157,7 @@ public class PageLoader {
 			configPage(load());
 			questionPageView.setBean(obj);
 			break;
-			
+
 		case ASSIGNMENT:
 			loadPage();
 			AssignmentPageView assignmentPageView = new AssignmentPageView();
@@ -174,14 +175,14 @@ public class PageLoader {
 
 	// Build a page without pass a bean
 	public void buildPage(Page page) {
-		
+
 		addFirst(new Pair<>(PageLoader.getPage(), PageLoader.getObject()));
-		
+
 		PageLoader.setPage(page);
 		PageLoader.setObject(null);
-		
+
 		switch (page) {
-		
+
 		case SIGNUP:
 			loadPageNoNavBar();
 			break;
@@ -189,7 +190,7 @@ public class PageLoader {
 		case LOGIN:
 			loadPageNoNavBar();
 			break;
-			
+
 		default:
 			loadPage();
 			configPage(load());
@@ -198,14 +199,14 @@ public class PageLoader {
 	}
 
 	private void loadPage() {
-		
+
 		try {
 			URL url = new File(page.getRes()).toURI().toURL();
 			loader = new FXMLLoader(url);
-			
+
 		} catch (IOException e) {
 			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
-		}	
+		}
 	}
 
 	private VBox configNavBar() {
@@ -213,7 +214,8 @@ public class PageLoader {
 	}
 
 	private HBox configStatusBar() {
-		// Reset StatusBar instance every time in order to set label and user avatar properly
+		// Reset StatusBar instance every time in order to set label and user avatar
+		// properly
 		StatusBar.reset();
 		HBox statusBarHBox = new HBox(StatusBar.getInstance().getPane());
 		statusBarHBox.setAlignment(Pos.TOP_RIGHT);
@@ -240,22 +242,22 @@ public class PageLoader {
 			URL url = new File(page.getRes()).toURI().toURL();
 			loader = new FXMLLoader(url);
 			Parent parent = loader.load();
-			
+
 			Scene scene = new Scene(parent);
 			stage.setScene(scene);
 			stage.setTitle(page.getStageTitle());
 			stage.show();
-			
+
 		} catch (IOException e) {
 			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
 		}
 	}
-	
+
 	private Parent load() {
-		
+
 		try {
 			return loader.load();
-			
+
 		} catch (IOException e) {
 			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
 			return null;
@@ -264,5 +266,17 @@ public class PageLoader {
 
 	public Object getController() {
 		return loader.getController();
+	}
+
+	public void refreshPage() {
+		System.out.println(PageLoader.getPage());
+		System.out.println(PageLoader.getObject());
+		if (PageLoader.getObject() == null) {
+			buildPage(PageLoader.getPage());
+		}
+
+		else {
+			buildPage(PageLoader.getPage(), PageLoader.getObject());
+		}
 	}
 }
