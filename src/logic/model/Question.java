@@ -90,14 +90,5 @@ public class Question {
 		this.student = student;
 	}
 
-	@Override
-	public String toString() {
-//		String buildString = "ID: "+getId()
-//			+"\nTitle: "+ getTitle()
-//			+"\nText: "+ getText()
-//			+"\nAuthor: "+getStudent().getName() + " " + getStudent().getSurname();
-		return getText();
-	}
-
 }
 

@@ -45,7 +45,7 @@ public class QuestionPageServlet extends HttpServlet {
 			
 		} catch (SQLException e) {
 			req.setAttribute("alertMsg", "An error as occured. Try later.");
-			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+			req.getRequestDispatcher("/WEB-INF/HomePage.jsp").forward(req, resp);
 			return;
 		}
 		req.setAttribute("listOfAnswers", answers);
@@ -69,15 +69,13 @@ public class QuestionPageServlet extends HttpServlet {
 			
 			try {
 				controller.save(answerBean);
-				//TODO lanciare popuop di avvenuto inserimento. Problema: non possiamo ricaricare QuestionPage perche non abbiamo i dati della domanda
-			
+				req.setAttribute("alertMsg", "Answer correctly added.");
 			} catch (SQLException e) {
 				req.setAttribute("alertMsg", "An error as occured. Try later.");
 				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
 				return;
 			}
-			
-			resp.sendRedirect("/ispw_project/ForumPageServlet");
+			req.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(req, resp);		//TODO Mettere scrip nel jsp e controllare se funziona
 		}
 	}
 }

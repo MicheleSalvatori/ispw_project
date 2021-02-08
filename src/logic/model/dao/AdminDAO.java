@@ -47,7 +47,6 @@ public class AdminDAO {
 				stmt.close();
 		}
 		
-		System.out.println("AdminDAO -> username = " + adminLogged.getUsername());
 		return adminLogged;
 	}
 }

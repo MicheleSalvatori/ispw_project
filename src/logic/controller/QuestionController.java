@@ -36,23 +36,23 @@ public class QuestionController {
 
 		return courses;
 	}
-	
+
 	public QuestionBean getQuestionByID(int id) throws SQLException {
-		
+
 		Question question = null;
 		try {
 			question = QuestionDAO.getQuestion(id);
-			
+
 		} catch (RecordNotFoundException e) {
 			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
 			return null;
 		}
-		
+
 		StudentBean studentBean = new StudentBean();
 		studentBean.setName(question.getStudent().getName());
 		studentBean.setSurname(question.getStudent().getSurname());
 		studentBean.setUsername(question.getStudent().getUsername());
-		
+
 		QuestionBean questionBean = new QuestionBean();
 		questionBean.setCourse(question.getCourse().getAbbrevation());
 		questionBean.setId(question.getId());
@@ -61,7 +61,7 @@ public class QuestionController {
 		questionBean.setStudent(studentBean);
 		questionBean.setText(question.getText());
 		questionBean.setTitle(question.getTitle());
-		
+
 		return questionBean;
 	}
 
@@ -105,45 +105,27 @@ public class QuestionController {
 		return QuestionDAO.countQuestionsByProfessor(userBean.getUsername());
 	}
 
-	public boolean setSolved(int questionID) {
-		try {
-			QuestionDAO.setSolved(questionID);
-
-		} catch (SQLException e) {
-			// TODO AlertControl
-			return false;
-		}
-
-		return true;
+	public void setSolved(int questionID) throws SQLException {
+		QuestionDAO.setSolved(questionID);
 	}
 
-	public List<AnswerBean> getAnswersOf(int questionID) throws RecordNotFoundException {
+	public List<AnswerBean> getAnswersOf(int questionID) throws RecordNotFoundException, SQLException {
 		List<AnswerBean> answerList = new ArrayList<>();
 		List<Answer> answers;
-		try {
-			answers = AnswerDAO.getAnswerOf(questionID);
-			for (Answer answer : answers) {
-				User user = answer.getUser();
-				UserBean usrBean = new UserBean();
-				usrBean.setName(user.getName());
-				usrBean.setSurname(user.getSurname());
-				
-				AnswerBean answerBean = new AnswerBean();
-				answerBean.setDate(answer.getDate());
-				answerBean.setId(answer.getId());
-				answerBean.setText(answer.getText());
-				answerBean.setUser(usrBean);
-				answerList.add(answerBean);
-			}
-			
-		} catch (SQLException e) {
-			//TODO
-			e.printStackTrace();
-			
-		} catch (RecordNotFoundException e) {
-			throw new RecordNotFoundException("no answer founded");
+		answers = AnswerDAO.getAnswerOf(questionID);
+		for (Answer answer : answers) {
+			User user = answer.getUser();
+			UserBean usrBean = new UserBean();
+			usrBean.setName(user.getName());
+			usrBean.setSurname(user.getSurname());
+
+			AnswerBean answerBean = new AnswerBean();
+			answerBean.setDate(answer.getDate());
+			answerBean.setId(answer.getId());
+			answerBean.setText(answer.getText());
+			answerBean.setUser(usrBean);
+			answerList.add(answerBean);
 		}
-		
 		return answerList;
 	}
 }

@@ -23,7 +23,6 @@ public class LoginController {
 	public UserBean login(UserBean userBean) throws SQLException, RecordNotFoundException {
 
 		Role role = getUserRole(userBean);
-		System.out.println(role);
 		switch (role) {
 
 		case STUDENT:
@@ -65,7 +64,6 @@ public class LoginController {
 		userBean.setName(professor.getName());
 		userBean.setSurname(professor.getSurname());
 		userBean.setEmail(professor.getEmail());
-		System.out.println("FINE: " + professor.getUsername());
 	}
 
 	public void loginAsStudent(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -77,7 +75,6 @@ public class LoginController {
 		userBean.setName(student.getName());
 		userBean.setSurname(student.getSurname());
 		userBean.setEmail(student.getEmail());
-		System.out.println("FINE: " + student.getUsername());
 	}
 
 	public void loginAsAdmin(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -88,7 +85,6 @@ public class LoginController {
 		userBean.setName(admin.getName());
 		userBean.setSurname(admin.getSurname());
 		userBean.setEmail(admin.getEmail());
-		System.out.println("FINE: " + admin.getUsername());
 	}
 
 	public void logout() {

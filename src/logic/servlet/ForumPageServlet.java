@@ -68,7 +68,13 @@ public class ForumPageServlet extends HttpServlet {
 		if (req.getParameter("set-solved") != null) {
 			int questionID = Integer.valueOf(req.getParameter("set-solved"));
 			QuestionController controller = new QuestionController();
-			controller.setSolved(questionID);
+			try {
+				controller.setSolved(questionID);
+			} catch (SQLException e) {
+				req.setAttribute("alertMsg", "An error as occured. Try later.");
+				req.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(req, resp);
+				return;
+			}
 		}
 		
 		resp.sendRedirect("/ispw_project/ForumPageServlet");

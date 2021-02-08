@@ -338,48 +338,6 @@ public class CourseDAO {
 		return courses;
 	}
 
-	public static List<Course> getStudentCourses_1(String student) throws SQLException {
-
-		Statement stmt = null;
-		Connection conn = null;
-		List<Course> courses;
-
-		try {
-			conn = SingletonDB.getDbInstance().getConnection();
-			if (conn == null) {
-				throw new SQLException();
-			}
-
-			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet rs = Queries.selectCoursesByStudent(stmt, student);
-
-			if (!rs.first()) {
-				courses = null;
-			} else {
-				courses = new ArrayList<>();
-				rs.first();
-				do {
-					String n = rs.getString("name");
-					String a = rs.getString("abbrevation");
-					String y = rs.getString("year");
-					String s = rs.getString("semester");
-					String c = rs.getString("credits");
-					String p = rs.getString("prerequisites");
-					String g = rs.getString("goal");
-					String r = rs.getString("reception");
-					Course course = new Course(n, a, y, s, c, p, g, r);
-					courses.add(course);
-				} while (rs.next());
-			}
-			rs.close();
-		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-		}
-		return courses;
-	}
-
 	public static List<Course> getStudentCoursesByRequest(String student) throws SQLException, RecordNotFoundException {
 
 		Statement stmt = null;

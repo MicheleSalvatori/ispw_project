@@ -51,7 +51,6 @@ public class ProfessorDAO {
 				stmt.close();
 		}
 		
-		System.out.println("ProfessorDAO -> username = " + professorLogged.getUsername());
 		return professorLogged;
 	}
 	
@@ -91,7 +90,6 @@ public class ProfessorDAO {
 				stmt.close();
 		}
 		
-		System.out.println("ProfessorDAO -> username = " + professor.getUsername());
 		return professor;
 	}
 	

@@ -50,7 +50,6 @@ public class StudentDAO {
 				stmt.close();
 		}
 		
-		System.out.println("StudentDAO -> username = " + studentLogged.getUsername());
 		return studentLogged;
 	}
 
@@ -100,7 +99,6 @@ public class StudentDAO {
 				stmt.close();
 		}
 		
-		System.out.println("StudentDAO: new student entry created with username = " + user.getUsername() + "\n");
 	}
 	
 	

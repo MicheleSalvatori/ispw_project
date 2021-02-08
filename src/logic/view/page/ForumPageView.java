@@ -203,7 +203,7 @@ public class ForumPageView implements Initializable {
 		}
 	}
   
-	public boolean setSolved(int questionID) {
-		return allQuestionController.setSolved(questionID);
+	public void setSolved(int questionID) throws SQLException {			//Throws exception to cardViewController
+			allQuestionController.setSolved(questionID);
 	}
 }
