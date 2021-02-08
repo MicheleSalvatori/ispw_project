@@ -22,9 +22,6 @@ import logic.utilities.Role;
 @WebServlet("/LoginServlet")
 public class LoginPageServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override

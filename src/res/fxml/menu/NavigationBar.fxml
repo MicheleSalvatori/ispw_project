@@ -36,10 +36,15 @@
                   <Button fx:id="btnNews" mnemonicParsing="false" onAction="#newsButton" styleClass="news-button" />
       
       <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#scheduleButton" styleClass="schedule-button" />
+      <Button fx:id="btnRefresh" mnemonicParsing="false" onAction="#refreshPage" styleClass="refresh-button">
+         <VBox.margin>
+            <Insets top="90.0" />
+         </VBox.margin>
+      </Button>
       
       <Button fx:id="btnBack" mnemonicParsing="false" onAction="#backButton" styleClass="back-button">
          <VBox.margin>
-            <Insets bottom="100.0" top="150.0" />
+            <Insets bottom="100.0" />
          </VBox.margin>
       </Button>
       
