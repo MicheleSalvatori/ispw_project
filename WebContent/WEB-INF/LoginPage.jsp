@@ -14,6 +14,7 @@
 <body>
 	
 	<div class="content">
+		<form action="/ispw_project/LoginServlet" method="post">
 		<table class="table">
 		  <caption></caption>
 		  <tbody>
@@ -26,21 +27,19 @@
 			  
 			<tr>
 			  	<td style="text-align: right; padding-right: 20px; padding-bottom: 18px;">
-				  <input class="input" type="text" id="username" name="username" placeholder="Username" form="form-login">
+				  <input class="input" type="text" id="username" name="username" placeholder="Username">
 				</td>
 				
 			  	<td style="text-align: left; padding-left: 20px; padding-bottom: 18px;">
-					<input class="input" type="password" id="password" name="password" placeholder="Password" form="form-login">
+					<input class="input" type="password" id="password" name="password" placeholder="Password">
 				</td>
 			</tr>
 			  
 			<tr>
 				<td colspan="2" style="text-align: center; padding-bottom: 18px; padding-left: 7px;">
-					<form action="/ipsw_project/LoginServlet" method="post" name="form-login">
-						<button class="login" type="submit" name="login">
-							LOG IN
-						</button>
-					</form>
+					<button class="login" type="submit" name="login">
+						LOG IN
+					</button>
 					
 					<button class="button" type="button" name="facebook" onclick="alert('Functionality not yet implemented.')">
 						<img src="res/img/Facebook.png" alt="Facebook">
@@ -69,6 +68,7 @@
 			</tr>
 		  </tbody>
 		</table>
+		</form>
 	</div>
 	
 	<!-- The Modal -->
