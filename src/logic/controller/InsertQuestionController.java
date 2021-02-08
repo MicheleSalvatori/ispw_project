@@ -7,41 +7,48 @@ import java.util.List;
 
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
+import logic.bean.UserBean;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Question;
+import logic.model.Student;
 import logic.model.dao.CourseDAO;
 import logic.model.dao.QuestionDAO;
 
 public class InsertQuestionController {
 
 	public InsertQuestionController() {
+		
 	}
 
-	public List<CourseBean> getCoursesOfStudent(String usernameString) {
+	public List<CourseBean> getCoursesOfStudent(UserBean user) throws RecordNotFoundException {
 		List<Course> courses = new ArrayList<>();
 		List<CourseBean> courseBeans;
+		String username = user.getUsername();
 		try {
-			courses = CourseDAO.getStudentCourses(usernameString);
-			if (courses == null) {
-				courseBeans = null;
-			} else {
-				courseBeans = new ArrayList<>();
-				for (Course c : courses) {
-					CourseBean cb = new CourseBean(c.getName(), c.getAbbrevation());
-					courseBeans.add(cb);
-				}
+			courses = CourseDAO.getStudentCourses(username);
+
+			courseBeans = new ArrayList<>();
+			for (Course c : courses) {
+				CourseBean cb = new CourseBean(c.getName(), c.getAbbrevation());
+				courseBeans.add(cb);
 			}
+			
 		} catch (SQLException e) {
 			courseBeans = null;
 		}
+		
 		return courseBeans;
 	}
 
 	public void save(QuestionBean questionBean) throws SQLException {
 		Course course = new Course();
-		course.setAbbrevation(questionBean.getCourse().getAbbrevation());
+		course.setAbbrevation(questionBean.getCourse());
+		
+		Student student = new Student();
+		student.setUsername(questionBean.getStudent().getUsername());
 				
-		Question question = new Question(questionBean.getTitle(), questionBean.getText(), course, questionBean.getStudent(),
+		Question question = new Question(questionBean.getTitle(), questionBean.getText(), course, student,
 										 false, new Date(System.currentTimeMillis()));
 
 		QuestionDAO.saveQuestion(question);

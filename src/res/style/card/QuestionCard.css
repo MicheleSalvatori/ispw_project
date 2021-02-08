@@ -45,14 +45,7 @@
 	-fx-font-size: 13px;
 }
 
-.label-course {
-	-fx-text-fill: #0C0B0B;
-	-fx-font-family: "Baloo Bhai";
-	-fx-font-size: 16px;
-}
-
-
-.button {
+.button-view {
 	-fx-background-color: #0C0B0B;
 	-fx-background-radius: 8px;
 	
@@ -60,7 +53,6 @@
 	-fx-font-family: "Roboto";
 	-fx-font-weight: bold;
 	-fx-font-size: 13;
-	
 }
 
 .button-label {
@@ -70,13 +62,31 @@
  	-fx-text-fill: black;
  	-fx-background-color: transparent;
  	-fx-underline: true;
- }
- 
- .button-label:disabled{
- 	  -fx-opacity: 1;
- 	  -fx-underline: false;
- }
+}
 
-.button:hover {
+.button-label-course {
+	-fx-text-fill: #0C0B0B;
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 16px;
+	
+	-fx-background-color: transparent;
+ 	-fx-underline: true;
+}
+ 
+.button-label:disabled {
+	-fx-opacity: 1;
+	-fx-underline: false;
+}
+
+.button-view:hover {
 	-fx-cursor: hand;
+	-fx-background-color: #0C0B0B;
+}
+
+.button-label:hover {
+	-fx-background-color: transparent;
+}
+
+.button-label-course:hover {
+	-fx-background-color: transparent;
 }

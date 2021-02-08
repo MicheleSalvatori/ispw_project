@@ -1,0 +1,172 @@
+@font-face {
+	font-family: 'Baloo Bhai';
+	src: url("BalooBhai-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Overpass';
+	src: url("Overpass-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+	src: url("Roboto/Roboto-Regular.ttf");
+	font-weight: normal;
+}
+
+/* Style page content */
+.content {
+	margin-left: 200px; /* Same as the width of the sidebar */
+	margin-top: 70px;
+	display: flex;
+}
+
+.content-question {
+	display: inline-block;
+	width: 70%;
+}
+
+.content-right{
+	float:rigth;
+	margin-top : 70px;
+	margin-left : 40px;
+}
+
+.content-assignment {
+	margin-top: 50px;
+	border: 2px solid #0C0B0B;
+	border-radius: 14px;
+	display: inline-block;
+	width: 100%;
+}
+
+.border-table {
+	height: 100%;
+	border: 2px solid #0C0B0B;
+	border-radius: 14px;
+}
+
+.table-question {
+	border-collapse: separate;
+	border-spacing: 0;
+	width: 100%;
+	border: 15px solid transparent;
+}
+
+.new-question {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 2vw;
+	border-radius: 10px;
+	border: 0;
+	background-color: #F0F0F2;
+	padding: 18px;
+}
+
+.questions-button {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.3vw;
+	border-radius: 10px;
+	border: 0;
+	background-color: #F0F0F2;
+	width: 48%;
+	margin-top: 10px;
+}
+
+.questions-button:disabled{
+	opacity: 0.4;
+}
+
+.new-question:hover{
+	cursor: pointer;
+}
+
+.img {
+	width: 100%;
+	height: auto;
+	max-width: 50px;
+	min-width: 15px;
+}
+
+.title-label {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.8vw;
+}
+
+.button-view {
+	background-color: #0C0B0B;
+	border-radius: 8px;
+	border-color: transparent;
+	color: white;
+	font-family: "Overpass";
+	font-weight: bold;
+	font-size: 0.8vw;
+	height: 2vw;
+	width: 4vw;
+	text-align: center;
+}
+
+.button-view:hover {
+	cursor: pointer;
+}
+
+.question-subject {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.4vw;
+}
+
+.question-date {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 0.9vw;
+}
+
+.question-solved {
+	font-family: "Roboto";
+	font-weight: bold;
+	font-size: 0.99vw;
+}
+
+.button-solved{
+	color: red;
+	font-family: "Roboto";
+	font-weight: bold;
+	font-size: 1.01vw;
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	margin: 0;
+	border:0;
+	text-decoration: underline;
+}
+
+.button-solved:hover{
+	cursor:pointer;
+}
+
+.id {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.1vw;
+}
+
+.author {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 1.1vw;
+}
+
+.course {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.3vw;
+}
+
+.course:hover {
+	cursor: pointer;
+}

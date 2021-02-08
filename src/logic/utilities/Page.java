@@ -7,6 +7,7 @@ public enum Page {
 	SIGNUP("src/res/fxml/page/SignupPage.fxml", "App - Signup"), 
 	FORUM("src/res/fxml/page/ForumPage.fxml", "App - Forum"), 
 	NEWQUESTION("src/res/fxml/page/NewQuestionPage.fxml", "App - Insert new question"),
+	NEWASSIGNMENT("src/res/fxml/page/NewAssignmentPage.fxml", "App - Insert new assignment"),
 	QUESTION("src/res/fxml/page/QuestionPage.fxml", "App - Question"),
 	ANSWER_QUESTION("src/res/fxml/page/AnswerPage.fxml", "App - Answer a Question"),
 	NEWS("src/res/fxml/page/NewsPage.fxml", "App - News"),
@@ -19,9 +20,7 @@ public enum Page {
 	SCHEDULE("src/res/fxml/page/SchedulePage.fxml", "App - Schedule"),
 	REQUEST("src/res/fxml/page/RequestPage.fxml", "App - Request"),
 	SCHEDULED_LESSONS("src/res/fxml/page/ScheduledPage.fxml", "App - Scheduled Lessons"),
-	SCHEDULED_EXAMS("src/res/fxml/page/ScheduledPage.fxml", "App - Scheduled Exams"),
-	NEWNEWS("src/res/fxml/page/NewNewsPage.fxml", "App - Insert news"),
-	NEWCOMMUNICATION("src/res/fxml/page/NewCommunicationPage.fxml", "App - Insert communication"),;
+	SCHEDULED_EXAMS("src/res/fxml/page/ScheduledPage.fxml", "App - Scheduled Exams");
 
 	private String res;
 	private String stageTitle;

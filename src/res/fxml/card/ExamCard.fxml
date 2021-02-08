@@ -20,21 +20,23 @@
          </image>
       </ImageView>
       
-      <Label fx:id="labelVote" alignment="CENTER" layoutX="547.0" layoutY="28.0" prefHeight="28.0" prefWidth="184.0" styleClass="details-label" text="Vote" AnchorPane.bottomAnchor="26.0" AnchorPane.topAnchor="26.0" />
+      <Label fx:id="labelVote" alignment="CENTER" layoutX="450.0" layoutY="28.0" prefHeight="28.0" prefWidth="180.0" styleClass="details-label" text="Vote" AnchorPane.bottomAnchor="26.0" AnchorPane.topAnchor="26.0" />
       
-      <Label fx:id="labelCFU" alignment="CENTER" layoutX="732.0" layoutY="28.0" prefHeight="28.0" prefWidth="174.0" styleClass="details-label" text="CFU" AnchorPane.bottomAnchor="26.0" AnchorPane.topAnchor="26.0" />
+      <Label fx:id="labelCFU" alignment="CENTER" layoutX="630.0" layoutY="28.0" prefHeight="28.0" prefWidth="174.0" styleClass="details-label" text="CFU" AnchorPane.bottomAnchor="26.0" AnchorPane.topAnchor="26.0" />
       
-      <Line endY="54.0" layoutX="547.0" layoutY="13.0" />
+      <Line endY="54.0" layoutX="450.0" layoutY="13.0" />
       
-      <Line endY="54.0" layoutX="731.16" layoutY="13.0" />
+      <Line endY="54.0" layoutX="630.0" layoutY="13.0" />
       
-      <Line endY="54.0" layoutX="905.57" layoutY="13.0" />
+      <Line endY="54.0" layoutX="805.0" layoutY="13.0" />
       
       <Line endY="54.0" layoutX="98.0" layoutY="13.0" />
       
       <Label fx:id="labelNumber" layoutX="70.0" layoutY="23.0" styleClass="exam-label" text="?" AnchorPane.leftAnchor="60.0" />
       
-      <Button fx:id="btnCourse" onAction="#course" layoutX="906.0" layoutY="20.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="172.0" text="Course" AnchorPane.bottomAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      <Button fx:id="btnCourse" layoutX="805.0" layoutY="20.0" mnemonicParsing="false" onAction="#course" prefHeight="40.0" prefWidth="164.0" text="Course" AnchorPane.bottomAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      
+      <Button fx:id="btnDelete" onAction="#deleteExam" layoutX="932.0" layoutY="20.0" mnemonicParsing="false" styleClass="button-view" text="Delete" AnchorPane.rightAnchor="25.0" />
       
    </children>
 </AnchorPane>

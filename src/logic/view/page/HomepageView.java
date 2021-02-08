@@ -17,12 +17,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
-import logic.Session;
 import logic.bean.LessonBean;
+import logic.bean.UserBean;
+import logic.controller.AcceptRequestController;
+import logic.controller.AllQuestionController;
 import logic.controller.ViewNextLessonController;
+import logic.controller.ViewVerbalizedExamsController;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Role;
 import logic.utilities.Weather;
-import logic.view.card.element.AdminStatCard;
 import logic.view.card.element.LessonCard;
 import logic.view.card.element.ProfessorStatCard;
 import logic.view.card.element.StudentStatCard;
@@ -51,72 +54,8 @@ public class HomepageView implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		setUserName(Session.getSession().getUserLogged().getName());
-		
-		switch (Session.getSession().getType()) {
-		case STUDENT:
-			for (int i=0; i<2; i++) {
-				StudentStatCard studentCard;
-				try {
-					studentCard = new StudentStatCard(22, "Verbalized", "Grades");
-					hboxStats.getChildren().add(studentCard);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			break;
-		case PROFESSOR:
-			try {
-				ProfessorStatCard professorCard = new ProfessorStatCard(10);
-				hboxStats.getChildren().add(professorCard);
-			} catch (IOException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-			
-			break;
-		case ADMIN:
-			try {
-				AdminStatCard adminCard = new AdminStatCard(10);
-				hboxStats.getChildren().add(adminCard);
-			} catch (IOException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-			
-			break;
-
-		default:
-			break;
-		}
-		
-		// User is a Student
-		if (Session.getSession().getType() == Role.STUDENT) {
-			for (int i=0; i<2; i++) {
-				StudentStatCard studentCard;
-				try {
-					studentCard = new StudentStatCard(22, "Verbalized", "Grades");
-					hboxStats.getChildren().add(studentCard);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		// User is a Professor
-		else if (Session.getSession().getType() == Role.PROFESSOR) {
-			try {
-				ProfessorStatCard professorCard = new ProfessorStatCard(10);
-				hboxStats.getChildren().add(professorCard);
-			} catch (IOException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-		}
-
+		setUserName(UserBean.getInstance().getName());
+		addStatCards();
 		addWeatherCards();
 		addLessonCards();
 		addWebMap();
@@ -127,14 +66,12 @@ public class HomepageView implements Initializable {
 		labelUsername.setText("Hello " + name + "!");
 	}
 	
-	
-	
 	// Add Lesson cards to the scene
 	private void addLessonCards() {
 		try {
 			
 			viewNextLessonController = new ViewNextLessonController();
-			List<LessonBean> lessons = viewNextLessonController.getTodayLessons();
+			List<LessonBean> lessons = viewNextLessonController.getTodayLessons(UserBean.getInstance());
 			
 			if (lessons.size() == 1) {
 				vboxScroll.getChildren().add(new Label("There are no future lessons today"));
@@ -154,9 +91,8 @@ public class HomepageView implements Initializable {
 				}
 			}
 		
-		} catch (NullPointerException e) {
+		} catch (RecordNotFoundException e) {
 			vboxScroll.getChildren().add(new Label("There are no future lessons today"));
-			return;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -166,6 +102,63 @@ public class HomepageView implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	// Add Stat cards to the scene
+	private void addStatCards() {
+		
+		try {
+			
+			// User is a Student
+			if (UserBean.getInstance().getRole() == Role.STUDENT) {
+				
+				ViewVerbalizedExamsController controller = new ViewVerbalizedExamsController();
+				StudentStatCard studentCard1 = new StudentStatCard(controller.countVerbalizedExams(UserBean.getInstance()), "Verbalized", "Grades");
+				StudentStatCard studentCard2 = new StudentStatCard((int)controller.WPA(controller.getVerbalizedExams(UserBean.getInstance())), "Average", "Grade");
+				
+				hboxStats.getChildren().add(studentCard1);
+				hboxStats.getChildren().add(studentCard2);
+			}
+				
+			// User is a Professor
+			else if (UserBean.getInstance().getRole() == Role.PROFESSOR) {
+				
+				AllQuestionController controller = new AllQuestionController();
+				ProfessorStatCard professorCard = new ProfessorStatCard(controller.countQuestions(UserBean.getInstance()));
+				
+				hboxStats.getChildren().add(professorCard);
+			}
+			
+		} catch (RecordNotFoundException e) {
+			try {
+				
+				if (UserBean.getInstance().getRole() == Role.STUDENT) {
+					StudentStatCard studentCard1 = new StudentStatCard(0, "Verbalized", "Grades");
+					StudentStatCard studentCard2 = new StudentStatCard(0, "Average", "Grade");
+					hboxStats.getChildren().clear();
+					hboxStats.getChildren().add(studentCard1);
+					hboxStats.getChildren().add(studentCard2);
+				}
+				
+				else if (UserBean.getInstance().getRole() == Role.PROFESSOR) {
+					ProfessorStatCard professorCard = new ProfessorStatCard(0);
+					hboxStats.getChildren().clear();
+					hboxStats.getChildren().add(professorCard);
+				}
+			
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 	
 	// Add Weather cards to the scene

@@ -4,15 +4,13 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.model.Student;
-
 public class QuestionBean {
 	
 	private int id;
 	private String title;
 	private String text;
-	private CourseBean course;
-	private Student student;
+	private String course;
+	private StudentBean student;
 	private boolean solved;
 	private Date date;
 	private List<AnswerBean> answers;
@@ -72,35 +70,34 @@ public class QuestionBean {
 		this.text = text;
 	}
 	
-	public CourseBean getCourse() {
+	public String getCourse() {
 		return course;
 	}
 
-	public void setCourse(CourseBean course) {
+	public void setCourse(String course) {
 		this.course = course;
 	}
 
-	public void setCourseByAbbr(String course) {
-		CourseBean c = new CourseBean();
-		c.setAbbrevation(course);
-		this.course = c;
-	}
+//	public void setCourseByAbbr(String course) {
+//		CourseBean c = new CourseBean();
+//		c.setAbbreviation(course);
+//		this.course = c;
+//	}
 
-	public Student getStudent() {
+	public StudentBean getStudent() {
 		return student;
 	}
 
-	public void setStudent(Student student) {
+	public void setStudent(StudentBean student) {
 		this.student = student;
 	}
 
 	@Override
 	public String toString() {
-		String buildString = "ID: "+getId()
+		return "ID: "+getId()
 			+"\nTitle: "+ getTitle()
 			+"\nText: "+ getText()
 			+"\nAuthor: "+getStudent().getName() + " " + getStudent().getSurname()
-			+"\nCourse: "+getCourse().getAbbrevation();
-		return buildString;
+			+"\nCourse: "+getCourse();
 	}
 }

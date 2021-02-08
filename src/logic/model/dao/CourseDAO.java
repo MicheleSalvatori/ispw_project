@@ -7,9 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.utilities.Queries;
-import logic.utilities.Role;
 import logic.utilities.SingletonDB;
 
 public class CourseDAO {
@@ -18,7 +18,7 @@ public class CourseDAO {
 		
 	}
 
-	public static Course getCourseByAbbrevation(String abbrevation) throws SQLException {
+	public static Course getCourseByAbbrevation(String abbrevation) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -34,7 +34,8 @@ public class CourseDAO {
 			ResultSet rs = Queries.findCourseByAbbr(stmt, abbrevation);
 
 			if (!rs.first()) {
-				course = null;
+				throw new RecordNotFoundException("No course found");
+				
 			} else {
 				rs.first();
 				String n = rs.getString("name");
@@ -48,6 +49,7 @@ public class CourseDAO {
 				course = new Course(n, a, y, s, c, p, g, r);
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -57,7 +59,7 @@ public class CourseDAO {
 	}
 
 
-	public static int getCourseNumberOf(String username, Role role) throws SQLException {
+	public static int getProfessorCourseNumberOf(String username) throws SQLException {
 		Statement stmt = null;
 		Connection conn = null;
 		int number;
@@ -71,16 +73,39 @@ public class CourseDAO {
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = null;
 
-			switch (role) {
-			case PROFESSOR:
-				rs = Queries.countCoursesProf(stmt, username);
-				break;
-			case STUDENT:
-				rs = Queries.countCourses(stmt, username);
-				break;
-			default:
-				break;
+			rs = Queries.countCoursesProf(stmt, username);
+
+			if (!rs.first()) {
+				number = 0;
+			} else {
+				rs.first();
+				number = rs.getInt(1);
 			}
+			rs.close();
+			
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return number;
+	}
+	
+	public static int getStudentCourseNumberOf(String username) throws SQLException {
+		Statement stmt = null;
+		Connection conn = null;
+		int number;
+
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			ResultSet rs = null;
+			
+			rs = Queries.countCourses(stmt, username);
 
 			if (!rs.first()) {
 				number = 0;
@@ -97,7 +122,7 @@ public class CourseDAO {
 		return number;
 	}
 
-	public static List<Course> getAllCourses() throws SQLException {
+	public static List<Course> getAllCourses() throws SQLException, RecordNotFoundException {
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -113,7 +138,8 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectAllCourses(stmt);
 
 			if (!rs.first()) {
-				courses = null;
+				throw new RecordNotFoundException("No course found");
+				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();
@@ -130,6 +156,7 @@ public class CourseDAO {
 					courses.add(course);
 				} while (rs.next());
 			}
+			
 			rs.close();
 		} finally {
 			if (stmt != null) {
@@ -139,7 +166,7 @@ public class CourseDAO {
 		return courses;
 	}
 
-	public static List<Course> getAvailableCourses(String student) throws SQLException {
+	public static List<Course> getAvailableCourses(String student) throws SQLException, RecordNotFoundException {
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -156,7 +183,52 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectAvailableCourses(stmt, student);
 
 			if (!rs.first()) {
-				courses = null;
+				throw new RecordNotFoundException("No course found");
+				
+			} else {
+				courses = new ArrayList<>();
+				rs.first();
+				do {
+					String n = rs.getString("name");
+					String a = rs.getString("abbrevation");
+					String y = rs.getString("year");
+					String s = rs.getString("semester");
+					String c = rs.getString("credits");
+					String p = rs.getString("prerequisites");
+					String g = rs.getString("goal");
+					String r = rs.getString("reception");
+					Course course = new Course(n, a, y, s, c, p, g, r);
+					courses.add(course);
+				} while (rs.next());
+			}
+			rs.close();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return courses;
+	}
+	
+	public static List<Course> getNotVerbalizedCourses(String student) throws SQLException, RecordNotFoundException {
+
+		Statement stmt = null;
+		Connection conn = null;
+		List<Course> courses;
+
+		try {
+			conn = SingletonDB.getDbInstance().getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			ResultSet rs = Queries.selectNotVerbalizedCourses(stmt, student);
+
+			if (!rs.first()) {
+				throw new RecordNotFoundException("No course found");
+				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();
@@ -182,7 +254,7 @@ public class CourseDAO {
 		return courses;
 	}
 
-	public static List<Course> getStudentCourses(String student) throws SQLException {
+	public static List<Course> getStudentCourses(String student) throws SQLException, RecordNotFoundException {
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -198,7 +270,8 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectCoursesByStudent(stmt, student);
 
 			if (!rs.first()) {
-				courses = null;
+				throw new RecordNotFoundException("No course found");
+				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();
@@ -224,7 +297,7 @@ public class CourseDAO {
 		return courses;
 	}
 
-	public static List<Course> getProfessorCourses(String professor) throws SQLException {
+	public static List<Course> getProfessorCourses(String professor) throws SQLException, RecordNotFoundException {
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -240,7 +313,8 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectCoursesByProfessor(stmt, professor);
 
 			if (!rs.first()) {
-				courses = null;
+				throw new RecordNotFoundException("No course found");
+				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();
@@ -308,7 +382,7 @@ public class CourseDAO {
 		return courses;
 	}
 
-	public static List<Course> getStudentCoursesByRequest(String student) throws SQLException {
+	public static List<Course> getStudentCoursesByRequest(String student) throws SQLException, RecordNotFoundException {
 
 		Statement stmt = null;
 		Connection conn = null;
@@ -325,7 +399,8 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectCoursesRequestedByStudent(stmt, student);
 
 			if (!rs.first()) {
-				courses = null;
+				throw new RecordNotFoundException("No course found");
+				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();

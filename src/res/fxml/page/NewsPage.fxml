@@ -1,40 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" stylesheets="@../../style/page/NewsPage.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.NewsPageView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" styleClass="root" stylesheets="@../../style/page/NewsPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.NewsPageView">
    <children>
-      <Label layoutX="6.0" layoutY="14.0" text="News" />
-      <ScrollPane layoutY="55.0" prefHeight="719.0" prefWidth="550.0" stylesheets="@../../style/ScrollPaneTest.css" AnchorPane.leftAnchor="0.0">
-         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="437.0" prefWidth="598.0">
-               <children>
-                  <VBox fx:id="vboxNews" prefWidth="600.0" spacing="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                  <Label fx:id="labelLoadingNews" alignment="CENTER" layoutX="-26.0" layoutY="349.0" prefHeight="43.0" prefWidth="528.0" text="Loading..." textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="-26.0" AnchorPane.rightAnchor="96.0" AnchorPane.topAnchor="349.0" />
-               </children>
-          </AnchorPane>
-         </content>
-      </ScrollPane>
-  	  <Button fx:id="btnNewNews" layoutX="84.0" layoutY="12.0" maxHeight="97.0" mnemonicParsing="false" onAction="#newNews" prefHeight="41.0" prefWidth="97.0" styleClass="small-button" text="Insert" AnchorPane.rightAnchor="1023.0" />
       
-          
-      <Label layoutX="579.0" layoutY="13.0" text="Communications" AnchorPane.rightAnchor="440.0" />
-      <ScrollPane layoutX="711.0" layoutY="55.0" prefHeight="719.0" prefWidth="550.0" stylesheets="@../../style/ScrollPaneTest.css" AnchorPane.rightAnchor="75.0">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="531.0">
+      <ScrollPane fx:id="scroll" fitToWidth="true" layoutY="45.0" prefHeight="729.0" prefWidth="560.0" stylesheets="@../../style/ScrollPaneBorder.css" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="45.0">
+        <content> 
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="543.0">
                <children>
-                  <VBox fx:id="vboxNews" alignment="CENTER" prefWidth="414.0" spacing="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                  <Label fx:id="labelLoadingCommunications" alignment="CENTER" layoutX="213.0" layoutY="350.0" prefHeight="21.0" prefWidth="105.0" text="Loading..." textAlignment="CENTER" wrapText="true" />
+                  <VBox fx:id="vboxComm" prefWidth="100.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="13.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      
+      <ScrollPane layoutX="577.0" layoutY="45.0" prefHeight="729.0" prefWidth="560.0" stylesheets="@../../style/ScrollPaneBorder.css">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="543.0">
+               <children>
+                  <VBox fx:id="vboxNews" prefWidth="100.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="13.0" />
                </children>
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Button fx:id="btnNewCommunication" layoutX="784.0" layoutY="12.0" maxHeight="97.0" mnemonicParsing="false" onAction="#newCommunication" prefHeight="41.0" prefWidth="97.0" styleClass="small-button" text="Insert" />
       
+      <Label layoutY="5.0" text="Communications" />
+      
+      <Label layoutX="577.0" layoutY="5.0" text="News" />
       
    </children>
 </AnchorPane>

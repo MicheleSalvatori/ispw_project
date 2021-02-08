@@ -1,21 +1,20 @@
 package logic.view.page;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.util.ResourceBundle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -24,16 +23,22 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.model.Course;
+import logic.bean.SeatBean;
+import logic.bean.UserBean;
+import logic.controller.BookSeatController;
+import logic.exceptions.DuplicatedRecordException;
+import logic.exceptions.RecordNotFoundException;
+import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
 import logic.utilities.Weather;
 import logic.view.card.element.WeatherCard;
 
-public class LessonPageView implements Initializable {
+public class LessonPageView {
 
 	@FXML
 	private Button btnCourse;
@@ -54,75 +59,127 @@ public class LessonPageView implements Initializable {
 	private AnchorPane weatherCard;
 
 	private LessonBean lesson;
+	private ClassroomBean classroom;
 	private EventHandler<ActionEvent> seatEvent;
+	private BookSeatController controlSeat;
+	private GridPane gridSeat;
+	private SeatBean mySeat;
+	private ObservableList<Node> buttonList;
+
+	private enum SeatState {
+		FREE, BOOKED, YOUR
+	}
+
+	@FXML
+	private void course(ActionEvent event) throws IOException {
+		CourseBean courseBean = lesson.getCourse();
+		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
+	}
 
 	public void setBean(Object lesson) {
-		this.lesson = (LessonBean) lesson;
-		setPage();
+		
+		controlSeat = new BookSeatController();
+
+		try {
+			this.lesson = controlSeat.getLesson((LessonBean) lesson);
+			this.classroom = this.lesson.getClassroom();
+			this.classroom.setSeat(controlSeat.getOccupateSeatOf(this.lesson));
+			this.mySeat = controlSeat.getMySeat(this.lesson, UserBean.getInstance());
+			setPage();
+			
+		} catch (SQLException e) {
+			System.out.println("CATCH");
+			
+		} catch (RecordNotFoundException e) {
+			// nothing
+		}
 	}
 
 	public void setPage() {
-		btnCourse.setText(lesson.getCourse().getAbbrevation());
+		btnCourse.setText(lesson.getCourse().getAbbreviation());
 		labelClassroom.setText(lesson.getClassroom().getName());
 		labelTime.setText(SQLConverter.time(lesson.getTime()));
 		labelDate.setText(SQLConverter.date(lesson.getDate()));
 		labelProfessor.setText(lesson.getProfessor().getName() + " " + lesson.getProfessor().getSurname());
 		textTopic.setText(lesson.getTopic());
-		
+
 		setupEvent();
 		setWeatherCard(lesson.getTime());
 		setupRoom();
 	}
 
-	@FXML
-	private void course(ActionEvent event) throws IOException, SQLException {
-		Course course = lesson.getCourse();
-
-		CourseBean courseBean = new CourseBean();
-		courseBean.setAbbrevation(course.getAbbrevation());
-		courseBean.setName(course.getName());
-		courseBean.setYear(course.getYear());
-		courseBean.setCredits(course.getCredits());
-		courseBean.setSemester(course.getSemester());
-		courseBean.setPrerequisites(course.getPrerequisites());
-		courseBean.setGoal(course.getGoal());
-		courseBean.setReception(course.getReception());
-
-		PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
-	}
 	private void setupEvent() {
 		seatEvent = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Button btn = (Button) event.getSource();
-				System.out.println("occupa posto: "+ btn.getText());
+				Button btnSeat = (Button) event.getSource();
+				switch (btnSeat.getId()) {
+				case "your-seat":
+					if (AlertController.confirmationAlert("Are you sure you want to free your seat?")) {
+						freeSeat(btnSeat);
+					}
+					break;
+				case "free-seat":
+					if (AlertController.confirmationAlert("Are you sure you want to book this seat?")) {
+						bookSeat(btnSeat);
+					}
+					break;
+				default:
+					break;
+				}
 			}
 		};
 	}
+
+	private void freeSeat(Button buttonSeat) {
+		try {
+			controlSeat.freeSeat(mySeat, this.lesson, UserBean.getInstance());
+			changeState(getSeat(buttonSeat), SeatState.FREE);
+			mySeat = null;
+		} catch (SQLException e) {
+			AlertController.infoAlert("The system was unable to accommodate your request, please try again!");
+		}
+	}
+
+	private void bookSeat(Button buttonSeat) {
+		SeatBean seatToBook = getSeat(buttonSeat);
+		SeatBean newSeat = null;
+		try {
+			newSeat = controlSeat.occupateSeat(seatToBook, lesson, UserBean.getInstance());
+			if (mySeat != null) {
+				changeState(mySeat, SeatState.FREE);
+			}
+			mySeat = newSeat;
+			changeState(mySeat, SeatState.YOUR);
+		} catch (SQLException e) {
+			AlertController.infoAlert("Something bad happened, booking failed, please try again!");
+		} catch (DuplicatedRecordException e) {
+			AlertController.infoAlert(e.getMessage());
+			changeState(seatToBook, SeatState.BOOKED);
+		}
+	}
+
 	private void setupRoom() {
-		int numRow = lesson.getClassroom().getSeatRow();
-		int seatPerRow = lesson.getClassroom().getSeatColumn();
+		int numRow = classroom.getSeatRow();
+		int seatPerRow = classroom.getSeatColumn();
 		System.out.println(numRow + " " + seatPerRow);
-		GridPane gridSeat = new GridPane();
+		gridSeat = new GridPane();
 		paneSeat.getChildren().add(gridSeat);
 		AnchorPane.setTopAnchor(gridSeat, 0d);
 		AnchorPane.setLeftAnchor(gridSeat, 0d);
 		AnchorPane.setRightAnchor(gridSeat, 0d);
-		// AnchorPane.setBottomAnchor(gridSeat, 5d);
 
-		// scrollPane.setFitToHeight(true);
 		scrollPane.setFitToWidth(true);
-
 		gridSeat.setVgap(10);
-
 		gridSeat.setAlignment(Pos.TOP_CENTER);
 
 		for (int i = 0; i < numRow; i++) {
 
 			for (int j = 0; j < seatPerRow; j++) {
 
-				Button btn = new Button((j+1)+(i*seatPerRow) + "");
+				Button btn = new Button(j + 1 + "");
 				btn.getStylesheets().add("/res/style/SeatButton.css");
+				btn.setId("free-seat");
 				btn.setMaxWidth(1);
 				btn.setOnAction(seatEvent);
 				gridSeat.add(btn, j, i);
@@ -138,10 +195,48 @@ public class LessonPageView implements Initializable {
 			Label label = new Label(String.valueOf((char) (65 + j)));
 			gridSeat.add(label, seatPerRow, j);
 		}
+		setupSeatStatus();
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	private void setupSeatStatus() {
+		buttonList = gridSeat.getChildren();
+		if (classroom.getSeat() != null) {
+			for (SeatBean s : classroom.getSeat()) {
+				if (mySeat != null && s.getId() == mySeat.getId()) {
+					changeState(s, SeatState.YOUR);
+				} else if (!s.isFree()) {
+					changeState(s, SeatState.BOOKED);
+				}
+			}
+		}
+	}
+
+
+	private SeatBean getSeat(Button button) {
+		int row = GridPane.getRowIndex(button) * classroom.getSeatColumn();
+		int col = GridPane.getColumnIndex(button) + 1;
+		System.out.println(row + col);
+		SeatBean seat = new SeatBean(row + col, lesson.getClassroom().getName());
+		return seat;
+	}
+
+	private void changeState(SeatBean seat, SeatState state) {
+		Button button = (Button) buttonList.get(seat.getId() - 1);
+		System.out.println(state);
+		switch (state) {
+		case FREE:
+			button.setId("free-seat");
+			button.setDisable(false);
+			break;
+		case BOOKED:
+			button.setId("booked-seat");
+			button.setDisable(true);
+			break;
+		case YOUR:
+			button.setId("your-seat");
+			button.setDisable(false);
+			break;
+		}
 	}
 
 	private void setWeatherCard(Time time) {
@@ -176,5 +271,4 @@ public class LessonPageView implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
 }

@@ -9,7 +9,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-import logic.bean.ExamBean;
+import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Exam;
@@ -22,7 +22,7 @@ public class ExamDAO {
 		
 	}
 	
-	public static Exam getExamByDateAndTime(Date date, Time time) throws SQLException {
+	public static Exam getExamByDateAndTime(Date date, Time time) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -38,7 +38,8 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectExam(stmt, date, time);
 
 			if (!rs.first()) {
-				exam = null;
+				throw new RecordNotFoundException("No exam found");
+				
 			} else {
 				rs.first();
 				Date d = rs.getDate("date");
@@ -49,16 +50,18 @@ public class ExamDAO {
 				exam = new Exam(d, t, c, cl, note);
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return exam;
 	}
 	
 	
-	public static List<Exam> getExamsByCourse(Date date, Time time, String course) throws SQLException {
+	public static List<Exam> getExamsByCourse(Date date, Time time, String course) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -74,7 +77,8 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectExamsByCourse(stmt, date, time, course);
 
 			if (!rs.first()) {
-				exams = null;
+				throw new RecordNotFoundException("No exam found");
+				
 			} else {
 				exams = new ArrayList<>();
 				rs.first();
@@ -89,16 +93,18 @@ public class ExamDAO {
 				} while (rs.next());
 			}
 			rs.close();
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		
 		return exams;
 	}
 	
 	
-	public static List<Exam> getNextExams(Date date, Time time) throws SQLException {
+	public static List<Exam> getNextExams(Date date, Time time) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -114,7 +120,8 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectNextExams(stmt, date, time);
 
 			if (!rs.first()) {
-				exams = null;
+				throw new RecordNotFoundException("No exam found");
+				
 			} else {
 				exams = new ArrayList<>();
 				rs.first();
@@ -136,7 +143,7 @@ public class ExamDAO {
 		return exams;
 	}
 	
-	public static List<Exam> getNextExamsStudent(Date date, String student) throws SQLException {
+	public static List<Exam> getNextExamsStudent(Date date, String student) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -152,7 +159,8 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectNextExamsByStudent(stmt, date, student);
 
 			if (!rs.first()) {
-				exams = null;
+				throw new RecordNotFoundException("No exam found");
+				
 			} else {
 				exams = new ArrayList<>();
 				rs.first();
@@ -175,7 +183,7 @@ public class ExamDAO {
 	}
 	
 	
-	public static List<Exam> getNextExamsProfessor(Date date, String professor) throws SQLException {
+	public static List<Exam> getNextExamsProfessor(Date date, String professor) throws SQLException, RecordNotFoundException {
 		
 		Statement stmt = null;
 		Connection conn = null;
@@ -191,7 +199,8 @@ public class ExamDAO {
 			ResultSet rs = Queries.selectNextExamsByProfessor(stmt, date, professor);
 
 			if (!rs.first()) {
-				exams = null;
+				throw new RecordNotFoundException("No exam found");
+
 			} else {
 				exams = new ArrayList<>();
 				rs.first();
@@ -214,7 +223,7 @@ public class ExamDAO {
 	}
 	
 	
-	public static boolean insertExam(ExamBean examBean) {
+	public static boolean insertExam(Exam exam) {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -226,17 +235,18 @@ public class ExamDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			Date date = examBean.getDate();
-			Time time = examBean.getTime();
-			Course course = examBean.getCourse();
-			Classroom classroom = examBean.getClassroom();
-			String note = examBean.getNote();
+			Date date = exam.getDate();
+			Time time = exam.getTime();
+			Course course = exam.getCourse();
+			Classroom classroom = exam.getClassroom();
+			String note = exam.getNote();
 			
 			Queries.insertExam(stmt, date, time, course.getAbbrevation(), classroom.getName(), note);
 			
 		} catch (SQLException e) {
 			return false;
 		}
+		
 		return true;
 	}
 }

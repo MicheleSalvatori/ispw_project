@@ -32,14 +32,6 @@
 	-fx-pref-width: 208;
 	-fx-pref-height: 96;
 }
-
-.root-admin {
-	-fx-background-color: #E5E5EB;
-	-fx-background-radius: 14px;
-	
-	-fx-pref-width: 440;
-	-fx-pref-height: 96;
-}
  
 .label {
 	-fx-text-fill: #0C0B0B;

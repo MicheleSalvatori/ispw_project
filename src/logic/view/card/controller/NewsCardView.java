@@ -7,7 +7,14 @@ import javafx.scene.control.Label;
 public class NewsCardView {
 
 	@FXML
-	private Label labelTitle, labelDate, labelNumber;
+	private Label labelTitle;
+	
+	@FXML
+	private Label labelDate;
+	
+	@FXML
+	private Label labelNumber;
+	
 	@FXML
 	private Button btnView;
 	

@@ -1,0 +1,144 @@
+@font-face {
+	font-family: 'Baloo Bhai';
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+	src: url("../font/Roboto/Roboto-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ 	font-weight: bold;
+}
+ 
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ 	font-weight: light;
+}
+
+
+/* Style page content */
+.content {
+  	margin-left: 200px; /* Same as the width of the sidebar */
+	margin-top: 70px;
+	margin-right: 25px;
+}
+
+.row {
+	display: flex;
+}
+
+.col {
+	flex: 1;
+}
+
+.request {
+	background-color: #F0F0F2;
+	border-radius: 14px;
+	min-width: 100%;
+}
+
+.info-text {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.5vw;
+	color: #0C0B0B;
+}
+
+.course {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1vw;
+	color: #0C0B0B;
+	text-decoration: underline;
+}
+
+.button {
+	font-family: "Roboto";
+	font-weight: bold;
+	font-size: 1vw;
+	color: white;
+	height: 2vw;
+	width: 5vw;
+	
+	background-color: #0C0B0B;
+	border-radius: 8px;
+	border: 0;
+}
+
+.time-img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 24px;
+	min-width: 10px;
+}
+
+.img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 50px;
+	min-width: 15px;
+}
+
+.exam-img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 35px;
+	min-width: 15px;
+}
+
+.button-small {
+	font-family: "Roboto";
+	font-weight: bold;
+	font-size: 1vw;
+	color: #0C0B0B;
+	background-color: transparent;
+	border: 0;
+}
+
+.button-small:hover {
+	cursor: pointer;
+}
+
+.button:hover {
+	cursor: pointer;
+}
+
+.course-row {
+	background-color: #F0F0F2;
+	border-radius: 14px;
+	min-width: 100%;
+}
+
+.request-text {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.3vw;
+}
+
+.lesson-text {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.3vw;
+}
+
+.lesson-classroom {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 1vw;
+}
+
+.lesson-time {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 2vw;
+}

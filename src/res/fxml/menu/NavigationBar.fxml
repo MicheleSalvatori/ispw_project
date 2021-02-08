@@ -26,7 +26,7 @@
       
       <Button fx:id="btnProfile" mnemonicParsing="false" onAction="#profileButton" styleClass="profile-button" />
       
-      <Button fx:id="btnForum" mnemonicParsing="false" onAction="#forumButton" styleClass="forum-button"/>
+      <Button fx:id="btnForum" mnemonicParsing="false" onAction="#forumButton" styleClass="forum-button" />
       
       <Button fx:id="btnNews" mnemonicParsing="false" onAction="#newsButton" styleClass="news-button" />
       

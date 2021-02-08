@@ -2,12 +2,10 @@ package logic.bean;
 
 import java.sql.Date;
 
-import logic.model.Course;
-
 public class AssignmentBean {
 	
 	private int id;
-	private Course course;
+	private CourseBean course;
 	private String title;
 	private Date date;
 	private String text;
@@ -24,11 +22,11 @@ public class AssignmentBean {
 		this.id = id;
 	}
 	
-	public Course getCourse() {
+	public CourseBean getCourse() {
 		return course;
 	}
 	
-	public void setCourse(Course course) {
+	public void setCourse(CourseBean course) {
 		this.course = course;
 	}
 	

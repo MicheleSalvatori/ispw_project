@@ -29,4 +29,8 @@ public class AppProperties {
 	public String getProperty(String key) {
 		return prop.getProperty(PREFIX + key);
 	}
+	
+	public void setProperty(String key, String value) {
+		prop.setProperty(PREFIX + key, value);
+	}
 }

@@ -14,11 +14,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import logic.Session;
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
+import logic.bean.StudentBean;
+import logic.bean.UserBean;
 import logic.controller.InsertQuestionController;
-import logic.model.Student;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -36,6 +37,7 @@ public class NewQuestionView implements Initializable {
 
 	@FXML
 	private ComboBox<String> courseComboBox;
+	
 	private String questionText, questionSubject;
 	private QuestionBean questionBean;
 	private InsertQuestionController controller;
@@ -48,31 +50,47 @@ public class NewQuestionView implements Initializable {
 		controller = new InsertQuestionController();
 		btnSubmit.disableProperty().bind(Bindings.isEmpty(textQuestion.textProperty())
 				.or(Bindings.isEmpty(textSubject.textProperty())).or((courseComboBox.valueProperty().isNull())));
-		courses = controller.getCoursesOfStudent(Session.getSession().getUserLogged().getUsername());
-		for (CourseBean c : courses) {
-			courseComboBox.getItems().add(c.getAbbrevation());
+		
+		try {
+			courses = controller.getCoursesOfStudent(UserBean.getInstance());
+			for (CourseBean c : courses) {
+				courseComboBox.getItems().add(c.getAbbreviation());
+			}
+			
+		} catch (RecordNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	@FXML
-	private void saveQuestion(ActionEvent ae) {
+	private void saveQuestion(ActionEvent event) {
 		questionBean = new QuestionBean();
 		this.questionSubject = textSubject.getText();
 		this.questionText = textQuestion.getText();
+		
+		StudentBean studentBean = new StudentBean();
+		studentBean.setEmail(UserBean.getInstance().getEmail());
+		studentBean.setName(UserBean.getInstance().getName());
+		studentBean.setPassword(UserBean.getInstance().getPassword());
+		studentBean.setSurname(UserBean.getInstance().getSurname());
+		studentBean.setUsername(UserBean.getInstance().getUsername());
 
-		questionBean.setStudent((Student) (Session.getSession().getUserLogged()));
+		questionBean.setStudent(studentBean);
 		questionBean.setText(questionText);
 		questionBean.setTitle(questionSubject);
-		questionBean.setCourseByAbbr(courseComboBox.getValue());
-
+//		questionBean.setCourseByAbbr(courseComboBox.getValue());
+		questionBean.setCourse(courseComboBox.getValue());
+		
 		try {
 			controller.save(questionBean);
-			AlertController.buildInfoAlert("Your question has been correctly entered", "", ae);
+			AlertController.infoAlert("Your question has been correctly entered");
 		} catch (SQLException e) {
-			AlertController.buildInfoAlert("Something happened, your question was not acquired..", "Bad news..", ae);
+			AlertController.infoAlert("Something happened, your question was not acquired..");
 		} finally {
 			try {
-				PageLoader.getInstance().buildPage(Page.FORUM, ae, null);
+				PageLoader.getInstance().buildPage(Page.FORUM, event);
+				
 			} catch (IOException e) {
 				// errore caricamento fxml capire come gestirla. Conviene gestirla nel
 				// pageLoader

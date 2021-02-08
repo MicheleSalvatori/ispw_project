@@ -1,7 +1,6 @@
 package logic.view.card.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
@@ -11,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.shape.Line;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.model.Course;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
@@ -19,13 +17,25 @@ import logic.utilities.SQLConverter;
 public class LessonCardView {
 	
 	@FXML
-	private Label labelLesson, labelClass, labelTime;
+	private Label labelLesson;
 	
 	@FXML
-	private Line line1, line2;
+	private Label labelClass;
 	
 	@FXML
-	private Button btnView, btnCourse;
+	private Label labelTime;
+	
+	@FXML
+	private Line line1;
+	
+	@FXML
+	private Line line2;
+	
+	@FXML
+	private Button btnView;
+	
+	@FXML
+	private Button btnCourse;
 	
 	private LessonBean lesson;
 	
@@ -37,7 +47,7 @@ public class LessonCardView {
 			line2.setVisible(false);
 			btnCourse.setVisible(false);
 			
-			labelLesson.setText(lesson.getCourse().getAbbrevation());
+			labelLesson.setText(lesson.getCourse().getAbbreviation());
 			labelClass.setText(lesson.getClassroom().getName());
 			labelTime.setText(SQLConverter.time(lesson.getTime()));
 		}
@@ -62,29 +72,18 @@ public class LessonCardView {
 			labelLesson.setText(SQLConverter.date(lesson.getDate()));
 			labelClass.setText(lesson.getClassroom().getName());
 			labelTime.setText(SQLConverter.time(lesson.getTime()));
-			btnCourse.setText(lesson.getCourse().getAbbrevation());
+			btnCourse.setText(lesson.getCourse().getAbbreviation());
 		}
 	}
 	
 	@FXML
-	public void course(ActionEvent event) throws IOException, SQLException {
-    	Course course = lesson.getCourse();
-	
-    	CourseBean courseBean = new CourseBean();
-    	courseBean.setAbbrevation(course.getAbbrevation());
-    	courseBean.setName(course.getName());
-    	courseBean.setYear(course.getYear());
-    	courseBean.setCredits(course.getCredits());
-    	courseBean.setSemester(course.getSemester());
-    	courseBean.setPrerequisites(course.getPrerequisites());
-    	courseBean.setGoal(course.getGoal());
-    	courseBean.setReception(course.getReception());
-
-    	PageLoader.getInstance().buildPage(Page.COURSE, event, courseBean);
+	public void course(ActionEvent event) throws IOException {
+    	CourseBean courseBean = lesson.getCourse();
+    	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
 	@FXML
-	public void viewLesson(ActionEvent event) throws IOException, SQLException {
-		PageLoader.getInstance().buildPage(Page.LESSON, event, lesson);
+	public void viewLesson(ActionEvent event) throws IOException {
+		PageLoader.getInstance().buildPage(Page.LESSON, lesson);
 	}
 }

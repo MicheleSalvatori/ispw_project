@@ -18,7 +18,6 @@ public class AnswerCardView {
     private Label labelDate;
     
     public void setCard(AnswerBean answer) {
-    	
     	labelStudent.setText(answer.getUser().getName() + " " + answer.getUser().getSurname());
 		labelDate.setText(SQLConverter.date(answer.getDate()));
 		textAnswer.setText(answer.getText());

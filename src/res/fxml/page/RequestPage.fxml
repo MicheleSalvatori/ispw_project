@@ -10,7 +10,7 @@
       
       <Label layoutX="138.0" layoutY="101.0" text="Request" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
       
-      <ScrollPane layoutY="41.0" prefHeight="732.0" prefWidth="667.0" stylesheets="@../../style/ScrollPaneTest.css" AnchorPane.leftAnchor="0.0">
+      <ScrollPane layoutY="41.0" prefHeight="732.0" prefWidth="667.0" stylesheets="@../../style/ScrollPaneBorder.css" AnchorPane.leftAnchor="0.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0">
                <children>
@@ -22,7 +22,7 @@
       
       <Label layoutX="728.0" text="Courses" />
       
-      <ScrollPane layoutX="728.0" layoutY="41.0" prefHeight="732.0" prefWidth="409.0" stylesheets="@../../style/ScrollPaneTest.css">
+      <ScrollPane layoutX="728.0" layoutY="41.0" prefHeight="732.0" prefWidth="409.0" stylesheets="@../../style/ScrollPaneBorder.css">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0">
                <children>

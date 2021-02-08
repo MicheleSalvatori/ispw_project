@@ -3,15 +3,12 @@ package logic.bean;
 import java.sql.Date;
 import java.sql.Time;
 
-import logic.model.Classroom;
-import logic.model.Course;
-
 public class ExamBean {
 
 	private Date date;
 	private Time time;
-	private Course course;
-	private Classroom classroom;
+	private CourseBean course;
+	private ClassroomBean classroom;
 	private String note;
 	
 	public ExamBean() {
@@ -34,19 +31,19 @@ public class ExamBean {
 		this.time = time;
 	}
 	
-	public Course getCourse() {
+	public CourseBean getCourse() {
 		return course;
 	}
 	
-	public void setCourse(Course course) {
+	public void setCourse(CourseBean course) {
 		this.course = course;
 	}
 	
-	public Classroom getClassroom() {
+	public ClassroomBean getClassroom() {
 		return classroom;
 	}
 	
-	public void setClassroom(Classroom classroom) {
+	public void setClassroom(ClassroomBean classroom) {
 		this.classroom = classroom;
 	}
 	

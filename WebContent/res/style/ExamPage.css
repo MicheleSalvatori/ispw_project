@@ -1,0 +1,135 @@
+@font-face {
+	font-family: 'Baloo Bhai';
+	src: url("../font/BalooBhai/BalooBhai-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Overpass';
+	src: url("../font/Overpass/Overpass-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+	src: url("../font/Roboto/Roboto-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Bold.ttf");
+ 	font-weight: bold;
+}
+ 
+@font-face {
+	font-family: 'Roboto';
+ 	src: url("../font/Roboto/Roboto-Light.ttf");
+ 	font-weight: light;
+}
+
+/* Style page content */
+.content {
+  	margin-left: 200px; /* Same as the width of the sidebar */
+	margin-top: 70px;
+	margin-right: 25px;
+	height: 70vh;
+}
+
+.img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 50px;
+	min-width: 15px;
+}
+.exam {
+	background-color: #F0F0F2;
+	border-radius: 14px;
+	min-width: 100%;
+}
+
+.exam-label {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.5vw;
+}
+
+.exam-number {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 2vw;
+}
+
+.exam-text {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.3vw;
+}
+
+.exam-date {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 1vw;
+}
+
+.exam-grade {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1vw;
+}
+
+.exam-average {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.5vw;
+}
+
+.num-average {
+	font-family: "Roboto";
+	font-weight: normal;
+	font-size: 1.2vw;
+	padding-left: 35px;
+	text-align: right;
+}
+
+.add-exam-button {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.5vw;
+	width: 30%;
+	filter: drop-shadow(5px 5px 5px black);
+	
+	border-radius: 20px;
+	border: 0;
+	background-color: #F0F0F2;
+}
+
+.add-exam-button:hover {
+	cursor: pointer;
+}
+
+.plus-img {
+	width: 100%;
+	height: auto;
+	
+	max-width: 28px;
+	min-width: 10px;
+}
+
+.exam-button {
+	font-family: "Roboto";
+	font-weight: bold;
+	font-size: 1vw;
+	color: white;
+	height: 2vw;
+	width: 5vw;
+	
+	background-color: #0C0B0B;
+	border-radius: 8px;
+	border: 0;
+}
+
+.exam-button:hover {
+	cursor: pointer;
+}

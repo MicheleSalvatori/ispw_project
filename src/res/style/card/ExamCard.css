@@ -55,6 +55,34 @@
 	-fx-underline: true;
 }
 
+.button-view {
+	-fx-background-color: #0C0B0B;
+	-fx-background-radius: 8px;
+	
+	-fx-text-fill: white;
+	-fx-font-family: "Roboto";
+	-fx-font-weight: bold;
+	-fx-font-size: 13;
+	-fx-underline: false;
+	
+	-width: 100;
+	-height: 40;
+	-fx-min-width: -width;
+	-fx-min-height: -height;
+	-fx-pref-width: -width;
+	-fx-pref-height: -height;
+	-fx-max-width: -width;
+	-fx-max-height: -height;	
+}
+
+.button-view:hover {
+	-fx-background-color: #0C0B0B;
+}
+
+.button-view:pressed {
+	-fx-background-color: #0C0B0B;
+}
+
 .button:hover {
 	-fx-cursor: hand;
 	-fx-background-color: transparent;

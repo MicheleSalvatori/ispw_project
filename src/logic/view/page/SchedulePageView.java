@@ -18,42 +18,64 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.Pair;
-import logic.Session;
 import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
+import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.controller.ScheduleController;
 import logic.controller.ScheduleExamController;
 import logic.controller.ScheduleLessonController;
-import logic.model.Classroom;
-import logic.model.Course;
-import logic.model.Professor;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 
 public class SchedulePageView implements Initializable {
 	
 	@FXML
-	private TextField textTimeLesson, textTimeExam;
+	private TextField textTimeLesson;
 	
 	@FXML
-	private TextArea textTopic, textNote;
+	private TextField textTimeExam;
 	
 	@FXML
-	private ComboBox<String> comboCourseLesson, comboClassLesson, comboCourseExam, comboClassExam;
+	private TextArea textTopic;
 	
 	@FXML
-	private DatePicker dateLesson, dateExam;
+	private TextArea textNote;
 	
 	@FXML
-	private Button btnTimeLesson, btnTimeExam, btnAddLesson, btnAddExam;
+	private ComboBox<String> comboCourseLesson;
+	
+	@FXML
+	private ComboBox<String> comboClassLesson;
+	
+	@FXML
+	private ComboBox<String> comboCourseExam;
+	
+	@FXML
+	private ComboBox<String> comboClassExam;
+	
+	@FXML
+	private DatePicker dateLesson;
+	
+	@FXML
+	private DatePicker dateExam;
+	
+	@FXML
+	private Button btnTimeLesson;
+	
+	@FXML
+	private Button btnTimeExam;
+	
+	@FXML
+	private Button btnAddLesson;
+	
+	@FXML
+	private Button btnAddExam;
 	
 	private List<ClassroomBean> classrooms;
 	private List<CourseBean> courses;
-	
-	private ScheduleLessonController scheduleLessonController;
-	private ScheduleExamController scheduleExamController;
-	private ScheduleController scheduleController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -73,7 +95,7 @@ public class SchedulePageView implements Initializable {
 			.or(textNote.textProperty().isEmpty()));
 		
 		
-		scheduleController = new ScheduleController();
+		ScheduleController scheduleController = new ScheduleController();
 		try {
 			classrooms = scheduleController.getClassrooms();
 			for (ClassroomBean classroom : classrooms) {
@@ -81,15 +103,14 @@ public class SchedulePageView implements Initializable {
 				comboClassExam.getItems().add(classroom.getName());
 			}
 			
-			courses = scheduleController.getCourses();
+			courses = scheduleController.getCourses(UserBean.getInstance());
 			for (CourseBean course : courses) {
-				comboCourseLesson.getItems().add(course.getAbbrevation());
-				comboCourseExam.getItems().add(course.getAbbrevation());
+				comboCourseLesson.getItems().add(course.getAbbreviation());
+				comboCourseExam.getItems().add(course.getAbbreviation());
 			}
 			
-		} catch (NullPointerException e) {
+		} catch (RecordNotFoundException e) {
 			System.out.println("No course available");
-			return;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -98,7 +119,7 @@ public class SchedulePageView implements Initializable {
 	}
 	
 	@FXML
-	private void addLesson(ActionEvent event) throws SQLException {
+	private void addLesson(ActionEvent event) {
 		LessonBean lessonBean = new LessonBean();
 		
 		String topic = textTopic.getText();
@@ -112,26 +133,30 @@ public class SchedulePageView implements Initializable {
 		lessonBean.setTime(time);
 		
 		CourseBean course = courses.get(comboCourseLesson.getSelectionModel().getSelectedIndex());
-		lessonBean.setCourse(new Course(course.getName(), course.getAbbrevation(), course.getYear(), course.getSemester(),
-								course.getCredits(), course.getPrerequisites(), course.getGoal(), course.getReception()));
+		lessonBean.setCourse(course);
 		
 		ClassroomBean classroom = classrooms.get(comboClassLesson.getSelectionModel().getSelectedIndex());
-		lessonBean.setClassroom(new Classroom(classroom.getName()));
+		lessonBean.setClassroom(classroom);
 		
-		Professor professor = (Professor) Session.getSession().getUserLogged();
+		ProfessorBean professor = new ProfessorBean();
+		professor.setEmail(UserBean.getInstance().getEmail());
+		professor.setName(UserBean.getInstance().getName());
+		professor.setPassword(UserBean.getInstance().getPassword());
+		professor.setSurname(UserBean.getInstance().getSurname());
+		professor.setUsername(UserBean.getInstance().getUsername());
 		lessonBean.setProfessor(professor);
 		
-		scheduleLessonController = new ScheduleLessonController();
+		ScheduleLessonController scheduleLessonController = new ScheduleLessonController();
 		if (!scheduleLessonController.scheduleLesson(lessonBean)) {
-			AlertController.buildInfoAlert("Lesson doesn't added.\nTry later.", "Add lesson", event);
+			AlertController.infoAlert("Lesson doesn't added.\nTry later.");
 		}
 		
-		AlertController.buildInfoAlert("Lesson succesfully added", "Add lesson", event);
+		AlertController.infoAlert("Lesson succesfully added");
 		resetLessonView();
 	}
 	
 	@FXML
-	private void addExam(ActionEvent event) throws SQLException {
+	private void addExam(ActionEvent event) {
 		ExamBean examBean = new ExamBean();
 		
 		String note = textNote.getText();
@@ -146,41 +171,34 @@ public class SchedulePageView implements Initializable {
 		examBean.setTime(time);
 		
 		CourseBean course = courses.get(comboCourseExam.getSelectionModel().getSelectedIndex());
-		examBean.setCourse(new Course(course.getName(), course.getAbbrevation(), course.getYear(), course.getSemester(),
-								course.getCredits(), course.getPrerequisites(), course.getGoal(), course.getReception()));
+		examBean.setCourse(course);
 		
 		ClassroomBean classroom = classrooms.get(comboClassExam.getSelectionModel().getSelectedIndex());
-		examBean.setClassroom(new Classroom(classroom.getName()));
+		examBean.setClassroom(classroom);
 		
-		scheduleExamController = new ScheduleExamController();
+		ScheduleExamController scheduleExamController = new ScheduleExamController();
 		if (!scheduleExamController.scheduleExam(examBean)) {
-			AlertController.buildInfoAlert("Exam doesn't added.\nTry later.", "Add exam", event);
+			AlertController.infoAlert("Exam doesn't added.\nTry later.");
 		}
 		
-		AlertController.buildInfoAlert("Exam succesfully added", "Add exam", event);
+		AlertController.infoAlert("Exam succesfully added");
 		resetExamView();
 	}
 	
 	@FXML
 	public void time(ActionEvent event) {
-		Pair<String, String> result = AlertController.time(event);
+		Pair<String, String> result = AlertController.timeSelector();
 		
-		switch (((Node) event.getSource()).getId()) {
-			
-		case "btnTimeLesson":
-			if (result != null) {	
-				textTimeLesson.setText(result.getKey() + ":" + result.getValue());
-			}
-			break;
-			
-		case "btnTimeExam":
-			if (result != null) {	
-				textTimeExam.setText(result.getKey() + ":" + result.getValue());
-			}
-			break;
+		if (((Node) event.getSource()).getId().equals("btnTimeLesson") && result != null) {	
+			textTimeLesson.setText(result.getKey() + ":" + result.getValue());
+		}
+		
+		else if (((Node) event.getSource()).getId().equals("btnTimeExam") && result != null) {	
+			textTimeExam.setText(result.getKey() + ":" + result.getValue());
 		}
 	}
 	
+	// Clear lesson views
 	private void resetLessonView() {
 		textTimeLesson.setText(null);
 		textTopic.setText(null);
@@ -191,6 +209,7 @@ public class SchedulePageView implements Initializable {
 		dateLesson.setValue(null);
 	}
 	
+	// Clear exam views
 	private void resetExamView() {
 		textTimeExam.setText(null);
 		textNote.setText(null);

@@ -1,30 +1,24 @@
 package logic.view.card.controller;
 
-import java.io.FileNotFoundException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class WeatherCardView implements Initializable {
+public class WeatherCardView {
 
 	@FXML
-	private Label labelTemp, labelTime;
+	private Label labelTemp;
+	
+	@FXML
+	private Label labelTime;
+	
 	@FXML
 	private ImageView imgWeather;
 	
-	public void setCard(String temp, Image img, String time) throws FileNotFoundException {
+	public void setCard(String temp, Image img, String time) {
 		labelTemp.setText(temp);
 		imgWeather.setImage(img);
 		labelTime.setText(time);
-	}
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub	
 	}
 }

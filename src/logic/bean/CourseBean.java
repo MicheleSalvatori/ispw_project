@@ -4,13 +4,11 @@ package logic.bean;
 
 import java.util.List;
 
-import logic.model.Student;
-
 public class CourseBean {
 
 	private String name;
-	private String abbrevation;
-	private List<Student> studentOfCourse;
+	private String abbreviation;
+	private List<StudentBean> students;
 	
 	private String year;
 	private String semester;
@@ -25,7 +23,7 @@ public class CourseBean {
 	
 	public CourseBean(String course, String abbrv) {
 		this.name = course;
-		this.abbrevation = abbrv;
+		this.abbreviation = abbrv;
 	}
 
 	public String getName() {
@@ -35,21 +33,25 @@ public class CourseBean {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public List<Student> getStudentOfCourse() {
-		return studentOfCourse;
+	
+	public void setStudentsOfCourse(List<StudentBean> students) {
+		this.students = students;
 	}
 
-	public void addStudentToCourse(Student student) {
-		this.studentOfCourse.add(student);
+	public List<StudentBean> getStudents() {
+		return students;
 	}
 
-	public String getAbbrevation() {
-		return abbrevation;
+	public void addStudentToCourse(StudentBean student) {
+		this.students.add(student);
 	}
 
-	public void setAbbrevation(String abbrevation) {
-		this.abbrevation = abbrevation;
+	public String getAbbreviation() {
+		return abbreviation;
+	}
+
+	public void setAbbreviation(String abbreviation) {
+		this.abbreviation = abbreviation;
 	}
 	
 	public String getYear() {

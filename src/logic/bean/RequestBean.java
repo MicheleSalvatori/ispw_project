@@ -1,30 +1,27 @@
 package logic.bean;
 
-import logic.model.Course;
-import logic.model.Student;
-
 public class RequestBean {
 
-	private Student student;
-	private Course course;
+	private StudentBean student;
+	private CourseBean course;
 	
 	public RequestBean() {
 		
 	}
 	
-	public Student getStudent() {
+	public StudentBean getStudent() {
 		return student;
 	}
 	
-	public void setStudent(Student student) {
+	public void setStudent(StudentBean student) {
 		this.student = student;
 	}
 	
-	public Course getCourse() {
+	public CourseBean getCourse() {
 		return course;
 	}
 	
-	public void setCourse(Course course) {
+	public void setCourse(CourseBean course) {
 		this.course = course;
 	}
 }

@@ -14,7 +14,9 @@ import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
+import logic.bean.UserBean;
 import logic.controller.ScheduledController;
+import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.card.element.CourseFilterCard;
@@ -49,24 +51,34 @@ public class ScheduledPageView implements Initializable {
 				labelPage.setText("Lessons");
 				
 				// Get user lessons
-				lessons = scheduledController.getLessons();
+				lessons = scheduledController.getLessons(UserBean.getInstance());
 			}
 			
 			else if (PageLoader.getPage() == Page.SCHEDULED_EXAMS) {
 				labelPage.setText("Exams");
 				
 				// Get user exams
-				exams = scheduledController.getExams();
+				exams = scheduledController.getExams(UserBean.getInstance());
 			}
-			
-			// Get user courses
-			courses = scheduledController.getCourses();
 
-		} catch (NullPointerException e) {
-			vboxCourse.getChildren().add(new Label("No course found"));
+		} catch (RecordNotFoundException e) {
+			vboxScroll.getChildren().add(new Label(e.getMessage()));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			// Get user courses
+			courses = scheduledController.getCourses(UserBean.getInstance());
+			
+		} catch (RecordNotFoundException e) {
+			vboxCourse.getChildren().add(new Label(e.getMessage()));
 			return;
 			
 		} catch (SQLException e) {
+		// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -84,9 +96,9 @@ public class ScheduledPageView implements Initializable {
 	}
 	
 	public void setFilters(CourseBean course) throws IOException {
-		for (CourseBean c : courses) {	
-			CourseFilterCard courseFilterCard = new CourseFilterCard(c);
-			if (c.getAbbrevation().compareTo(course.getAbbrevation()) == 0) {
+		for (CourseBean courseBean : courses) {	
+			CourseFilterCard courseFilterCard = new CourseFilterCard(courseBean);
+			if (courseBean.getAbbreviation().compareTo(course.getAbbreviation()) == 0) {
 				courseFilterCard.getController().getButton().setSelected(true);
 			}
 			vboxCourse.getChildren().add(courseFilterCard);
@@ -95,18 +107,18 @@ public class ScheduledPageView implements Initializable {
 	
 	public void filterLessons(CourseBean course) {
 		
-		if (filteredCourses.contains(course.getAbbrevation())) {
-			filteredCourses.remove(course.getAbbrevation());
+		if (filteredCourses.contains(course.getAbbreviation())) {
+			filteredCourses.remove(course.getAbbreviation());
 		}
 		else {
-			filteredCourses.add(course.getAbbrevation());
+			filteredCourses.add(course.getAbbreviation());
 		}
 		
 		try {
 			vboxScroll.getChildren().clear();
 			
 			for (LessonBean lessonBean : lessons) {
-				if (filteredCourses.contains(lessonBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
+				if (filteredCourses.contains(lessonBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
 					LessonCard lessonCard = new LessonCard(lessonBean);
 					vboxScroll.getChildren().add(lessonCard);
 				}
@@ -129,17 +141,17 @@ public class ScheduledPageView implements Initializable {
 	
 	public void filterExams(CourseBean course) {
 		
-		if (filteredCourses.contains(course.getAbbrevation())) {
-			filteredCourses.remove(course.getAbbrevation());
+		if (filteredCourses.contains(course.getAbbreviation())) {
+			filteredCourses.remove(course.getAbbreviation());
 		}
 		else {
-			filteredCourses.add(course.getAbbrevation());
+			filteredCourses.add(course.getAbbreviation());
 		}
 		
 		try {
 			vboxScroll.getChildren().clear();
 			for (ExamBean examBean : exams) {
-				if (filteredCourses.contains(examBean.getCourse().getAbbrevation()) || filteredCourses.isEmpty()) {
+				if (filteredCourses.contains(examBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
 					ScheduledExamCard scheduledExamCard = new ScheduledExamCard(examBean);
 					vboxScroll.getChildren().add(scheduledExamCard);
 				}

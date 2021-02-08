@@ -18,6 +18,10 @@ import javafx.scene.image.Image;
 
 public class Weather {
 	
+	private Weather() {
+		
+	}
+	
 	public static double kelvinToCelsius(double kelvin) {
 		BigDecimal bd = new BigDecimal(kelvin-273.15).setScale(1, RoundingMode.HALF_UP);
 		return bd.doubleValue();
@@ -33,27 +37,27 @@ public class Weather {
 			switch (weather) {
 			
 			case "Clear":
-				file = new File("src/res/png/Weather/Moon.png");
+				file = new File("src/res/png/weather/Moon.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Clouds":
-				file = new File("src/res/png/Weather/CloudMoon.png");
+				file = new File("src/res/png/weather/CloudMoon.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Rain":
-				file = new File("src/res/png/Weather/Rain.png");
+				file = new File("src/res/png/weather/Rain.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Thunderstorm":
-				file = new File("src/res/png/Weather/Thunderstorm.png");
+				file = new File("src/res/png/weather/Thunderstorm.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			default:
-				file = new File("src/res/png/Weather/Cloud.png");
+				file = new File("src/res/png/weather/Cloud.png");
 				image = new Image(file.toURI().toString());
 				break;
 			
@@ -65,27 +69,27 @@ public class Weather {
 			switch (weather) {
 			
 			case "Clear":
-				file = new File("src/res/png/Weather/Sun.png");
+				file = new File("src/res/png/weather/Sun.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Clouds":
-				file = new File("src/res/png/Weather/CloudSun.png");
+				file = new File("src/res/png/weather/CloudSun.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Rain":
-				file = new File("src/res/png/Weather/Rain.png");
+				file = new File("src/res/png/weather/Rain.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			case "Thunderstorm":
-				file = new File("src/res/png/Weather/Thunderstorm.png");
+				file = new File("src/res/png/weather/Thunderstorm.png");
 				image = new Image(file.toURI().toString());
 				break;
 				
 			default:
-				file = new File("src/res/png/Weather/Cloud.png");
+				file = new File("src/res/png/weather/Cloud.png");
 				image = new Image(file.toURI().toString());
 				break;
 			
@@ -106,14 +110,11 @@ public class Weather {
 
 	public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
 		InputStream is = new URL(url).openStream();
-		try {
-	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-	      String jsonText = readAll(rd);
-	      JSONObject json = new JSONObject(jsonText);
-	      return json;
-	    } finally {
-	      is.close();
-	    }
+	    BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+	    String jsonText = readAll(rd);
+	    JSONObject json = new JSONObject(jsonText);
+	    is.close();
+	    return json;
 	}
 	
 	public static JSONArray getInfo() {
