@@ -57,7 +57,6 @@ public class RoleDAO {
 			if(stmt != null)
 				stmt.close();
 		}
-		System.out.println("RoleDAO -> username = " + username );
 		return role;
 	}
 	

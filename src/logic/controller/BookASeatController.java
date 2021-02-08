@@ -91,7 +91,6 @@ public class BookASeatController {
 			
 		if (seats != null) {
 			for (Seat s : seats) {
-				System.out.println("S: "+s.getIndex()+s.getState());
 				seatsBean.get(s.getIndex()-1).setFree(s.getState());
 			}
 		}

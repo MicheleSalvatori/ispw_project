@@ -115,7 +115,7 @@ public class LessonDAO {
 				Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
 				Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
 				String to = rs.getString("topic");
-				Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));;
+				Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
 				lesson = new Lesson(d, t, c, cl, to, p);
 			}
 			rs.close();
@@ -319,7 +319,7 @@ public class LessonDAO {
 				Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
 				Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
 				String to = rs.getString("topic");
-				Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));;
+				Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
 				lesson = new Lesson(d, t, c, cl, to, p);
 			}
 			rs.close();

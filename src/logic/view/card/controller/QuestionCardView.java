@@ -1,5 +1,7 @@
 package logic.view.card.controller;
 
+import java.sql.SQLException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,6 +9,7 @@ import javafx.scene.control.Label;
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
 import logic.bean.UserBean;
+import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.SQLConverter;
@@ -16,28 +19,28 @@ public class QuestionCardView {
 
 	@FXML
 	private Label labelName;
-	
+
 	@FXML
 	private Label labelSurname;
-	
+
 	@FXML
 	private Label labelNumber;
-	
+
 	@FXML
 	private Label labelQuestionObject;
-	
+
 	@FXML
 	private Label labelQuestionDate;
-	
+
 	@FXML
 	private Button btnCourse;
-	
+
 	@FXML
 	private Button btnView;
-	
+
 	@FXML
 	private Button btnSolved;
-	
+
 	private QuestionBean question;
 
 	public void setCard(QuestionBean question) {
@@ -54,7 +57,7 @@ public class QuestionCardView {
 			btnSolved.setDisable(true);
 			btnSolved.setText("Solved");
 			btnSolved.setStyle("-fx-text-fill: green");
-			
+
 		} else {
 //			Only the author of this question can be set it to solved
 			if (question.getStudent().getUsername().equals(UserBean.getInstance().getUsername())) {
@@ -74,17 +77,21 @@ public class QuestionCardView {
 
 	@FXML
 	private void setSolved(ActionEvent ae) {
-		ForumPageView controller = (ForumPageView) PageLoader.getInstance().getController();
-		if (controller.setSolved(question.getId())) {
+		ForumPageView graphicController = (ForumPageView) PageLoader.getInstance().getController();
+		try {
+			graphicController.setSolved(question.getId());
 			question.setSolved(true);
 			setCard(question);
+		} catch (SQLException e) {
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
 		}
 	}
 
 	@FXML
 	private void course(ActionEvent event) {
-    	CourseBean courseBean = new CourseBean();
-    	courseBean.setAbbreviation(question.getCourse());
-    	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
+		CourseBean courseBean = new CourseBean();
+		courseBean.setAbbreviation(question.getCourse());
+		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 }

@@ -66,7 +66,7 @@ public class ScheduledController {
 		
 		// Get current date
 		Date date = new Date(System.currentTimeMillis());
-		List<Exam> exams;
+		List<Exam> exams = null;
 		List<ExamBean> examsBean = new ArrayList<>();
 		
 		// Get user lessons and courses
@@ -74,13 +74,8 @@ public class ScheduledController {
 			exams = ExamDAO.getNextExamsStudent(date, userBean.getUsername());
 		}
 		
-		else if (userBean.getRole() == Role.PROFESSOR) {
+		if (userBean.getRole() == Role.PROFESSOR) {
 			exams = ExamDAO.getNextExamsProfessor(date, userBean.getUsername());
-		}
-		
-		else {
-			// Admin role
-			return null;
 		}
 		
 		for (Exam exam : exams) {

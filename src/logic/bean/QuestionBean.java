@@ -78,12 +78,6 @@ public class QuestionBean {
 		this.course = course;
 	}
 
-//	public void setCourseByAbbr(String course) {
-//		CourseBean c = new CourseBean();
-//		c.setAbbreviation(course);
-//		this.course = c;
-//	}
-
 	public StudentBean getStudent() {
 		return student;
 	}
