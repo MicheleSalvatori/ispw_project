@@ -31,12 +31,14 @@ public class RequestCardView {
 	private void acceptRequest(ActionEvent event) {
 		RequestPageView requestPageView = (RequestPageView) PageLoader.getInstance().getController();
 		requestPageView.acceptRequest(request);
+		PageLoader.getInstance().buildPage(Page.REQUEST);
 	}
 	
 	@FXML
 	private void declineRequest(ActionEvent event) {
 		RequestPageView requestPageView = (RequestPageView) PageLoader.getInstance().getController();
 		requestPageView.declineRequest(request);
+		PageLoader.getInstance().buildPage(Page.REQUEST);
 	}
 	
 	@FXML
