@@ -27,6 +27,13 @@
   	margin-left: 200px; /* Same as the width of the sidebar */
 	margin-top: 70px;
 	margin-right: 25px;
+	height: 70vh;
+}
+
+.overflow {
+	overflow: auto; 
+	height: 100%; 
+	overflow-x: hidden;	
 }
 
 .row {

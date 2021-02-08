@@ -250,8 +250,8 @@
 							</table>
 						</div>
 
-						<!-- Next Lessons-->
-						<div style="padding-top: 2vw; width: 100%">
+						<!-- Weekly Lessons-->
+						<div style="padding-top: 2vw; width: 100%; class: overflow; height: 100%;">
 							<table style="border-collapse: collapse; width: 100%;">
 
 								<thead>

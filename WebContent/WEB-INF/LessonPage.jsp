@@ -288,10 +288,11 @@
 		</div>
 		<div style="float: right; width: 50%;" class="col">
 			<a class="text" style="padding-left: 0; text-align: left;">Seat Map</a>
-			<div class="seat">
+			<div class="seat" style="height: 100%;">
+				<div class="overflow">
 				<form action="/ispw_project/LessonPageServlet" method="post">
 				<div style="text-align: center;">
-				<img style="padding:10px; max-height: 8vw; margin-top: 18px;" src="res/img/ClassProf.png" alt="classroom">
+					<img style="padding:10px; max-height: 8vw; margin-top: 18px;" src="res/img/ClassProf.png" alt="classroom">
 				</div>
 				<table style="border-spacing: 10px;">
 					<c:forEach var="i" begin="1" end="<%=row%>">
@@ -323,7 +324,8 @@
 						</tr>
 					</c:forEach>
 				</table>
-			</form>
+				</form>
+				</div>
 			</div>
 		</div>
 	</div>

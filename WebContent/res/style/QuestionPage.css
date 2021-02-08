@@ -29,6 +29,13 @@
   margin-left: 200px; 
   margin-top: 70px;
   margin-right: 80px;
+  height: 80vh;
+}
+
+.overflow {
+	overflow: auto; 
+	height: 100%; 
+	overflow-x: hidden;	
 }
 
 .title-label {

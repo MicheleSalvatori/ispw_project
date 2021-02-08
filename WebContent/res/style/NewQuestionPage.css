@@ -21,12 +21,21 @@
 	margin-left: 200px; /* Same as the width of the sidebar */
 	margin-top: 70px;
 	margin-right: 140px;
+	height: 80vh;
 }
+
+.overflow {
+	overflow: auto; 
+	height: 100%; 
+	overflow-x: hidden;	
+}
+
 .title-label{
 	font-family: "Baloo Bhai";
 	font-size: 2vw;
 	font-weight: normal;
 }
+
 .input-subject {
 	width: 50%;
 	border-radius: 10px;

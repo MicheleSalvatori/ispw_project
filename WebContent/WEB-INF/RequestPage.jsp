@@ -163,6 +163,7 @@
 			<div style="width: 60%; margin-right: 5vw; float: left; height: 80vh;">
 				<div class="info-text">Requests</div>
 				<div style="border: 2px solid #0C0B0B; border-radius: 14px; width: 100%; height: 100%;">
+					<div class="overflow">
 					<table id="tableRequest" style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
 						<c:if test="${empty listOfRequest}">
 						<tr>
@@ -204,7 +205,8 @@
 							</td>
 						</tr>
 						</c:forEach>
-				</table>
+					</table>
+					</div>
 				</div>
 			</div>
 			

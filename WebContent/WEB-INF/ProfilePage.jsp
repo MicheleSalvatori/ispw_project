@@ -237,6 +237,7 @@
 			<div class="col" style="float: right;">
 				<div class="info-text">Courses</div>
 				<div style="border: 2px solid #0C0B0B; border-radius: 14px; width: 100%; height: 100%;">
+					<div class="overflow">
 					<table style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
 						<c:if test="${empty listOfCourse && empty listOfRequest}">
 							<tr>
@@ -303,7 +304,8 @@
 							</td>
 						</tr>
 						</c:forEach>
-				</table>
+					</table>
+					</div>
 				</div>
 				<div style="text-align: center; padding-top: 20px;">
 					<button name="btnAdd" id="btnAdd" class="button-add" style="margin-right: 5vw;">

@@ -21,14 +21,19 @@
 	margin-left: 200px; /* Same as the width of the sidebar */
 	margin-top: 70px;
 	margin-right: 70px;
-	height: 50vh;
+	height: 80vh;
+}
+
+.overflow {
+	overflow: auto; 
+	height: 100%; 
+	overflow-x: hidden;	
 }
 
 .tr{
 	background-color: #F0F0F2;
 	border-radius: 14px;
 }
-
 
 .table{
 	white-space: normal; 

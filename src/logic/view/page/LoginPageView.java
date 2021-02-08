@@ -4,6 +4,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +18,7 @@ import javafx.scene.control.TextField;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.exceptions.CancelException;
+import logic.exceptions.InvalidInputException;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.Email;
@@ -97,6 +101,8 @@ public class LoginPageView implements Initializable {
 		
 		try {
 			String email = AlertController.emailInput();
+			checkInput(email);
+			
 			UserBean userBean = new UserBean();
 			userBean.setEmail(email);
 			
@@ -107,7 +113,7 @@ public class LoginPageView implements Initializable {
 			AlertController.infoAlert("Connection failed!");
 			return;
 
-		} catch (RecordNotFoundException e) {
+		} catch (RecordNotFoundException | InvalidInputException e) {
 			AlertController.infoAlert(e.getMessage());
 			return;
 
@@ -131,5 +137,15 @@ public class LoginPageView implements Initializable {
 	@FXML
 	void googleLogin(ActionEvent event) {
 		AlertController.infoAlert("Functionality not yet implemented");
+	}
+	
+	private void checkInput(String email) throws InvalidInputException {
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+			
+		} catch (AddressException e) {
+			throw new InvalidInputException(e.getMessage());
+		}
 	}
 }

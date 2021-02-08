@@ -249,8 +249,8 @@
 			<c:otherwise>
 				<a class="title-label">Answers</a>
 				<c:forEach items="${listOfAnswers}" var="answer">
-					<div
-						style="height: 100%; margin-top: 10px; border: 2px solid #0C0B0B; border-radius: 14px; padding: 4px;">
+					<div style="height: 100%; margin-top: 10px; border: 2px solid #0C0B0B; border-radius: 14px; padding: 4px;">
+						<div class="overflow">
 						<div style="margin-left: 10px; margin-right: 10px;">
 							<a class="author"> ${answer.getUser().getName()}
 								${answer.getUser().getSurname()}</a> <a class="author"
@@ -261,6 +261,7 @@
 							style="height: 2px; border-width: 0; color: black; background-color: black; margin-left: 10px; margin-right: 10px;">
 						<div>
 							<a class="answer-text">${answer.getText()}</a>
+						</div>
 						</div>
 					</div>
 				</c:forEach>

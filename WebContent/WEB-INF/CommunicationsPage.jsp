@@ -207,7 +207,8 @@
 		<a class="title-label">Communications</a>
 	</div>
 
-	<div style="border: 2px solid #0C0B0B; border-radius: 14px; overflow: scroll; height: 100%; overflow-x: hidden; border">
+	<div style="border: 2px solid #0C0B0B; border-radius: 14px; height: 100%;">
+		<div class="overflow"> 
 		<table class="table">
 			<c:if test="${empty listOfCommunications}">
 				<tr>
@@ -247,8 +248,8 @@
 					</td>
 				</tr>
 			</c:forEach>
-
 		</table>
+		</div>
 	</div>
 </div>
 </body>

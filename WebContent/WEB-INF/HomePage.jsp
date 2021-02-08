@@ -266,7 +266,7 @@
 					</div>
 					
 					<!-- Next Lessons-->
-					<div style="padding-top: 2vw; width: 100%;">
+					<div class="overflow" style="padding-top: 2vw; width: 100%; height: 100%;">
 						<table style="border-collapse: separate; width: 100%; border-spacing: 0 15px;">
 							
 							<thead>
@@ -277,7 +277,7 @@
 								</tr>
 							</thead>
 							
-							<tbody style="overflow: auto; width: 100%;">
+							<tbody style="width: 100%;">
 								<c:if test="${empty listOfLesson}">
 									<tr>
 										<td colspan="5" class="next-lessons-label" style="text-align: center;">

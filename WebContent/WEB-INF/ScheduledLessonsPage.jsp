@@ -164,6 +164,7 @@
 			<div style="width: 60%; margin-right: 5vw; float: left; height: 80vh;">
 				<div class="info-text">Lessons</div>
 				<div style="border: 2px solid #0C0B0B; border-radius: 14px; width: 100%; height: 100%;">
+					<div class="overflow">
 					<table id="tableLesson" style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
 						<c:if test="${empty listOfLesson}">
 						<tr>
@@ -218,7 +219,8 @@
 							</td>
 						</tr>
 						</c:forEach>
-				</table>
+					</table>
+					</div>
 				</div>
 			</div>
 			
@@ -226,6 +228,7 @@
 			<div class="col" style="float: right;">
 				<div class="info-text">Courses</div>
 				<div style="border: 2px solid #0C0B0B; border-radius: 14px; width: 100%; height: 100%;">
+					<div class="overflow">
 					<table style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
 						<tr class="course-row">
 							<td style="border-radius: 14px; white-space: nowrap; text-align: center; padding: 10px 0 10px 0;">
@@ -243,7 +246,8 @@
 							</td>	
 						</tr>
 						</c:forEach>
-				</table>
+					</table>
+					</div>
 				</div>
 			</div>
 		

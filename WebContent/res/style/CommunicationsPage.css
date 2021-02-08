@@ -24,6 +24,12 @@
 	height: 80vh;
 }
 
+.overflow {
+	overflow: auto; 
+	height: 100%; 
+	overflow-x: hidden;	
+}
+
 .tr{
 	background-color: #F0F0F2;
 	border-radius: 14px;
@@ -36,7 +42,6 @@
 	width: 100%; 
 	border: 15px solid transparent;
 	word-wrap: break-word;
-	height: 50px;
 }
 
 td{

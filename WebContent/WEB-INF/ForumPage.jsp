@@ -210,8 +210,9 @@
 		<a class="title-label">Questions</a>
 		<!-- Question Table -->
 		<div class="border-table" style="height: 100%;">
-			<table class="table-question" id="tableQuestions" style="overflow: scroll;">
-				<tbody style="overflow: auto; display: block; border-spacing: 0 10px;">
+			<div class="overflow">
+			<table class="table-question" id="tableQuestions">
+				<tbody style="display: block; border-spacing: 0 10px;">
 					<c:forEach items="${listOfQuestion}" var="question">
 						<tr height="50px" class="question">
 							<td
@@ -288,6 +289,7 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			</div>
 		</div>
 	</div>
 
@@ -316,9 +318,10 @@
 		</a>
 		<% } %>
 
-		<div style="margin-top: 30px;">
+		<div style="margin-top: 30px; height: 70%;">
 			<a class="title-label">Assignments</a>
 			<div class="border-table">
+				<div class="overflow">
 				<table class="table-question;" style="border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
 						<c:forEach items="${listOfAssignment}" var="assignment">
 							<tr height="30px" class="question">
@@ -352,6 +355,7 @@
 							
 						</c:forEach>
 				</table>
+				</div>
 			</div>
 		</div>
 	</div>
