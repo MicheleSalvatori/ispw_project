@@ -81,7 +81,7 @@ public class SignupPageServlet extends HttpServlet {
 	
 	private void checkInput(String name, String surname, String email, String password, String confirmPassword) throws InvalidInputException {
 
-		Pattern p = Pattern.compile("[^A-Za-z]", Pattern.CASE_INSENSITIVE);
+		Pattern p = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(name + surname);
 
 		// Check if email is valid and if passwords are the same

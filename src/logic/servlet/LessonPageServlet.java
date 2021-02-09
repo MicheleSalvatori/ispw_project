@@ -50,7 +50,6 @@ public class LessonPageServlet extends HttpServlet {
 		try {
 			LessonBean lesson = controller.getLesson(l);
 			List<SeatBean> occupiedSeats = controller.getOccupateSeatOf(lesson);
-			System.out.println(occupiedSeats.get(0).isFree());
 			SeatBean mySeat = controller.getMySeat(lesson, user);
 			
 			req.setAttribute("lesson", lesson);
@@ -106,7 +105,7 @@ public class LessonPageServlet extends HttpServlet {
 		if (req.getParameter("yourSeat")!=null) {
 			try {
 				LessonBean lesson = controller.getLesson(l);
-				SeatBean seat = new SeatBean(Integer.valueOf(req.getParameter("yourSeat")));
+				SeatBean seat = new SeatBean(Integer.parseInt(req.getParameter("yourSeat")));
 				controller.freeSeat(seat, lesson, user);
 				
 			} catch (SQLException e) {

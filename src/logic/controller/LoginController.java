@@ -92,7 +92,7 @@ public class LoginController {
 		UserBean.setInstance(null);
 
 		// Delete Navigation Bar
-		NavigationBar.setInstance(null);
+		NavigationBar.resetInstance();
 	}
 
 	public void signup(UserBean userBean) throws SQLException, DuplicatedRecordException {

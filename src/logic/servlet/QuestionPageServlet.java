@@ -37,8 +37,8 @@ public class QuestionPageServlet extends HttpServlet {
 		List<AnswerBean> answers = null;
 		QuestionBean questionBean = null;
 		try {
-			questionBean = controller.getQuestionByID(Integer.valueOf(req.getParameter("questionID")));
-			answers = controller.getAnswersOf(Integer.valueOf(req.getParameter("questionID")));
+			questionBean = controller.getQuestionByID(Integer.parseInt(req.getParameter("questionID")));
+			answers = controller.getAnswersOf(Integer.parseInt(req.getParameter("questionID")));
 			
 		} catch (RecordNotFoundException e) {
 			answers = new ArrayList<>();
@@ -48,16 +48,15 @@ public class QuestionPageServlet extends HttpServlet {
 			req.getRequestDispatcher("/WEB-INF/HomePage.jsp").forward(req, resp);
 			return;
 		}
+		
 		req.setAttribute("listOfAnswers", answers);
 		req.setAttribute("question", questionBean);
 		req.setAttribute("questionID", req.getParameter("questionID"));
 		req.getRequestDispatcher("/WEB-INF/QuestionPage.jsp").forward(req, resp);
-
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.print("QuestionPageServletPOST: ");
 		HttpSession session = req.getSession();
 		if (req.getParameter("submitAdd") != null) {
 			AnswerAQuestionController controller = new AnswerAQuestionController();
@@ -65,16 +64,18 @@ public class QuestionPageServlet extends HttpServlet {
 			answerBean.setUser((UserBean) session.getAttribute("loggedUser"));
 			answerBean.setText(req.getParameter("answer-text"));
 			answerBean.setDate(new Date(System.currentTimeMillis()));
-			answerBean.setId(Integer.valueOf(req.getParameter("id")));
+			answerBean.setId(Integer.parseInt(req.getParameter("id")));
 			
 			try {
 				controller.save(answerBean);
 				req.setAttribute("alertMsg", "Answer correctly added.");
+				
 			} catch (SQLException e) {
 				req.setAttribute("alertMsg", "An error as occured. Try later.");
 				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
 				return;
 			}
+			
 			req.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(req, resp);		//TODO Mettere scrip nel jsp e controllare se funziona
 		}
 	}

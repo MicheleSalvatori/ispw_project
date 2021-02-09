@@ -44,7 +44,7 @@ public class NavigationBar {
 		return vbox;
 	}
 
-	public static void setInstance(Object object) {
+	public static void resetInstance() {
 		instance = null;
 	}
 }

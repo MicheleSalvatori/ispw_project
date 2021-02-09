@@ -64,7 +64,7 @@ public class SignupPageView implements Initializable {
 	}
 
 	@FXML
-	void signup(ActionEvent event) {
+	void signup() {
 
 		String username = (textUsername.getText().replaceAll("\\s", "")).toLowerCase();
 		String password = textPassword.getText();
@@ -76,12 +76,15 @@ public class SignupPageView implements Initializable {
 			AlertController.infoAlert("One or more fields are empty");
 			return;
 		}
+		
 		try {
 			checkInput();
+			
 		} catch (InvalidInputException e) {
 			AlertController.infoAlert(e.getMessage());
 			return;
 		}
+		
 		if (AlertController.confirmationAlert("Are your data correct?\nYour username will be:\n" + username)) {
 			UserBean userBean = new UserBean();
 			userBean.setUsername(username);
@@ -111,7 +114,7 @@ public class SignupPageView implements Initializable {
 		String email = textEmail.getText();
 		String password = textPassword.getText();
 		String confirmPassword = textConfirmPassword.getText();
-		Pattern p = Pattern.compile("[^A-Za-z]", Pattern.CASE_INSENSITIVE);
+		Pattern p = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(name + surname);
 
 		// Check if email is valid and if passwords are the same
@@ -140,12 +143,8 @@ public class SignupPageView implements Initializable {
 				.or(Bindings.isEmpty(textEmail.textProperty())).or(Bindings.isEmpty(textPassword.textProperty()))
 				.or(Bindings.isEmpty(textConfirmPassword.textProperty())));
 
-		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				signup(event);
-			}
-		};
+		EventHandler<ActionEvent> eventHandler = e -> signup();
+
 
 		textUsername.setOnAction(eventHandler);
 		textPassword.setOnAction(eventHandler);

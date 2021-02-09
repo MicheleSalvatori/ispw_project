@@ -124,7 +124,6 @@ public class NavigationBarView implements Initializable {
 	
 	@FXML
 	public void refreshPage(ActionEvent event) {
-		System.out.println("Refresh");
 		PageLoader.getInstance().refreshPage();
 	}
 }

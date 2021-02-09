@@ -47,9 +47,6 @@ public class NewQuestionPageServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println(req.getParameter("courses"));
-		System.out.println(req.getParameter("question-subject"));
-		System.out.println(req.getParameter("question-text"));
 		AskAQuestionController controller = new AskAQuestionController();
 		QuestionBean newQuestion = new QuestionBean();
 		StudentBean student = new StudentBean();
@@ -68,7 +65,6 @@ public class NewQuestionPageServlet extends HttpServlet {
 			return;
 		}
 		
-		System.out.println(student.getUsername());
 		resp.sendRedirect("/ispw_project/ForumPageServlet");
 	}
 }

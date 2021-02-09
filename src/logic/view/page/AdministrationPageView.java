@@ -2,7 +2,6 @@ package logic.view.page;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -28,7 +27,14 @@ public class AdministrationPageView implements Initializable {
 	private VBox vboxComm;
 
 	@FXML
-	private Button btnAddCommunication, btnAddCourse, btnCredentialsProfessor;
+	private Button btnAddCommunication;
+	
+	@FXML
+	private Button btnAddCourse;
+	
+	@FXML
+	private Button btnCredentialsProfessor;
+	
 	@FXML
 	private ScrollPane scroll;
 
@@ -45,20 +51,17 @@ public class AdministrationPageView implements Initializable {
 				vboxComm.getChildren().add(communicationCard.getPane());
 			}
 
-
 		} catch (SQLException e1) {
 			AlertController.infoAlert(AlertController.getError());
 			PageLoader.getInstance().goBack();
+			
 		} catch (RecordNotFoundException e1) {
-			communications = new ArrayList<>();
 			vboxComm.getChildren().add(new Label("No exam found"));
-			return;
 		}
 	}
 
 	@FXML
 	public void postCommunication(ActionEvent event) {
-		System.out.println("Post Communication");
 		PageLoader.getInstance().buildPage(Page.POST_COMMUNICATION);
 	}
 

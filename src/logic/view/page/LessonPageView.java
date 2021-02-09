@@ -70,6 +70,10 @@ public class LessonPageView {
 	private GridPane gridSeat;
 	private SeatBean mySeat;
 	private ObservableList<Node> buttonList;
+	
+	private static final String FREE_SEAT = "free-seat";
+	private static final String YOUR_SEAT = "your-seat";
+	private static final String BOOKED_SEAT = "booked-seat";
 
 	private enum SeatState {
 		FREE, BOOKED, YOUR
@@ -112,24 +116,24 @@ public class LessonPageView {
 	}
 
 	private void setupEvent() {
-		seatEvent = new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				Button btnSeat = (Button) event.getSource();
-				switch (btnSeat.getId()) {
-				case "your-seat":
-					if (AlertController.confirmationAlert("Are you sure you want to free your seat?")) {
-						freeSeat(btnSeat);
-					}
-					break;
-				case "free-seat":
-					if (AlertController.confirmationAlert("Are you sure you want to book this seat?")) {
-						bookSeat(btnSeat);
-					}
-					break;
-				default:
-					break;
+		seatEvent = event -> {
+			Button btnSeat = (Button) event.getSource();
+			switch (btnSeat.getId()) {
+			
+			case YOUR_SEAT:
+				if (AlertController.confirmationAlert("Are you sure you want to free your seat?")) {
+					freeSeat(btnSeat);
 				}
+				break;
+				
+			case FREE_SEAT:
+				if (AlertController.confirmationAlert("Are you sure you want to book this seat?")) {
+					bookSeat(btnSeat);
+				}
+				break;
+				
+			default:
+				break;
 			}
 		};
 	}
@@ -139,6 +143,7 @@ public class LessonPageView {
 			controlSeat.freeSeat(mySeat, this.lesson, UserBean.getInstance());
 			changeState(getSeat(buttonSeat), SeatState.FREE);
 			mySeat = null;
+			
 		} catch (SQLException e) {
 			AlertController.infoAlert("The system was unable to accommodate your request, please try again!");
 		}
@@ -167,7 +172,6 @@ public class LessonPageView {
 	private void setupRoom() {
 		int numRow = classroom.getSeatRow();
 		int seatPerRow = classroom.getSeatColumn();
-		System.out.println(numRow + " " + seatPerRow);
 		gridSeat = new GridPane();
 		paneSeat.getChildren().add(gridSeat);
 		AnchorPane.setTopAnchor(gridSeat, 0d);
@@ -184,7 +188,7 @@ public class LessonPageView {
 
 				Button btn = new Button(j + 1 + "");
 				btn.getStylesheets().add("/res/style/SeatButton.css");
-				btn.setId("free-seat");
+				btn.setId(FREE_SEAT);
 				btn.setMaxWidth(1);
 				btn.setOnAction(seatEvent);
 				gridSeat.add(btn, j, i);
@@ -219,24 +223,26 @@ public class LessonPageView {
 	private SeatBean getSeat(Button button) {
 		int row = GridPane.getRowIndex(button) * classroom.getSeatColumn();
 		int col = GridPane.getColumnIndex(button) + 1;
-		System.out.println(row + col);
 		return new SeatBean(row + col, lesson.getClassroom().getName());
 	}
 
 	private void changeState(SeatBean seat, SeatState state) {
 		Button button = (Button) buttonList.get(seat.getId() - 1);
-		System.out.println(state);
+		
 		switch (state) {
+		
 		case FREE:
-			button.setId("free-seat");
+			button.setId(FREE_SEAT);
 			button.setDisable(false);
 			break;
+			
 		case BOOKED:
-			button.setId("booked-seat");
+			button.setId(BOOKED_SEAT);
 			button.setDisable(true);
 			break;
+			
 		case YOUR:
-			button.setId("your-seat");
+			button.setId(YOUR_SEAT);
 			button.setDisable(false);
 			break;
 		}

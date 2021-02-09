@@ -29,9 +29,6 @@ public class PostCommunicationView implements Initializable {
 	@FXML
 	private Button btnSubmit;
 
-	
-	private String text, title;
-	private CommunicationBean communication;
 	private PostCommunicationController controller;
 
 	@Override
@@ -39,14 +36,13 @@ public class PostCommunicationView implements Initializable {
 		controller = new PostCommunicationController();
 		btnSubmit.disableProperty().bind(Bindings.isEmpty(titleCommunication.textProperty())
 				.or(Bindings.isEmpty(textCommunication.textProperty())));
-		
 	}
 
 	@FXML
 	private void submitCommunication(ActionEvent event) {
-		communication = new CommunicationBean();
-		this.title = titleCommunication.getText();
-		this.text = textCommunication.getText();
+		CommunicationBean communication = new CommunicationBean();
+		String title = titleCommunication.getText();
+		String text = textCommunication.getText();
 		communication.setDate(new Date(System.currentTimeMillis()));
 		communication.setText(text);
 		communication.setTitle(title);
@@ -55,9 +51,10 @@ public class PostCommunicationView implements Initializable {
 			controller.postCommunication(communication);
 			AlertController.infoAlert("Communication has been correctly posted");
 			PageLoader.getInstance().buildPage(Page.ADMINISTRATION_PAGE);
+		
 		} catch (SQLException e) {
 			AlertController.infoAlert("Somethings gone wrong!");
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
 		} 
 	}
-
 }

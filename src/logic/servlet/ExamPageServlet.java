@@ -40,13 +40,13 @@ public class ExamPageServlet extends HttpServlet {
 		
 		List<VerbalizedBean> exams = null;
 		List<CourseBean> courses = null;
-		double GPA = 0;
-		double WPA = 0;
+		double gpa = 0;
+		double wpa = 0;
 		
 		try {
 			exams = controller.getVerbalizedExams((UserBean) session.getAttribute("loggedUser"));
-			GPA = controller.gpa(exams);
-			WPA = controller.wpa(exams);
+			gpa = controller.gpa(exams);
+			wpa = controller.wpa(exams);
 			
 		} catch (SQLException e) {
 			request.setAttribute("alertMsg", "An error as occured. Try later.");
@@ -69,8 +69,8 @@ public class ExamPageServlet extends HttpServlet {
 			courses = new ArrayList<>();
 		}
 		
-		request.setAttribute("gpa", GPA);
-		request.setAttribute("wpa", WPA);
+		request.setAttribute("gpa", gpa);
+		request.setAttribute("wpa", wpa);
 		request.setAttribute("listOfExam", exams);
 		request.setAttribute("listOfCourse", courses);
 		request.getRequestDispatcher("/WEB-INF/ExamPage.jsp").forward(request, response);

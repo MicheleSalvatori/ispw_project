@@ -95,7 +95,7 @@ public class CoursePageView {
 			PageLoader.getInstance().goBack();
 			
 		} catch (RecordNotFoundException e) {
-			anchorNextLesson.getChildren().add(new Label("There is no future lesson."));;
+			anchorNextLesson.getChildren().add(new Label("There is no future lesson."));
 		}
 		
 		try {

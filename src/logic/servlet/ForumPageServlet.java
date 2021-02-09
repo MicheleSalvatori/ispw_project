@@ -56,17 +56,16 @@ public class ForumPageServlet extends HttpServlet {
 		} catch (RecordNotFoundException e) {
 			assignments = new ArrayList<>();
 		}
+		
 		request.setAttribute("listOfAssignment", assignments);
 		request.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.print("doPost ForumServlet: ");
-		System.out.println(req.getParameter("set-solved"));
 		
 		if (req.getParameter("set-solved") != null) {
-			int questionID = Integer.valueOf(req.getParameter("set-solved"));
+			int questionID = Integer.parseInt(req.getParameter("set-solved"));
 			QuestionController controller = new QuestionController();
 			try {
 				controller.setSolved(questionID);

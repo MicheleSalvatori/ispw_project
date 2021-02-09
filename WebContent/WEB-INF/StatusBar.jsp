@@ -25,12 +25,12 @@
 		System.out.println("REQUEST COUNT " +  reqCount);	
 		
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		request.setAttribute("alertMsg", "An error as occured. Try later.");
+		request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+		return;
 		
 	} catch (RecordNotFoundException e) {
-		// TODO Auto-generated catch block
-		System.out.println("NOREQ");
+		reqCount = 0;
 		
 	} finally {
 		request.setAttribute("reqCount", reqCount);

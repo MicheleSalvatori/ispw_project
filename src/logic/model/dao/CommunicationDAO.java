@@ -14,6 +14,10 @@ import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
 public class CommunicationDAO {
+	
+	private CommunicationDAO() {
+		
+	}
 
 	public static List<Communication> getCommunications() throws SQLException, RecordNotFoundException {
 

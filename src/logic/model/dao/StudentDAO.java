@@ -34,7 +34,7 @@ public class StudentDAO {
 				throw new RecordNotFoundException("No Username Found matching with name: " + username);
 				
 			}else {
-				resultSet.first();				// mi riposiziono alla prima riga
+				resultSet.first();
 				String u = resultSet.getString("username");
 				String n = resultSet.getString("name");
 				String s = resultSet.getString("surname");
@@ -82,14 +82,12 @@ public class StudentDAO {
 			// If there are no entry then insert a new User
 			result = Queries.insertRole(stmt, user.getUsername());
 			if (result == 0) {
-				System.out.println("Insert role error");	// TODO EXCEPTION
-				return;
+				throw new SQLException();
 			}
 				
 			result = Queries.insertStudent(stmt, user.getUsername(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail());
 			if (result == 0) {
-				System.out.println("Insert studenterror");	// TODO EXCEPTION
-				return;
+				throw new SQLException();
 			}
 			
 			rs.close();

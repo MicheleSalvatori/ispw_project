@@ -177,12 +177,9 @@ public class ForumPageView implements Initializable {
 			break;
 		}
 		
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				getAllQuestions();
-				setAllQuestions();
-			}
+		Platform.runLater( () -> {
+			getAllQuestions();
+			setAllQuestions();
 		});
 		
 		try {
