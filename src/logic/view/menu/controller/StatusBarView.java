@@ -159,12 +159,12 @@ public class StatusBarView implements Initializable {
 	
 	private void setupEvent() {
 		addGotoRequestevent = e -> {
-			dialogStage.close();
+			closeStage(dialogStage);
 			PageLoader.getInstance().buildPage(Page.REQUEST);
 		};
 		
 		cancRequestEvent = e -> {
-			dialogStage.close();
+			closeStage(dialogStage);
 			PageLoader.getStage().getScene().getRoot().setEffect(null);
 		};
 	}
@@ -189,6 +189,10 @@ public class StatusBarView implements Initializable {
 		} else {
 			btnNotifications.setVisible(false);
 		}
+	}
+	
+	private void closeStage(Stage stage) {
+		stage.close();
 	}
 	
 	@FXML
