@@ -62,7 +62,6 @@ public class TestAskQuestion {
 
 		String resultTest = questionTested.getText();
 		assertEquals(expectedText, resultTest);
-
 	}
 
 	@After
