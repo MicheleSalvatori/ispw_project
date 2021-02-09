@@ -140,7 +140,11 @@ public class Queries {
 		String query = "UPDATE student SET password = '" + password + "' WHERE username = '" + username + "';";
 		return stmt.executeUpdate(query);
 	}
-
+	
+	public static int deleteQuestion(Statement stmt, int id) throws SQLException {
+		String query = String.format("DELETE FROM question WHERE id = %d;", id);
+		return stmt.executeUpdate(query);
+	}
 
 /******************************************************************************************************************/
 
@@ -512,4 +516,5 @@ public class Queries {
         String sql = String.format("INSERT INTO communications (text, title, date) VALUES('%s', '%s', '%s');", text, title, date.toString());
         stmt.executeUpdate(sql);
     }
+
 }

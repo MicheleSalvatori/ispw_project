@@ -158,7 +158,6 @@ public class QuestionPageView {
 		Button btnCancel = (Button) scene.lookup("#btnCancel");
 
 		textAnswer = (TextArea) scene.lookup("#textAnswer");
-
 		btnSubmit.disableProperty().bind(textAnswer.textProperty().isEmpty());
 
 		setupEvent();
@@ -180,8 +179,8 @@ public class QuestionPageView {
 	}
 
 	private void setupEvent() {
-		
-		addAnswerEvent = e -> saveAnswer(textAnswer.getText());
+		String text = textAnswer.getText();
+		addAnswerEvent = e -> saveAnswer(text);
 
 		cancAddAnswerEvent = e -> {
 			closeStage(dialogStage);

@@ -13,7 +13,8 @@ import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
 public class CourseDAO {
-
+	private static String noCourse = "No course found";
+	
 	private CourseDAO() {
 		
 	}
@@ -34,19 +35,11 @@ public class CourseDAO {
 			ResultSet rs = Queries.findCourseByAbbr(stmt, abbrevation);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No course found");
+				throw new RecordNotFoundException(noCourse);
 				
 			} else {
 				rs.first();
-				String n = rs.getString("name");
-				String a = rs.getString("abbrevation");
-				String y = rs.getString("year");
-				String s = rs.getString("semester");
-				String c = rs.getString("credits");
-				String p = rs.getString("prerequisites");
-				String g = rs.getString("goal");
-				String r = rs.getString("reception");
-				course = new Course(n, a, y, s, c, p, g, r);
+				course = getCourse(rs);
 			}
 			rs.close();
 			
@@ -138,21 +131,13 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectAllCourses(stmt);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No course found");
+				throw new RecordNotFoundException(noCourse);
 				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();
 				do {
-					String n = rs.getString("name");
-					String a = rs.getString("abbrevation");
-					String y = rs.getString("year");
-					String s = rs.getString("semester");
-					String c = rs.getString("credits");
-					String p = rs.getString("prerequisites");
-					String g = rs.getString("goal");
-					String r = rs.getString("reception");
-					Course course = new Course(n, a, y, s, c, p, g, r);
+					Course course = getCourse(rs);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -183,21 +168,13 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectAvailableCourses(stmt, student);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No course found");
+				throw new RecordNotFoundException(noCourse);
 				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();
 				do {
-					String n = rs.getString("name");
-					String a = rs.getString("abbrevation");
-					String y = rs.getString("year");
-					String s = rs.getString("semester");
-					String c = rs.getString("credits");
-					String p = rs.getString("prerequisites");
-					String g = rs.getString("goal");
-					String r = rs.getString("reception");
-					Course course = new Course(n, a, y, s, c, p, g, r);
+					Course course = getCourse(rs);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -227,21 +204,13 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectNotVerbalizedCourses(stmt, student);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No course found");
+				throw new RecordNotFoundException(noCourse);
 				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();
 				do {
-					String n = rs.getString("name");
-					String a = rs.getString("abbrevation");
-					String y = rs.getString("year");
-					String s = rs.getString("semester");
-					String c = rs.getString("credits");
-					String p = rs.getString("prerequisites");
-					String g = rs.getString("goal");
-					String r = rs.getString("reception");
-					Course course = new Course(n, a, y, s, c, p, g, r);
+					Course course = getCourse(rs);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -270,21 +239,13 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectCoursesByStudent(stmt, student);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No course found");
+				throw new RecordNotFoundException(noCourse);
 				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();
 				do {
-					String n = rs.getString("name");
-					String a = rs.getString("abbrevation");
-					String y = rs.getString("year");
-					String s = rs.getString("semester");
-					String c = rs.getString("credits");
-					String p = rs.getString("prerequisites");
-					String g = rs.getString("goal");
-					String r = rs.getString("reception");
-					Course course = new Course(n, a, y, s, c, p, g, r);
+					Course course = getCourse(rs);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -310,21 +271,13 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectCoursesByProfessor(stmt, professor);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No course found");
+				throw new RecordNotFoundException(noCourse);
 				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();
 				do {
-					String n = rs.getString("name");
-					String a = rs.getString("abbrevation");
-					String y = rs.getString("year");
-					String s = rs.getString("semester");
-					String c = rs.getString("credits");
-					String p = rs.getString("prerequisites");
-					String g = rs.getString("goal");
-					String r = rs.getString("reception");
-					Course course = new Course(n, a, y, s, c, p, g, r);
+					Course course = getCourse(rs);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -355,21 +308,13 @@ public class CourseDAO {
 			ResultSet rs = Queries.selectCoursesRequestedByStudent(stmt, student);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No course found");
+				throw new RecordNotFoundException(noCourse);
 				
 			} else {
 				courses = new ArrayList<>();
 				rs.first();
 				do {
-					String n = rs.getString("name");
-					String a = rs.getString("abbrevation");
-					String y = rs.getString("year");
-					String s = rs.getString("semester");
-					String c = rs.getString("credits");
-					String p = rs.getString("prerequisites");
-					String g = rs.getString("goal");
-					String r = rs.getString("reception");
-					Course course = new Course(n, a, y, s, c, p, g, r);
+					Course course = getCourse(rs);
 					courses.add(course);
 				} while (rs.next());
 			}
@@ -398,5 +343,17 @@ public class CourseDAO {
 				stmt.close();
 		}	
 		
+	}
+	
+	private static Course getCourse(ResultSet rs) throws SQLException {
+		String n = rs.getString("name");
+		String a = rs.getString("abbrevation");
+		String y = rs.getString("year");
+		String s = rs.getString("semester");
+		String c = rs.getString("credits");
+		String p = rs.getString("prerequisites");
+		String g = rs.getString("goal");
+		String r = rs.getString("reception");
+		return new Course(n, a, y, s, c, p, g, r);
 	}
 }

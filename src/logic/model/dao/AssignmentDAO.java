@@ -15,9 +15,11 @@ import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
 public class AssignmentDAO {
+	private static String noAssigment = "No assignment found";
+	private static String rsCourse = "course";
+	private static String rsTitle = "title";
 	
 	private AssignmentDAO() {
-		
 	}
 
 	public static List<Assignment> getAssignmentsByStudent(String student) throws SQLException, RecordNotFoundException {
@@ -36,15 +38,15 @@ public class AssignmentDAO {
 			ResultSet rs = Queries.selectAssignmentsByStudent(stmt, student);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No assignment found");
+				throw new RecordNotFoundException(noAssigment);
 				
 			} else {
 				assignments = new ArrayList<>();
 				rs.first();
 				do {
 					int id = rs.getInt("id");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-					String t = rs.getString("title");
+					Course c = CourseDAO.getCourseByAbbrevation(rs.getString(rsCourse));
+					String t = rs.getString(rsTitle);
 					Date d = rs.getDate("date");
 					String te = rs.getString("text");
 					Assignment assignment = new Assignment(id, c, t, d, te);
@@ -76,15 +78,15 @@ public class AssignmentDAO {
 			ResultSet rs = Queries.selectAssignmentsByProfessor(stmt, professor);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No assignment found");
+				throw new RecordNotFoundException(noAssigment);
 				
 			} else {
 				assignments = new ArrayList<>();
 				rs.first();
 				do {
 					int id = rs.getInt("id");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-					String t = rs.getString("title");
+					Course c = CourseDAO.getCourseByAbbrevation(rs.getString(rsCourse));
+					String t = rs.getString(rsTitle);
 					Date d = rs.getDate("date");
 					String te = rs.getString("text");
 					Assignment assignment = new Assignment(id, c, t, d, te);
@@ -136,15 +138,15 @@ public class AssignmentDAO {
 		ResultSet rs = Queries.getAssignment(stmt, id);
 
 		if (!rs.first()) {
-			throw new RecordNotFoundException("No assignment found");
+			throw new RecordNotFoundException(noAssigment);
 
 		} else {
 			rs.first();
 			int i = rs.getInt("id");
-			String t = rs.getString("title");
+			String t = rs.getString(rsTitle);
 			String te = rs.getString("text");
 			Date d = rs.getDate("date");
-			Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+			Course c = CourseDAO.getCourseByAbbrevation(rs.getString(rsCourse));
 
 			assignment = new Assignment(i, c, t, d, te);
 		}
