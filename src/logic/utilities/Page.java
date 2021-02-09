@@ -22,7 +22,9 @@ public enum Page {
 	SCHEDULED_LESSONS("src/res/fxml/page/ScheduledPage.fxml", "App - Scheduled Lessons"),
 	SCHEDULED_EXAMS("src/res/fxml/page/ScheduledPage.fxml", "App - Scheduled Exams"),
 	POST_COMMUNICATION("src/res/fxml/page/PostCommunicationPage.fxml", "App - Post Communication"),
-	ADMINISTRATION_PAGE("src/res/fxml/page/AdministrationPage.fxml", "App - Administration;");
+	ADMINISTRATION_PAGE("src/res/fxml/page/AdministrationPage.fxml", "App - Administration;"),
+	NEWPROFESSOR("src/res/fxml/page/NewProfessorPage.fxml", "App - Add Professor"),
+	NEWCOURSE("src/res/fxml/page/NewCoursePage.fxml", "App - Add Course");
 
 	private String res;
 	private String stageTitle;

@@ -1,7 +1,6 @@
 package logic.controller;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,23 +35,23 @@ public class CheckWeatherController {
 			switch (weather) {
 			
 			case "Clear":
-				file = new File("src/res/png/weather/Moon.png").toURI().toString();
+				file = "Moon.png";
 				break;
 				
 			case "Clouds":
-				file = new File("src/res/png/weather/CloudMoon.png").toURI().toString();
+				file = "CloudMoon.png";
 				break;
 				
 			case "Rain":
-				file = new File("src/res/png/weather/Rain.png").toURI().toString();
+				file = "Rain.png";
 				break;
 				
 			case "Thunderstorm":
-				file = new File("src/res/png/weather/Thunderstorm.png").toURI().toString();
+				file = "Thunderstorm.png";
 				break;
 				
 			default:
-				file = new File("src/res/png/weather/Cloud.png").toURI().toString();
+				file = "Cloud.png";
 				break;
 			
 			}
@@ -63,23 +62,23 @@ public class CheckWeatherController {
 			switch (weather) {
 			
 			case "Clear":
-				file = new File("src/res/png/weather/Sun.png").toURI().toString();
+				file = "Sun.png";
 				break;
 				
 			case "Clouds":
-				file = new File("src/res/png/weather/CloudSun.png").toURI().toString();
+				file = "CloudSun.png";
 				break;
 				
 			case "Rain":
-				file = new File("src/res/png/weather/Rain.png").toURI().toString();
+				file = "Rain.png";
 				break;
 				
 			case "Thunderstorm":
-				file = new File("src/res/png/weather/Thunderstorm.png").toURI().toString();
+				file = "Thunderstorm.png";
 				break;
 				
 			default:
-				file = new File("src/res/png/weather/Cloud.png").toURI().toString();
+				file = "Cloud.png";
 				break;
 			
 			}
@@ -164,7 +163,7 @@ public class CheckWeatherController {
 		}
 		h = h + ":00";
 		
-		String temp = kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + "\u00B0" + "C";
+		String temp = kelvinToCelsius(info.getJSONObject(hour).getDouble("temp")) + " \u00B0" + "C";
 		
 		List<String> w = new ArrayList<>();
 		w.add(temp);

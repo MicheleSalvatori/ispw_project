@@ -12,7 +12,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="773.0" prefWidth="1204.0" styleClass="root" stylesheets="@../../style/page/NewsPage.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.page.AdministrationPageView">
    <children>
       
-      <ScrollPane fx:id="scroll" fitToWidth="true" layoutY="254.0" prefHeight="429.0" prefWidth="1144.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="254.0">
+      <ScrollPane fx:id="scroll" fitToWidth="true" layoutY="254.0" prefHeight="438.0" prefWidth="1144.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="234.0">
         <content> 
           <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="543.0">
                <children>
@@ -22,8 +22,8 @@
         </content>
       </ScrollPane>
       
-      <Label layoutX="14.0" layoutY="222.0" text="Communications" />
-      <Button fx:id="bntAddCourse" layoutX="91.0" layoutY="101.0" mnemonicParsing="false" onAction="#addCourse" prefHeight="57.0" prefWidth="348.0" text="Add Course in the System" AnchorPane.leftAnchor="69.0" AnchorPane.topAnchor="101.0" />
+      <Label layoutX="14.0" layoutY="222.0" text="Communications" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="200.0" />
+      <Button fx:id="bntAddCourse" layoutX="91.0" layoutY="101.0" mnemonicParsing="false" onAction="#addCourse" prefHeight="57.0" prefWidth="348.0" text="Add Course in the System" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="101.0" />
       <Button fx:id="btnCredentialsProfessor" layoutX="748.0" layoutY="101.0" mnemonicParsing="false" onAction="#assignProfessor" text="Create credentials for professor" AnchorPane.rightAnchor="69.0" AnchorPane.topAnchor="101.0" />
       <Label layoutY="14.0" styleClass="title-label" text="Administration Control Panel" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="15.0" />
       <Button fx:id="btnAddCommunication" layoutX="14.0" layoutY="690.0" mnemonicParsing="false" onAction="#postCommunication" prefWidth="316.0" styleClass="button-add">

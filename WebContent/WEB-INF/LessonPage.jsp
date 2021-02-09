@@ -88,19 +88,23 @@
 					</table>
 				</div>
 
-				<div class="weather" style="margin-left: 5%;">
+				<div class="weather" style="margin-left: 5%; padding: 10px;">
 					<table align="center">
 						<tr>
-							<td class="weather-text" style="padding-top: 5px;">15 °C</td>
+							<td class="weather-text" style="padding-top: 5px;">
+								${weather.get(0)}
+							</td>
 						</tr>
 
 						<tr>
-							<td align="center"><img class="img" src="res/img/Cloud.png"
-								alt="weath"></td>
+							<td align="center">
+								<img class="img" src="res/img/${weather.get(1)}" alt="weath">
+							</td>
 						</tr>
 
 						<tr>
-							<td class="weather-text" style="padding-bottom: 5px;">10:00
+							<td class="weather-text" style="padding-bottom: 5px;">
+								${weather.get(2)}
 							</td>
 						</tr>
 					</table>

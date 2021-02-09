@@ -29,7 +29,7 @@ public class AskAQuestionController {
 
 			courseBeans = new ArrayList<>();
 			for (Course c : courses) {
-				CourseBean cb = new CourseBean(c.getName(), c.getAbbrevation());
+				CourseBean cb = new CourseBean(c.getName(), c.getAbbreviation());
 				courseBeans.add(cb);
 			}
 			
@@ -42,7 +42,7 @@ public class AskAQuestionController {
 
 	public void save(QuestionBean questionBean) throws SQLException {
 		Course course = new Course();
-		course.setAbbrevation(questionBean.getCourse());
+		course.setAbbreviation(questionBean.getCourse());
 		
 		Student student = new Student();
 		student.setUsername(questionBean.getStudent().getUsername());

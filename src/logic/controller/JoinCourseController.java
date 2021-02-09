@@ -85,7 +85,7 @@ public class JoinCourseController {
 		
 		for (Course course : courses) {
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbreviation());
 			courseBean.setCredits(course.getCredits());
 			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
@@ -138,7 +138,7 @@ public class JoinCourseController {
 	private Course getCourse(RequestBean requestBean) {
 		CourseBean courseBean = requestBean.getCourse();
 		Course course = new Course();
-		course.setAbbrevation(courseBean.getAbbreviation());
+		course.setAbbreviation(courseBean.getAbbreviation());
 		return course;
 	}
 }

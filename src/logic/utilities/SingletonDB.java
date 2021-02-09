@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class SingletonDB {
 
 	private static SingletonDB dbInstance = null;
-	private static Connection conn;
+	private Connection conn;
 
 	private SingletonDB() throws SQLException {
 		try {

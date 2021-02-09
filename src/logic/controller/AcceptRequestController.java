@@ -26,7 +26,7 @@ public class AcceptRequestController {
 				
 		CourseBean courseBean = requestBean.getCourse();
 		Course course = new Course();
-		course.setAbbrevation(courseBean.getAbbreviation());
+		course.setAbbreviation(courseBean.getAbbreviation());
 				
 		Request request = new Request(student, course);
 				
@@ -45,7 +45,7 @@ public class AcceptRequestController {
 			
 		CourseBean courseBean = requestBean.getCourse();
 		Course course = new Course();
-		course.setAbbrevation(courseBean.getAbbreviation());
+		course.setAbbreviation(courseBean.getAbbreviation());
 			
 		Request request = new Request(student, course);
 		RequestDAO.deleteRequest(request);
@@ -58,7 +58,7 @@ public class AcceptRequestController {
 		
 		for (Course course : courses) {
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbreviation());
 			courseBean.setCredits(course.getCredits());
 			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
@@ -83,8 +83,8 @@ public class AcceptRequestController {
 			
 			Course course = request.getCourse();
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbrevation());
-			courseBean.setCredits(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbreviation());
+			courseBean.setCredits(course.getAbbreviation());
 			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
 			courseBean.setPrerequisites(course.getPrerequisites());

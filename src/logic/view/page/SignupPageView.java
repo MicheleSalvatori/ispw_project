@@ -59,20 +59,21 @@ public class SignupPageView implements Initializable {
 	private Button btnGoogle;
 
 	@FXML
-	void gotoLogin(ActionEvent event) {
+	public void gotoLogin(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.LOGIN);
 	}
 
 	@FXML
-	void signup() {
+	public void signup() {
 
 		String username = (textUsername.getText().replaceAll("\\s", "")).toLowerCase();
 		String password = textPassword.getText();
+		String confirmPassword = textConfirmPassword.getText();
 		String email = textEmail.getText();
 		String name = textName.getText();
 		String surname = textSurname.getText();
 
-		if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
+		if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
 			AlertController.infoAlert("One or more fields are empty");
 			return;
 		}
@@ -145,7 +146,6 @@ public class SignupPageView implements Initializable {
 
 		EventHandler<ActionEvent> eventHandler = e -> signup();
 
-
 		textUsername.setOnAction(eventHandler);
 		textPassword.setOnAction(eventHandler);
 		textEmail.setOnAction(eventHandler);
@@ -155,12 +155,12 @@ public class SignupPageView implements Initializable {
 	}
 
 	@FXML
-	void facebookSignup(ActionEvent event) {
+	public void facebookSignup(ActionEvent event) {
 		AlertController.infoAlert("Functionality not yet implemented");
 	}
 
 	@FXML
-	void googleSignup(ActionEvent event) {
+	public void googleSignup(ActionEvent event) {
 		AlertController.infoAlert("Functionality not yet implemented");
 	}
 }

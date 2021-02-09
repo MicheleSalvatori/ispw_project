@@ -38,7 +38,7 @@ public class AddAssignmentController {
 			Course course = assignment.getCourse();
 			
 			AssignmentBean assignmentBean = new AssignmentBean();
-			assignmentBean.setCourse(course.getAbbrevation());
+			assignmentBean.setCourse(course.getAbbreviation());
 			assignmentBean.setDate(assignment.getDate());
 			assignmentBean.setId(assignment.getId());
 			assignmentBean.setText(assignment.getText());
@@ -58,7 +58,7 @@ public class AddAssignmentController {
 			courses = CourseDAO.getProfessorCourses(userBean.getUsername());
 			courseBeans = new ArrayList<>();
 			for (Course c : courses) {
-				CourseBean cb = new CourseBean(c.getName(), c.getAbbrevation());
+				CourseBean cb = new CourseBean(c.getName(), c.getAbbreviation());
 				courseBeans.add(cb);
 			}
 			
@@ -72,7 +72,7 @@ public class AddAssignmentController {
 	public boolean saveAssignment(AssignmentBean assignmentBean) throws SQLException {
 
 		Course course = new Course();
-		course.setAbbrevation(assignmentBean.getCourse());
+		course.setAbbreviation(assignmentBean.getCourse());
 		
 		Assignment assignment = new Assignment(course, assignmentBean.getTitle(), assignmentBean.getDate(), assignmentBean.getText());
 
@@ -86,7 +86,7 @@ public class AddAssignmentController {
 		try {
 			Assignment assignment = AssignmentDAO.getAssignment(id);
 			assignmentBean = new AssignmentBean();
-			assignmentBean.setCourse(assignment.getCourse().getAbbrevation());
+			assignmentBean.setCourse(assignment.getCourse().getAbbreviation());
 			assignmentBean.setTitle(assignment.getTitle());
 			assignmentBean.setText(assignment.getText());
 			assignmentBean.setDate(assignment.getDate());

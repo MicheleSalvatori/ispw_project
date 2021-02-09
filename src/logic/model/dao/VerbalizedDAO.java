@@ -112,7 +112,7 @@ public class VerbalizedDAO {
 			int grade = verb.getGrade();
 			Student student = verb.getStudent();
 			
-			Queries.insertVerbalizedExam(stmt, student.getUsername(), course.getAbbrevation(), grade, date);
+			Queries.insertVerbalizedExam(stmt, student.getUsername(), course.getAbbreviation(), grade, date);
 			
 		} catch (SQLException e) {
 			return false;
@@ -135,7 +135,7 @@ public class VerbalizedDAO {
 			Course course = verb.getCourse();
 			Student student = verb.getStudent();
 			
-			Queries.deleteVerbalizedExam(stmt, student.getUsername(), course.getAbbrevation());
+			Queries.deleteVerbalizedExam(stmt, student.getUsername(), course.getAbbreviation());
 			
 		} catch (SQLException e) {
 			return false;

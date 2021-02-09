@@ -22,7 +22,6 @@
 	AcceptRequestController acceptRequestController = new AcceptRequestController();
 	try {
 		reqCount = acceptRequestController.getRequests(user).size();
-		System.out.println("REQUEST COUNT " +  reqCount);	
 		
 	} catch (SQLException e) {
 		request.setAttribute("alertMsg", "An error as occured. Try later.");

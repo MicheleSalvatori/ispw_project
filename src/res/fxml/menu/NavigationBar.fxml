@@ -18,7 +18,7 @@
          <children>
             
             <Button fx:id="btnHome" layoutX="53.0" mnemonicParsing="false" onAction="#homeButton" styleClass="home-button" />
-            <Button fx:id="btnSettings" layoutX="54.0" layoutY="-3.0" mnemonicParsing="false" styleClass="settings-button" />
+            <Button fx:id="btnSettings" layoutX="54.0" layoutY="-3.0" mnemonicParsing="false" onAction="#settingButton" styleClass="settings-button" />
          </children>
       </AnchorPane>
       
@@ -31,9 +31,9 @@
       
       <Button fx:id="btnProfile" mnemonicParsing="false" onAction="#profileButton" styleClass="profile-button" />
       
-                        <Button fx:id="btnForum" mnemonicParsing="false" onAction="#forumButton" styleClass="forum-button" />
+      <Button fx:id="btnForum" mnemonicParsing="false" onAction="#forumButton" styleClass="forum-button" />
       
-                  <Button fx:id="btnNews" mnemonicParsing="false" onAction="#newsButton" styleClass="news-button" />
+      <Button fx:id="btnNews" mnemonicParsing="false" onAction="#newsButton" styleClass="news-button" />
       
       <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#scheduleButton" styleClass="schedule-button" />
       <Button fx:id="btnRefresh" mnemonicParsing="false" onAction="#refreshPage" styleClass="refresh-button">

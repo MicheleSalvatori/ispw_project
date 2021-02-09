@@ -42,7 +42,7 @@ public class ViewNextLessonController {
 			
 			Course course = lesson.getCourse();
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbreviation());
 			
 			Classroom classroom = lesson.getClassroom();
 			ClassroomBean classroomBean = new ClassroomBean();

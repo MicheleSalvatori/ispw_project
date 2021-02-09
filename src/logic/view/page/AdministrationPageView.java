@@ -67,11 +67,11 @@ public class AdministrationPageView implements Initializable {
 
 	@FXML
 	public void assignProfessor(ActionEvent event) {
-		System.out.println("Professor Credentials");
+		PageLoader.getInstance().buildPage(Page.NEWPROFESSOR);
 	}
 
 	@FXML
 	public void addCourse(ActionEvent event) {
-		System.out.println("Add Course");
+		PageLoader.getInstance().buildPage(Page.NEWCOURSE);
 	}
 }

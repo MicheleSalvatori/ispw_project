@@ -96,9 +96,13 @@ public class LoginController {
 	}
 
 	public void signup(UserBean userBean) throws SQLException, DuplicatedRecordException {
-		User user = new User(userBean.getUsername(), userBean.getPassword(), userBean.getName(), userBean.getSurname(),
-				userBean.getEmail());
+		User user = new User(userBean.getUsername(), userBean.getPassword(), userBean.getName(), userBean.getSurname(), userBean.getEmail());
 		StudentDAO.addStudent(user);
+	}
+	
+	public void addProfessor(UserBean userBean) throws SQLException, DuplicatedRecordException {
+		User user = new User(userBean.getUsername(), userBean.getPassword(), userBean.getName(), userBean.getSurname(), userBean.getEmail());
+		ProfessorDAO.addProfessor(user);
 	}
 
 	public void changePassword(UserBean userBean) throws SQLException {

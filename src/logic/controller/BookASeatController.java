@@ -41,7 +41,7 @@ public class BookASeatController {
 		classroom.setSeatColumn(l.getClassroom().getSeatColumn());
 		
 		CourseBean course = new CourseBean();
-		course.setAbbreviation(l.getCourse().getAbbrevation());
+		course.setAbbreviation(l.getCourse().getAbbreviation());
 		
 		ProfessorBean professor = new ProfessorBean();
 		professor.setName(l.getProfessor().getName());

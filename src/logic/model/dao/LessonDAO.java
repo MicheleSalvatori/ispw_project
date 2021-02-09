@@ -290,7 +290,7 @@ public class LessonDAO {
 			String topic = lesson.getTopic();
 			Professor professor = lesson.getProfessor();
 			
-			Queries.insertLesson(stmt, date, time, course.getAbbrevation(), classroom.getName(), topic, professor.getUsername());
+			Queries.insertLesson(stmt, date, time, course.getAbbreviation(), classroom.getName(), topic, professor.getUsername());
 			
 		} catch (SQLException e) {
 			return false;

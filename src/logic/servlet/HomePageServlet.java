@@ -2,6 +2,7 @@ package logic.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.bean.LessonBean;
 import logic.bean.UserBean;
+import logic.controller.CheckWeatherController;
 import logic.controller.ViewNextLessonController;
 import logic.exceptions.RecordNotFoundException;
 
@@ -38,6 +40,7 @@ public class HomePageServlet extends HttpServlet {
 		ViewNextLessonController viewNextLessonController = new ViewNextLessonController();
 		List<LessonBean> lessons = null;
 		LessonBean lesson = null;
+		
 		try {
 			lessons = viewNextLessonController.getTodayLessons(loggedUser);
 			lesson = lessons.get(0);
@@ -53,8 +56,19 @@ public class HomePageServlet extends HttpServlet {
 			lessons = new ArrayList<>();
 		}
 		
+		int hour = LocalDateTime.now().getHour();
+		CheckWeatherController controller = new CheckWeatherController();
+		
+		List<List<String>> weather = new ArrayList<>();
+		for (int i=0; i<5; i++) {
+			List<String> info = controller.getWeather(hour+i);
+			System.out.println(info.get(1));
+			weather.add(info);
+		}
+		
 		request.setAttribute("lesson", lesson);
 		request.setAttribute("listOfLesson", lessons);
+		request.setAttribute("listOfWeather", weather);
 		request.getRequestDispatcher("/WEB-INF/HomePage.jsp").forward(request, response);
 	}
 }

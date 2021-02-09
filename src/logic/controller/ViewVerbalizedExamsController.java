@@ -28,7 +28,7 @@ public class ViewVerbalizedExamsController {
 			
 			Course course = verb.getCourse();
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbreviation());
 			courseBean.setCredits(course.getCredits());
 			courseBean.setName(course.getName());
 			
@@ -92,7 +92,7 @@ public class ViewVerbalizedExamsController {
 		for (Course course : courses) {
 
 			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbrevation());
+			courseBean.setAbbreviation(course.getAbbreviation());
 			courseBean.setCredits(course.getCredits());
 			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
@@ -112,7 +112,7 @@ public class ViewVerbalizedExamsController {
 		student.setUsername(verb.getStudent().getUsername());
 		
 		Course course = new Course();
-		course.setAbbrevation(verb.getCourse().getAbbreviation());
+		course.setAbbreviation(verb.getCourse().getAbbreviation());
 		
 		Verbalized verbExam = new Verbalized(student, course, verb.getGrade(), verb.getDate());
 		
@@ -124,7 +124,7 @@ public class ViewVerbalizedExamsController {
 		student.setUsername(verb.getStudent().getUsername());
 		
 		Course course = new Course();
-		course.setAbbrevation(verb.getCourse().getAbbreviation());
+		course.setAbbreviation(verb.getCourse().getAbbreviation());
 		
 		Verbalized verbExam = new Verbalized();
 		verbExam.setCourse(course);

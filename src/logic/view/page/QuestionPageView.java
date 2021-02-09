@@ -181,9 +181,9 @@ public class QuestionPageView {
 
 	private void setupEvent() {
 		
-		this.addAnswerEvent = e -> saveAnswer(textAnswer.getText());
+		addAnswerEvent = e -> saveAnswer(textAnswer.getText());
 
-		this.cancAddAnswerEvent = e -> {
+		cancAddAnswerEvent = e -> {
 			closeStage(dialogStage);
 			PageLoader.getStage().getScene().getRoot().setEffect(null);
 		};

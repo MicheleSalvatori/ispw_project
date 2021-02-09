@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.exceptions.DuplicatedRecordException;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Professor;
 import logic.model.User;
@@ -133,6 +134,48 @@ public class ProfessorDAO {
 		}
 		
 		return professors;
+	}
+	
+	public static void addProfessor(User user) throws SQLException, DuplicatedRecordException {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		int result;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
+			if (rs.first()) {
+				// Raise duplicate entry exception
+				throw new DuplicatedRecordException("Username '" + user.getUsername() + "' already in use.");   
+			}
+			
+			rs = Queries.selectUserByEmail(stmt, user.getEmail());
+			if (rs.first()) {
+				// Raise duplicate entry exception
+				throw new DuplicatedRecordException("Email '" + user.getEmail() + "' already in use.");
+			}
+			
+			// If there are no entry then insert a new User
+			result = Queries.insertRole(stmt, user.getUsername(), "professor");
+			if (result == 0) {
+				throw new SQLException();
+			}
+				
+			result = Queries.insertProfessor(stmt, user.getUsername(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail());
+			if (result == 0) {
+				throw new SQLException();
+			}
+			
+			rs.close();
+			
+		} finally {
+			if(stmt != null)
+				stmt.close();
+		}	
 	}
 	
 	public static void changePassword(User user) throws SQLException, RecordNotFoundException {

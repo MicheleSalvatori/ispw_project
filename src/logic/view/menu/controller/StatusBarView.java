@@ -52,6 +52,9 @@ public class StatusBarView implements Initializable {
 	private Button btnLogout;
 	
 	@FXML
+	private Button btnProfile;
+	
+	@FXML
 	private Label labelName;
 	
 	@FXML
@@ -69,6 +72,7 @@ public class StatusBarView implements Initializable {
 		if (UserBean.getInstance().getRole() == Role.ADMIN) {
 			btnNotifications.setVisible(false);
 			rectAvatar.setVisible(false);
+			btnProfile.setDisable(true);
 			btnNotifications.setDisable(true);
 			rectAvatar.setDisable(true);
 			return;
@@ -88,7 +92,6 @@ public class StatusBarView implements Initializable {
 		PageLoader.getInstance().buildPage(Page.LOGIN);
 	}
 	
-	// --------------------------------------------------------
 	@FXML
 	public void notification(ActionEvent event) {
 		if(UserBean.getInstance().getRole().equals(Role.PROFESSOR)) {
@@ -140,8 +143,6 @@ public class StatusBarView implements Initializable {
 		} else {
 			labelNotification.setText("You don't have requests.");
 		}
-			
-
 	}
 	
 	private void animation(Stage stage) {
@@ -157,12 +158,12 @@ public class StatusBarView implements Initializable {
 	}
 	
 	private void setupEvent() {
-		this.addGotoRequestevent = e -> {
+		addGotoRequestevent = e -> {
 			dialogStage.close();
 			PageLoader.getInstance().buildPage(Page.REQUEST);
 		};
 		
-		this.cancRequestEvent = e -> {
+		cancRequestEvent = e -> {
 			dialogStage.close();
 			PageLoader.getStage().getScene().getRoot().setEffect(null);
 		};
@@ -189,8 +190,6 @@ public class StatusBarView implements Initializable {
 			btnNotifications.setVisible(false);
 		}
 	}
-	
-	// ---------------------------------------------------------
 	
 	@FXML
 	public void profile(ActionEvent event) {

@@ -241,7 +241,7 @@ public class ExamDAO {
 			Classroom classroom = exam.getClassroom();
 			String note = exam.getNote();
 			
-			Queries.insertExam(stmt, date, time, course.getAbbrevation(), classroom.getName(), note);
+			Queries.insertExam(stmt, date, time, course.getAbbreviation(), classroom.getName(), note);
 			
 		} catch (SQLException e) {
 			return false;

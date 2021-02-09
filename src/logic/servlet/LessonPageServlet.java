@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +18,7 @@ import logic.bean.LessonBean;
 import logic.bean.SeatBean;
 import logic.bean.UserBean;
 import logic.controller.BookASeatController;
+import logic.controller.CheckWeatherController;
 import logic.exceptions.SeatAlreadyBookedException;
 
 @WebServlet("/LessonPageServlet")
@@ -52,9 +54,13 @@ public class LessonPageServlet extends HttpServlet {
 			List<SeatBean> occupiedSeats = controller.getOccupateSeatOf(lesson);
 			SeatBean mySeat = controller.getMySeat(lesson, user);
 			
+			CheckWeatherController controllerWeather = new CheckWeatherController();
+			List<String> weather = controllerWeather.getWeather((int) TimeUnit.MILLISECONDS.toHours(lesson.getTime().getTime()));
+			
 			req.setAttribute("lesson", lesson);
 			req.setAttribute("occupiedSeats", occupiedSeats);
 			req.setAttribute("mySeat", mySeat);
+			req.setAttribute("weather", weather);
 			
 		} catch (SQLException e) {
 			req.setAttribute("alertMsg", "An error as occured. Try later.");

@@ -80,7 +80,7 @@ public class StudentDAO {
 			}
 			
 			// If there are no entry then insert a new User
-			result = Queries.insertRole(stmt, user.getUsername());
+			result = Queries.insertRole(stmt, user.getUsername(), "student");
 			if (result == 0) {
 				throw new SQLException();
 			}

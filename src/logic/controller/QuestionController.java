@@ -54,7 +54,7 @@ public class QuestionController {
 		studentBean.setUsername(question.getStudent().getUsername());
 
 		QuestionBean questionBean = new QuestionBean();
-		questionBean.setCourse(question.getCourse().getAbbrevation());
+		questionBean.setCourse(question.getCourse().getAbbreviation());
 		questionBean.setId(question.getId());
 		questionBean.setDate(question.getDate());
 		questionBean.setSolved(question.isSolved());
@@ -92,7 +92,7 @@ public class QuestionController {
 			bean.setStudent(studentBean);
 			bean.setText(q.getText());
 			bean.setTitle(q.getTitle());
-			bean.setCourse(q.getCourse().getAbbrevation());
+			bean.setCourse(q.getCourse().getAbbreviation());
 			bean.setSolved(q.isSolved());
 			bean.setDate(q.getDate());
 			questionBeans.add(bean);

@@ -114,7 +114,7 @@ public class AssignmentDAO {
 
 			String title = assignment.getTitle();
 			String text = assignment.getText();
-			String course = assignment.getCourse().getAbbrevation();
+			String course = assignment.getCourse().getAbbreviation();
 			Date date = assignment.getDate();
 		
 			Queries.saveAssignment(stmt, title, text, course, date);

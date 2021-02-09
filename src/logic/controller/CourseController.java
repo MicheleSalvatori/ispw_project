@@ -86,7 +86,7 @@ public class CourseController {
 		Course course = CourseDAO.getCourseByAbbrevation(courseBean.getAbbreviation());
 		
 		CourseBean c = new CourseBean();
-		c.setAbbreviation(course.getAbbrevation());
+		c.setAbbreviation(course.getAbbreviation());
 		c.setCredits(course.getCredits());
 		c.setGoal(course.getGoal());
 		c.setName(course.getName());

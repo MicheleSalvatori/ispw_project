@@ -270,10 +270,12 @@ public class PageLoader {
 	public void refreshPage() {
 		if (PageLoader.getObject() == null) {
 			buildPage(PageLoader.getPage());
+			getFirst();
 		}
 
 		else {
 			buildPage(PageLoader.getPage(), PageLoader.getObject());
+			getFirst();
 		}
 	}
 }

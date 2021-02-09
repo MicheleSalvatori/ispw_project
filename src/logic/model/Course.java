@@ -5,7 +5,7 @@ import java.util.List;
 public class Course {
 	
 	private String name;
-	private String abbrevation;
+	private String abbreviation;
 	private List<Student> studentOfCourse;
 	
 	private String year;
@@ -17,7 +17,7 @@ public class Course {
 	
 	public Course(String name, String abbrevation, String year, String semster, String credits, String prerequisites, String goal, String reception) {
 		this.name = name;
-		this.abbrevation = abbrevation;
+		this.abbreviation = abbrevation;
 		this.year = year;
 		this.semester = semster;
 		this.credits = credits;
@@ -46,12 +46,12 @@ public class Course {
 		this.studentOfCourse.add(student);
 	}
 
-	public String getAbbrevation() {
-		return abbrevation;
+	public String getAbbreviation() {
+		return abbreviation;
 	}
 
-	public void setAbbrevation(String abbrevation) {
-		this.abbrevation = abbrevation;
+	public void setAbbreviation(String abbrevation) {
+		this.abbreviation = abbrevation;
 	}
 
 	public String getYear() {

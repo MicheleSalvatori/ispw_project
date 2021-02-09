@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 
+import logic.model.Course;
+
 public class Queries {
 	
 	private static final String AND_TIME = "' AND time = '";
@@ -41,8 +43,8 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 
-	public static int insertRole(Statement stmt, String username) throws SQLException {
-		String query = "INSERT INTO role (username, type) VALUES ('" + username + "', 'student');";
+	public static int insertRole(Statement stmt, String username, String role) throws SQLException {
+		String query = "INSERT INTO role (username, type) VALUES ('" + username + "', '" + role + "');";
 		return stmt.executeUpdate(query);
 	}
 	
@@ -74,6 +76,12 @@ public class Queries {
 	public static ResultSet selectProfessorsByCourse(Statement stmt, String course) throws SQLException {
 		String query = "SELECT username, name, surname, email, password FROM teach JOIN professor on teach.professor = professor.username WHERE teach.course = '" + course + "';";
 		return stmt.executeQuery(query);
+	}
+	
+	public static int insertProfessor(Statement stmt, String username, String password, String name, String surname, String email) throws SQLException {
+		String query = "INSERT INTO professor (username, password, name, surname, email) VALUES ('" + username + "', '"
+				+ password + "', '" + name + "', '" + surname + "', '" + email + "');";
+		return stmt.executeUpdate(query);
 	}
 
 	public static int updateProfessorPassword(Statement stmt, String username, String password) throws SQLException {
@@ -343,6 +351,13 @@ public class Queries {
 	public static ResultSet countCoursesProf(Statement stmt, String username) throws SQLException {
 		String sql  = "SELECT count(distinct course) from teach where professor ='"+username+"';"; 
 		return stmt.executeQuery(sql);
+	}
+	
+	public static int insertCourse(Statement stmt, Course course) throws SQLException {
+		String sql = String.format("INSERT INTO course VALUES('%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s')",
+						course.getAbbreviation(), course.getName(), Integer.parseInt(course.getYear()), Integer.parseInt(course.getCredits()), 
+						course.getSemester(), course.getPrerequisites(), course.getGoal(), course.getReception());
+		return stmt.executeUpdate(sql);
 	}
 	
 /******************************************************************************************************************/

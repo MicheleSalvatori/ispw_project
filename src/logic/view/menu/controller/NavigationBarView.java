@@ -93,6 +93,11 @@ public class NavigationBarView implements Initializable {
 	}
 
 	@FXML
+	public void settingButton(ActionEvent event) {
+		PageLoader.getInstance().buildPage(Page.ADMINISTRATION_PAGE);
+	}
+	
+	@FXML
 	public void profileButton(ActionEvent event) {
 		PageLoader.getInstance().buildPage(Page.PROFILE);
 	}

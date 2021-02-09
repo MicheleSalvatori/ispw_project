@@ -121,7 +121,7 @@ public class QuestionDAO {
 			String title = question.getTitle();
 			String text = question.getText();
 			String username = question.getStudent().getUsername();
-			String course = question.getCourse().getAbbrevation();
+			String course = question.getCourse().getAbbreviation();
 			Date date = question.getDate();
 			boolean solved = question.isSolved();
 

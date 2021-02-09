@@ -201,7 +201,7 @@
 				</div>
 				
 				<!-- Second Col -->
-				<div class="col" style="float: right; width: 45%;">
+				<div class="col" style="float: right; width: 47%;">
 					<!-- Weather -->
 					<table style="height: 80%;">
 						<thead>
@@ -214,24 +214,24 @@
 					
 						<tbody>
 						<tr>
-							<c:forEach items="${listOfLesson}" var="mhanz">
+							<c:forEach items="${listOfWeather}" var="weather">
 							<td style="padding-right: 1vw; width: 20%;">
-								<table class="weather" align="center">
+								<table class="weather" align="center" style="padding: 10px;">
 									<tr>
 										<td class="weather-text">
-											15 °C
+											${weather.get(0)}
 										</td>
 									</tr>
 
 									<tr>
 										<td align="center">
-											<img class="img" src="Cloud.png" alt="weath">
+											<img class="img" src="res/img/${weather.get(1)}" alt="weath">
 										</td>
 									</tr>
 
 									<tr>
 										<td class="weather-text">
-											10:00
+											${weather.get(2)}
 										</td>
 									</tr>
 								</table>
@@ -241,6 +241,10 @@
 						</tbody>
 					
 					</table>
+					
+					<!-- Map -->
+					<a class="next-lessons-label">Map</a>
+					<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11886.930780547153!2d12.622736!3d41.85558!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x556bbd1ff2a33c63!2sMacroarea%20di%20Ingegneria%20-%20Universit%C3%A0%20di%20Roma%20Tor%20Vergata!5e0!3m2!1sit!2sit!4v1612894377315!5m2!1sit!2sit" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 				</div>
 			
 			</div>

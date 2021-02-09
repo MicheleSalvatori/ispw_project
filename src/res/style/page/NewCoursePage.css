@@ -1,0 +1,88 @@
+/*Roboto font */
+@font-face {
+ 	src: url("../../font/Roboto/Roboto-Regular.ttf");
+}
+ 
+@font-face {
+ 	src: url("../../font/Roboto/Roboto-Bold.ttf");
+}
+ 
+@font-face {
+ 	src: url("../../font/Roboto/Roboto-Light.ttf");
+}
+
+/* Baloo Bhai font */
+@font-face {
+	src: url("../../font/BalooBhai/BalooBhai-Regular.ttf");
+}
+
+/* Background color */
+.root {
+	-fx-background-color: white;
+}
+
+.text-field {
+	-fx-border-color: #0C0B0B;
+	-fx-border-radius: 31.5px;
+    -fx-background-radius: 31.5px;
+   
+    -fx-pref-height: 63;
+    -fx-pref-width: 319;
+ 	
+ 	-fx-font-family: "Roboto";
+ 	-fx-font-size: 18px;
+ 	-fx-font-weight: bold;
+}
+
+.text-area {
+	-fx-border-color: #0C0B0B;
+	-fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    
+    -fx-padding: 5px;
+    -fx-background-color: transparent;
+ 	
+ 	-fx-font-family: "Roboto";
+ 	-fx-font-size: 18px;
+ 	-fx-font-weight: bold;
+ 	-fx-background-insets: 0;
+}
+
+.text-area .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area:focused .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 14.0px;
+    -fx-boreder-color:#0C0B0B;
+}
+
+.label {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24;
+	-fx-text-fill: #0C0B0B;
+}
+
+.title-label{
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 36;
+	-fx-text-fill: #0C0B0B;
+}
+
+.button {
+	-fx-font-family: "Baloo Bhai";
+	-fx-font-size: 24;
+	-fx-text-fill: #0C0B0B;
+	
+	-fx-background-color: #E5E5EB;
+	-fx-background-radius: 8px;
+}
+
+.button:hover {
+	-fx-cursor: hand;
+}

@@ -135,7 +135,7 @@ public class RequestDAO {
 		Student student = request.getStudent();
 		Course course = request.getCourse();
 			
-		Queries.insertRequest(stmt, student.getUsername(), course.getAbbrevation());
+		Queries.insertRequest(stmt, student.getUsername(), course.getAbbreviation());
 	}
 	
 	public static void deleteRequest(Request request) throws SQLException {
@@ -149,7 +149,7 @@ public class RequestDAO {
 		Student student = request.getStudent();
 		Course course = request.getCourse();
 			
-		Queries.deleteRequest(stmt, student.getUsername(), course.getAbbrevation());
+		Queries.deleteRequest(stmt, student.getUsername(), course.getAbbreviation());
 	}
 	
 	public static void insertFollow(Request request) throws SQLException {
@@ -164,7 +164,7 @@ public class RequestDAO {
 		Student student = request.getStudent();
 		Course course = request.getCourse();
 		
-		Queries.insertFollow(stmt, student.getUsername(), course.getAbbrevation());
+		Queries.insertFollow(stmt, student.getUsername(), course.getAbbreviation());
 	}
 	
 	public static void deleteFollow(Request request) throws SQLException {
@@ -178,6 +178,6 @@ public class RequestDAO {
 		Student student = request.getStudent();
 		Course course = request.getCourse();
 			
-		Queries.deleteFollow(stmt, student.getUsername(), course.getAbbrevation());
+		Queries.deleteFollow(stmt, student.getUsername(), course.getAbbreviation());
 	}
 }

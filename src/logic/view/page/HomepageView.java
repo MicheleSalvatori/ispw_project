@@ -1,4 +1,5 @@
 package logic.view.page;
+import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -153,7 +154,7 @@ public class HomepageView implements Initializable {
 		
 		for (int i=0; i<5; i++) {
 			List<String> info = controller.getWeather(hour+i);
-			Image image = new Image(info.get(1));
+			Image image = new Image(new File("src/res/png/weather/" + info.get(1)).toURI().toString());
 			WeatherCard weatherCard = new WeatherCard(info.get(0), image, info.get(2));
 			hboxWeather.getChildren().add(weatherCard.getPane());
 		}
