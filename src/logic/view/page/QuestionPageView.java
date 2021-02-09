@@ -109,12 +109,11 @@ public class QuestionPageView {
 
 		} catch (RecordNotFoundException e) {
 			vboxAnswer.getChildren().add(new Label("No one seems to have a solution. Be the first!"));
-			return;
+			
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
 			PageLoader.getInstance().goBack();
 		}
-
 	}
 
 	@FXML
@@ -181,17 +180,12 @@ public class QuestionPageView {
 	}
 
 	private void setupEvent() {
-		this.addAnswerEvent = new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				saveAnswer(textAnswer.getText());
-			}
-		};
+		
+		this.addAnswerEvent = e -> saveAnswer(textAnswer.getText());
 
-		this.cancAddAnswerEvent = new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				closeStage(dialogStage);
-				PageLoader.getStage().getScene().getRoot().setEffect(null);
-			}
+		this.cancAddAnswerEvent = e -> {
+			closeStage(dialogStage);
+			PageLoader.getStage().getScene().getRoot().setEffect(null);
 		};
 	}
 

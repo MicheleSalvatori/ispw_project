@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
@@ -116,7 +115,7 @@ public class PageLoader {
 		PageLoader.setPage(page);
 		PageLoader.setObject(obj);
 
-		switch (page) { // TODO high coupling (cast dal pageloader)
+		switch (page) {
 
 		case COURSE:
 			loadPage();
@@ -131,7 +130,7 @@ public class PageLoader {
 			ScheduledPageView scheduledPageView = new ScheduledPageView();
 			loader.setController(scheduledPageView);
 			configPage(load());
-			scheduledPageView.setLessonPage(obj);
+			scheduledPageView.setBean(obj);
 			break;
 
 		case SCHEDULED_EXAMS:
@@ -139,7 +138,7 @@ public class PageLoader {
 			ScheduledPageView scheduledExamPageView = new ScheduledPageView();
 			loader.setController(scheduledExamPageView);
 			configPage(load());
-			scheduledExamPageView.setExamPage(obj);
+			scheduledExamPageView.setBean(obj);
 			break;
 
 		case LESSON:
@@ -205,7 +204,7 @@ public class PageLoader {
 			loader = new FXMLLoader(url);
 
 		} catch (IOException e) {
-			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+			Logger.getGlobal().log(Level.SEVERE, AlertController.PAGE_ERROR);
 		}
 	}
 
@@ -249,7 +248,7 @@ public class PageLoader {
 			stage.show();
 
 		} catch (IOException e) {
-			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+			Logger.getGlobal().log(Level.SEVERE, AlertController.PAGE_ERROR);
 		}
 	}
 
@@ -259,7 +258,7 @@ public class PageLoader {
 			return loader.load();
 
 		} catch (IOException e) {
-			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+			Logger.getGlobal().log(Level.SEVERE, AlertController.PAGE_ERROR);
 			return null;
 		}
 	}
@@ -269,8 +268,6 @@ public class PageLoader {
 	}
 
 	public void refreshPage() {
-		System.out.println(PageLoader.getPage());
-		System.out.println(PageLoader.getObject());
 		if (PageLoader.getObject() == null) {
 			buildPage(PageLoader.getPage());
 		}

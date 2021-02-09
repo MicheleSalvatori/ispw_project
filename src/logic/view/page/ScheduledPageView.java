@@ -84,16 +84,10 @@ public class ScheduledPageView implements Initializable {
 		}
 	}
 	
-	public void setLessonPage(Object obj) {
+	public void setBean(Object obj) {
 		CourseBean course = (CourseBean) obj;
 		setFilters(course);
 		filterLessons(course);
-	}
-	
-	public void setExamPage(Object obj) {
-		CourseBean course = (CourseBean) obj;
-		setFilters(course);
-		filterExams(course);
 	}
 	
 	public void setFilters(CourseBean course) {

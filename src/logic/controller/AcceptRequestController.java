@@ -3,7 +3,6 @@ package logic.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.bean.StudentBean;
@@ -74,7 +73,7 @@ public class AcceptRequestController {
 		return coursesBean;
 	}
 	
-	public List<RequestBean> getRequests(UserBean userBean) throws SQLException, RecordNotFoundException {
+	public List<RequestBean> getRequests(UserBean userBean) throws RecordNotFoundException, SQLException {
 		
 		List<Request> requests = RequestDAO.getRequestsByProfessor(userBean.getUsername());
 		List<RequestBean> requestsBean = new ArrayList<>();

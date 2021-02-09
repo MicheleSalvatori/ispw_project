@@ -136,6 +136,7 @@ public class ExamPageView implements Initializable {
 			
 		} catch (IOException e) {
 			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+			return;
 		}
 		
 		Scene scene = new Scene(root);
@@ -204,17 +205,11 @@ public class ExamPageView implements Initializable {
 	}
 	
 	private void setupEvent() {
-		this.addExamEvent = new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				saveExam();
-			}
-		};
+		this.addExamEvent = e -> saveExam();
 		
-		this.cancAddExamEvent = new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				dialogStage.close();
-				PageLoader.getStage().getScene().getRoot().setEffect(null);
-			}
+		this.cancAddExamEvent = e -> {
+			dialogStage.close();
+			PageLoader.getStage().getScene().getRoot().setEffect(null);
 		};
 	}
 	

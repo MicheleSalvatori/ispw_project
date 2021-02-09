@@ -5,26 +5,33 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="logic.bean.UserBean" %>
-<%@ page import="logic.bean.LessonBean" %>
-<%@ page import="logic.utilities.SQLConverter" %>
 <%@ page import="logic.utilities.Role" %>
 <%@ page import="logic.controller.AcceptRequestController" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="logic.exceptions.RecordNotFoundException" %>
 
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="res/style/StatusBar.css">
+	</head>
+
 <%	
 	UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
+
 	int reqCount = 0;
 	AcceptRequestController acceptRequestController = new AcceptRequestController();
 	try {
 		reqCount = acceptRequestController.getRequests(user).size();
 		System.out.println("REQUEST COUNT " +  reqCount);	
+		
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
+		
 	} catch (RecordNotFoundException e) {
 		// TODO Auto-generated catch block
 		System.out.println("NOREQ");
+		
 	} finally {
 		request.setAttribute("reqCount", reqCount);
 	}

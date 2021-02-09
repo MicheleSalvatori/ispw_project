@@ -63,11 +63,6 @@ public class AssignmentPageView implements Initializable {
 		}
 	}
 	
-	
-	//TODO
-	// public void setBean(AssignmentBean bean) {  (il cast lo fai dal pageloader
-	
-	
 	public void setBean(Object obj) {
 		AddAssignmentController controller = new AddAssignmentController();
 		try {
@@ -78,7 +73,6 @@ public class AssignmentPageView implements Initializable {
 			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
 		}
 
-		//this.assignment = (AssignmentBean) obj;		// TODO Forse high coupling
 		setPage();
 	}
 	

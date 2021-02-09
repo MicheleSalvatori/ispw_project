@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -35,6 +37,7 @@ import logic.bean.UserBean;
 import logic.controller.AcceptRequestController;
 import logic.controller.LoginController;
 import logic.exceptions.RecordNotFoundException;
+import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.utilities.Role;
@@ -56,9 +59,8 @@ public class StatusBarView implements Initializable {
 	
 	int reqCount;
 	private Stage dialogStage;
-	private Button btnRequest, btnCancel;
-	private Label labelNotification;
-	private EventHandler<ActionEvent> addGotoRequestevent, cancRequestEvent;
+	private EventHandler<ActionEvent> addGotoRequestevent;
+	private EventHandler<ActionEvent> cancRequestEvent;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -88,18 +90,25 @@ public class StatusBarView implements Initializable {
 	
 	// --------------------------------------------------------
 	@FXML
-	public void notification(ActionEvent event) throws IOException {
-		System.out.println("Notifications");
+	public void notification(ActionEvent event) {
 		if(UserBean.getInstance().getRole().equals(Role.PROFESSOR)) {
 			setupRequestDialog();
 		}
 	}
 	
-	private void setupRequestDialog() throws IOException {
+	private void setupRequestDialog() {
 		dialogStage = new Stage();
 		
-		URL url = new File("src/res/fxml/dialog/NotificationDialog.fxml").toURI().toURL();
-		Parent root = FXMLLoader.load(url);
+		Parent root = null;
+		try {
+			URL url = new File("src/res/fxml/dialog/NotificationDialog.fxml").toURI().toURL();
+			root = FXMLLoader.load(url);
+			
+		} catch (IOException e) {
+			Logger.getGlobal().log(Level.SEVERE, "Page loading error");
+			return;
+		}
+		
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(RequestPageView.class.getResource("/res/style/dialog/NotificationDialog.css").toExternalForm());
 		scene.setFill(Color.TRANSPARENT);
@@ -118,9 +127,9 @@ public class StatusBarView implements Initializable {
 		dialogStage.show();
 		animation(dialogStage);
 		
-		btnRequest = (Button) scene.lookup("#btnRequest");
-		btnCancel = (Button) scene.lookup("#btnCancel");
-		labelNotification = (Label) scene.lookup("#labelNotification");
+		Button btnRequest = (Button) scene.lookup("#btnRequest");
+		Button btnCancel = (Button) scene.lookup("#btnCancel");
+		Label labelNotification = (Label) scene.lookup("#labelNotification");
 		
 		setupEvent();
 		btnRequest.setOnAction(addGotoRequestevent);
@@ -148,18 +157,14 @@ public class StatusBarView implements Initializable {
 	}
 	
 	private void setupEvent() {
-		this.addGotoRequestevent = new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				dialogStage.close();
-				PageLoader.getInstance().buildPage(Page.REQUEST);
-			}
+		this.addGotoRequestevent = e -> {
+			dialogStage.close();
+			PageLoader.getInstance().buildPage(Page.REQUEST);
 		};
 		
-		this.cancRequestEvent = new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				dialogStage.close();
-				PageLoader.getStage().getScene().getRoot().setEffect(null);	//TODO
-			}
+		this.cancRequestEvent = e -> {
+			dialogStage.close();
+			PageLoader.getStage().getScene().getRoot().setEffect(null);
 		};
 	}
 	
@@ -168,19 +173,18 @@ public class StatusBarView implements Initializable {
 			AcceptRequestController acceptRequestController = new AcceptRequestController();
 			try {
 				reqCount = acceptRequestController.getRequests(UserBean.getInstance()).size();
-				System.out.println("REQUEST COUNT " +  reqCount);
 				btnNotifications.setStyle("-icon-paint: #FF00FF; -fx-text-fill: #FF00FF");
 				btnNotifications.setText(String.valueOf(reqCount));
 				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (RecordNotFoundException e) {
-				// TODO Auto-generated catch block
-				System.out.println("NOREQ");
 				btnNotifications.setStyle("-icon-paint: black; -fx-text-fill: black");
 				btnNotifications.setText("");
+				
+			} catch (SQLException e) {
+				AlertController.infoAlert(AlertController.getError());
+				PageLoader.getInstance().goBack();
 			}
+			
 		} else {
 			btnNotifications.setVisible(false);
 		}

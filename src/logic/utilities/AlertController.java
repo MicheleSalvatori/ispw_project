@@ -42,6 +42,9 @@ public class AlertController {
 	
 	private static Stage stage;
 	private static String error = "An error as occured.\nTry later.";
+	public static final String PAGE_ERROR = "Page loading error";
+	
+	private static String alertRes = "/res/style/Alert.css";
 	
 	private static ColorAdjust adj;
 	
@@ -82,7 +85,7 @@ public class AlertController {
 		dialog.setHeaderText("Insert a new password");
 		dialog.setGraphic(null);
 		dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
-		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
+		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource(alertRes).toExternalForm());
 		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 		centerButtons(dialog.getDialogPane());
 		dialog.initStyle(StageStyle.TRANSPARENT);
@@ -129,7 +132,7 @@ public class AlertController {
 		dialog.setHeaderText("Insert your email");
 		dialog.setGraphic(null);
 		dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
-		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
+		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource(alertRes).toExternalForm());
 		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 		centerButtons(dialog.getDialogPane());
 		dialog.initStyle(StageStyle.TRANSPARENT);
@@ -182,7 +185,7 @@ public class AlertController {
 		choiceDialog.setHeaderText("Select a course");
 		choiceDialog.setGraphic(null);
 		choiceDialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
-		choiceDialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
+		choiceDialog.getDialogPane().getStylesheets().add(AlertController.class.getResource(alertRes).toExternalForm());
 		centerButtons(choiceDialog.getDialogPane());
 		choiceDialog.initStyle(StageStyle.TRANSPARENT);
 		
@@ -219,19 +222,15 @@ public class AlertController {
 	    
 	    // Only number from 00 to 23
 	    hour.focusedProperty().addListener((arg0, oldValue, newValue) -> {
-	    	if (!newValue) {
-	    		if (!hour.getText().matches("^(0[0-9]|1[0-9]|2[0-3])")) {
+	    	if ((!newValue) && (!hour.getText().matches("^(0[0-9]|1[0-9]|2[0-3])"))) {
 	    			hour.setText("");
-	    		}
 	    	}
 	    });
 	    
 	    // Only number from 00 to 59
 	    minutes.focusedProperty().addListener((arg0, oldValue, newValue) -> {
-	    	if (!newValue) {
-	    		if (!minutes.getText().matches("[0-5][0-9]")) {
-	    			minutes.setText("");
-	    		}
+	    	if ((!newValue) && (!minutes.getText().matches("[0-5][0-9]"))) {
+	    		minutes.setText("");
 	    	}
 	    });
 	    
@@ -255,7 +254,7 @@ public class AlertController {
 	    });
 
 	    dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
-	    dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
+	    dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource(alertRes).toExternalForm());
 	    dialog.initStyle(StageStyle.TRANSPARENT);
 	    centerButtons(dialog.getDialogPane());
 	    
@@ -317,7 +316,7 @@ public class AlertController {
 		dialog.setHeaderText(null);
 		dialog.setGraphic(null);
 		dialog.getDialogPane().getScene().setFill(Color.TRANSPARENT);
-		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource("/res/style/Alert.css").toExternalForm());
+		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource(alertRes).toExternalForm());
 		centerButtons(dialog.getDialogPane());
 		dialog.initStyle(StageStyle.TRANSPARENT);
 	}
