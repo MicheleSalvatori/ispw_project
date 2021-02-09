@@ -128,4 +128,13 @@ public class QuestionController {
 		}
 		return answerList;
 	}
+	
+	
+	public void deleteQuestion(int id) {
+		try {
+			QuestionDAO.deleteQuestion(id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

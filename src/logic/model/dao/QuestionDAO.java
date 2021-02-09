@@ -217,4 +217,18 @@ public class QuestionDAO {
 
 		return tot;
 	}
+
+	public static void deleteQuestion(int id) throws SQLException {
+		Statement stmt = null;
+		Connection conn = null;
+
+		conn = SingletonDB.getDbInstance().getConnection();
+		if (conn == null) {
+			throw new SQLException();
+		}
+		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		Queries.deleteQuestion(stmt, id);
+
+	}
+
 }
