@@ -206,7 +206,7 @@ public class LessonDAO {
 		
 		Statement stmt = null;
 		Connection conn = null;
-		Lesson lesson;
+		Lesson lessonCourse;
 		
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -218,7 +218,7 @@ public class LessonDAO {
 				
 			} else {
 				rs.first();
-				lesson = getLesson(rs);
+				lessonCourse = getLesson(rs);
 			}
 			rs.close();
 			
@@ -228,7 +228,7 @@ public class LessonDAO {
 			}
 		}
 		
-		return lesson;
+		return lessonCourse;
 	}
 	
 	private static Lesson getLesson(ResultSet rs) throws SQLException, RecordNotFoundException {

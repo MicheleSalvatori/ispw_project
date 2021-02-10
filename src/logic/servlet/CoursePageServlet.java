@@ -27,9 +27,7 @@ public class CoursePageServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		final String alertString = "An error as occured. Try later.";
-		final String alertAttribute = "alertMsg";
-		final String loginPageUrl = "/WEB-INF/LoginPage.jsp";
+		
 		
 		HttpSession session = request.getSession();
 		
@@ -53,8 +51,7 @@ public class CoursePageServlet extends HttpServlet {
 			course = controller.getCourse(courseBean);
 			
 		} catch (SQLException e) {
-			request.setAttribute(alertAttribute, alertString);
-			request.getRequestDispatcher(loginPageUrl).forward(request, response);
+			error(request, response);
 			return;
 		}
 		
@@ -62,8 +59,7 @@ public class CoursePageServlet extends HttpServlet {
 			lesson = controller.getNextLesson(courseBean);
 				
 		} catch (SQLException e) {
-			request.setAttribute(alertAttribute, alertString);
-			request.getRequestDispatcher(loginPageUrl).forward(request, response);
+			error(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -74,8 +70,7 @@ public class CoursePageServlet extends HttpServlet {
 			professors = controller.getCourseProfessors(courseBean);
 			
 		} catch (SQLException e) {
-			request.setAttribute(alertAttribute, alertString);
-			request.getRequestDispatcher(loginPageUrl).forward(request, response);
+			error(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -86,8 +81,7 @@ public class CoursePageServlet extends HttpServlet {
 			weeklyLessons = controller.getWeeklyLessons(courseBean);
 			
 		} catch (SQLException e) {
-			request.setAttribute(alertAttribute, alertString);
-			request.getRequestDispatcher(loginPageUrl).forward(request, response);
+			error(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -99,6 +93,11 @@ public class CoursePageServlet extends HttpServlet {
 		request.setAttribute("listOfProfessor", professors);
 		request.setAttribute("listOfWeekly", weeklyLessons);
 		request.getRequestDispatcher("/WEB-INF/CoursePage.jsp").forward(request, response);
+	}
+	
+	private void error(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("alertMsg", "An error as occured. Try later.");
+		request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
 	}
 }
 
