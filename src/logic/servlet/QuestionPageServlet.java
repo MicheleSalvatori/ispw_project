@@ -22,13 +22,18 @@ import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/QuestionPageServlet")
 public class QuestionPageServlet extends HttpServlet {
+	
+	private static String loggedAttribute = "loggedUser";
+	private static String alertString = "An error as occured. Try later.";
+	private static String alertAttribute = "alertMsg";
+	private static String questionAttribute = "questionID";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		
-		if (session.getAttribute("loggedUser") == null) {
+		if (session.getAttribute(loggedAttribute) == null) {
 	        resp.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
@@ -37,21 +42,21 @@ public class QuestionPageServlet extends HttpServlet {
 		List<AnswerBean> answers = null;
 		QuestionBean questionBean = null;
 		try {
-			questionBean = controller.getQuestionByID(Integer.parseInt(req.getParameter("questionID")));
-			answers = controller.getAnswersOf(Integer.parseInt(req.getParameter("questionID")));
+			questionBean = controller.getQuestionByID(Integer.parseInt(req.getParameter(questionAttribute)));
+			answers = controller.getAnswersOf(Integer.parseInt(req.getParameter(questionAttribute)));
 			
 		} catch (RecordNotFoundException e) {
 			answers = new ArrayList<>();
 			
 		} catch (SQLException e) {
-			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.setAttribute(alertAttribute, alertString);
 			req.getRequestDispatcher("/WEB-INF/HomePage.jsp").forward(req, resp);
 			return;
 		}
 		
 		req.setAttribute("listOfAnswers", answers);
 		req.setAttribute("question", questionBean);
-		req.setAttribute("questionID", req.getParameter("questionID"));
+		req.setAttribute(questionAttribute, req.getParameter(questionAttribute));
 		req.getRequestDispatcher("/WEB-INF/QuestionPage.jsp").forward(req, resp);
 	}
 
@@ -61,22 +66,22 @@ public class QuestionPageServlet extends HttpServlet {
 		if (req.getParameter("submitAdd") != null) {
 			AnswerAQuestionController controller = new AnswerAQuestionController();
 			AnswerBean answerBean = new AnswerBean();
-			answerBean.setUser((UserBean) session.getAttribute("loggedUser"));
+			answerBean.setUser((UserBean) session.getAttribute(loggedAttribute));
 			answerBean.setText(req.getParameter("answer-text"));
 			answerBean.setDate(new Date(System.currentTimeMillis()));
 			answerBean.setId(Integer.parseInt(req.getParameter("id")));
 			
 			try {
 				controller.save(answerBean);
-				req.setAttribute("alertMsg", "Answer correctly added.");
+				req.setAttribute(alertAttribute, "Answer correctly added.");
 				
 			} catch (SQLException e) {
-				req.setAttribute("alertMsg", "An error as occured. Try later.");
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+				req.setAttribute(alertAttribute, alertString);
+				req.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(req, resp);
 				return;
 			}
 			
-			req.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(req, resp);		//TODO Mettere scrip nel jsp e controllare se funziona
+			req.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(req, resp);		//TODO Mettere script nel jsp e controllare se funziona
 		}
 	}
 }
