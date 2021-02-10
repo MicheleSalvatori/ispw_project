@@ -24,16 +24,17 @@ import logic.exceptions.RecordNotFoundException;
 @WebServlet("/ProfilePageServlet")
 public class ProfilePageServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
+	private static String alertString = "An error as occured. Try later.";
+	private static String alertAttribute = "alertMsg";
+	private static String loggedAttribute = "loggedUser";
+	private static String loginPageUrl = "/WEB-INF/LoginPage.jsp";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		if (request.getSession().getAttribute("loggedUser") == null) {
+		if (request.getSession().getAttribute(loggedAttribute) == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
@@ -44,16 +45,17 @@ public class ProfilePageServlet extends HttpServlet {
 		List<CourseBean> requests = null;
 		List<CourseBean> available = null;
 		List<ProfessorBean> professors = new ArrayList<>();
+		UserBean userLogged = (UserBean) session.getAttribute(loggedAttribute); 
 		
 		try {
-			courses = controller.getCourses((UserBean) session.getAttribute("loggedUser"));
+			courses = controller.getCourses(userLogged);
 			for (CourseBean course : courses) {
 				professors.add(controller.getCourseProfessors(course).get(0));
 			}
 			
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			request.setAttribute(alertAttribute, alertString);
+			request.getRequestDispatcher(loginPageUrl).forward(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -61,14 +63,14 @@ public class ProfilePageServlet extends HttpServlet {
 		}
 		
 		try {
-			requests = controller.getRequestedCourses((UserBean) session.getAttribute("loggedUser"));
+			requests = controller.getRequestedCourses(userLogged);
 			for (CourseBean courseRequest : requests) {
 				professors.add(controller.getCourseProfessors(courseRequest).get(0));
 			}
 			
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			request.setAttribute(alertAttribute, alertString);
+			request.getRequestDispatcher(loginPageUrl).forward(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -76,11 +78,11 @@ public class ProfilePageServlet extends HttpServlet {
 		}
 		
 		try {
-			available = controller.getAvailableCourses((UserBean) session.getAttribute("loggedUser"));
+			available = controller.getAvailableCourses(userLogged);
 		
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			request.setAttribute(alertAttribute, alertString);
+			request.getRequestDispatcher(loginPageUrl).forward(request, response);
 			return;
 		
 		} catch (RecordNotFoundException e) {
@@ -98,13 +100,20 @@ public class ProfilePageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		JoinCourseController controller = new JoinCourseController();
+		UserBean userLogged = (UserBean) session.getAttribute(loggedAttribute);
 		
 		if (request.getParameter("submitAdd") != null) {
 			
 			String course = request.getParameter("course-select");
 			
 			StudentBean studentBean = new StudentBean();
-			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
+
+			studentBean.setEmail(userLogged.getEmail());
+			studentBean.setName(userLogged.getName());
+			studentBean.setPassword(userLogged.getPassword());
+			studentBean.setSurname(userLogged.getSurname());
+			studentBean.setUsername(userLogged.getUsername());
+
 			
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course);
@@ -117,18 +126,22 @@ public class ProfilePageServlet extends HttpServlet {
 				controller.sendRequest(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute("alertMsg", "An error as occured. Try later.");
-				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				request.setAttribute(alertAttribute, alertString);
+				request.getRequestDispatcher(loginPageUrl).forward(request, response);
 				return;
 			}
 		}
 		
-		else if (request.getParameter("submitRemove") != null) {
+		if (request.getParameter("submitRemove") != null) {
 			
 			String course = request.getParameter("course-select");
 			
 			StudentBean studentBean = new StudentBean();
-			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
+			studentBean.setEmail(userLogged.getEmail());
+			studentBean.setName(userLogged.getName());
+			studentBean.setPassword(userLogged.getPassword());
+			studentBean.setSurname(userLogged.getSurname());
+			studentBean.setUsername(userLogged.getUsername());
 			
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course);
@@ -141,13 +154,13 @@ public class ProfilePageServlet extends HttpServlet {
 				controller.removeCourse(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute("alertMsg", "An error as occured. Try later.");
-				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				request.setAttribute(alertAttribute, alertString);
+				request.getRequestDispatcher(loginPageUrl).forward(request, response);
 				return;
 			}
 		}
 		
-		else if (request.getParameter("deleteRequest") != null) {
+		if (request.getParameter("deleteRequest") != null) {
 			
 			String course = request.getParameter("course");
 			
@@ -155,7 +168,7 @@ public class ProfilePageServlet extends HttpServlet {
 			courseBean.setAbbreviation(course);
 			
 			StudentBean studentBean = new StudentBean();
-			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
+			studentBean.setUsername(userLogged.getUsername());
 		
 			RequestBean requestBean = new RequestBean();
 			requestBean.setStudent(studentBean);
@@ -165,37 +178,36 @@ public class ProfilePageServlet extends HttpServlet {
 				controller.deleteRequest(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute("alertMsg", "An error as occured. Try later.");
-				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				request.setAttribute(alertAttribute, alertString);
+				request.getRequestDispatcher(loginPageUrl).forward(request, response);
 				return;
 			}
 		}
 		
-		else if (request.getParameter("changePassword") != null) {
+		if (request.getParameter("changePassword") != null) {
 			
 			String password = request.getParameter("password");
 			if (!password.isEmpty()) {
 
-				if (password.compareTo(((UserBean) session.getAttribute("loggedUser")).getPassword()) == 0) {
+				if (password.compareTo(userLogged.getPassword()) == 0) {
 					session.setAttribute("error", "You inserted your current password.");
 				}
 				
 				else {
 					
-					UserBean userBean = (UserBean) session.getAttribute("loggedUser");
-					userBean.setPassword(password);
+					userLogged.setPassword(password);
 					
 					LoginController loginController = new LoginController();
 					try {
-						loginController.changePassword(userBean);
+						loginController.changePassword(userLogged);
 						session.invalidate();
-						session.setAttribute("alertMsg", "You will be redirected to Login page.");
+						session.setAttribute(alertAttribute, "You will be redirected to Login page.");
 						response.sendRedirect("/ispw_project/LoginServlet");
 						return;
 						
 					} catch (SQLException e) {
-						request.setAttribute("alertMsg", "An error as occured. Try later.");
-						request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+						request.setAttribute(alertAttribute, alertString);
+						request.getRequestDispatcher(loginPageUrl).forward(request, response);
 						return;
 					}
 				}

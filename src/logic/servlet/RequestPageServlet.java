@@ -21,32 +21,33 @@ import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/RequestPageServlet")
 public class RequestPageServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
+	
+	private static String alertString = "An error as occured. Try later.";
+	private static String alertAttribute = "alertMsg";
+	private static String loggedAttribute = "loggedUser";
+	private static String loginPageUrl = "/WEB-INF/LoginPage.jsp";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
-		if (request.getSession().getAttribute("loggedUser") == null) {
+		if (request.getSession().getAttribute(loggedAttribute) == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
 	
+		UserBean userLogged = (UserBean) request.getSession().getAttribute(loggedAttribute);
 		AcceptRequestController controller = new AcceptRequestController();
 		
 		List<RequestBean> requests = null;
 		List<CourseBean> courses = null;
 		
 		try {
-			requests = controller.getRequests((UserBean) request.getSession().getAttribute("loggedUser"));
+			requests = controller.getRequests(userLogged);
 
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			request.setAttribute(alertAttribute, alertString);
+			request.getRequestDispatcher(loginPageUrl).forward(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -55,11 +56,11 @@ public class RequestPageServlet extends HttpServlet {
 		
 		
 		try {
-			courses = controller.getCourses((UserBean) request.getSession().getAttribute("loggedUser"));
+			courses = controller.getCourses(userLogged);
 		
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			request.setAttribute(alertAttribute, alertString);
+			request.getRequestDispatcher(loginPageUrl).forward(request, response);
 			return;
 		
 		} catch (RecordNotFoundException e) {
@@ -94,8 +95,8 @@ public class RequestPageServlet extends HttpServlet {
 				controller.acceptRequest(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute("alertMsg", "An error as occured. Try later.");
-				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				request.setAttribute(alertAttribute, alertString);
+				request.getRequestDispatcher(loginPageUrl).forward(request, response);
 				return;
 			}
 		}
@@ -105,12 +106,13 @@ public class RequestPageServlet extends HttpServlet {
 				controller.declineRequest(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute("alertMsg", "An error as occured. Try later.");
-				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				request.setAttribute(alertAttribute, alertString);
+				request.getRequestDispatcher(loginPageUrl).forward(request, response);
 				return;
 			}
 		}
 		
 		response.sendRedirect("/ispw_project/RequestPageServlet");
 	}
+	
 }

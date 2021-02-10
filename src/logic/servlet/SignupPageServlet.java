@@ -21,15 +21,13 @@ import logic.exceptions.InvalidInputException;
 
 @WebServlet("/SignupServlet")
 public class SignupPageServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
+	
+	private static String signupPageUrl = "/WEB-INF/SignupPage.jsp";
 	private static final long serialVersionUID = 1L;
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/SignupPage.jsp").forward(request, response);
+		request.getRequestDispatcher(signupPageUrl).forward(request, response);
 	}
 	
 	@Override
@@ -45,7 +43,7 @@ public class SignupPageServlet extends HttpServlet {
 			checkInput(name, surname, email, password, confirmPassword);
 		
 		} catch (InvalidInputException e) {
-			alert(req, resp, e.getMessage(), "/WEB-INF/SignupPage.jsp");
+			alert(req, resp, e.getMessage(), signupPageUrl);
 			return;
 		}
 		
@@ -66,7 +64,7 @@ public class SignupPageServlet extends HttpServlet {
 			return;
 			
 		} catch (DuplicatedRecordException e) {
-			alert(req, resp, e.getMessage(), "/WEB-INF/SignupPage.jsp");
+			alert(req, resp, e.getMessage(), signupPageUrl);
 			return;
 		}
 

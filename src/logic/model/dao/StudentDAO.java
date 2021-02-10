@@ -13,6 +13,7 @@ import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
 public class StudentDAO {
+	private static String noUsername = "No Username Found matching with name: ";
 	
 	private StudentDAO() {}
 	
@@ -31,7 +32,7 @@ public class StudentDAO {
 			resultSet = Queries.selectStudent(stmt, username, password);
 			
 			if (!resultSet.first()) {
-				throw new RecordNotFoundException("No Username Found matching with name: " + username);
+				throw new RecordNotFoundException(noUsername + username);
 				
 			}else {
 				resultSet.first();
@@ -112,7 +113,7 @@ public class StudentDAO {
 			
 			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No Username Found matching with name: " + user.getUsername());	
+				throw new RecordNotFoundException(noUsername + user.getUsername());	
 			} 
 			
 			Queries.updateStudentPassword(stmt, user.getUsername(), user.getPassword());
@@ -170,7 +171,7 @@ public class StudentDAO {
 			
 			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No Username Found matching with name: " + user.getUsername());	
+				throw new RecordNotFoundException(noUsername + user.getUsername());	
 			} 
 			
 			Queries.deleteStudent(stmt, user.getUsername());
