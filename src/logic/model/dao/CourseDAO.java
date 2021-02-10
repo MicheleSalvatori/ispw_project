@@ -67,14 +67,7 @@ public class CourseDAO {
 			ResultSet rs = null;
 
 			rs = Queries.countCoursesProf(stmt, username);
-
-			if (!rs.first()) {
-				number = 0;
-			} else {
-				rs.first();
-				number = rs.getInt(1);
-			}
-			rs.close();
+			number = getNumber(rs);
 			
 		} finally {
 			if (stmt != null) {
@@ -99,19 +92,26 @@ public class CourseDAO {
 			ResultSet rs = null;
 			
 			rs = Queries.countCourses(stmt, username);
-
-			if (!rs.first()) {
-				number = 0;
-			} else {
-				rs.first();
-				number = rs.getInt(1);
-			}
-			rs.close();
+			number = getNumber(rs);
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		return number;
+	}
+	
+	private static int getNumber(ResultSet rs) throws SQLException {
+		int number;
+		if (!rs.first()) {
+			number = 0;
+		} else {
+			rs.first();
+			number = rs.getInt(1);
+		}
+		rs.close();
+		
 		return number;
 	}
 
@@ -129,20 +129,8 @@ public class CourseDAO {
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectAllCourses(stmt);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noCourse);
-				
-			} else {
-				courses = new ArrayList<>();
-				rs.first();
-				do {
-					Course course = getCourse(rs);
-					courses.add(course);
-				} while (rs.next());
-			}
+			courses = getCourses(rs);
 			
-			rs.close();
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -164,21 +152,9 @@ public class CourseDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
 			ResultSet rs = Queries.selectAvailableCourses(stmt, student);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noCourse);
-				
-			} else {
-				courses = new ArrayList<>();
-				rs.first();
-				do {
-					Course course = getCourse(rs);
-					courses.add(course);
-				} while (rs.next());
-			}
-			rs.close();
+			courses = getCourses(rs);
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -202,19 +178,8 @@ public class CourseDAO {
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			ResultSet rs = Queries.selectNotVerbalizedCourses(stmt, student);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noCourse);
-				
-			} else {
-				courses = new ArrayList<>();
-				rs.first();
-				do {
-					Course course = getCourse(rs);
-					courses.add(course);
-				} while (rs.next());
-			}
-			rs.close();
+			courses = getCourses(rs);
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -237,19 +202,8 @@ public class CourseDAO {
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectCoursesByStudent(stmt, student);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noCourse);
-				
-			} else {
-				courses = new ArrayList<>();
-				rs.first();
-				do {
-					Course course = getCourse(rs);
-					courses.add(course);
-				} while (rs.next());
-			}
-			rs.close();
+			courses = getCourses(rs);
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -269,19 +223,7 @@ public class CourseDAO {
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectCoursesByProfessor(stmt, professor);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noCourse);
-				
-			} else {
-				courses = new ArrayList<>();
-				rs.first();
-				do {
-					Course course = getCourse(rs);
-					courses.add(course);
-				} while (rs.next());
-			}
-			rs.close();
+			courses = getCourses(rs);
 			
 		} finally {
 			if (stmt != null) {
@@ -304,26 +246,33 @@ public class CourseDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
 			ResultSet rs = Queries.selectCoursesRequestedByStudent(stmt, student);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noCourse);
-				
-			} else {
-				courses = new ArrayList<>();
-				rs.first();
-				do {
-					Course course = getCourse(rs);
-					courses.add(course);
-				} while (rs.next());
-			}
-			rs.close();
+			courses = getCourses(rs);
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		return courses;
+	}
+	
+	private static List<Course> getCourses(ResultSet rs) throws SQLException, RecordNotFoundException {
+		List<Course> courses;
+		if (!rs.first()) {
+			throw new RecordNotFoundException(noCourse);
+			
+		} else {
+			courses = new ArrayList<>();
+			rs.first();
+			do {
+				Course course = getCourse(rs);
+				courses.add(course);
+			} while (rs.next());
+		}
+		
+		rs.close();
+		
 		return courses;
 	}
 

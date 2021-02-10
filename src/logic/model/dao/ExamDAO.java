@@ -17,6 +17,7 @@ import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
 public class ExamDAO {
+	
 	private static String noExam = "No exam found";
 	private static String rsCourse = "course";
 	private static String rsClassroom = "classroom";
@@ -78,24 +79,7 @@ public class ExamDAO {
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectExamsByCourse(stmt, date, time, course);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noExam);
-
-			} else {
-				exams = new ArrayList<>();
-				rs.first();
-				do {
-					Date d = rs.getDate("date");
-					Time t = rs.getTime("time");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString(rsCourse));
-					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString(rsClassroom));
-					String n = rs.getString("note");
-					Exam exam = new Exam(d, t, c, cl, n);
-					exams.add(exam);
-				} while (rs.next());
-			}
-			rs.close();
+			exams = getExams(rs);
 
 		} finally {
 			if (stmt != null) {
@@ -120,23 +104,8 @@ public class ExamDAO {
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectNextExams(stmt, date, time);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noExam);
-
-			} else {
-				exams = new ArrayList<>();
-				rs.first();
-				do {
-					Date d = rs.getDate("date");
-					Time t = rs.getTime("time");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString(rsCourse));
-					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString(rsClassroom));
-					String n = rs.getString("note");
-					Exam exam = new Exam(d, t, c, cl, n);
-					exams.add(exam);
-				} while (rs.next());
-			}
+			exams = getExams(rs);
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -160,23 +129,8 @@ public class ExamDAO {
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectNextExamsByStudent(stmt, date, student);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noExam);
-
-			} else {
-				exams = new ArrayList<>();
-				rs.first();
-				do {
-					Date d = rs.getDate("date");
-					Time t = rs.getTime("time");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString(rsCourse));
-					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString(rsClassroom));
-					String n = rs.getString("note");
-					Exam exam = new Exam(d, t, c, cl, n);
-					exams.add(exam);
-				} while (rs.next());
-			}
+			exams = getExams(rs);
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -200,28 +154,37 @@ public class ExamDAO {
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectNextExamsByProfessor(stmt, date, professor);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noExam);
-
-			} else {
-				exams = new ArrayList<>();
-				rs.first();
-				do {
-					Date d = rs.getDate("date");
-					Time t = rs.getTime("time");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString(rsCourse));
-					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString(rsClassroom));
-					String n = rs.getString("note");
-					Exam exam = new Exam(d, t, c, cl, n);
-					exams.add(exam);
-				} while (rs.next());
-			}
+			exams = getExams(rs);
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
+		return exams;
+	}
+	
+	private static List<Exam> getExams(ResultSet rs) throws SQLException, RecordNotFoundException {
+		List<Exam> exams;
+		
+		if (!rs.first()) {
+			throw new RecordNotFoundException(noExam);
+
+		} else {
+			exams = new ArrayList<>();
+			rs.first();
+			do {
+				Date d = rs.getDate("date");
+				Time t = rs.getTime("time");
+				Course c = CourseDAO.getCourseByAbbrevation(rs.getString(rsCourse));
+				Classroom cl = ClassroomDAO.getClassroomByName(rs.getString(rsClassroom));
+				String n = rs.getString("note");
+				Exam exam = new Exam(d, t, c, cl, n);
+				exams.add(exam);
+			} while (rs.next());
+		}
+		rs.close();
+		
 		return exams;
 	}
 

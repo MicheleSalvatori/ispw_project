@@ -133,7 +133,7 @@ public class ProfessorDAO {
 			conn = (SingletonDB.getDbInstance()).getConnection();
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
+			rs = Queries.selectProfessorByUsername(stmt, user.getUsername());
 			if (rs.first()) {
 				// Raise duplicate entry exception
 				throw new DuplicatedRecordException("Username '" + user.getUsername() + "' already in use.");   
@@ -164,7 +164,7 @@ public class ProfessorDAO {
 		}	
 	}
 	
-	public static void changePassword(User user) throws SQLException, RecordNotFoundException {
+	public static void changePasswordProfessor(User user) throws SQLException, RecordNotFoundException {
 		
 		Connection conn = null;
 		Statement stmt = null;

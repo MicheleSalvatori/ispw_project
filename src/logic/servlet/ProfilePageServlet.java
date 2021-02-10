@@ -24,17 +24,17 @@ import logic.exceptions.RecordNotFoundException;
 @WebServlet("/ProfilePageServlet")
 public class ProfilePageServlet extends HttpServlet {
 
-	private static String alertString = "An error as occured. Try later.";
-	private static String alertAttribute = "alertMsg";
-	private static String loggedAttribute = "loggedUser";
-	private static String loginPageUrl = "/WEB-INF/LoginPage.jsp";
+	private static String alertStringProfile = "An error as occured. Try later.";
+	private static String alertAttributeProfile = "alertMsg";
+	private static String loggedAttributeProfile = "loggedUser";
+	private static String loginPageUrlProfile = "/WEB-INF/LoginPage.jsp";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		if (request.getSession().getAttribute(loggedAttribute) == null) {
+		if (request.getSession().getAttribute(loggedAttributeProfile) == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
@@ -45,7 +45,7 @@ public class ProfilePageServlet extends HttpServlet {
 		List<CourseBean> requests = null;
 		List<CourseBean> available = null;
 		List<ProfessorBean> professors = new ArrayList<>();
-		UserBean userLogged = (UserBean) session.getAttribute(loggedAttribute); 
+		UserBean userLogged = (UserBean) session.getAttribute(loggedAttributeProfile); 
 		
 		try {
 			courses = controller.getCourses(userLogged);
@@ -54,8 +54,8 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 			
 		} catch (SQLException e) {
-			request.setAttribute(alertAttribute, alertString);
-			request.getRequestDispatcher(loginPageUrl).forward(request, response);
+			request.setAttribute(alertAttributeProfile, alertStringProfile);
+			request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -69,8 +69,8 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 			
 		} catch (SQLException e) {
-			request.setAttribute(alertAttribute, alertString);
-			request.getRequestDispatcher(loginPageUrl).forward(request, response);
+			request.setAttribute(alertAttributeProfile, alertStringProfile);
+			request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -81,8 +81,8 @@ public class ProfilePageServlet extends HttpServlet {
 			available = controller.getAvailableCourses(userLogged);
 		
 		} catch (SQLException e) {
-			request.setAttribute(alertAttribute, alertString);
-			request.getRequestDispatcher(loginPageUrl).forward(request, response);
+			request.setAttribute(alertAttributeProfile, alertStringProfile);
+			request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
 			return;
 		
 		} catch (RecordNotFoundException e) {
@@ -100,86 +100,46 @@ public class ProfilePageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		JoinCourseController controller = new JoinCourseController();
-		UserBean userLogged = (UserBean) session.getAttribute(loggedAttribute);
+		UserBean userLogged = (UserBean) session.getAttribute(loggedAttributeProfile);
 		
 		if (request.getParameter("submitAdd") != null) {
 			
-			String course = request.getParameter("course-select");
-			
-			StudentBean studentBean = new StudentBean();
-
-			studentBean.setEmail(userLogged.getEmail());
-			studentBean.setName(userLogged.getName());
-			studentBean.setPassword(userLogged.getPassword());
-			studentBean.setSurname(userLogged.getSurname());
-			studentBean.setUsername(userLogged.getUsername());
-
-			
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course);
-			
-			RequestBean requestBean = new RequestBean();
-			requestBean.setStudent(studentBean);
-			requestBean.setCourse(courseBean);
+			RequestBean requestBean = getRequestBean(request, userLogged);
 
 			try {
 				controller.sendRequest(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute(alertAttribute, alertString);
-				request.getRequestDispatcher(loginPageUrl).forward(request, response);
+				request.setAttribute(alertAttributeProfile, alertStringProfile);
+				request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
 				return;
 			}
 		}
 		
 		if (request.getParameter("submitRemove") != null) {
 			
-			String course = request.getParameter("course-select");
-			
-			StudentBean studentBean = new StudentBean();
-			studentBean.setEmail(userLogged.getEmail());
-			studentBean.setName(userLogged.getName());
-			studentBean.setPassword(userLogged.getPassword());
-			studentBean.setSurname(userLogged.getSurname());
-			studentBean.setUsername(userLogged.getUsername());
-			
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course);
-			
-			RequestBean requestBean = new RequestBean();
-			requestBean.setStudent(studentBean);
-			requestBean.setCourse(courseBean);
+			RequestBean requestBean = getRequestBean(request, userLogged);
 
 			try {
 				controller.removeCourse(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute(alertAttribute, alertString);
-				request.getRequestDispatcher(loginPageUrl).forward(request, response);
+				request.setAttribute(alertAttributeProfile, alertStringProfile);
+				request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
 				return;
 			}
 		}
 		
 		if (request.getParameter("deleteRequest") != null) {
 			
-			String course = request.getParameter("course");
-			
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course);
-			
-			StudentBean studentBean = new StudentBean();
-			studentBean.setUsername(userLogged.getUsername());
-		
-			RequestBean requestBean = new RequestBean();
-			requestBean.setStudent(studentBean);
-			requestBean.setCourse(courseBean);
+			RequestBean requestBean = getRequestBean(request, userLogged);
 			
 			try {
 				controller.deleteRequest(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute(alertAttribute, alertString);
-				request.getRequestDispatcher(loginPageUrl).forward(request, response);
+				request.setAttribute(alertAttributeProfile, alertStringProfile);
+				request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
 				return;
 			}
 		}
@@ -201,13 +161,13 @@ public class ProfilePageServlet extends HttpServlet {
 					try {
 						loginController.changePassword(userLogged);
 						session.invalidate();
-						session.setAttribute(alertAttribute, "You will be redirected to Login page.");
+						session.setAttribute(alertAttributeProfile, "You will be redirected to Login page.");
 						response.sendRedirect("/ispw_project/LoginServlet");
 						return;
 						
 					} catch (SQLException e) {
-						request.setAttribute(alertAttribute, alertString);
-						request.getRequestDispatcher(loginPageUrl).forward(request, response);
+						request.setAttribute(alertAttributeProfile, alertStringProfile);
+						request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
 						return;
 					}
 				}
@@ -215,5 +175,21 @@ public class ProfilePageServlet extends HttpServlet {
 		}
 		
 		response.sendRedirect("/ispw_project/ProfilePageServlet");
+	}
+	
+	private RequestBean getRequestBean(HttpServletRequest request, UserBean userLogged) {
+		String course = request.getParameter("course-select");
+		
+		StudentBean studentBean = new StudentBean();
+		studentBean.setUsername(userLogged.getUsername());
+
+		CourseBean courseBean = new CourseBean();
+		courseBean.setAbbreviation(course);
+		
+		RequestBean requestBean = new RequestBean();
+		requestBean.setStudent(studentBean);
+		requestBean.setCourse(courseBean);
+		
+		return requestBean;
 	}
 }

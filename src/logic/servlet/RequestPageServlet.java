@@ -22,21 +22,21 @@ import logic.exceptions.RecordNotFoundException;
 @WebServlet("/RequestPageServlet")
 public class RequestPageServlet extends HttpServlet {
 	
-	private static String alertString = "An error as occured. Try later.";
-	private static String alertAttribute = "alertMsg";
-	private static String loggedAttribute = "loggedUser";
-	private static String loginPageUrl = "/WEB-INF/LoginPage.jsp";
+	private static String alertStringRequest = "An error as occured. Try later.";
+	private static String alertAttributeRequest = "alertMsg";
+	private static String loggedAttributeRequest = "loggedUser";
+	private static String loginPageUrlRequest = "/WEB-INF/LoginPage.jsp";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		if (request.getSession().getAttribute(loggedAttribute) == null) {
+		if (request.getSession().getAttribute(loggedAttributeRequest) == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
 	
-		UserBean userLogged = (UserBean) request.getSession().getAttribute(loggedAttribute);
+		UserBean userLogged = (UserBean) request.getSession().getAttribute(loggedAttributeRequest);
 		AcceptRequestController controller = new AcceptRequestController();
 		
 		List<RequestBean> requests = null;
@@ -46,8 +46,8 @@ public class RequestPageServlet extends HttpServlet {
 			requests = controller.getRequests(userLogged);
 
 		} catch (SQLException e) {
-			request.setAttribute(alertAttribute, alertString);
-			request.getRequestDispatcher(loginPageUrl).forward(request, response);
+			request.setAttribute(alertAttributeRequest, alertStringRequest);
+			request.getRequestDispatcher(loginPageUrlRequest).forward(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -59,8 +59,8 @@ public class RequestPageServlet extends HttpServlet {
 			courses = controller.getCourses(userLogged);
 		
 		} catch (SQLException e) {
-			request.setAttribute(alertAttribute, alertString);
-			request.getRequestDispatcher(loginPageUrl).forward(request, response);
+			request.setAttribute(alertAttributeRequest, alertStringRequest);
+			request.getRequestDispatcher(loginPageUrlRequest).forward(request, response);
 			return;
 		
 		} catch (RecordNotFoundException e) {
@@ -95,8 +95,8 @@ public class RequestPageServlet extends HttpServlet {
 				controller.acceptRequest(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute(alertAttribute, alertString);
-				request.getRequestDispatcher(loginPageUrl).forward(request, response);
+				request.setAttribute(alertAttributeRequest, alertStringRequest);
+				request.getRequestDispatcher(loginPageUrlRequest).forward(request, response);
 				return;
 			}
 		}
@@ -106,8 +106,8 @@ public class RequestPageServlet extends HttpServlet {
 				controller.declineRequest(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute(alertAttribute, alertString);
-				request.getRequestDispatcher(loginPageUrl).forward(request, response);
+				request.setAttribute(alertAttributeRequest, alertStringRequest);
+				request.getRequestDispatcher(loginPageUrlRequest).forward(request, response);
 				return;
 			}
 		}

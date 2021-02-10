@@ -54,7 +54,7 @@ public class LessonDAO {
 	public static List<Lesson> getLessonsByCourse(Date date, Time time, String course) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
-		List<Lesson> lessons;
+		List<Lesson> lessonsCourse;
 		
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -65,11 +65,11 @@ public class LessonDAO {
 				throw new RecordNotFoundException(noLesson);
 				
 			} else {
-				lessons = new ArrayList<>();
+				lessonsCourse = new ArrayList<>();
 				rs.first();
 				do {
-					Lesson lesson = getLesson(rs);
-					lessons.add(lesson);
+					Lesson l = getLesson(rs);
+					lessonsCourse.add(l);
 				} while (rs.next());
 			}
 			rs.close();
@@ -80,13 +80,13 @@ public class LessonDAO {
 			}
 		}
 		
-		return lessons;
+		return lessonsCourse;
 	}
 	
 	public static Lesson getNextLessonByCourse(Date date, Time time, String course) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
-		Lesson lesson;
+		Lesson lessonCourse;
 		
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -98,7 +98,7 @@ public class LessonDAO {
 				
 			} else {
 				rs.first();
-				lesson = getLesson(rs);
+				lessonCourse = getLesson(rs);
 			}
 			rs.close();
 			
@@ -107,13 +107,13 @@ public class LessonDAO {
 				stmt.close();
 			}
 		}
-		return lesson;
+		return lessonCourse;
 	}
 	
 	public static List<Lesson> getNextLessonsProfessor(Date date, String professor) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
-		List<Lesson> lessons;
+		List<Lesson> lessonsProfessor;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -124,11 +124,11 @@ public class LessonDAO {
 				throw new RecordNotFoundException(noLesson);
 				
 			} else {
-				lessons = new ArrayList<>();
+				lessonsProfessor = new ArrayList<>();
 				rs.first();
 				do {
-					Lesson lesson = getLesson(rs);
-					lessons.add(lesson);
+					Lesson l = getLesson(rs);
+					lessonsProfessor.add(l);
 				} while (rs.next());
 			}
 			
@@ -138,13 +138,13 @@ public class LessonDAO {
 			}
 		}
 		
-		return lessons;
+		return lessonsProfessor;
 	}
 	
 	public static List<Lesson> getTodayNextLessonsProfessor(Date date, Time time, String professor) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
-		List<Lesson> lessons;
+		List<Lesson> lessonsProfessor;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -155,11 +155,11 @@ public class LessonDAO {
 				throw new RecordNotFoundException(noLesson);
 				
 			} else {
-				lessons = new ArrayList<>();
+				lessonsProfessor = new ArrayList<>();
 				rs.first();
 				do {
-					Lesson lesson = getLesson(rs);
-					lessons.add(lesson);
+					Lesson l = getLesson(rs);
+					lessonsProfessor.add(l);
 				} while (rs.next());
 			}
 		} finally {
@@ -167,13 +167,13 @@ public class LessonDAO {
 				stmt.close();
 			}
 		}
-		return lessons;
+		return lessonsProfessor;
 	}
 	
 	public static List<Lesson> getNextLessonsStudent(Date date, String student) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
-		List<Lesson> lessons;
+		List<Lesson> lessonsStudent;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -184,11 +184,11 @@ public class LessonDAO {
 				throw new RecordNotFoundException(noLesson);
 				
 			} else {
-				lessons = new ArrayList<>();
+				lessonsStudent = new ArrayList<>();
 				rs.first();
 				do {
-					Lesson lesson = getLesson(rs);
-					lessons.add(lesson);
+					Lesson l = getLesson(rs);
+					lessonsStudent.add(l);
 				} while (rs.next());
 			}
 			
@@ -198,13 +198,13 @@ public class LessonDAO {
 			}
 		}
 		
-		return lessons;
+		return lessonsStudent;
 	}
 	
 	public static List<Lesson> getTodayNextLessonsStudent(Date date, Time time, String student) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
-		List<Lesson> lessons;
+		List<Lesson> lessonsStudent;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -215,11 +215,11 @@ public class LessonDAO {
 				throw new RecordNotFoundException(noLesson);
 				
 			} else {
-				lessons = new ArrayList<>();
+				lessonsStudent = new ArrayList<>();
 				rs.first();
 				do {
-					Lesson lesson = getLesson(rs);
-					lessons.add(lesson);
+					Lesson l = getLesson(rs);
+					lessonsStudent.add(l);
 				} while (rs.next());
 			}
 			
@@ -229,7 +229,7 @@ public class LessonDAO {
 			}
 		}
 		
-		return lessons;
+		return lessonsStudent;
 	}
 	
 	public static boolean insertLesson(Lesson lesson) {

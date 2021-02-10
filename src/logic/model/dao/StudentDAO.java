@@ -101,7 +101,7 @@ public class StudentDAO {
 	}
 	
 	
-	public static void changePassword(User user) throws SQLException, RecordNotFoundException {
+	public static void changePasswordStudent(User user) throws SQLException, RecordNotFoundException {
 		
 		Connection conn = null;
 		Statement stmt = null;
