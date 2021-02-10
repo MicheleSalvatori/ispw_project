@@ -190,6 +190,7 @@ public class ProfessorDAO {
 			if(stmt != null) stmt.close();
 		}
 	}
+
 	
 	private static Professor setupProfessor(ResultSet resultSet) throws SQLException {
 		String u = resultSet.getString("username");
@@ -198,5 +199,32 @@ public class ProfessorDAO {
 		String s = resultSet.getString("surname");
 		String e = resultSet.getString("email");
 		return new Professor(u, p, n, s, e);
+  }
+
+
+	public static void deleteProfessor(User user) throws SQLException, RecordNotFoundException {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			rs = Queries.selectProfessorByUsername(stmt, user.getUsername());
+			if (!rs.first()) {
+				throw new RecordNotFoundException("No Username Found matching with name: " + user.getUsername());	
+			} 
+			
+			Queries.deleteProfessor(stmt, user.getUsername());
+			
+			RoleDAO.deleteRole(user);
+			
+			rs.close();
+			
+		} finally {
+			if(stmt != null) stmt.close();
+		}
 	}
 }

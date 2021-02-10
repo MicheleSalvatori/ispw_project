@@ -189,7 +189,7 @@ public class QuestionDAO {
 
 		Statement stmt = null;
 		Connection conn = null;
-		int tot;
+		int num;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -205,7 +205,7 @@ public class QuestionDAO {
 
 			} else {
 				rs.first();
-				tot = rs.getInt(1);
+				num = rs.getInt(1);
 			}
 			rs.close();
 
@@ -215,7 +215,7 @@ public class QuestionDAO {
 			}
 		}
 
-		return tot;
+		return num;
 	}
 
 	public static void deleteQuestion(int id) throws SQLException {

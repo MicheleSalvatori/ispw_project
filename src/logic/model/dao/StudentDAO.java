@@ -158,4 +158,30 @@ public class StudentDAO {
 		return student;
 	}
 
+	public static void deleteStudent(User user) throws SQLException, RecordNotFoundException {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
+			if (!rs.first()) {
+				throw new RecordNotFoundException("No Username Found matching with name: " + user.getUsername());	
+			} 
+			
+			Queries.deleteStudent(stmt, user.getUsername());
+			
+			RoleDAO.deleteRole(user);
+			
+			rs.close();
+			
+		} finally {
+			if(stmt != null) stmt.close();
+		}
+	}
+
 }
