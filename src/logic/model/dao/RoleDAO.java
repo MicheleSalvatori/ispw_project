@@ -93,4 +93,20 @@ public class RoleDAO {
 		
 		return user;
 	}
+	
+	public static void deleteRole(User user) throws SQLException {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			Queries.deleteRole(stmt, user.getUsername());
+			
+		} finally {
+			if(stmt != null) stmt.close();
+		}
+	}
 }

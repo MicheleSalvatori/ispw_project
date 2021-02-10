@@ -125,4 +125,27 @@ public class LoginController {
 			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
 		}
 	}
+	
+	public void deleteUser(UserBean userBean) {
+		User user = new User(userBean.getUsername(), userBean.getPassword(), userBean.getName(), userBean.getSurname(), userBean.getEmail());
+	
+		try {
+
+			// User is a student
+			if (userBean.getRole() == Role.STUDENT) {
+				StudentDAO.deleteStudent(user);
+			}
+
+			// User is a professor
+			else if (userBean.getRole() == Role.PROFESSOR) {
+				ProfessorDAO.deleteProfessor(user);
+			}
+
+		} catch (RecordNotFoundException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+			
+		} catch (SQLException e) {
+			Logger.getGlobal().log(Level.SEVERE, "Connection failed");
+		}
+	}
 }

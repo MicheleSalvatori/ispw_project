@@ -48,6 +48,11 @@ public class Queries {
 		return stmt.executeUpdate(query);
 	}
 	
+	public static int deleteRole(Statement stmt, String username) throws SQLException {
+		String query = String.format("DELETE FROM role WHERE username = '%s';", username);
+		return stmt.executeUpdate(query);
+	}
+	
 /******************************************************************************************************************/
 	
 	// Admin queries
@@ -57,7 +62,6 @@ public class Queries {
         return stmt.executeQuery(sql);
 
     }
-
     
 /******************************************************************************************************************/
 	
@@ -86,6 +90,11 @@ public class Queries {
 
 	public static int updateProfessorPassword(Statement stmt, String username, String password) throws SQLException {
 		String query = "UPDATE professor SET password = '" + password + "' WHERE username = '" + username + "';";
+		return stmt.executeUpdate(query);
+	}
+	
+	public static int deleteProfessor(Statement stmt, String username) throws SQLException {
+		String query = String.format("DELETE FROM professor WHERE username = %s;", username);
 		return stmt.executeUpdate(query);
 	}
 	
@@ -141,8 +150,8 @@ public class Queries {
 		return stmt.executeUpdate(query);
 	}
 	
-	public static int deleteQuestion(Statement stmt, int id) throws SQLException {
-		String query = String.format("DELETE FROM question WHERE id = %d;", id);
+	public static int deleteStudent(Statement stmt, String username) throws SQLException {
+		String query = String.format("DELETE FROM student WHERE username = '%s';", username);
 		return stmt.executeUpdate(query);
 	}
 
@@ -190,6 +199,11 @@ public class Queries {
 	public static ResultSet getQuestion(Statement stmt, int id) throws SQLException {
 		String query = String.format("SELECT * FROM question WHERE id = '%d';", id);
 		return stmt.executeQuery(query);
+	}
+	
+	public static int deleteQuestion(Statement stmt, int id) throws SQLException {
+		String query = String.format("DELETE FROM question WHERE id = %d;", id);
+		return stmt.executeUpdate(query);
 	}
 
 /******************************************************************************************************************/
@@ -516,5 +530,4 @@ public class Queries {
         String sql = String.format("INSERT INTO communications (text, title, date) VALUES('%s', '%s', '%s');", text, title, date.toString());
         stmt.executeUpdate(sql);
     }
-
 }
