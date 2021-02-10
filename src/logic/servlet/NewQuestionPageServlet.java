@@ -25,15 +25,16 @@ public class NewQuestionPageServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
+		UserBean userLogged = (UserBean) session.getAttribute("loggedUser");
 		
-		if (session.getAttribute("loggedUser") == null) {
+		if (userLogged == null) {
 	        resp.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
 		
 		AskAQuestionController controller = new AskAQuestionController();
 		try {
-			List<CourseBean> courses = controller.getCoursesOfStudent((UserBean) session.getAttribute("loggedUser"));
+			List<CourseBean> courses = controller.getCoursesOfStudent(userLogged);
 			req.setAttribute("listOfCourses", courses);
 			
 		} catch (SQLException e) {
