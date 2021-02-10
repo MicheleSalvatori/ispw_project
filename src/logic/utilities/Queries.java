@@ -149,7 +149,7 @@ public class Queries {
 		String query = "UPDATE student SET password = '" + password + "' WHERE username = '" + username + "';";
 		return stmt.executeUpdate(query);
 	}
-	
+
 	public static int deleteStudent(Statement stmt, String username) throws SQLException {
 		String query = String.format("DELETE FROM student WHERE username = '%s';", username);
 		return stmt.executeUpdate(query);

@@ -18,7 +18,7 @@ import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
 public class LessonDAO {
-
+	private static String noLesson = "No lesson found";
 	private LessonDAO() {
 		
 	}
@@ -34,17 +34,11 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectLesson(stmt, date, time);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No lesson found");
+				throw new RecordNotFoundException(noLesson);
 				
 			} else {
 				rs.first();
-				Date d = rs.getDate("date");
-				Time t = rs.getTime("time");
-				Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-				Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
-				String to = rs.getString("topic");
-				Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
-				lesson = new Lesson(d, t, c, cl, to, p);
+				lesson = getLesson(rs);
 			}
 			rs.close();
 			
@@ -68,19 +62,13 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectLessonsByCourse(stmt, date, time, course);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No lesson found");
+				throw new RecordNotFoundException(noLesson);
 				
 			} else {
 				lessons = new ArrayList<>();
 				rs.first();
 				do {
-					Date d = rs.getDate("date");
-					Time t = rs.getTime("time");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
-					String to = rs.getString("topic");
-					Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
-					Lesson lesson = new Lesson(d, t, c, cl, to, p);
+					Lesson lesson = getLesson(rs);
 					lessons.add(lesson);
 				} while (rs.next());
 			}
@@ -106,17 +94,11 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectNextLessonByCourse(stmt, date, time, course);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No lesson found");
+				throw new RecordNotFoundException(noLesson);
 				
 			} else {
 				rs.first();
-				Date d = rs.getDate("date");
-				Time t = rs.getTime("time");
-				Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-				Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
-				String to = rs.getString("topic");
-				Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
-				lesson = new Lesson(d, t, c, cl, to, p);
+				lesson = getLesson(rs);
 			}
 			rs.close();
 			
@@ -139,19 +121,13 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectNextLessonsByProfessor(stmt, date, professor);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No lesson found");
+				throw new RecordNotFoundException(noLesson);
 				
 			} else {
 				lessons = new ArrayList<>();
 				rs.first();
 				do {
-					Date d = rs.getDate("date");
-					Time t = rs.getTime("time");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
-					String to = rs.getString("topic");
-					Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
-					Lesson lesson = new Lesson(d, t, c, cl, to, p);
+					Lesson lesson = getLesson(rs);
 					lessons.add(lesson);
 				} while (rs.next());
 			}
@@ -176,19 +152,13 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectTodayNextLessonsByProfessor(stmt, date, time, professor);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No lesson found");
+				throw new RecordNotFoundException(noLesson);
 				
 			} else {
 				lessons = new ArrayList<>();
 				rs.first();
 				do {
-					Date d = rs.getDate("date");
-					Time t = rs.getTime("time");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
-					String to = rs.getString("topic");
-					Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
-					Lesson lesson = new Lesson(d, t, c, cl, to, p);
+					Lesson lesson = getLesson(rs);
 					lessons.add(lesson);
 				} while (rs.next());
 			}
@@ -211,19 +181,13 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectNextLessonsByStudent(stmt, date, student);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No lesson found");
+				throw new RecordNotFoundException(noLesson);
 				
 			} else {
 				lessons = new ArrayList<>();
 				rs.first();
 				do {
-					Date d = rs.getDate("date");
-					Time t = rs.getTime("time");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
-					String to = rs.getString("topic");
-					Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
-					Lesson lesson = new Lesson(d, t, c, cl, to, p);
+					Lesson lesson = getLesson(rs);
 					lessons.add(lesson);
 				} while (rs.next());
 			}
@@ -248,19 +212,13 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectTodayNextLessonsByStudent(stmt, date, time, student);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No lesson found");
+				throw new RecordNotFoundException(noLesson);
 				
 			} else {
 				lessons = new ArrayList<>();
 				rs.first();
 				do {
-					Date d = rs.getDate("date");
-					Time t = rs.getTime("time");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-					Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
-					String to = rs.getString("topic");
-					Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
-					Lesson lesson = new Lesson(d, t, c, cl, to, p);
+					Lesson lesson = getLesson(rs);
 					lessons.add(lesson);
 				} while (rs.next());
 			}
@@ -310,17 +268,11 @@ public class LessonDAO {
 			ResultSet rs = Queries.selectLesson(stmt, date, time, course);
 
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No lesson found");
+				throw new RecordNotFoundException(noLesson);
 				
 			} else {
 				rs.first();
-				Date d = rs.getDate("date");
-				Time t = rs.getTime("time");
-				Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-				Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
-				String to = rs.getString("topic");
-				Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
-				lesson = new Lesson(d, t, c, cl, to, p);
+				lesson = getLesson(rs);
 			}
 			rs.close();
 			
@@ -331,5 +283,15 @@ public class LessonDAO {
 		}
 		
 		return lesson;
+	}
+	
+	private static Lesson getLesson(ResultSet rs) throws SQLException, RecordNotFoundException {
+		Date d = rs.getDate("date");
+		Time t = rs.getTime("time");
+		Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+		Classroom cl = ClassroomDAO.getClassroomByName(rs.getString("classroom"));
+		String to = rs.getString("topic");
+		Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
+		return new Lesson(d, t, c, cl, to, p);
 	}
 }
