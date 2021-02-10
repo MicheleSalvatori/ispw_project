@@ -116,7 +116,7 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 		}
 		
-		if (request.getParameter("submitRemove") != null) {
+		else if (request.getParameter("submitRemove") != null) {
 			
 			RequestBean requestBean = getRequestBean(request, userLogged);
 
@@ -130,7 +130,7 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 		}
 		
-		if (request.getParameter("deleteRequest") != null) {
+		else if (request.getParameter("deleteRequest") != null) {
 			
 			RequestBean requestBean = getRequestBean(request, userLogged);
 			
@@ -144,32 +144,30 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 		}
 		
-		if (request.getParameter("changePassword") != null) {
+		else if (request.getParameter("changePassword") != null) {
 			
 			String password = request.getParameter("password");
-			if (!password.isEmpty()) {
-
-				if (password.compareTo(userLogged.getPassword()) == 0) {
-					session.setAttribute("error", "You inserted your current password.");
-				}
-				
-				else {
+			if (!password.isEmpty() && password.compareTo(userLogged.getPassword()) == 0) {
+				session.setAttribute("error", "You inserted your current password.");
+				return;
+			}
+			
+			else {
 					
-					userLogged.setPassword(password);
+				userLogged.setPassword(password);
 					
-					LoginController loginController = new LoginController();
-					try {
-						loginController.changePassword(userLogged);
-						session.invalidate();
-						session.setAttribute(alertAttributeProfile, "You will be redirected to Login page.");
-						response.sendRedirect("/ispw_project/LoginServlet");
-						return;
+				LoginController loginController = new LoginController();
+				try {
+					loginController.changePassword(userLogged);
+					session.invalidate();
+					session.setAttribute(alertAttributeProfile, "You will be redirected to Login page.");
+					response.sendRedirect("/ispw_project/LoginServlet");
+					return;
 						
-					} catch (SQLException e) {
-						request.setAttribute(alertAttributeProfile, alertStringProfile);
-						request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
-						return;
-					}
+				} catch (SQLException e) {
+					request.setAttribute(alertAttributeProfile, alertStringProfile);
+					request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
+					return;
 				}
 			}		
 		}

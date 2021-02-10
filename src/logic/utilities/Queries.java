@@ -219,8 +219,7 @@ public class Queries {
 		return stmt.executeUpdate(sql);
 	}
 
-/**
- * @throws SQLException ****************************************************************************************************************/
+/******************************************************************************************************************/
 
 	// Lesson queries
 	public static ResultSet selectLesson(Statement stmt, Date date, Time time, String course) throws SQLException {
@@ -256,14 +255,12 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 
-	public static ResultSet selectNextLessonByCourse(Statement stmt, Date date, Time time, String course)
-			throws SQLException {
+	public static ResultSet selectNextLessonByCourse(Statement stmt, Date date, Time time, String course) throws SQLException {
 		String query = "SELECT * FROM lesson WHERE date >= '" + date + AND_TIME_GREATER + time + AND_COURSE + course + "' LIMIT 1;";
 		return stmt.executeQuery(query);
 	}
 
-	public static ResultSet selectLessonsByCourse(Statement stmt, Date date, Time time, String course)
-			throws SQLException {
+	public static ResultSet selectLessonsByCourse(Statement stmt, Date date, Time time, String course) throws SQLException {
 		String query = "SELECT * FROM lesson WHERE date >= '" + date + AND_TIME_GREATER + time + AND_COURSE + course + "';";
 		return stmt.executeQuery(query);
 	}
