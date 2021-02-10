@@ -130,7 +130,7 @@ public class PageLoader {
 			ScheduledPageView scheduledPageView = new ScheduledPageView();
 			loader.setController(scheduledPageView);
 			configPage(load());
-			scheduledPageView.setBean(obj);
+			scheduledPageView.setBeanLesson(obj);
 			break;
 
 		case SCHEDULED_EXAMS:
@@ -138,7 +138,7 @@ public class PageLoader {
 			ScheduledPageView scheduledExamPageView = new ScheduledPageView();
 			loader.setController(scheduledExamPageView);
 			configPage(load());
-			scheduledExamPageView.setBean(obj);
+			scheduledExamPageView.setBeanExam(obj);
 			break;
 
 		case LESSON:

@@ -46,8 +46,6 @@ public class RequestPageView implements Initializable {
 				vboxCourse.getChildren().add(courseFilterCard.getPane());
 			}
 			
-			updateRequests();
-			
 		} catch (RecordNotFoundException e) {
 			vboxCourse.getChildren().add(new Label("No course found"));
 			
@@ -55,6 +53,8 @@ public class RequestPageView implements Initializable {
 			AlertController.infoAlert(AlertController.getError());
 			PageLoader.getInstance().goBack();
 		}
+		
+		updateRequests();
 	}
 	
 	public void updateRequests() {
@@ -71,6 +71,7 @@ public class RequestPageView implements Initializable {
 			
 		} catch (RecordNotFoundException e) {
 			vboxRequest.getChildren().add(new Label("No request found"));
+			requests = new ArrayList<>();
 			
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
@@ -87,21 +88,16 @@ public class RequestPageView implements Initializable {
 			filteredCourses.add(course.getAbbreviation());
 		}
 
-		try {
-			vboxRequest.getChildren().clear();
+		vboxRequest.getChildren().clear();
 			
-			for (RequestBean requestBean : requests) {
-				if (filteredCourses.contains(requestBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
-					RequestCard requestCard = new RequestCard(requestBean);
-					vboxRequest.getChildren().add(requestCard.getPane());
-				}
+		for (RequestBean requestBean : requests) {
+			if (filteredCourses.contains(requestBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
+				RequestCard requestCard = new RequestCard(requestBean);
+				vboxRequest.getChildren().add(requestCard.getPane());
 			}
+		}
 			
-			if (vboxRequest.getChildren().isEmpty()) {
-				vboxRequest.getChildren().add(new Label("No request found."));
-			}
-			
-		} catch (NullPointerException e) { //TODO Unchecked Exception
+		if (vboxRequest.getChildren().isEmpty()) {
 			vboxRequest.getChildren().add(new Label("No request found"));
 		}
 	}

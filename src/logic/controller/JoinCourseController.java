@@ -88,6 +88,7 @@ public class JoinCourseController {
 			courseBean.setAbbreviation(course.getAbbreviation());
 			courseBean.setSemester(course.getSemester());
 			courseBean.setYear(course.getYear());
+			courseBean.setName(course.getName());
 			
 			coursesBean.add(courseBean);
 		}
