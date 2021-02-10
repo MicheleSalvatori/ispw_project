@@ -161,10 +161,6 @@ public class ProfilePageView implements Initializable {
 				CourseBean courseBean = courses.get(index);
 				
 				StudentBean studentBean = new StudentBean();
-				studentBean.setEmail(UserBean.getInstance().getEmail());
-				studentBean.setName(UserBean.getInstance().getName());
-				studentBean.setPassword(UserBean.getInstance().getPassword());
-				studentBean.setSurname(UserBean.getInstance().getSurname());
 				studentBean.setUsername(UserBean.getInstance().getUsername());
 				
 				RequestBean requestBean = new RequestBean();
@@ -208,29 +204,25 @@ public class ProfilePageView implements Initializable {
 			return;
 		}
 		
-		List<String> names = new ArrayList<>();
+		List<String> courseNames = new ArrayList<>();
 		for (CourseBean course : courses) {
-			names.add(course.getName());
+			courseNames.add(course.getName());
 		}
 		
-		int index = AlertController.courseRequest(names);
+		int index = AlertController.courseRequest(courseNames);
 		if (index != -1) {
 			
-			CourseBean courseBean = courses.get(index);
+			CourseBean course = courses.get(index);
 			
-			StudentBean studentBean = new StudentBean();
-			studentBean.setEmail(UserBean.getInstance().getEmail());
-			studentBean.setName(UserBean.getInstance().getName());
-			studentBean.setPassword(UserBean.getInstance().getPassword());
-			studentBean.setSurname(UserBean.getInstance().getSurname());
-			studentBean.setUsername(UserBean.getInstance().getUsername());
+			StudentBean student = new StudentBean();
+			student.setUsername(UserBean.getInstance().getUsername());
 			
-			RequestBean requestBean = new RequestBean();
-			requestBean.setStudent(studentBean);
-			requestBean.setCourse(courseBean);
+			RequestBean request = new RequestBean();
+			request.setStudent(student);
+			request.setCourse(course);
 
 			try {
-				joinCourseController.sendRequest(requestBean);
+				joinCourseController.sendRequest(request);
 				
 			} catch (SQLException e) {
 				AlertController.infoAlert(AlertController.getError());

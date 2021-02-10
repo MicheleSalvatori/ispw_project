@@ -59,13 +59,6 @@ public class AcceptRequestController {
 		for (Course course : courses) {
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course.getAbbreviation());
-			courseBean.setCredits(course.getCredits());
-			courseBean.setGoal(course.getGoal());
-			courseBean.setName(course.getName());
-			courseBean.setPrerequisites(course.getPrerequisites());
-			courseBean.setReception(course.getReception());
-			courseBean.setSemester(course.getSemester());
-			courseBean.setYear(course.getYear());
 			
 			coursesBean.add(courseBean);
 		}
@@ -84,19 +77,10 @@ public class AcceptRequestController {
 			Course course = request.getCourse();
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course.getAbbreviation());
-			courseBean.setCredits(course.getAbbreviation());
-			courseBean.setGoal(course.getGoal());
-			courseBean.setName(course.getName());
-			courseBean.setPrerequisites(course.getPrerequisites());
-			courseBean.setReception(course.getReception());
-			courseBean.setSemester(course.getSemester());
-			courseBean.setYear(course.getYear());
 			
 			Student student = request.getStudent();
 			StudentBean studentBean = new StudentBean();
-			studentBean.setEmail(student.getEmail());
 			studentBean.setName(student.getName());
-			studentBean.setPassword(student.getPassword());
 			studentBean.setSurname(student.getSurname());
 			studentBean.setUsername(student.getUsername());
 			

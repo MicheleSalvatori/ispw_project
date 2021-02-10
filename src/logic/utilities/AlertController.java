@@ -14,10 +14,9 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
@@ -27,11 +26,14 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -111,20 +113,7 @@ public class AlertController {
 	        return null;
 	    });
 	    
-		stage.getScene().getRoot().setEffect(adj);
-		
-		dialog.show();
-		animation(dialog);
-		dialog.close();
-		
-		Optional<String> result = dialog.showAndWait();
-		stage.getScene().getRoot().setEffect(null);
-		
-		if (result.isPresent()) {
-	    	return result.get();
-	    }
-	    
-		throw new CancelException("Cancel button pressed");
+		return showDialog(dialog);
 	}
 	
 	public static String emailInput() throws CancelException {
@@ -157,6 +146,10 @@ public class AlertController {
 	        return null;
 	    });
 	    
+		return showDialog(dialog);
+	}
+	
+	private static String showDialog(Dialog<String> dialog) throws CancelException {
 		stage.getScene().getRoot().setEffect(adj);
 		
 		dialog.show();
@@ -297,6 +290,19 @@ public class AlertController {
 		timeIn.play();
 	}
 	
+	// Animation for stage
+	public static void animation(Stage stage) {
+		double yIni = -stage.getHeight();
+		double yEnd = stage.getY();
+		
+		DoubleProperty yProperty = new SimpleDoubleProperty(yIni);
+		yProperty.addListener((ob,n,n1)->stage.setY(n1.doubleValue()));
+		
+		Timeline timeIn = new Timeline();
+		timeIn.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(yProperty, yEnd, Interpolator.EASE_BOTH)));
+		timeIn.play();
+	}
+	
 	private static void show(Dialog<?> dialog) {
 		// Add effect to the scene
 		stage.getScene().getRoot().setEffect(adj);
@@ -319,5 +325,22 @@ public class AlertController {
 		dialog.getDialogPane().getStylesheets().add(AlertController.class.getResource(alertRes).toExternalForm());
 		centerButtons(dialog.getDialogPane());
 		dialog.initStyle(StageStyle.TRANSPARENT);
+	}
+	
+	public static void setupDialog(Scene scene, Stage stage) {
+		scene.setFill(Color.TRANSPARENT);
+		
+		stage.setScene(scene);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.initStyle(StageStyle.TRANSPARENT);
+		stage.setResizable(false);
+		
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+	    GaussianBlur blur = new GaussianBlur(55);
+	    adj.setInput(blur);
+		
+		PageLoader.getStage().getScene().getRoot().setEffect(adj);
+		stage.show();
+		animation(stage);
 	}
 }

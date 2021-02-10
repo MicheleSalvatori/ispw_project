@@ -107,11 +107,13 @@ public class ProfilePageServlet extends HttpServlet {
 			String course = request.getParameter("course-select");
 			
 			StudentBean studentBean = new StudentBean();
+
 			studentBean.setEmail(userLogged.getEmail());
 			studentBean.setName(userLogged.getName());
 			studentBean.setPassword(userLogged.getPassword());
 			studentBean.setSurname(userLogged.getSurname());
 			studentBean.setUsername(userLogged.getUsername());
+
 			
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course);

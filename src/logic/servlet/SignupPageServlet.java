@@ -1,4 +1,4 @@
-package logic.servlet;
+	package logic.servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -79,8 +79,8 @@ public class SignupPageServlet extends HttpServlet {
 	
 	private void checkInput(String name, String surname, String email, String password, String confirmPassword) throws InvalidInputException {
 
-		Pattern p = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
-		Matcher m = p.matcher(name + surname);
+		Pattern pattern = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(name + surname);
 
 		// Check if email is valid and if passwords are the same
 		if (!password.equals(confirmPassword)) {
@@ -96,7 +96,7 @@ public class SignupPageServlet extends HttpServlet {
 		}
 		
 		// Check if name and surname are valid
-		if (m.find()) {
+		if (matcher.find()) {
 			throw new InvalidInputException("The name and surname must contain alpha characters only.");
 		}
 	}

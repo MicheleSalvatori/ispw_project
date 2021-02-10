@@ -1,5 +1,6 @@
 package logic.view.page;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;
@@ -253,7 +254,7 @@ public class LessonPageView {
 		CheckWeatherController controller = new CheckWeatherController();
 
 		List<String> info = controller.getWeather(hour);
-		Image image = new Image(info.get(1));
+		Image image = new Image(new File("src/res/png/weather/" + info.get(1)).toURI().toString());
 		WeatherCard w = new WeatherCard(info.get(0), image, info.get(2));
 		weatherCard.getChildren().add(w.getPane());
 	}

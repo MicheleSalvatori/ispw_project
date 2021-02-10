@@ -5,57 +5,57 @@ import java.sql.Time;
 
 public class Exam {
 
-	private Date date;
-	private Time time;
-	private Course course;
-	private Classroom classroom;
-	private String note;
+	private Date eDate;
+	private Time eTime;
+	private Course eCourse;
+	private Classroom exClassroom;
+	private String eNote;
 	
 	public Exam(Date date, Time time, Course course, Classroom classroom, String note) {
-		this.date = date;
-		this.time = time;
-		this.course = course;
-		this.classroom = classroom;
-		this.note = note;
+		this.eDate = date;
+		this.eTime = time;
+		this.eCourse = course;
+		this.exClassroom = classroom;
+		this.eNote = note;
 	}
 
 	public Date getDate() {
-		return date;
+		return eDate;
 	}
 	
 	public void setDate(Date date) {
-		this.date = date;
+		this.eDate = date;
 	}
 	
 	public Time getTime() {
-		return time;
+		return eTime;
 	}
 	
 	public void setTime(Time time) {
-		this.time = time;
+		this.eTime = time;
 	}
 	
 	public Course getCourse() {
-		return course;
+		return eCourse;
 	}
 	
 	public void setCourse(Course course) {
-		this.course = course;
+		this.eCourse = course;
 	}
 	
 	public Classroom getClassroom() {
-		return classroom;
+		return exClassroom;
 	}
 	
 	public void setClassroom(Classroom classroom) {
-		this.classroom = classroom;
+		this.exClassroom = classroom;
 	}
 	
 	public String getNote() {
-		return note;
+		return eNote;
 	}
 	
 	public void setNote(String note) {
-		this.note = note;
+		this.eNote = note;
 	}
 }

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="210.0" prefWidth="700.0" styleClass="root" stylesheets="@../../style/dialog/ExamDialog.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="210.0" prefWidth="700.0" styleClass="root" stylesheets="@../../style/dialog/ExamDialog.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
                   
       <Button fx:id="btnRequest" layoutX="216.0" layoutY="151.0" mnemonicParsing="false" text="View requests" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0" />

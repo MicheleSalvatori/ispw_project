@@ -78,17 +78,17 @@ public class LessonPageServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String course = req.getParameter("lessonCourse");
-		String date = req.getParameter("lessonDate");
-		String time = req.getParameter("lessonTime");
+		String coursePost = req.getParameter("lessonCourse");
+		String datePost = req.getParameter("lessonDate");
+		String timePost = req.getParameter("lessonTime");
 		
-		CourseBean c = new CourseBean();
-		c.setAbbreviation(course);
+		CourseBean courseBean = new CourseBean();
+		courseBean.setAbbreviation(coursePost);
 		
-		LessonBean l = new LessonBean();
-		l.setCourse(c);
-		l.setDate(Date.valueOf(date));
-		l.setTime(Time.valueOf(time));
+		LessonBean lessonBean = new LessonBean();
+		lessonBean.setCourse(courseBean);
+		lessonBean.setDate(Date.valueOf(datePost));
+		lessonBean.setTime(Time.valueOf(timePost));
 		
 		BookASeatController controller = new BookASeatController();
 		UserBean user = (UserBean) req.getSession().getAttribute(loggedAttribute);
@@ -96,7 +96,7 @@ public class LessonPageServlet extends HttpServlet {
 		if (req.getParameter("bookSeat")!=null) {
 			controller = new BookASeatController();
 			try {
-				LessonBean lesson = controller.getLesson(l);
+				LessonBean lesson = controller.getLesson(lessonBean);
 				SeatBean seat = new SeatBean(Integer.valueOf(req.getParameter("bookSeat")));
 				controller.occupateSeat(seat, lesson, user);
 				
@@ -114,7 +114,7 @@ public class LessonPageServlet extends HttpServlet {
 		
 		if (req.getParameter("yourSeat")!=null) {
 			try {
-				LessonBean lesson = controller.getLesson(l);
+				LessonBean lesson = controller.getLesson(lessonBean);
 				SeatBean seat = new SeatBean(Integer.parseInt(req.getParameter("yourSeat")));
 				controller.freeSeat(seat, lesson, user);
 				
@@ -125,6 +125,6 @@ public class LessonPageServlet extends HttpServlet {
 			}
 		}
 		
-		resp.sendRedirect("/ispw_project/LessonPageServlet?viewLesson=&lessonCourse=" + course + "&lessonDate=" + date + "&lessonTime=" + time);
+		resp.sendRedirect("/ispw_project/LessonPageServlet?viewLesson=&lessonCourse=" + coursePost + "&lessonDate=" + datePost + "&lessonTime=" + timePost);
 	}
 }

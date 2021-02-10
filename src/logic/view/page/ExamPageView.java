@@ -13,12 +13,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,15 +24,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Duration;
 import logic.bean.CourseBean;
 import logic.bean.StudentBean;
 import logic.bean.UserBean;
@@ -140,22 +128,10 @@ public class ExamPageView implements Initializable {
 		}
 		
 		Scene scene = new Scene(root);
-		scene.getStylesheets().add(QuestionPageView.class.getResource("/res/style/dialog/ExamDialog.css").toExternalForm());
-		scene.setFill(Color.TRANSPARENT);
+		scene.getStylesheets().add(getClass().getResource("/res/style/dialog/ExamDialog.css").toExternalForm());
+		AlertController.setupDialog(scene, dialogStage);
 		
-		dialogStage.setScene(scene);
-		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		dialogStage.initStyle(StageStyle.TRANSPARENT);
-		dialogStage.setResizable(false);
 		dialogStage.setTitle("App - Insert Exam");
-		
-		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55);
-	    adj.setInput(blur);
-		
-		PageLoader.getStage().getScene().getRoot().setEffect(adj);
-		dialogStage.show();
-		animation(dialogStage);
 		
 		Button btnSubmit = (Button) scene.lookup("#btnSubmit");
 		Button btnCancel = (Button) scene.lookup("#btnCancel");
@@ -189,19 +165,6 @@ public class ExamPageView implements Initializable {
 		for (Integer g : grades) {
 			comboGrade.getItems().add(g);
 		}
-
-	}
-	
-	private void animation(Stage stage) {
-		double yIni = -stage.getHeight();
-		double yEnd = stage.getY();
-		
-		DoubleProperty yProperty = new SimpleDoubleProperty(yIni);
-		yProperty.addListener((ob,n,n1)->stage.setY(n1.doubleValue()));
-		
-		Timeline timeIn = new Timeline();
-		timeIn.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(yProperty, yEnd, Interpolator.EASE_BOTH)));
-		timeIn.play();
 	}
 	
 	private void setupEvent() {
@@ -218,10 +181,6 @@ public class ExamPageView implements Initializable {
 		controller = new ViewVerbalizedExamsController();
 		
 		StudentBean studentBean = new StudentBean();
-		studentBean.setEmail(UserBean.getInstance().getEmail());
-		studentBean.setName(UserBean.getInstance().getName());
-		studentBean.setPassword(UserBean.getInstance().getPassword());
-		studentBean.setSurname(UserBean.getInstance().getSurname());
 		studentBean.setUsername(UserBean.getInstance().getUsername());
 		
 		CourseBean courseBean = courses.get(comboCourse.getSelectionModel().getSelectedIndex());

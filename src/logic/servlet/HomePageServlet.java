@@ -62,7 +62,6 @@ public class HomePageServlet extends HttpServlet {
 		List<List<String>> weather = new ArrayList<>();
 		for (int i=0; i<5; i++) {
 			List<String> info = controller.getWeather(hour+i);
-			System.out.println(info.get(1));
 			weather.add(info);
 		}
 		

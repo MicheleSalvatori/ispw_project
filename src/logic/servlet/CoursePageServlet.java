@@ -102,3 +102,4 @@ public class CoursePageServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/CoursePage.jsp").forward(request, response);
 	}
 }
+
