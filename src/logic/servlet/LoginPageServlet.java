@@ -22,11 +22,14 @@ import logic.utilities.Role;
 @WebServlet("/LoginServlet")
 public class LoginPageServlet extends HttpServlet {
 
+	private static String alertString = "An error as occured. Try later.";
+	private static String alertAttribute = "alertMsg";
+	private static String loginPageUrl = "/WEB-INF/LoginPage.jsp";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+		request.getRequestDispatcher(loginPageUrl).forward(request, response);
 	}
 	
 	@Override
@@ -42,15 +45,11 @@ public class LoginPageServlet extends HttpServlet {
 			try {
 				userBean = controller.login(userBean);
 				
-			} catch (SQLException e) {
-				req.setAttribute("alertMsg", "An error as occured. Try later.");
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(req, resp);
+			} catch (SQLException | RecordNotFoundException e ) {
+				req.setAttribute(alertAttribute, alertString);
+				req.getRequestDispatcher(loginPageUrl).include(req, resp);
 				return;
 				
-			} catch (RecordNotFoundException e) {
-	            req.setAttribute("alertMsg", "Not valid login credentials.");
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(req, resp);
-				return;
 			}
 
 	        HttpSession session = req.getSession();
@@ -80,13 +79,13 @@ public class LoginPageServlet extends HttpServlet {
 				Email.password(email, password);
 
 			} catch (SQLException e) {
-				req.setAttribute("alertMsg", "Connection failed!");
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(req, resp);
+				req.setAttribute(alertAttribute, alertString);
+				req.getRequestDispatcher(loginPageUrl).include(req, resp);
 				return;
 
 			} catch (RecordNotFoundException | InvalidInputException e) {
 				req.setAttribute("alertMsg", e.getMessage());
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(req, resp);
+				req.getRequestDispatcher(loginPageUrl).include(req, resp);
 				return;
 			}
 

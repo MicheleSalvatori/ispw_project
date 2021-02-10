@@ -36,8 +36,9 @@ public class SchedulePageServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		UserBean userLogged = (UserBean) session.getAttribute("loggedUser");
 	
-		if (session.getAttribute("loggedUser") == null) {
+		if (userLogged == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
@@ -49,7 +50,7 @@ public class SchedulePageServlet extends HttpServlet {
 		
 		try {
 			classrooms = controller.getClassrooms();
-			courses = controller.getCourses((UserBean) session.getAttribute("loggedUser"));
+			courses = controller.getCourses(userLogged);
 			
 		} catch (SQLException e) {
 			request.setAttribute("alertMsg", "An error as occured. Try later.");

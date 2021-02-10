@@ -24,12 +24,16 @@ import logic.exceptions.SeatAlreadyBookedException;
 @WebServlet("/LessonPageServlet")
 public class LessonPageServlet extends HttpServlet {
 
+	private static String alertString = "An error as occured. Try later.";
+	private static String alertAttribute = "alertMsg";
+	private static String loggedAttribute = "loggedUser";
+	private static String loginPageUrl = "/WEB-INF/LoginPage.jsp";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		if (req.getSession().getAttribute("loggedUser") == null) {
+		if (req.getSession().getAttribute(loggedAttribute) == null) {
 	        resp.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
@@ -47,7 +51,7 @@ public class LessonPageServlet extends HttpServlet {
 		l.setTime(Time.valueOf(time));
 		
 		BookASeatController controller = new BookASeatController();
-		UserBean user = (UserBean) req.getSession().getAttribute("loggedUser");
+		UserBean user = (UserBean) req.getSession().getAttribute(loggedAttribute);
 		
 		try {
 			LessonBean lesson = controller.getLesson(l);
@@ -63,8 +67,8 @@ public class LessonPageServlet extends HttpServlet {
 			req.setAttribute("weather", weather);
 			
 		} catch (SQLException e) {
-			req.setAttribute("alertMsg", "An error as occured. Try later.");
-			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+			req.setAttribute(alertAttribute, alertString);
+			req.getRequestDispatcher(loginPageUrl).forward(req, resp);
 			return;	
 		}
 		
@@ -87,7 +91,7 @@ public class LessonPageServlet extends HttpServlet {
 		l.setTime(Time.valueOf(time));
 		
 		BookASeatController controller = new BookASeatController();
-		UserBean user = (UserBean) req.getSession().getAttribute("loggedUser");
+		UserBean user = (UserBean) req.getSession().getAttribute(loggedAttribute);
 		
 		if (req.getParameter("bookSeat")!=null) {
 			controller = new BookASeatController();
@@ -97,12 +101,12 @@ public class LessonPageServlet extends HttpServlet {
 				controller.occupateSeat(seat, lesson, user);
 				
 			} catch (SQLException e) {
-				req.setAttribute("alertMsg", "An error as occured. Try later.");
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+				req.setAttribute(alertAttribute, alertString);
+				req.getRequestDispatcher(loginPageUrl).forward(req, resp);
 				return;
 				
 			} catch (SeatAlreadyBookedException e) {
-				req.setAttribute("alertMsg", "An error as occured. Try later.");
+				req.setAttribute(alertAttribute, alertString);
 				req.getRequestDispatcher("/WEB-INF/LessonPage.jsp").include(req, resp);
 				return;
 			}
@@ -115,8 +119,8 @@ public class LessonPageServlet extends HttpServlet {
 				controller.freeSeat(seat, lesson, user);
 				
 			} catch (SQLException e) {
-				req.setAttribute("alertMsg", "An error as occured. Try later.");
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+				req.setAttribute(alertAttribute, alertString);
+				req.getRequestDispatcher(loginPageUrl).forward(req, resp);
 				return;
 			}
 		}
