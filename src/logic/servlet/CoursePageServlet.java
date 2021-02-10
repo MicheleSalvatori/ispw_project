@@ -22,13 +22,13 @@ import logic.exceptions.RecordNotFoundException;
 @WebServlet("/CoursePageServlet")
 public class CoursePageServlet extends HttpServlet {
 	
-	private static String alertString = "An error as occured. Try later.";
-	private static String alertAttribute = "alertMsg";
-	private static String loginPageUrl = "/WEB-INF/LoginPage.jsp";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String alertString = "An error as occured. Try later.";
+		String alertAttribute = "alertMsg";
+		String loginPageUrl = "/WEB-INF/LoginPage.jsp";
 		HttpSession session = request.getSession();
 		
 		if (session.getAttribute("loggedUser") == null) {
