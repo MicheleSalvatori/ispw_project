@@ -4,40 +4,40 @@ import java.util.List;
 
 public class ClassroomBean {
 	
-	private String name;
-	private int seatRow;
-	private int seatColumn;
-	List<SeatBean> seat;
+	private String cbName;
+	private int cbSeatRow;
+	private int cbSeatColumn;
+	List<SeatBean> cbSeats;
 
 	public String getName() {
-		return name;
+		return cbName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.cbName = name;
 	}
 
 	public int getSeatRow() {
-		return seatRow;
+		return cbSeatRow;
 	}
 
 	public void setSeatRow(int seatRow) {
-		this.seatRow = seatRow;
+		this.cbSeatRow = seatRow;
 	}
 
 	public int getSeatColumn() {
-		return seatColumn;
+		return cbSeatColumn;
 	}
 
 	public void setSeatColumn(int seatColumn) {
-		this.seatColumn = seatColumn;
+		this.cbSeatColumn = seatColumn;
 	}
 	
 	public void setSeat(List<SeatBean> seat) {
-        this.seat = seat;
+        this.cbSeats = seat;
     }
 	
 	public List<SeatBean> getSeat() {
-		return seat;
+		return cbSeats;
 	}
 }

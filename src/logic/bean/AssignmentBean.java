@@ -4,49 +4,49 @@ import java.sql.Date;
 
 public class AssignmentBean {
 	
-	private int id;
-	private String course;
-	private String title;
-	private Date date;
-	private String text;
+	private int asbID;
+	private String asbCourse;
+	private String asbTitle;
+	private Date asbDate;
+	private String asbText;
 	
 	public int getId() {
-		return id;
+		return asbID;
 	}
 	
 	public void setId(int id) {
-		this.id = id;
+		this.asbID = id;
 	}
 	
 	public String getCourse() {
-		return course;
+		return asbCourse;
 	}
 	
 	public void setCourse(String course) {
-		this.course = course;
+		this.asbCourse = course;
 	}
 	
 	public String getTitle() {
-		return title;
+		return asbTitle;
 	}
 	
 	public void setTitle(String title) {
-		this.title = title;
+		this.asbTitle = title;
 	}
 	
 	public Date getDate() {
-		return date;
+		return asbDate;
 	}
 	
 	public void setDate(Date date) {
-		this.date = date;
+		this.asbDate = date;
 	}
 	
 	public String getText() {
-		return text;
+		return asbText;
 	}
 	
 	public void setText(String text) {
-		this.text = text;
+		this.asbText = text;
 	}
 }

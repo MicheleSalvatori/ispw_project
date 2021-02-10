@@ -2,49 +2,49 @@ package logic.bean;
 
 public class ProfessorBean {
 	
-	private String username;
-	private String password;
-	private String name;
-	private String surname;
-	private String email;
+	private String pbSsername;
+	private String pbPassword;
+	private String pbName;
+	private String pbSurname;
+	private String pbEmail;
 	
 	public String getUsername() {
-		return username;
+		return pbSsername;
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.pbSsername = username;
 	}
 
 	public String getPassword() {
-		return password;
+		return pbPassword;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.pbPassword = password;
 	}
 
 	public String getName() {
-		return name;
+		return pbName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.pbName = name;
 	}
 	
 	public String getSurname() {
-		return surname;
+		return pbSurname;
 	}
 
 	public void setSurname(String surname) {
-		this.surname = surname;
+		this.pbSurname = surname;
 	}
 
 	public String getEmail() {
-		return email;
+		return pbEmail;
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.pbEmail = email;
 	}
 }
