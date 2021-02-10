@@ -94,12 +94,7 @@ public class ViewVerbalizedExamsController {
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course.getAbbreviation());
 			courseBean.setCredits(course.getCredits());
-			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
-			courseBean.setPrerequisites(course.getPrerequisites());
-			courseBean.setReception(course.getReception());
-			courseBean.setSemester(course.getSemester());
-			courseBean.setYear(course.getYear());
 			
 			coursesBean.add(courseBean);
 		}

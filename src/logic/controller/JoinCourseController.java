@@ -86,11 +86,6 @@ public class JoinCourseController {
 		for (Course course : courses) {
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course.getAbbreviation());
-			courseBean.setCredits(course.getCredits());
-			courseBean.setGoal(course.getGoal());
-			courseBean.setName(course.getName());
-			courseBean.setPrerequisites(course.getPrerequisites());
-			courseBean.setReception(course.getReception());
 			courseBean.setSemester(course.getSemester());
 			courseBean.setYear(course.getYear());
 			
@@ -116,11 +111,8 @@ public class JoinCourseController {
 		
 		for (Professor professor : professors) {
 			ProfessorBean professorBean = new ProfessorBean();
-			professorBean.setEmail(professor.getEmail());
 			professorBean.setName(professor.getName());
-			professorBean.setPassword(professor.getPassword());
 			professorBean.setSurname(professor.getSurname());
-			professorBean.setUsername(professor.getUsername());
 			
 			professorsBean.add(professorBean);
 		}

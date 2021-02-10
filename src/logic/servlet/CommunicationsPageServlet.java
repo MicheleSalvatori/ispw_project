@@ -30,9 +30,9 @@ public class CommunicationsPageServlet extends HttpServlet {
 		}
 		
 		PostCommunicationController controller = new PostCommunicationController();
-		List<CommunicationBean> communications = null;
+		List<CommunicationBean> comms = null;
 		try {
-			communications = controller.getCommunications();
+			comms = controller.getCommunications();
 
 		} catch (SQLException e) {
 			request.setAttribute("alertMsg", "An error as occured. Try later.");
@@ -40,10 +40,10 @@ public class CommunicationsPageServlet extends HttpServlet {
 			return;
 
 		} catch (RecordNotFoundException e) {
-			communications = new ArrayList<>();
+			comms = new ArrayList<>();
 		}
 
-		request.setAttribute("listOfCommunications", communications);
+		request.setAttribute("listOfCommunications", comms);
 		request.getRequestDispatcher("/WEB-INF/CommunicationsPage.jsp").forward(request, response);
 	}
 }

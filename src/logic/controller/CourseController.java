@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
@@ -81,9 +83,17 @@ public class CourseController {
 		return lessonsBean;
 	}
 	
-	public CourseBean getCourse(CourseBean courseBean) throws SQLException, RecordNotFoundException {
+	public CourseBean getCourse(CourseBean courseBean) throws SQLException {
 		
-		Course course = CourseDAO.getCourseByAbbrevation(courseBean.getAbbreviation());
+		Course course;
+		
+		try {
+			course = CourseDAO.getCourseByAbbrevation(courseBean.getAbbreviation());
+			
+		} catch (RecordNotFoundException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+			return null;
+		}
 		
 		CourseBean c = new CourseBean();
 		c.setAbbreviation(course.getAbbreviation());

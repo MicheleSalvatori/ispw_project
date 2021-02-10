@@ -76,21 +76,20 @@ public class RequestPageServlet extends HttpServlet {
 		
 		AcceptRequestController controller = new AcceptRequestController();
 		
+		String course = request.getParameter("course");
+		String student = request.getParameter("student");
+		
+		CourseBean courseBean = new CourseBean();
+		courseBean.setAbbreviation(course);
+		
+		StudentBean studentBean = new StudentBean();
+		studentBean.setUsername(student);
+		
+		RequestBean requestBean = new RequestBean();
+		requestBean.setCourse(courseBean);
+		requestBean.setStudent(studentBean);
+		
 		if (request.getParameter("btnAccept") != null) {
-			
-			String course = request.getParameter("course");
-			String student = request.getParameter("student");
-			
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course);
-			
-			StudentBean studentBean = new StudentBean();
-			studentBean.setUsername(student);
-			
-			RequestBean requestBean = new RequestBean();
-			requestBean.setCourse(courseBean);
-			requestBean.setStudent(studentBean);
-			
 			try {
 				controller.acceptRequest(requestBean);
 				
@@ -101,20 +100,7 @@ public class RequestPageServlet extends HttpServlet {
 			}
 		}
 		
-		else if (request.getParameter("btnDecline") != null) {
-			String course = request.getParameter("course");
-			String student = request.getParameter("student");
-			
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course);
-			
-			StudentBean studentBean = new StudentBean();
-			studentBean.setUsername(student);
-			
-			RequestBean requestBean = new RequestBean();
-			requestBean.setCourse(courseBean);
-			requestBean.setStudent(studentBean);
-			
+		else if (request.getParameter("btnDecline") != null) {	
 			try {
 				controller.declineRequest(requestBean);
 				

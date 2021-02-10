@@ -104,10 +104,6 @@ public class ProfilePageServlet extends HttpServlet {
 			String course = request.getParameter("course-select");
 			
 			StudentBean studentBean = new StudentBean();
-			studentBean.setEmail(((UserBean) session.getAttribute("loggedUser")).getEmail());
-			studentBean.setName(((UserBean) session.getAttribute("loggedUser")).getName());
-			studentBean.setPassword(((UserBean) session.getAttribute("loggedUser")).getPassword());
-			studentBean.setSurname(((UserBean) session.getAttribute("loggedUser")).getSurname());
 			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
 			
 			CourseBean courseBean = new CourseBean();
@@ -132,10 +128,6 @@ public class ProfilePageServlet extends HttpServlet {
 			String course = request.getParameter("course-select");
 			
 			StudentBean studentBean = new StudentBean();
-			studentBean.setEmail(((UserBean) session.getAttribute("loggedUser")).getEmail());
-			studentBean.setName(((UserBean) session.getAttribute("loggedUser")).getName());
-			studentBean.setPassword(((UserBean) session.getAttribute("loggedUser")).getPassword());
-			studentBean.setSurname(((UserBean) session.getAttribute("loggedUser")).getSurname());
 			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
 			
 			CourseBean courseBean = new CourseBean();
