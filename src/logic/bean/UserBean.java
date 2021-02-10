@@ -5,13 +5,13 @@ import logic.utilities.Role;
 public class UserBean {
 
 	private static UserBean userInstance = null;
-	private Role role;
+	private Role ubRole;
 
-	private String username;
-	private String password;
-	private String name;
-	private String surname;
-	private String email;
+	private String ubUsername;
+	private String ubPassword;
+	private String ubName;
+	private String ubSurname;
+	private String ubEmail;
 
 	public static UserBean getInstance() {
 		return UserBean.userInstance;
@@ -22,51 +22,51 @@ public class UserBean {
 	}
 
 	public Role getRole() {
-		return role;
+		return ubRole;
 	}
 
 	public void setRole(Role role) {
-		this.role = role;
+		this.ubRole = role;
 	}
 
 	public String getUsername() {
-		return username;
+		return ubUsername;
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.ubUsername = username;
 	}
 
 	public String getPassword() {
-		return password;
+		return ubPassword;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.ubPassword = password;
 	}
 
 	public String getName() {
-		return name;
+		return ubName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.ubName = name;
 	}
 
 	public String getSurname() {
-		return surname;
+		return ubSurname;
 	}
 
 	public void setSurname(String surname) {
-		this.surname = surname;
+		this.ubSurname = surname;
 	}
 
 	public String getEmail() {
-		return email;
+		return ubEmail;
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.ubEmail = email;
 	}
 
 }

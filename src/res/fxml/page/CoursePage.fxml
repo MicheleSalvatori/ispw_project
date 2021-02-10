@@ -23,7 +23,10 @@
          </children>
       </AnchorPane>
       
-      <AnchorPane fx:id="anchorNextLesson" layoutY="142.0" prefHeight="80.0" prefWidth="620.0" styleClass="anchor-pane" AnchorPane.leftAnchor="0.0" />
+      <AnchorPane fx:id="anchorNextLesson" layoutY="142.0" prefHeight="80.0" prefWidth="620.0" styleClass="anchor-pane" AnchorPane.leftAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" text="There are no future lessons today." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children></AnchorPane>
       
       <Label layoutY="250.0" text="Weekly Schedule" AnchorPane.leftAnchor="0.0" />
       

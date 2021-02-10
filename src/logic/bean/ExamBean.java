@@ -5,49 +5,49 @@ import java.sql.Time;
 
 public class ExamBean {
 
-	private Date date;
-	private Time time;
-	private CourseBean course;
-	private ClassroomBean classroom;
-	private String note;
+	private Date ebDate;
+	private Time ebTime;
+	private CourseBean ebCourse;
+	private ClassroomBean ebClassroom;
+	private String ebNote;
 	
 	public Date getDate() {
-		return date;
+		return ebDate;
 	}
 	
 	public void setDate(Date date) {
-		this.date = date;
+		this.ebDate = date;
 	}
 	
 	public Time getTime() {
-		return time;
+		return ebTime;
 	}
 	
 	public void setTime(Time time) {
-		this.time = time;
+		this.ebTime = time;
 	}
 	
 	public CourseBean getCourse() {
-		return course;
+		return ebCourse;
 	}
 	
 	public void setCourse(CourseBean course) {
-		this.course = course;
+		this.ebCourse = course;
 	}
 	
 	public ClassroomBean getClassroom() {
-		return classroom;
+		return ebClassroom;
 	}
 	
 	public void setClassroom(ClassroomBean classroom) {
-		this.classroom = classroom;
+		this.ebClassroom = classroom;
 	}
 	
 	public String getNote() {
-		return note;
+		return ebNote;
 	}
 	
 	public void setNote(String note) {
-		this.note = note;
+		this.ebNote = note;
 	}
 }

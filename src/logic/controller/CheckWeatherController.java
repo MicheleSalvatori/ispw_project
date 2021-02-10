@@ -29,59 +29,36 @@ public class CheckWeatherController {
 	private String weatherImage(int hour, String weather) {
 
 		String file;
-		
-		if (hour < 6 || hour > 19) {
+
+		switch (weather) {
 			
-			switch (weather) {
-			
-			case "Clear":
+		case "Clear":
+			if (hour < 6 || hour > 19) {
 				file = "Moon.png";
-				break;
-				
-			case "Clouds":
-				file = "CloudMoon.png";
-				break;
-				
-			case "Rain":
-				file = "Rain.png";
-				break;
-				
-			case "Thunderstorm":
-				file = "Thunderstorm.png";
-				break;
-				
-			default:
-				file = "Cloud.png";
-				break;
-			
-			}
-		}
-		
-		else {
-			
-			switch (weather) {
-			
-			case "Clear":
+			} else {
 				file = "Sun.png";
-				break;
+			}		
+			break;
 				
-			case "Clouds":
+		case "Clouds":
+			if (hour < 6 || hour > 19) {
+				file = "CloudMoon.png";
+			} else {
 				file = "CloudSun.png";
-				break;
+			}		
+			break;
 				
-			case "Rain":
-				file = "Rain.png";
-				break;
+		case "Rain":
+			file = "Rain.png";
+			break;
 				
-			case "Thunderstorm":
-				file = "Thunderstorm.png";
-				break;
+		case "Thunderstorm":
+			file = "Thunderstorm.png";
+			break;
 				
-			default:
-				file = "Cloud.png";
-				break;
-			
-			}
+		default:
+			file = "Cloud.png";
+			break;	
 		}
 		
 		return file;

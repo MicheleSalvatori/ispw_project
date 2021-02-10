@@ -2,22 +2,22 @@ package logic.bean;
 
 public class RequestBean {
 
-	private StudentBean student;
-	private CourseBean course;
+	private StudentBean rbStudent;
+	private CourseBean rbCourse;
 	
 	public StudentBean getStudent() {
-		return student;
+		return rbStudent;
 	}
 	
 	public void setStudent(StudentBean student) {
-		this.student = student;
+		this.rbStudent = student;
 	}
 	
 	public CourseBean getCourse() {
-		return course;
+		return rbCourse;
 	}
 	
 	public void setCourse(CourseBean course) {
-		this.course = course;
+		this.rbCourse = course;
 	}
 }

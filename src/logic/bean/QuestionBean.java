@@ -6,84 +6,84 @@ import java.util.List;
 
 public class QuestionBean {
 	
-	private int id;
-	private String title;
-	private String text;
-	private String course;
-	private StudentBean student;
-	private boolean solved;
-	private Date date;
-	private List<AnswerBean> answers;
+	private int qbID;
+	private String qbTitle;
+	private String qbText;
+	private String qbCourse;
+	private StudentBean qbStudent;
+	private boolean qbSolved;
+	private Date qbDate;
+	private List<AnswerBean> qbAnswers;
 
 	public List<AnswerBean> getAnswers() {
-		return answers;
+		return qbAnswers;
 	}
 
 	public void setAnswers(List<AnswerBean> answers) {
-		this.answers = answers;
+		this.qbAnswers = answers;
 	}
 
 	public void addAnswers(AnswerBean answer) {
-		if (answers == null) {
-			this.answers = new ArrayList<>();
+		if (qbAnswers == null) {
+			this.qbAnswers = new ArrayList<>();
 		}
-		this.answers.add(answer);
+		this.qbAnswers.add(answer);
 	}
   
 	public Date getDate() {
-		return date;
+		return qbDate;
 	}
 
 	public void setDate(Date date) {
-		this.date = date;
+		this.qbDate = date;
 	}
 
 	public boolean isSolved() {
-		return solved;
+		return qbSolved;
 	}
 
 	public void setSolved(boolean solved) {
-		this.solved = solved;
+		this.qbSolved = solved;
 	}
 
 	public int getId() {
-		return id;
+		return qbID;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.qbID = id;
 	}
 
 	public String getTitle() {
-		return title;
+		return qbTitle;
 	}
 
 	public void setTitle(String title) {
-		this.title = title;
+		this.qbTitle = title;
 	}
 
 	public String getText() {
-		return text;
+		return qbText;
 	}
 
 	public void setText(String text) {
-		this.text = text;
+		this.qbText = text;
 	}
 	
 	public String getCourse() {
-		return course;
+		return qbCourse;
 	}
 
 	public void setCourse(String course) {
-		this.course = course;
+		this.qbCourse = course;
 	}
 
 	public StudentBean getStudent() {
-		return student;
+		return qbStudent;
 	}
 
 	public void setStudent(StudentBean student) {
-		this.student = student;
+		this.qbStudent = student;
 	}
 
 	@Override

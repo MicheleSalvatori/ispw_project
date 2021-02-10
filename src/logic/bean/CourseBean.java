@@ -6,100 +6,100 @@ import java.util.List;
 
 public class CourseBean {
 
-	private String name;
-	private String abbreviation;
-	private List<StudentBean> students;
+	private String coubName;
+	private String coubAbbreviation;
+	private List<StudentBean> coubStudents;
 	
-	private String year;
-	private String semester;
-	private String credits;
-	private String prerequisites;
-	private String goal;
-	private String reception;
+	private String coubYear;
+	private String coubSemester;
+	private String coubCredits;
+	private String coubPrerequisites;
+	private String coubGoal;
+	private String coubReception;
 	
 	public CourseBean() {
 		
 	}
 	
 	public CourseBean(String course, String abbrv) {
-		this.name = course;
-		this.abbreviation = abbrv;
+		this.coubName = course;
+		this.coubAbbreviation = abbrv;
 	}
 
 	public String getName() {
-		return name;
+		return coubName;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.coubName = name;
 	}
 	
 	public void setStudentsOfCourse(List<StudentBean> students) {
-		this.students = students;
+		this.coubStudents = students;
 	}
 
 	public List<StudentBean> getStudents() {
-		return students;
+		return coubStudents;
 	}
 
 	public void addStudentToCourse(StudentBean student) {
-		this.students.add(student);
+		this.coubStudents.add(student);
 	}
 
 	public String getAbbreviation() {
-		return abbreviation;
+		return coubAbbreviation;
 	}
 
 	public void setAbbreviation(String abbreviation) {
-		this.abbreviation = abbreviation;
+		this.coubAbbreviation = abbreviation;
 	}
 	
 	public String getYear() {
-		return year;
+		return coubYear;
 	}
 
 	public void setYear(String year) {
-		this.year = year;
+		this.coubYear = year;
 	}
 
 	public String getSemester() {
-		return semester;
+		return coubSemester;
 	}
 
 	public void setSemester(String semester) {
-		this.semester = semester;
+		this.coubSemester = semester;
 	}
 
 	public String getCredits() {
-		return credits;
+		return coubCredits;
 	}
 
 	public void setCredits(String credits) {
-		this.credits = credits;
+		this.coubCredits = credits;
 	}
 
 	public String getPrerequisites() {
-		return prerequisites;
+		return coubPrerequisites;
 	}
 
 	public void setPrerequisites(String prerequisites) {
-		this.prerequisites = prerequisites;
+		this.coubPrerequisites = prerequisites;
 	}
 
 	public String getGoal() {
-		return goal;
+		return coubGoal;
 	}
 
 	public void setGoal(String goal) {
-		this.goal = goal;
+		this.coubGoal = goal;
 	}
 
 	public String getReception() {
-		return reception;
+		return coubReception;
 	}
 
 	public void setReception(String reception) {
-		this.reception = reception;
+		this.coubReception = reception;
 	}
 
 }

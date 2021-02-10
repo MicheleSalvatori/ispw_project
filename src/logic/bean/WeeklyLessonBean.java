@@ -4,40 +4,40 @@ import java.sql.Time;
 
 public class WeeklyLessonBean {
 
-	private String day;
-	private Time time;
-	private ClassroomBean classroom;
-	private CourseBean course;
+	private String wbDay;
+	private Time wbTime;
+	private ClassroomBean wbClassroom;
+	private CourseBean wbCourse;
 	
 	public String getDay() {
-		return day;
+		return wbDay;
 	}
 	
 	public void setDay(String day) {
-		this.day = day;
+		this.wbDay = day;
 	}
 	
 	public Time getTime() {
-		return time;
+		return wbTime;
 	}
 	
 	public void setTime(Time time) {
-		this.time = time;
+		this.wbTime = time;
 	}
 	
 	public ClassroomBean getClassroom() {
-		return classroom;
+		return wbClassroom;
 	}
 	
 	public void setClassroom(ClassroomBean classroom) {
-		this.classroom = classroom;
+		this.wbClassroom = classroom;
 	}
 	
 	public CourseBean getCourse() {
-		return course;
+		return wbCourse;
 	}
 	
 	public void setCourse(CourseBean course) {
-		this.course = course;
+		this.wbCourse = course;
 	}
 }
