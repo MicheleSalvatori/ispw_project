@@ -54,9 +54,6 @@ public class CoursePageServlet extends HttpServlet {
 			request.setAttribute(alertAttribute, alertString);
 			request.getRequestDispatcher(loginPageUrl).forward(request, response);
 			return;
-			
-		} catch (RecordNotFoundException e) {
-			course = null;
 		}
 		
 		try {
