@@ -54,25 +54,13 @@ public class LessonDAO {
 	public static List<Lesson> getLessonsByCourse(Date date, Time time, String course) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
-		List<Lesson> lessonsCourse;
+		List<Lesson> lessons;
 		
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectLessonsByCourse(stmt, date, time, course);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noLesson);
-				
-			} else {
-				lessonsCourse = new ArrayList<>();
-				rs.first();
-				do {
-					Lesson l = getLesson(rs);
-					lessonsCourse.add(l);
-				} while (rs.next());
-			}
-			rs.close();
+			lessons = getLessons(rs);
 			
 		} finally {
 			if (stmt != null) {
@@ -80,8 +68,9 @@ public class LessonDAO {
 			}
 		}
 		
-		return lessonsCourse;
+		return lessons;
 	}
+	
 	
 	public static Lesson getNextLessonByCourse(Date date, Time time, String course) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
@@ -113,24 +102,13 @@ public class LessonDAO {
 	public static List<Lesson> getNextLessonsProfessor(Date date, String professor) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
-		List<Lesson> lessonsProfessor;
+		List<Lesson> lessons;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectNextLessonsByProfessor(stmt, date, professor);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noLesson);
-				
-			} else {
-				lessonsProfessor = new ArrayList<>();
-				rs.first();
-				do {
-					Lesson l = getLesson(rs);
-					lessonsProfessor.add(l);
-				} while (rs.next());
-			}
+			lessons = getLessons(rs);
 			
 		} finally {
 			if (stmt != null) {
@@ -138,59 +116,38 @@ public class LessonDAO {
 			}
 		}
 		
-		return lessonsProfessor;
+		return lessons;
 	}
 	
 	public static List<Lesson> getTodayNextLessonsProfessor(Date date, Time time, String professor) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
-		List<Lesson> lessonsProfessor;
+		List<Lesson> lessons;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectTodayNextLessonsByProfessor(stmt, date, time, professor);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noLesson);
-				
-			} else {
-				lessonsProfessor = new ArrayList<>();
-				rs.first();
-				do {
-					Lesson l = getLesson(rs);
-					lessonsProfessor.add(l);
-				} while (rs.next());
-			}
+			lessons = getLessons(rs);
+			
 		} finally {
 			if (stmt != null) {
 				stmt.close();
 			}
 		}
-		return lessonsProfessor;
+		return lessons;
 	}
 	
 	public static List<Lesson> getNextLessonsStudent(Date date, String student) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
-		List<Lesson> lessonsStudent;
+		List<Lesson> lessons;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectNextLessonsByStudent(stmt, date, student);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noLesson);
-				
-			} else {
-				lessonsStudent = new ArrayList<>();
-				rs.first();
-				do {
-					Lesson l = getLesson(rs);
-					lessonsStudent.add(l);
-				} while (rs.next());
-			}
+			lessons = getLessons(rs);
 			
 		} finally {
 			if (stmt != null) {
@@ -198,30 +155,19 @@ public class LessonDAO {
 			}
 		}
 		
-		return lessonsStudent;
+		return lessons;
 	}
 	
 	public static List<Lesson> getTodayNextLessonsStudent(Date date, Time time, String student) throws SQLException, RecordNotFoundException {
 		Statement stmt = null;
 		Connection conn = null;
-		List<Lesson> lessonsStudent;
+		List<Lesson> lessons;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectTodayNextLessonsByStudent(stmt, date, time, student);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noLesson);
-				
-			} else {
-				lessonsStudent = new ArrayList<>();
-				rs.first();
-				do {
-					Lesson l = getLesson(rs);
-					lessonsStudent.add(l);
-				} while (rs.next());
-			}
+			lessons = getLessons(rs);
 			
 		} finally {
 			if (stmt != null) {
@@ -229,7 +175,7 @@ public class LessonDAO {
 			}
 		}
 		
-		return lessonsStudent;
+		return lessons;
 	}
 	
 	public static boolean insertLesson(Lesson lesson) {
@@ -293,5 +239,24 @@ public class LessonDAO {
 		String to = rs.getString("topic");
 		Professor p = ProfessorDAO.findProfessor(rs.getString("professor"));
 		return new Lesson(d, t, c, cl, to, p);
+	}
+	
+	private static List<Lesson> getLessons(ResultSet rs) throws SQLException, RecordNotFoundException {
+		List<Lesson> lessons;
+		
+		if (!rs.first()) {
+			throw new RecordNotFoundException(noLesson);
+			
+		} else {
+			lessons = new ArrayList<>();
+			rs.first();
+			do {
+				Lesson l = getLesson(rs);
+				lessons.add(l);
+			} while (rs.next());
+		}
+		rs.close();
+		
+		return lessons;
 	}
 }

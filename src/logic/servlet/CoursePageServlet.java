@@ -24,12 +24,12 @@ public class CoursePageServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private static String alertString = "An error as occured. Try later.";
-	private static String alertAttribute = "alertMsg";
-	private static String loginPageUrl = "/WEB-INF/LoginPage.jsp";
-
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		final String alertString = "An error as occured. Try later.";
+		final String alertAttribute = "alertMsg";
+		final String loginPageUrl = "/WEB-INF/LoginPage.jsp";
 		
 		HttpSession session = request.getSession();
 		
