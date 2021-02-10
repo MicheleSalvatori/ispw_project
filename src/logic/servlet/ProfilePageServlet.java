@@ -130,7 +130,7 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 		}
 		
-		else if (request.getParameter("submitRemove") != null) {
+		if (request.getParameter("submitRemove") != null) {
 			
 			String course = request.getParameter("course-select");
 			
@@ -158,7 +158,7 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 		}
 		
-		else if (request.getParameter("deleteRequest") != null) {
+		if (request.getParameter("deleteRequest") != null) {
 			
 			String course = request.getParameter("course");
 			
@@ -182,7 +182,7 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 		}
 		
-		else if (request.getParameter("changePassword") != null) {
+		if (request.getParameter("changePassword") != null) {
 			
 			String password = request.getParameter("password");
 			if (!password.isEmpty()) {

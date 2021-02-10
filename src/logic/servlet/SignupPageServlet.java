@@ -43,7 +43,7 @@ public class SignupPageServlet extends HttpServlet {
 			checkInput(name, surname, email, password, confirmPassword);
 		
 		} catch (InvalidInputException e) {
-			alert(req, resp, e.getMessage(), "/WEB-INF/SignupPage.jsp");
+			alert(req, resp, e.getMessage(), signupPageUrl);
 			return;
 		}
 		
@@ -64,7 +64,7 @@ public class SignupPageServlet extends HttpServlet {
 			return;
 			
 		} catch (DuplicatedRecordException e) {
-			alert(req, resp, e.getMessage(), "/WEB-INF/SignupPage.jsp");
+			alert(req, resp, e.getMessage(), signupPageUrl);
 			return;
 		}
 
