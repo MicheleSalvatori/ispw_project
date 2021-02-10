@@ -102,74 +102,49 @@ public class ProfilePageServlet extends HttpServlet {
 		JoinCourseController controller = new JoinCourseController();
 		UserBean userLogged = (UserBean) session.getAttribute(loggedAttributeProfile);
 		
-		if (request.getParameter("submitAdd") != null) {
+		try {
 			
-			RequestBean requestBean = getRequestBean(request, userLogged);
-
-			try {
+			if (request.getParameter("submitAdd") != null) {
+				RequestBean requestBean = getRequestBean(request, userLogged);
 				controller.sendRequest(requestBean);
-				
-			} catch (SQLException e) {
-				request.setAttribute(alertAttributeProfile, alertStringProfile);
-				request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
-				return;
 			}
-		}
 		
-		else if (request.getParameter("submitRemove") != null) {
-			
-			RequestBean requestBean = getRequestBean(request, userLogged);
-
-			try {
+			else if (request.getParameter("submitRemove") != null) {
+				RequestBean requestBean = getRequestBean(request, userLogged);
 				controller.removeCourse(requestBean);
-				
-			} catch (SQLException e) {
-				request.setAttribute(alertAttributeProfile, alertStringProfile);
-				request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
-				return;
 			}
-		}
 		
-		else if (request.getParameter("deleteRequest") != null) {
-			
-			RequestBean requestBean = getRequestBean(request, userLogged);
-			
-			try {
+			else if (request.getParameter("deleteRequest") != null) {
+				RequestBean requestBean = getRequestBean(request, userLogged);
 				controller.deleteRequest(requestBean);
+			}
+			
+			else if (request.getParameter("changePassword") != null) {
 				
-			} catch (SQLException e) {
-				request.setAttribute(alertAttributeProfile, alertStringProfile);
-				request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
-				return;
-			}
-		}
-		
-		else if (request.getParameter("changePassword") != null) {
-			
-			String password = request.getParameter("password");
-			if (!password.isEmpty() && password.compareTo(userLogged.getPassword()) == 0) {
-				session.setAttribute("error", "You inserted your current password.");
-				return;
-			}
-			
-			else {
+				String password = request.getParameter("password");
+				if (!password.isEmpty()) {
+	
+					if (password.compareTo(userLogged.getPassword()) == 0) {
+						session.setAttribute("error", "You inserted your current password.");
+					}
 					
-				userLogged.setPassword(password);
-					
-				LoginController loginController = new LoginController();
-				try {
-					loginController.changePassword(userLogged);
-					session.invalidate();
-					session.setAttribute(alertAttributeProfile, "You will be redirected to Login page.");
-					response.sendRedirect("/ispw_project/LoginServlet");
-					return;
+					else {
+						userLogged.setPassword(password);
 						
-				} catch (SQLException e) {
-					request.setAttribute(alertAttributeProfile, alertStringProfile);
-					request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
-					return;
+						LoginController loginController = new LoginController();
+						loginController.changePassword(userLogged);
+						session.invalidate();
+						session.setAttribute(alertAttributeProfile, "You will be redirected to Login page.");
+						response.sendRedirect("/ispw_project/LoginServlet");
+						return;
+					}
 				}
-			}		
+			}
+			
+		} catch (SQLException e) {
+			request.setAttribute(alertAttributeProfile, alertStringProfile);
+			request.getRequestDispatcher(loginPageUrlProfile).forward(request, response);
+			return;
 		}
 		
 		response.sendRedirect("/ispw_project/ProfilePageServlet");
