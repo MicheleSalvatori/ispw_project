@@ -530,4 +530,5 @@ public class Queries {
         String sql = String.format("INSERT INTO communications (text, title, date) VALUES('%s', '%s', '%s');", text, title, date.toString());
         stmt.executeUpdate(sql);
     }
+
 }
