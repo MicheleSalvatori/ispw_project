@@ -61,7 +61,6 @@ public class QuestionPageView {
 	private Stage dialogStage;
 	private EventHandler<ActionEvent> addAnswerEvent;
 	private EventHandler<ActionEvent> cancAddAnswerEvent;
-	private TextArea textAnswer;
 
 	private QuestionController controller;
 	private List<AnswerBean> answersList;
@@ -131,20 +130,17 @@ public class QuestionPageView {
 		Button btnSubmit = (Button) scene.lookup("#btnSubmit");
 		Button btnCancel = (Button) scene.lookup("#btnCancel");
 
-		textAnswer = (TextArea) scene.lookup("#textAnswer");
+		TextArea textAnswer = (TextArea) scene.lookup("#textAnswer");
 		btnSubmit.disableProperty().bind(textAnswer.textProperty().isEmpty());
 
-		setupEvent();
+		setupEvent(textAnswer);
 		btnSubmit.setOnAction(addAnswerEvent);
 		btnCancel.setOnAction(cancAddAnswerEvent);
 	}
 
-	private void setupEvent() {
+	private void setupEvent(TextArea text) {
 		
-		addAnswerEvent = e -> {
-			String text = textAnswer.getText();
-			saveAnswer(text);
-		};
+		addAnswerEvent = e -> saveAnswer(text.getText());
 
 		cancAddAnswerEvent = e -> {
 			closeStage(dialogStage);

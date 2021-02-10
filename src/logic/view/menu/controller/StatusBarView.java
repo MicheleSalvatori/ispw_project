@@ -48,7 +48,7 @@ public class StatusBarView implements Initializable {
 	private Rectangle rectAvatar;
 	
 	int reqCount;
-	private Stage dialogStage;
+	private Stage stage;
 	private EventHandler<ActionEvent> addGotoRequestevent;
 	private EventHandler<ActionEvent> cancRequestEvent;
 
@@ -87,7 +87,7 @@ public class StatusBarView implements Initializable {
 	}
 	
 	private void setupRequestDialog() {
-		dialogStage = new Stage();
+		stage = new Stage();
 		
 		Parent root = null;
 		try {
@@ -101,9 +101,9 @@ public class StatusBarView implements Initializable {
 		
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/res/style/dialog/NotificationDialog.css").toExternalForm());
-		AlertController.setupDialog(scene, dialogStage);
+		AlertController.setupDialog(scene, stage);
 		
-		dialogStage.setTitle("App - Notification");
+		stage.setTitle("App - Notification");
 		
 		Button btnRequest = (Button) scene.lookup("#btnRequest");
 		Button btnCancel = (Button) scene.lookup("#btnCancel");
@@ -155,7 +155,7 @@ public class StatusBarView implements Initializable {
 	}
 	
 	private void closeStage() {
-		dialogStage.close();
+		stage.close();
 	}
 	
 	@FXML

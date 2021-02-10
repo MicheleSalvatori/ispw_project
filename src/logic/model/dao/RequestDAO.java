@@ -62,19 +62,7 @@ public class RequestDAO {
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectRequestsByProfessor(stmt, professor);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noRequest);
-
-			} else {
-				requests = new ArrayList<>();
-				rs.first();
-				do {
-					Request request = getRequest(rs);
-					requests.add(request);
-				} while (rs.next());
-			}
-			rs.close();
+			requests = getRequests(rs);
 			
 		} finally {
 			if (stmt != null) {
@@ -96,19 +84,7 @@ public class RequestDAO {
 			
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.selectRequestsByProfessorAndCourse(stmt, professor, course);
-
-			if (!rs.first()) {
-				throw new RecordNotFoundException(noRequest);
-				
-			} else {
-				requests = new ArrayList<>();
-				rs.first();
-				do {
-					Request request = getRequest(rs);
-					requests.add(request);
-				} while (rs.next());
-			}
-			rs.close();
+			requests = getRequests(rs);
 			
 		} finally {
 			if (stmt != null) {
@@ -180,5 +156,24 @@ public class RequestDAO {
 		Student s = StudentDAO.findStudentByUsername(rs.getString("student"));
 		Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
 		return new Request(s, c);
+	}
+	
+	private static List<Request> getRequests(ResultSet rs) throws SQLException, RecordNotFoundException {
+		List<Request> requests;
+		
+		if (!rs.first()) {
+			throw new RecordNotFoundException(noRequest);
+
+		} else {
+			requests = new ArrayList<>();
+			rs.first();
+			do {
+				Request request = getRequest(rs);
+				requests.add(request);
+			} while (rs.next());
+		}
+		rs.close();
+		
+		return requests;
 	}
 }

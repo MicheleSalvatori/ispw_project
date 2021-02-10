@@ -113,12 +113,12 @@ public class LoginController {
 
 			// User is a student
 			if (userBean.getRole() == Role.STUDENT) {
-				StudentDAO.changePassword(user);
+				StudentDAO.changePasswordStudent(user);
 			}
 
 			// User is a professor
 			else if (userBean.getRole() == Role.PROFESSOR) {
-				ProfessorDAO.changePassword(user);
+				ProfessorDAO.changePasswordProfessor(user);
 			}
 
 		} catch (RecordNotFoundException e) {
