@@ -86,7 +86,7 @@
 							<td class="info-text">
 								Password:
 								<input type="checkbox" id="checkbox" onclick="show()" style="display: none; text-align: right; ">
-								<label for="checkbox"></label>
+								<label for="checkbox" id="show"></label>
 							</td>
 
 							<td style="text-align: right;">
