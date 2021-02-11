@@ -21,6 +21,10 @@ public class Lesson {
 		this.professor = professor;
 	}
 	
+	public Lesson() {
+
+	}
+
 	public Date getDate() {
 		return date;
 	}

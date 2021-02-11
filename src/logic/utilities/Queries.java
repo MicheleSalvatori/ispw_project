@@ -265,11 +265,15 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 
-	public static int insertLesson(Statement stmt, Date date, Time time, String course, String classroom, String topic,
-			String professor) throws SQLException {
+	public static int insertLesson(Statement stmt, Date date, Time time, String course, String classroom, String topic, String professor) throws SQLException {
 		String query = String.format(
 				"INSERT INTO lesson (date, time, course, classroom, topic, professor) VALUES('%s', '%s', '%s', '%s', '%s', '%s')",
 				date, time, course, classroom, topic, professor);
+		return stmt.executeUpdate(query);
+	}
+	
+	public static int deleteLesson(Statement stmt, Date date, Time time, String course) throws SQLException {
+		String query = String.format("DELETE FROM lesson WHERE date = '%s' AND time = '%s' AND course = '%s'", date, time, course);
 		return stmt.executeUpdate(query);
 	}
 	

@@ -259,4 +259,24 @@ public class LessonDAO {
 		
 		return lessons;
 	}
+
+	public static boolean deleteLesson(Lesson lesson) {
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			Date date = lesson.getDate();
+			Time time = lesson.getTime();
+			Course course = lesson.getCourse();
+			
+			Queries.deleteLesson(stmt, date, time, course.getAbbreviation());
+			
+		} catch (SQLException e) {
+			return false;
+		}
+		return true;
+	}
 }

@@ -29,4 +29,16 @@ public class ScheduleLessonController {
 		Lesson lesson = new Lesson(lessonBean.getDate(), lessonBean.getTime(), course, classroom, lessonBean.getTopic(), professor);
 		return LessonDAO.insertLesson(lesson);
 	}
+	
+	public boolean deleteLesson(LessonBean lessonBean) {
+		Course course = new Course();
+		course.setAbbreviation(lessonBean.getCourse().getAbbreviation());
+		
+		Lesson lesson = new Lesson();
+		lesson.setDate(lessonBean.getDate());
+		lesson.setTime(lessonBean.getTime());
+		lesson.setCourse(course);
+
+		return LessonDAO.deleteLesson(lesson);
+	}
 }
