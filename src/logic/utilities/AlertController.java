@@ -166,7 +166,7 @@ public class AlertController {
 	    throw new CancelException("Button cancel pressed");
 	}
 	
-	public static int courseRequest(List<String> courses) {
+	public static int courseRequest(List<String> courses) throws CancelException {
 		ChoiceDialog<String> choiceDialog = new ChoiceDialog<>();
 		
 		ObservableList<String> list = choiceDialog.getItems();
@@ -188,9 +188,13 @@ public class AlertController {
 		animation(choiceDialog);
 		choiceDialog.close();
 		
-		choiceDialog.showAndWait();
+		Optional<String> result = choiceDialog.showAndWait();
+
 		stage.getScene().getRoot().setEffect(null);
-		
+		if (!result.isPresent()) {
+			throw new CancelException("Button cancel pressed");
+		}
+
 		Node comboBox = choiceDialog.getDialogPane().lookup(".combo-box");
 		return ((ComboBox<?>) comboBox).getSelectionModel().getSelectedIndex();
 	}

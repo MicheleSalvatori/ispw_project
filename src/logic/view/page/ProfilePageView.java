@@ -156,22 +156,20 @@ public class ProfilePageView implements Initializable {
 			}
 			
 			int index = AlertController.courseRequest(names);
-			if (index != -1) {
+			
+			CourseBean courseBean = courses.get(index);
+					
+			StudentBean studentBean = new StudentBean();
+			studentBean.setUsername(UserBean.getInstance().getUsername());
 				
-				CourseBean courseBean = courses.get(index);
+			RequestBean requestBean = new RequestBean();
+			requestBean.setStudent(studentBean);
+			requestBean.setCourse(courseBean);
 				
-				StudentBean studentBean = new StudentBean();
-				studentBean.setUsername(UserBean.getInstance().getUsername());
-				
-				RequestBean requestBean = new RequestBean();
-				requestBean.setStudent(studentBean);
-				requestBean.setCourse(courseBean);
-				
-				joinCourseController.removeCourse(requestBean);
-				
-				AlertController.infoAlert("Course " + courseBean.getAbbreviation() + " removed.");
-				loadCourses();
-			}
+			joinCourseController.removeCourse(requestBean);
+					
+			AlertController.infoAlert("Course " + courseBean.getAbbreviation() + " removed.");
+			loadCourses();
 			
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
@@ -179,6 +177,9 @@ public class ProfilePageView implements Initializable {
 			
 		} catch (RecordNotFoundException e) {
 			AlertController.infoAlert("You don't have any courses available.");
+			
+		} catch (CancelException e) {
+			// return
 		}
 	}
 	
@@ -209,30 +210,34 @@ public class ProfilePageView implements Initializable {
 			courseNames.add(course.getName());
 		}
 		
-		int index = AlertController.courseRequest(courseNames);
-		if (index != -1) {
+		int index;
+		try {
+			index = AlertController.courseRequest(courseNames);
 			
-			CourseBean course = courses.get(index);
-			
-			StudentBean student = new StudentBean();
-			student.setUsername(UserBean.getInstance().getUsername());
-			
-			RequestBean request = new RequestBean();
-			request.setStudent(student);
-			request.setCourse(course);
+		} catch (CancelException e) {
+			return;
+		}
 
-			try {
-				joinCourseController.sendRequest(request);
-				
-			} catch (SQLException e) {
-				AlertController.infoAlert(AlertController.getError());
-				PageLoader.getInstance().buildPage(Page.HOMEPAGE);
-				return;
-			}
+		CourseBean course = courses.get(index);
 			
-			AlertController.infoAlert("Request sended to course's professor.");
-			loadCourses();
-		}	
+		StudentBean student = new StudentBean();
+		student.setUsername(UserBean.getInstance().getUsername());
+		
+		RequestBean request = new RequestBean();
+		request.setStudent(student);
+		request.setCourse(course);
+
+		try {
+			joinCourseController.sendRequest(request);
+			
+		} catch (SQLException e) {
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
+			return;
+		}
+			
+		AlertController.infoAlert("Request sended to course's professor.");
+		loadCourses();	
 	}
 	
 	@FXML
