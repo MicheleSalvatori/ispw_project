@@ -19,7 +19,7 @@
 	<body>
 		<!-- Side navigation -->
 		<div class="sidenav">
-		  <table class="nav-root" width="132" border="0">
+		  <table class="nav-root" width="132" border="0" id="nav-bar">
 			  <tbody>
 				<tr>
 					<td valign="top"><p class="nav-logo">F.</p></td>

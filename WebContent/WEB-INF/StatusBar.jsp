@@ -43,9 +43,9 @@
 			  <tbody>
 				<tr>
 				  	<td style="padding-right: 10px;">
-						<label class="status-label" id="statusName">
+						<a class="status-label" id="statusName">
 							<%=user.getName()%>
-						</label>
+						</a>
 					</td>
 					
 				  	<td style="padding-right: 10px;">

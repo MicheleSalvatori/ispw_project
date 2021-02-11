@@ -37,19 +37,32 @@ public class LoginPageServlet extends HttpServlet {
 
 		if (req.getParameter("login") != null) {
 			
+			String username = req.getParameter("username");
+			String password = req.getParameter("password");
+			
+			if (username.isEmpty() || password.isEmpty()) {
+				req.setAttribute(alertAttribute, "One or more fields are empty.");
+				req.getRequestDispatcher(loginPageUrl).include(req, resp);
+				return;
+			}
+			
 			UserBean userBean = new UserBean();
-	    	userBean.setUsername(req.getParameter("username"));
-	        userBean.setPassword(req.getParameter("password"));
+	    	userBean.setUsername(username);
+	        userBean.setPassword(password);
 	        LoginController controller = new LoginController();
 	        
 			try {
 				userBean = controller.login(userBean);
 				
-			} catch (SQLException | RecordNotFoundException e ) {
+			} catch (SQLException e) {
 				req.setAttribute(alertAttribute, alertString);
 				req.getRequestDispatcher(loginPageUrl).include(req, resp);
 				return;
-				
+			
+			} catch (RecordNotFoundException e) {
+				req.setAttribute(alertAttribute, e.getMessage());
+				req.getRequestDispatcher(loginPageUrl).include(req, resp);
+				return;
 			}
 
 	        HttpSession session = req.getSession();

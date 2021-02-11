@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import logic.bean.CommunicationBean;
 import logic.controller.PostCommunicationController;
@@ -19,6 +20,13 @@ public class PostCommunicationServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute("loggedUser") == null) {
+	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
+	        return;
+		}
+		
 		request.getRequestDispatcher("/WEB-INF/PostCommunicationPage.jsp").forward(request, response);
 	}
 

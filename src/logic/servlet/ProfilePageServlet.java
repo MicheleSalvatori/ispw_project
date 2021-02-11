@@ -134,6 +134,8 @@ public class ProfilePageServlet extends HttpServlet {
 						LoginController loginController = new LoginController();
 						loginController.changePassword(userLogged);
 						session.invalidate();
+						
+						session = request.getSession();
 						session.setAttribute(alertAttributeProfile, "You will be redirected to Login page.");
 						response.sendRedirect("/ispw_project/LoginServlet");
 						return;

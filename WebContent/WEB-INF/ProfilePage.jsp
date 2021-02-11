@@ -336,6 +336,9 @@
 		if (pass) {
 			return confirm('Are you sure you want to continue?');
 		}
+		else if (pass == null) {
+			return false;
+		}
 		else {
 			alert("Blank password is not allowed");
 			return false;

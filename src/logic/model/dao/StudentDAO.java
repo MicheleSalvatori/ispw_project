@@ -32,7 +32,7 @@ public class StudentDAO {
 			resultSet = Queries.selectStudent(stmt, username, password);
 			
 			if (!resultSet.first()) {
-				throw new RecordNotFoundException(noUsername + username);
+				throw new RecordNotFoundException("Wrong username or password.");
 				
 			}else {
 				resultSet.first();

@@ -11,7 +11,7 @@ import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.exceptions.RecordNotFoundException;
 
-public class TestLoginController {
+public class TestLogin {
 	
 	UserBean userBean;
 	

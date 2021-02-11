@@ -37,7 +37,7 @@
 			  
 			<tr>
 				<td colspan="2" style="text-align: center; padding-bottom: 18px; padding-left: 7px;">
-					<button class="login" type="submit" name="login">
+					<button class="login" type="submit" name="login" id="login">
 						LOG IN
 					</button>
 					
