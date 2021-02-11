@@ -1,9 +1,10 @@
 package logic.controller;
 
 public class CheckClassPositionController {
+	
+	private static final String MAP = "/res/html/map.html";
 
-	// TODO Da implementare
 	public String getMap() {
-		return getClass().getResource("/res/html/map.html").toString();
+		return MAP;
 	}
 }
