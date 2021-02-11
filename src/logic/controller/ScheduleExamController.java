@@ -14,21 +14,19 @@ import logic.model.dao.ExamDAO;
 public class ScheduleExamController {
 
 	public boolean scheduleExam(ExamBean examBean) {
-		
-		
-		
+
 		CourseBean courseBean = examBean.getCourse();
-		List<String> info = new ArrayList<>();
-		info.add(courseBean.getName());
-		info.add(courseBean.getAbbreviation());
-		info.add(courseBean.getYear());
-		info.add(courseBean.getSemester());
-		info.add(courseBean.getCredits());
-		info.add(courseBean.getPrerequisites());
-		info.add(courseBean.getGoal());
-		info.add(courseBean.getReception());
+		List<String> courseInfo = new ArrayList<>();
+		courseInfo.add(courseBean.getName());
+		courseInfo.add(courseBean.getAbbreviation());
+		courseInfo.add(courseBean.getYear());
+		courseInfo.add(courseBean.getSemester());
+		courseInfo.add(courseBean.getCredits());
+		courseInfo.add(courseBean.getPrerequisites());
+		courseInfo.add(courseBean.getGoal());
+		courseInfo.add(courseBean.getReception());
 		
-		Course course = new Course(info);
+		Course course = new Course(courseInfo);
 		
 		ClassroomBean classroomBean = examBean.getClassroom();
 		Classroom classroom = new Classroom(classroomBean.getName());
