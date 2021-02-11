@@ -19,6 +19,10 @@ import logic.controller.QuestionController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Role;
 
+/*
+ * Michele Salvatori 0253519
+ */
+
 public class TestAskQuestion {
 
 	boolean dbUpdated = true;

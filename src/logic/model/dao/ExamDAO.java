@@ -214,5 +214,24 @@ public class ExamDAO {
 
 		return true;
 	}
+
+	public static boolean deleteExam(Exam exam){
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			Queries.delteExam(stmt, exam.getDate(), exam.getTime(), exam.getCourse().getAbbreviation());
+		}catch(SQLException e) {
+			return false;
+		}
+		
+		return true;
+	}
 	
 }

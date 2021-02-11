@@ -137,7 +137,6 @@ public class SeatDAO {
 				throw new SQLException();
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			// Non mettere SQLConverte per date che non funziona, gli serve prima l'anno
 			ResultSet rs = Queries.getSeat(stmt, username, lesson.getDate().toString(), lesson.getTime().toString(),
 					lesson.getCourse().getAbbreviation());
 
