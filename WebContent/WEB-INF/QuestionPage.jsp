@@ -23,10 +23,12 @@
 		<title>App - QuestionPage</title>
 		<link rel="stylesheet" href="res/style/ModalBox.css">
 		<link rel="stylesheet" href="res/style/StatusBar.css">
+		<link rel="stylesheet" href="res/style/QuestionPage.css">
+		
 	</head>
 
 	<body>
-	
+		
 		<!-- Navigation bar -->
 		<jsp:include page="NavigationBar.jsp"/>
 

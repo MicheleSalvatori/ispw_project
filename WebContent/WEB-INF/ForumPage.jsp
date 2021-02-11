@@ -187,6 +187,15 @@
 			</div>
 		</div>
 	</body>
+	
+<%String message = (String)session.getAttribute("alertMsg");
+session.setAttribute("alertMsg", null);
+  if(message != null){ %>
+  	<script type="text/javascript">
+    	var msg = "<%=message%>";
+    	alert(msg);
+  	</script>
+<%} %>
 
 <script>
 	function filterMyQuestions() {

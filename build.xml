@@ -52,6 +52,10 @@
         <pathelement location="../../../../tomcat/lib/tomcat-websocket.jar"/>
         <pathelement location="../../../../tomcat/lib/websocket-api.jar"/>
     </path>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="../../../../.p2/pool/plugins/org.junit_4.13.0.v20200204-1500.jar"/>
+        <pathelement location="../../../../.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+    </path>
     <path id="ispw_project.classpath">
         <pathelement location="bin"/>
         <pathelement location="lib/mysql-connector-java-5.1.46-bin.jar"/>
@@ -63,6 +67,14 @@
         <pathelement location="lib/javax.servlet-api-4.0.1.jar"/>
         <pathelement location="lib/jfxrt.jar"/>
         <pathelement location="lib/junit-4.13.1.jar"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/libs/byte-buddy-1.8.15.jar"/>
+        <pathelement location="lib/libs/commons-exec-1.3.jar"/>
+        <pathelement location="lib/libs/guava-25.0-jre.jar"/>
+        <pathelement location="lib/libs/okhttp-3.11.0.jar"/>
+        <pathelement location="lib/libs/okio-1.14.0.jar"/>
+        <pathelement location="lib/client-combined-3.141.59.jar"/>
+        <pathelement location="lib/client-combined-3.141.59-sources.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -104,6 +116,33 @@
             <classpath refid="ispw_project.classpath"/>
         </java>
     </target>
+    <target name="TestAskQuestion">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.TestAskQuestion" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="ispw_project.classpath"/>
+        </junit>
+    </target>
+    <target name="TestLoginController">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.junit.TestLoginController" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="ispw_project.classpath"/>
+        </junit>
+    </target>
+    <target name="TestNotifications">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.junit.TestNotifications" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="ispw_project.classpath"/>
+        </junit>
+    </target>
     <target name="TestQuestion">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
@@ -113,11 +152,20 @@
             <classpath refid="ispw_project.classpath"/>
         </junit>
     </target>
-    <target name="TestAskQuestion">
+    <target name="TestScheduleExam">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
-            <test name="test.TestAskQuestion" todir="${junit.output.dir}"/>
+            <test name="test.junit.TestScheduleExam" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="ispw_project.classpath"/>
+        </junit>
+    </target>
+    <target name="TestBookASeat">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.junit.TestBookASeat" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="ispw_project.classpath"/>
         </junit>
