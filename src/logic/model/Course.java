@@ -14,16 +14,16 @@ public class Course {
 	private String prerequisites;
 	private String goal;
 	private String reception;
-	
-	public Course(String name, String abbrevation, String year, String semster, String credits, String prerequisites, String goal, String reception) {
-		this.name = name;
-		this.abbreviation = abbrevation;
-		this.year = year;
-		this.semester = semster;
-		this.credits = credits;
-		this.prerequisites = prerequisites;
-		this.goal = goal;
-		this.reception = reception;
+
+	public Course(List<String> info) {
+		this.name = info.get(0);
+		this.abbreviation = info.get(0);
+		this.year = info.get(0);
+		this.semester = info.get(0);
+		this.credits = info.get(0);
+		this.prerequisites = info.get(0);
+		this.goal = info.get(0);
+		this.reception = info.get(0);
 	}
 	
 	public Course() {

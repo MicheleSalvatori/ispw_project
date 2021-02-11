@@ -1,5 +1,8 @@
 package logic.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
@@ -15,9 +18,17 @@ public class ScheduleLessonController {
 	public boolean scheduleLesson(LessonBean lessonBean) {
 		
 		CourseBean courseBean = lessonBean.getCourse();
-		Course course = new Course(courseBean.getName(), courseBean.getAbbreviation(), courseBean.getYear(),
-									courseBean.getSemester(), courseBean.getCredits(), courseBean.getPrerequisites(),
-									courseBean.getGoal(), courseBean.getReception());
+		List<String> info = new ArrayList<>();
+		info.add(courseBean.getName());
+		info.add(courseBean.getAbbreviation());
+		info.add(courseBean.getYear());
+		info.add(courseBean.getSemester());
+		info.add(courseBean.getCredits());
+		info.add(courseBean.getPrerequisites());
+		info.add(courseBean.getGoal());
+		info.add(courseBean.getReception());
+		
+		Course course = new Course(info);
 		
 		ClassroomBean classroomBean = lessonBean.getClassroom();
 		Classroom classroom = new Classroom(classroomBean.getName());
