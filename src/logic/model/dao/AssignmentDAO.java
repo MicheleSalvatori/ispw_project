@@ -154,4 +154,26 @@ public class AssignmentDAO {
 		rs.close();
 		return assignment;
 	}
+
+	public static boolean deleteAssignment(Assignment assignment) {
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			if (conn == null) {
+				throw new SQLException();
+			}
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int id = assignment.getId();
+		
+			Queries.deleteAssignment(stmt, id);
+			
+		} catch (SQLException e) {
+			return false;
+		}
+		
+		return true;
+	}
 }

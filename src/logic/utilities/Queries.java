@@ -463,6 +463,11 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
+	public static int deleteAssignment(Statement stmt, int id) throws SQLException {
+		String query = String.format("DELETE FROM assignment WHERE id = '%d';", id);
+		return stmt.executeUpdate(query);
+	}
+	
 /******************************************************************************************************************/
 
 	// Seat Queries
@@ -516,5 +521,7 @@ public class Queries {
         String sql = String.format("INSERT INTO communications (text, title, date) VALUES('%s', '%s', '%s');", text, title, date.toString());
         stmt.executeUpdate(sql);
     }
+
+
 
 }
