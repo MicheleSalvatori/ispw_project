@@ -9,9 +9,7 @@ import java.util.logging.Logger;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import logic.bean.ClassroomBean;
-import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
 import logic.bean.SeatBean;
 import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
@@ -28,7 +26,7 @@ public class BookASeatController {
 		Lesson l = null;
 		
 		try {
-			l = LessonDAO.getLesson(lesson.getDate(), lesson.getTime(), lesson.getCourse().getAbbreviation());
+			l = LessonDAO.getLesson(lesson.getDate(), lesson.getTime(), lesson.getCourse());
 
 		} catch (RecordNotFoundException e) {
 			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
@@ -40,16 +38,13 @@ public class BookASeatController {
 		classroom.setSeatRow(l.getClassroom().getSeatRow());
 		classroom.setSeatColumn(l.getClassroom().getSeatColumn());
 		
-		CourseBean course = new CourseBean();
-		course.setAbbreviation(l.getCourse().getAbbreviation());
-		
-		ProfessorBean professor = new ProfessorBean();
+		UserBean professor = new UserBean();
 		professor.setName(l.getProfessor().getName());
 		professor.setSurname(l.getProfessor().getSurname());
 		
 		LessonBean lessonBean = new LessonBean();
 		lessonBean.setClassroom(classroom);
-		lessonBean.setCourse(course);
+		lessonBean.setCourse(l.getCourse().getAbbreviation());
 		lessonBean.setDate(l.getDate());
 		lessonBean.setProfessor(professor);
 		lessonBean.setTime(l.getTime());

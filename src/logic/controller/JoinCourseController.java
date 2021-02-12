@@ -7,15 +7,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import logic.bean.CourseBean;
-import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Professor;
 import logic.model.Request;
 import logic.model.Student;
+import logic.model.User;
 import logic.model.dao.CourseDAO;
 import logic.model.dao.ProfessorDAO;
 import logic.model.dao.RequestDAO;
@@ -96,7 +95,7 @@ public class JoinCourseController {
 		return coursesBean;
 	}
 	
-	public List<ProfessorBean> getCourseProfessors(CourseBean courseBean) throws SQLException {
+	public List<UserBean> getCourseProfessors(CourseBean courseBean) throws SQLException {
 	
 		List<Professor> professors = null;
 		
@@ -108,10 +107,10 @@ public class JoinCourseController {
 			return new ArrayList<>();
 		}
 		
-		List<ProfessorBean> professorsBean = new ArrayList<>();
+		List<UserBean> professorsBean = new ArrayList<>();
 		
-		for (Professor professor : professors) {
-			ProfessorBean professorBean = new ProfessorBean();
+		for (User professor : professors) {
+			UserBean professorBean = new UserBean();
 			professorBean.setName(professor.getName());
 			professorBean.setSurname(professor.getSurname());
 			
@@ -122,7 +121,7 @@ public class JoinCourseController {
 	}
 	
 	private Student getStudent(RequestBean requestBean) {
-		StudentBean studentBean = requestBean.getStudent();
+		UserBean studentBean = requestBean.getStudent();
 		Student student = new Student();
 		student.setUsername(studentBean.getUsername());
 		return student;

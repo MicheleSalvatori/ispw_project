@@ -16,9 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import logic.bean.CourseBean;
-import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.JoinCourseController;
 import logic.controller.LoginController;
@@ -159,7 +157,7 @@ public class ProfilePageView implements Initializable {
 			
 			CourseBean courseBean = courses.get(index);
 					
-			StudentBean studentBean = new StudentBean();
+			UserBean studentBean = new UserBean();
 			studentBean.setUsername(UserBean.getInstance().getUsername());
 				
 			RequestBean requestBean = new RequestBean();
@@ -220,7 +218,7 @@ public class ProfilePageView implements Initializable {
 
 		CourseBean course = courses.get(index);
 			
-		StudentBean student = new StudentBean();
+		UserBean student = new UserBean();
 		student.setUsername(UserBean.getInstance().getUsername());
 		
 		RequestBean request = new RequestBean();
@@ -270,7 +268,7 @@ public class ProfilePageView implements Initializable {
 
 		List<CourseBean> courses;
 		List<CourseBean> requests;
-		List<ProfessorBean> professors;
+		List<UserBean> professors;
 		
 		boolean course = true;
 	

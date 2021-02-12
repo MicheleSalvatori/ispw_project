@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.AcceptRequestController;
 import logic.exceptions.RecordNotFoundException;
@@ -83,7 +82,7 @@ public class RequestPageServlet extends HttpServlet {
 		CourseBean courseBean = new CourseBean();
 		courseBean.setAbbreviation(course);
 		
-		StudentBean studentBean = new StudentBean();
+		UserBean studentBean = new UserBean();
 		studentBean.setUsername(student);
 		
 		RequestBean requestBean = new RequestBean();

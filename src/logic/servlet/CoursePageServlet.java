@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.bean.WeeklyLessonBean;
 import logic.controller.CourseController;
 import logic.exceptions.RecordNotFoundException;
@@ -44,7 +44,7 @@ public class CoursePageServlet extends HttpServlet {
 		
 		CourseBean course = null;
 		LessonBean lesson = null;
-		List<ProfessorBean> professors = null;
+		List<UserBean> professors = null;
 		List<WeeklyLessonBean> weeklyLessons = null;
 		
 		try {

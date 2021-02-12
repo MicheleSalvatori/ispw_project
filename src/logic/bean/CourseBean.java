@@ -8,7 +8,7 @@ public class CourseBean {
 
 	private String coubName;
 	private String coubAbbreviation;
-	private List<StudentBean> coubStudents;
+	private List<UserBean> coubStudents;
 	
 	private String coubYear;
 	private String coubSemester;
@@ -34,15 +34,15 @@ public class CourseBean {
 		this.coubName = name;
 	}
 	
-	public void setStudentsOfCourse(List<StudentBean> students) {
+	public void setStudentsOfCourse(List<UserBean> students) {
 		this.coubStudents = students;
 	}
 
-	public List<StudentBean> getStudents() {
+	public List<UserBean> getStudents() {
 		return coubStudents;
 	}
 
-	public void addStudentToCourse(StudentBean student) {
+	public void addStudentToCourse(UserBean student) {
 		this.coubStudents.add(student);
 	}
 

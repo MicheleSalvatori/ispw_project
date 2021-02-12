@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import logic.bean.QuestionBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.AskAQuestionController;
 import logic.controller.QuestionController;
@@ -31,7 +30,7 @@ public class TestAskQuestion {
 	
 	@Before
 	public void prepareTest() {
-		StudentBean student = new StudentBean();
+		UserBean student = new UserBean();
 		student.setUsername(username);
 		questionBean = new QuestionBean();
 		questionBean.setText(expectedText);

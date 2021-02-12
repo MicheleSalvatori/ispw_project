@@ -89,6 +89,4 @@ public class Question {
 	public void setStudent(Student student) {
 		this.student = student;
 	}
-
 }
-

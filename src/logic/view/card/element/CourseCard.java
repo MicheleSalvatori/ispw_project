@@ -4,7 +4,7 @@ import java.util.List;
 
 import javafx.fxml.FXMLLoader;
 import logic.bean.CourseBean;
-import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.view.card.controller.CourseCardView;
 import logic.view.graphic.GraphicElement;
 
@@ -12,7 +12,7 @@ public class CourseCard extends GraphicElement {
 	
 	private CourseCardView courseCardView = new CourseCardView();
 	
-	public CourseCard(CourseBean courseBean, List<ProfessorBean> professorsBean, Type type) {
+	public CourseCard(CourseBean courseBean, List<UserBean> professorsBean, Type type) {
 		FXMLLoader loader = getLoader("src/res/fxml/card/CourseCard.fxml");
 		loader.setController(courseCardView);
 		load(loader);

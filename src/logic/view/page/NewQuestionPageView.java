@@ -15,7 +15,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.AskAQuestionController;
 import logic.utilities.AlertController;
@@ -62,10 +61,9 @@ public class NewQuestionPageView implements Initializable {
 		String questionSubject = textSubject.getText();
 		String questionText = textQuestion.getText();
 		
-		StudentBean studentBean = new StudentBean();
+		UserBean studentBean = new UserBean();
 		studentBean.setEmail(UserBean.getInstance().getEmail());
 		studentBean.setName(UserBean.getInstance().getName());
-		studentBean.setPassword(UserBean.getInstance().getPassword());
 		studentBean.setSurname(UserBean.getInstance().getSurname());
 		studentBean.setUsername(UserBean.getInstance().getUsername());
 

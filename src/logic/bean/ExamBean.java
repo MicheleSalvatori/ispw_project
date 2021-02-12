@@ -7,8 +7,8 @@ public class ExamBean {
 
 	private Date ebDate;
 	private Time ebTime;
-	private CourseBean ebCourse;
-	private ClassroomBean ebClassroom;
+	private String ebCourse;
+	private String ebClassroom;
 	private String ebNote;
 	
 	public Date getDate() {
@@ -27,19 +27,19 @@ public class ExamBean {
 		this.ebTime = time;
 	}
 	
-	public CourseBean getCourse() {
+	public String getCourse() {
 		return ebCourse;
 	}
 	
-	public void setCourse(CourseBean course) {
+	public void setCourse(String course) {
 		this.ebCourse = course;
 	}
 	
-	public ClassroomBean getClassroom() {
+	public String getClassroom() {
 		return ebClassroom;
 	}
 	
-	public void setClassroom(ClassroomBean classroom) {
+	public void setClassroom(String classroom) {
 		this.ebClassroom = classroom;
 	}
 	

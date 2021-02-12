@@ -7,9 +7,9 @@ public class LessonBean {
 
 	private Date lbDate;
 	private Time lbTime;
-	private CourseBean lbCourse;
+	private String lbCourse;
 	private ClassroomBean lbClassroom;
-	private ProfessorBean lbProfessor;
+	private UserBean lbProfessor;
 	private String lbTopic;
 	
 	public Date getDate() {
@@ -28,11 +28,11 @@ public class LessonBean {
 		this.lbTime = time;
 	}
 	
-	public CourseBean getCourse() {
+	public String getCourse() {
 		return lbCourse;
 	}
 	
-	public void setCourse(CourseBean course) {
+	public void setCourse(String course) {
 		this.lbCourse = course;
 	}
 	
@@ -52,11 +52,11 @@ public class LessonBean {
 		this.lbTopic = topic;
 	}
 
-	public ProfessorBean getProfessor() {
+	public UserBean getProfessor() {
 		return lbProfessor;
 	}
 
-	public void setProfessor(ProfessorBean professor) {
+	public void setProfessor(UserBean professor) {
 		this.lbProfessor = professor;
 	}
 }

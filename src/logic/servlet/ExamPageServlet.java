@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import logic.bean.CourseBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.bean.VerbalizedBean;
 import logic.controller.ViewVerbalizedExamsController;
@@ -85,13 +84,7 @@ public class ExamPageServlet extends HttpServlet {
 			String date = request.getParameter("date");
 			String grade = request.getParameter("grade-select");
 			
-			StudentBean studentBean = new StudentBean();
 			UserBean loggedUser = (UserBean) session.getAttribute(loggedAttribute);
-			studentBean.setEmail(loggedUser.getEmail());
-			studentBean.setName(loggedUser.getName());
-			studentBean.setPassword(loggedUser.getPassword());
-			studentBean.setSurname(loggedUser.getSurname());
-			studentBean.setUsername(loggedUser.getUsername());
 		
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course);
@@ -100,7 +93,7 @@ public class ExamPageServlet extends HttpServlet {
 			verb.setCourse(courseBean);
 			verb.setDate(Date.valueOf(date));
 			verb.setGrade(Integer.valueOf(grade));
-			verb.setStudent(studentBean);
+			verb.setStudent(loggedUser.getUsername());
 			
 			controller.saveVerbalizedExam(verb);
 		}
@@ -111,12 +104,11 @@ public class ExamPageServlet extends HttpServlet {
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course);
 			
-			StudentBean studentBean = new StudentBean();
-			studentBean.setUsername(((UserBean) session.getAttribute(loggedAttribute)).getUsername());
+			UserBean studentBean = ((UserBean) session.getAttribute(loggedAttribute));
 			
 			VerbalizedBean verb = new VerbalizedBean();
 			verb.setCourse(courseBean);
-			verb.setStudent(studentBean);
+			verb.setStudent(studentBean.getUsername());
 			
 			controller.deleteVerbalizedExam(verb);
 		}

@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import logic.bean.AnswerBean;
 import logic.bean.QuestionBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Answer;
@@ -48,7 +47,7 @@ public class QuestionController {
 			return null;
 		}
 
-		StudentBean studentBean = new StudentBean();
+		UserBean studentBean = new UserBean();
 		studentBean.setName(question.getStudent().getName());
 		studentBean.setSurname(question.getStudent().getSurname());
 		studentBean.setUsername(question.getStudent().getUsername());
@@ -82,7 +81,7 @@ public class QuestionController {
 
 		for (Question q : questionList) {
 
-			StudentBean studentBean = new StudentBean();
+			UserBean studentBean = new UserBean();
 			studentBean.setName(q.getStudent().getName());
 			studentBean.setSurname(q.getStudent().getSurname());
 			studentBean.setUsername(q.getStudent().getUsername());

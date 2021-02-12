@@ -10,7 +10,7 @@ public class QuestionBean {
 	private String qbTitle;
 	private String qbText;
 	private String qbCourse;
-	private StudentBean qbStudent;
+	private UserBean qbStudent;
 	private boolean qbSolved;
 	private Date qbDate;
 	private List<AnswerBean> qbAnswers;
@@ -78,20 +78,11 @@ public class QuestionBean {
 		this.qbCourse = course;
 	}
 
-	public StudentBean getStudent() {
+	public UserBean getStudent() {
 		return qbStudent;
 	}
 
-	public void setStudent(StudentBean student) {
+	public void setStudent(UserBean student) {
 		this.qbStudent = student;
-	}
-
-	@Override
-	public String toString() {
-		return "ID: "+getId()
-			+"\nTitle: "+ getTitle()
-			+"\nText: "+ getText()
-			+"\nAuthor: "+getStudent().getName() + " " + getStudent().getSurname()
-			+"\nCourse: "+getCourse();
 	}
 }

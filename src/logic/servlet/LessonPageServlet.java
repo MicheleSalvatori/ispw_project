@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.SeatBean;
 import logic.bean.UserBean;
@@ -42,11 +41,8 @@ public class LessonPageServlet extends HttpServlet {
 		String date = req.getParameter("lessonDate");
 		String time = req.getParameter("lessonTime");
 		
-		CourseBean c = new CourseBean();
-		c.setAbbreviation(course);
-		
 		LessonBean l = new LessonBean();
-		l.setCourse(c);
+		l.setCourse(course);
 		l.setDate(Date.valueOf(date));
 		l.setTime(Time.valueOf(time));
 		
@@ -82,11 +78,8 @@ public class LessonPageServlet extends HttpServlet {
 		String datePost = req.getParameter("lessonDate");
 		String timePost = req.getParameter("lessonTime");
 		
-		CourseBean courseBean = new CourseBean();
-		courseBean.setAbbreviation(coursePost);
-		
 		LessonBean lessonBean = new LessonBean();
-		lessonBean.setCourse(courseBean);
+		lessonBean.setCourse(coursePost);
 		lessonBean.setDate(Date.valueOf(datePost));
 		lessonBean.setTime(Time.valueOf(timePost));
 		

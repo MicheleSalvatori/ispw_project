@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import logic.bean.CourseBean;
-import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.JoinCourseController;
 import logic.controller.LoginController;
@@ -44,7 +42,7 @@ public class ProfilePageServlet extends HttpServlet {
 		List<CourseBean> courses = null;
 		List<CourseBean> requests = null;
 		List<CourseBean> available = null;
-		List<ProfessorBean> professors = new ArrayList<>();
+		List<UserBean> professors = new ArrayList<>();
 		UserBean userLogged = (UserBean) session.getAttribute(loggedAttributeProfile); 
 		
 		try {
@@ -155,7 +153,7 @@ public class ProfilePageServlet extends HttpServlet {
 	private RequestBean getRequestBean(HttpServletRequest request, UserBean userLogged) {
 		String course = request.getParameter("course-select");
 		
-		StudentBean studentBean = new StudentBean();
+		UserBean studentBean = new UserBean();
 		studentBean.setUsername(userLogged.getUsername());
 
 		CourseBean courseBean = new CourseBean();

@@ -28,7 +28,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import logic.bean.CourseBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.bean.VerbalizedBean;
 import logic.controller.ViewVerbalizedExamsController;
@@ -180,16 +179,13 @@ public class ExamPageView implements Initializable {
 		
 		controller = new ViewVerbalizedExamsController();
 		
-		StudentBean studentBean = new StudentBean();
-		studentBean.setUsername(UserBean.getInstance().getUsername());
-		
 		CourseBean courseBean = courses.get(comboCourse.getSelectionModel().getSelectedIndex());
 		
 		VerbalizedBean verb = new VerbalizedBean();
 		verb.setCourse(courseBean);
 		verb.setDate(Date.valueOf(dateVerb.getValue()));
 		verb.setGrade(comboGrade.getValue());
-		verb.setStudent(studentBean);
+		verb.setStudent(UserBean.getInstance().getUsername());
 		
 		controller.saveVerbalizedExam(verb);
 		dialogStage.close();
