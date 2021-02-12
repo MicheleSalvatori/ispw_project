@@ -51,7 +51,7 @@ public class RequestCardView {
 		this.request = request;
 		
 		UserBean student = request.getStudent();
-		labelName.setText(String.format("%s %s (%s)", student.getName(), student.getSurname(), student.getUsername()));
+		labelName.setText(String.format("%s %s", student.getName(), student.getSurname()));
 		btnCourse.setText(request.getCourse().getAbbreviation());
 	}
 }

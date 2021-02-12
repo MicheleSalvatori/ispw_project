@@ -77,17 +77,19 @@
 								<img class="time-img" src="res/img/Time.png" alt="time">
 							</td>
 
-							<td style="border-radius: 0 14px 14px 0; vertical-align: middle; padding-left: 0.5vw; white-space: nowrap; width: 1%;" class="lesson-time">
+							<td style="vertical-align: middle; padding-left: 0.5vw; white-space: nowrap; width: 1%;" class="lesson-time">
 								<label style="display: inline; vertical-align: middle;">
 									${SQLConverter.time(lesson.getTime())}
 								</label>
 							</td>
 				
-							<!-- TODO -->
 							<td style="border-radius: 0 14px 14px 0; white-space: nowrap; text-align: right; padding-right: 2vw;">
-								<button class="button">
-									View
-								</button>
+								<form action="/ispw_project/LessonPageServlet" method="get" >
+									<button class="button" type="submit">View</button>
+									<input type="hidden" name="lessonCourse" value="${lesson.getCourse()}">
+									<input type="hidden" name="lessonDate" value="${lesson.getDate()}">
+									<input type="hidden" name="lessonTime" value="${lesson.getTime()}">
+								</form>
 							</td>
 						</tr>
 						</c:forEach>
