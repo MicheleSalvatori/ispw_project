@@ -16,6 +16,7 @@ public class TestBookASeat {
 	private String expectedStatus = "yourSeat";
 	String seatStatus;
 	WebElement seat;
+	private String seatPath;
 
 	@Before
 	public void setupTest() {
@@ -32,7 +33,7 @@ public class TestBookASeat {
 
 	@Test
 	public void test() {
-
+		seatPath = "/html/body/div[3]/div[2]/div/div/form/table/tbody/tr[1]/td[1]/button";
 		driver.findElement(By.xpath("/html/body/div[3]/div[2]/div[1]/div[1]/table/tbody/tr/td[5]/form/button")).click();
 		seat = driver.findElement(By.xpath("/html/body/div[3]/div[2]/div/div/form/table/tbody/tr[1]/td[1]/button"));
 		seat.click();
@@ -46,7 +47,7 @@ public class TestBookASeat {
 	@After
 	public void closeTest() {
 		if (seatStatus.equals(expectedStatus)) {
-			driver.findElement(By.xpath("/html/body/div[3]/div[2]/div/div/form/table/tbody/tr[1]/td[1]/button")).click();
+			driver.findElement(By.xpath(seatPath)).click();
 			driver.switchTo().alert().accept();
 		}
 		driver.close();
