@@ -40,7 +40,6 @@ public class AssignmentCardView {
 	
 	@FXML
 	private void viewAssignment(ActionEvent event) {
-		System.out.println(assignment.getId());
 		PageLoader.getInstance().buildPage(Page.ASSIGNMENT, assignment);
 	}
 	
