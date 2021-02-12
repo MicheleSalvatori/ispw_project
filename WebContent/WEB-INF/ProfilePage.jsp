@@ -14,7 +14,7 @@
 	
 	<head>
 		<meta charset="utf-8">
-		<title>App - HomePage</title>
+		<title>.myUniversity - ProfilePage</title>
 		<link rel="stylesheet" href="res/style/ProfilePage.css">
 		<link rel="stylesheet" href="res/style/ModalBox.css">
 		<link rel="icon" href="res/img/Logo.png">

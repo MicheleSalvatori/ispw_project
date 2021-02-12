@@ -15,7 +15,7 @@
 	
 	<head>
 		<meta charset="utf-8">
-		<title>App - ScheduledExamsPage</title>
+		<title>.myUniversity - ScheduledExamsPage</title>
 		<link rel="stylesheet" href="res/style/ScheduledPage.css">
 		<link rel="icon" href="res/img/Logo.png">
 	</head>

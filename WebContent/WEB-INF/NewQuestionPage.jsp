@@ -16,7 +16,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>App - Ask a Question</title>
+		<title>.myUniversity - Ask a Question</title>
 		<link rel="stylesheet" href="res/style/NewQuestionPage.css">
 		<link rel="stylesheet" href="res/style/ModalBox.css">
 	</head>

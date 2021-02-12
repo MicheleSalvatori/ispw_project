@@ -16,7 +16,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>App - ForumPage</title>
+		<title>.myUniversity - ForumPage</title>
 		<link rel="stylesheet" href="res/style/ForumPage.css">
 		<link rel="stylesheet" href="res/style/ModalBox.css">
 	</head>

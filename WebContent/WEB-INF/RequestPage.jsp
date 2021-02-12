@@ -14,7 +14,7 @@
 	
 	<head>
 		<meta charset="utf-8">
-		<title>App - RequestPage</title>
+		<title>.myUniversity - RequestPage</title>
 		<link rel="stylesheet" href="res/style/RequestPage.css">
 		<link rel="icon" href="res/img/Logo.png">
 	</head>

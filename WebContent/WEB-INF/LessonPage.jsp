@@ -19,7 +19,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>App - LessonPage</title>
+	<title>.myUniversity - LessonPage</title>
 	<link rel="stylesheet" href="res/style/LessonPage.css">
 	<link rel="icon" href="res/img/Logo.png">
 </head>

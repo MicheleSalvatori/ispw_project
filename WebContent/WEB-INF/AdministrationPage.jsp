@@ -17,7 +17,7 @@ LessonBean lesson = (LessonBean) request.getAttribute("lesson");
 
 <head>
 <meta charset="utf-8">
-<title>App - Administration Control Panel</title>
+<title>.myUniversity - Administration Control Panel</title>
 <link rel="stylesheet" href="res/style/AdministrationPage.css">
 <link rel="stylesheet" href="res/style/NavigationBar.css">
 <link rel="stylesheet" href="res/style/StatusBar.css">

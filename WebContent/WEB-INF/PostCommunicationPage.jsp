@@ -14,7 +14,7 @@ UserBean user = (UserBean) request.getSession().getAttribute("loggedUser");
 
 <head>
 <meta charset="utf-8">
-<title>App - PostCommunication</title>
+<title>.myUniversity - PostCommunication</title>
 <link rel="stylesheet" href="res/style/AdministrationPage.css">
 <link rel="stylesheet" href="res/style/NavigationBar.css">
 <link rel="stylesheet" href="res/style/StatusBar.css">

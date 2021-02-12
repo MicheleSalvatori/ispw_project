@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="res/style/LoginPage.css">
 	<link rel="stylesheet" href="res/style/ModalBox.css">
 	<meta charset="utf-8">
-	<title>App - LoginPage</title>
+	<title>.myUniversity - LoginPage</title>
 </head>
 
 <body>
