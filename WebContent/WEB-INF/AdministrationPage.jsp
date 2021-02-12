@@ -129,7 +129,7 @@ LessonBean lesson = (LessonBean) request.getAttribute("lesson");
 			</div>
 		</div>
 
-		<a href="/ispw_project/PostCommunicationServlet"
+		<a style="padding-bottom: 2vw;" href="/ispw_project/PostCommunicationServlet"
 						type="button">
 				<button type="button" class="button" id="postCommunication"
 					name="postCommunication" style = "margin-top:15px;">

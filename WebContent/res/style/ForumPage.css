@@ -49,6 +49,12 @@
 	height: 100%;
 }
 
+.exam-text {
+    font-family: "Baloo Bhai";
+    font-weight: normal;
+    font-size: 1.3vw;
+}
+
 .content-assignment {
 	margin-top: 50px;
 	border: 2px solid #0C0B0B;

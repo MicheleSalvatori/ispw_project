@@ -97,7 +97,7 @@
 									<table style="display: inline; vertical-align: middle;" spacing="0">
 										<tr>
 											<td class="lesson-text">
-												<%=lesson.getCourse().getAbbreviation()%>
+												<%=lesson.getCourse()%>
 											</td>
 										</tr>
 
@@ -124,7 +124,7 @@
 								<td align="right" style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
 								<form action="/ispw_project/LessonPageServlet" method="get" >
 									<button name = "viewLesson" class="button-view" type="submit" onclick="f(<%=lesson%>)">View</button>
-									<input type = "hidden" name = "lessonCourse" value = "<%=lesson.getCourse().getAbbreviation()%>">
+									<input type = "hidden" name = "lessonCourse" value = "<%=lesson.getCourse()%>">
 									<input type = "hidden" name = "lessonDate" value = "<%=lesson.getDate()%>">
 									<input type = "hidden" name = "lessonTime" value = "<%=lesson.getTime()%>">
 								</form>

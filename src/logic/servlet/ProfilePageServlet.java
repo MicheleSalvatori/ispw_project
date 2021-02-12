@@ -113,6 +113,7 @@ public class ProfilePageServlet extends HttpServlet {
 			}
 		
 			else if (request.getParameter("deleteRequest") != null) {
+				
 				RequestBean requestBean = getRequestBean(request, userLogged);
 				controller.deleteRequest(requestBean);
 			}
@@ -151,7 +152,7 @@ public class ProfilePageServlet extends HttpServlet {
 	}
 	
 	private RequestBean getRequestBean(HttpServletRequest request, UserBean userLogged) {
-		String course = request.getParameter("course-select");
+		String course = request.getParameter("course");
 		
 		UserBean studentBean = new UserBean();
 		studentBean.setUsername(userLogged.getUsername());

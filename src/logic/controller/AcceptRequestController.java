@@ -59,6 +59,7 @@ public class AcceptRequestController {
 		for (Course course : courses) {
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course.getAbbreviation());
+			courseBean.setName(course.getName());
 			
 			coursesBean.add(courseBean);
 		}

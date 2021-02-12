@@ -180,6 +180,8 @@
 					</table>
 					</div>
 				</div>
+				
+				<% if (user.getRole() == Role.STUDENT) { %>
 				<div style="text-align: center; padding-top: 20px;">
 					<button name="btnAdd" id="btnAdd" class="button-add" style="margin-right: 5vw;">
 						<img style="vertical-align: middle;" class="plus-img" src="res/img/Plus.png" alt="add">
@@ -191,6 +193,7 @@
 						Remove Course
 					</button>
 				</div>
+				<% } %>
 			</div>
 		</div>
 		
@@ -208,7 +211,7 @@
 			  
 			  <div class="modal-body" style="text-align: center; padding: 25px 0 25px 0;">
 			  
-			  	<select name="course-select" class="select" name="courses" id="course-select" style="width: 50%;" required>	
+			  	<select name="course" class="select" name="courses" id="course-select" style="width: 50%;" required>	
 			  		<c:if test="${!empty listOfAvailable}">
 			  			<option value="" disabled selected>Select course</option>
 			  		</c:if>
@@ -247,7 +250,7 @@
 			  
 			  <div class="modal-body" style="text-align: center; padding: 25px 0 25px 0;">
 			  
-			  	<select name="course-select" class="select" name="courses" id="course-select" style="width: 50%;" required>	
+			  	<select name="course" class="select" name="courses" id="course-select" style="width: 50%;" required>	
 			  		<c:if test="${!empty listOfCourse}">
 			  			<option value="" disabled selected>Select course</option>
 			  		</c:if>
