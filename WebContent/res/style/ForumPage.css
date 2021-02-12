@@ -80,6 +80,12 @@
 	width: 100%;
 }
 
+.exam-text {
+	font-family: "Baloo Bhai";
+	font-weight: normal;
+	font-size: 1.3vw;
+}
+
 .questions-button {
 	font-family: "Baloo Bhai";
 	font-weight: normal;

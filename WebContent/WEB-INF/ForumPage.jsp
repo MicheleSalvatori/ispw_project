@@ -39,6 +39,14 @@
 					<div class="overflow">
 					<table class="table-question" id="tableQuestions">
 						<tbody style="display: block; border-spacing: 0 10px;">
+						<c:if test="${empty listOfQuestion}">
+						<tr>
+							<td colspan="7" class="exam-text">
+								No exam found.
+							</td>
+						</tr>
+						</c:if>
+						
 							<c:forEach items="${listOfQuestion}" var="question">
 								<tr height="50px" class="question">
 									<td
