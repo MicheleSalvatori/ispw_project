@@ -23,6 +23,14 @@ html,body {
 .nav-logo {
     font-family: "Baloo Bhai 2";
     font-weight: bold;
+    font-size: 26px;
+    color: white;
+	text-align: center;
+}
+
+.nav-logo-u {
+    font-family: "Baloo Bhai 2";
+    font-weight: bold;
     font-size: 64px;
     color: white;
 	text-align: center;

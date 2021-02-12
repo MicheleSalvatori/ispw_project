@@ -44,7 +44,7 @@ public class NewQuestionPageView implements Initializable {
 				.or(Bindings.isEmpty(textSubject.textProperty())).or((courseComboBox.valueProperty().isNull())));
 		
 		try {
-			List<CourseBean> courses = controller.getCoursesOfStudent(UserBean.getInstance());
+			List<CourseBean> courses = controller.getStudentCourses(UserBean.getInstance());
 			for (CourseBean c : courses) {
 				courseComboBox.getItems().add(c.getAbbreviation());
 			}
@@ -61,11 +61,7 @@ public class NewQuestionPageView implements Initializable {
 		String questionSubject = textSubject.getText();
 		String questionText = textQuestion.getText();
 		
-		UserBean studentBean = new UserBean();
-		studentBean.setEmail(UserBean.getInstance().getEmail());
-		studentBean.setName(UserBean.getInstance().getName());
-		studentBean.setSurname(UserBean.getInstance().getSurname());
-		studentBean.setUsername(UserBean.getInstance().getUsername());
+		UserBean studentBean = UserBean.getInstance();
 
 		questionBean.setStudent(studentBean);
 		questionBean.setText(questionText);

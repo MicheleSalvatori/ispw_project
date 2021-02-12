@@ -17,7 +17,6 @@ import logic.bean.UserBean;
 import logic.controller.BookASeatController;
 import logic.exceptions.SeatAlreadyBookedException;
 
-
 /*
  * Michele Salvatori 0253519
  */

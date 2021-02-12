@@ -73,6 +73,4 @@ public class TestAskQuestion {
 			questionController.deleteQuestion(questionTested.getId());
 		}
 	}
-
-
 }

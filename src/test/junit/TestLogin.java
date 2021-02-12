@@ -11,6 +11,10 @@ import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.exceptions.RecordNotFoundException;
 
+/*
+ * Gabriele Quatrana 0253513
+ */
+
 public class TestLogin {
 	
 	UserBean userBean;

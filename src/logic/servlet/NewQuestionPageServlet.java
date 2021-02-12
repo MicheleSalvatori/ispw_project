@@ -34,7 +34,7 @@ public class NewQuestionPageServlet extends HttpServlet {
 		
 		AskAQuestionController controller = new AskAQuestionController();
 		try {
-			List<CourseBean> courses = controller.getCoursesOfStudent(userLogged);
+			List<CourseBean> courses = controller.getStudentCourses(userLogged);
 			req.setAttribute("listOfCourses", courses);
 			
 		} catch (SQLException e) {

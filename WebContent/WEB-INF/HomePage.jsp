@@ -244,7 +244,6 @@
 					
 					<!-- Map -->
 					<a class="next-lessons-label">Map</a>
-					<!-- https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11886.930780547153!2d12.622736!3d41.85558!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x556bbd1ff2a33c63!2sMacroarea%20di%20Ingegneria%20-%20Universit%C3%A0%20di%20Roma%20Tor%20Vergata!5e0!3m2!1sit!2sit!4v1612894377315!5m2!1sit!2sit -->
 					<iframe src="${map}" width="100%" height="400" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 				</div>
 			

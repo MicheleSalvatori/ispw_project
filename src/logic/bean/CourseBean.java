@@ -2,14 +2,10 @@
 
 package logic.bean;
 
-import java.util.List;
-
 public class CourseBean {
 
 	private String coubName;
 	private String coubAbbreviation;
-	private List<UserBean> coubStudents;
-	
 	private String coubYear;
 	private String coubSemester;
 	private String coubCredits;
@@ -32,18 +28,6 @@ public class CourseBean {
 
 	public void setName(String name) {
 		this.coubName = name;
-	}
-	
-	public void setStudentsOfCourse(List<UserBean> students) {
-		this.coubStudents = students;
-	}
-
-	public List<UserBean> getStudents() {
-		return coubStudents;
-	}
-
-	public void addStudentToCourse(UserBean student) {
-		this.coubStudents.add(student);
 	}
 
 	public String getAbbreviation() {

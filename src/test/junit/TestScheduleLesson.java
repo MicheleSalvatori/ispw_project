@@ -17,6 +17,10 @@ import logic.bean.UserBean;
 import logic.controller.BookASeatController;
 import logic.controller.ScheduleLessonController;
 
+/*
+ * Gabriele Quatrana 0253513
+ */
+
 public class TestScheduleLesson {
 	
 	ScheduleLessonController controller;

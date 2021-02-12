@@ -13,6 +13,10 @@ import logic.controller.LoginController;
 import logic.exceptions.DuplicatedRecordException;
 import logic.utilities.Role;
 
+/*
+ * Gabriele Quatrana 0253513
+ */
+
 public class TestSignup {
 	
 	UserBean userBean;
