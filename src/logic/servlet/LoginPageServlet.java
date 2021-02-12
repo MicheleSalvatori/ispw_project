@@ -80,7 +80,8 @@ public class LoginPageServlet extends HttpServlet {
 				String password = controller.getUserByEmail(userBean).getPassword();
 				Email.password(email, password);
 	
-				resp.sendRedirect(req.getContextPath() + "/LoginServlet");
+				req.setAttribute(alertAttribute, "Password send by email.");
+				req.getRequestDispatcher(loginPageUrl).include(req, resp);
 			}
 			
 		} catch (SQLException e) {

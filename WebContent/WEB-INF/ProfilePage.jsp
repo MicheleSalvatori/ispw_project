@@ -38,7 +38,7 @@
 					<table align="center" style="width: 100%; padding: 10px; height: 100%; overflow: auto;">
 						<tr>
 							<td colspan="2" align="center">
-								<img class="img-avatar" src="res/img/Logo.png" alt="avatar">
+								<img class="img-avatar" src="res/img/avatar/profile/avatar1.png" alt="avatar">
 							</td>
 						</tr>
 
@@ -84,7 +84,7 @@
 
 						<tr>
 							<td class="info-text">
-								Password:
+								Password:&nbsp;&nbsp;
 								<input type="checkbox" id="checkbox" onclick="show()" style="display: none; text-align: right; ">
 								<label for="checkbox" id="show"></label>
 							</td>
@@ -153,7 +153,9 @@
 								<table style="display: inline; vertical-align: middle;" spacing="0">
 									<tr>
 										<td class="course-text">
-											${request.getAbbreviation()}
+											<a href="/ispw_project/CoursePageServlet?course=${request.getAbbreviation()}">
+												${request.getAbbreviation()}
+											</a>
 										</td>
 									</tr>
 

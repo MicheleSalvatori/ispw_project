@@ -189,7 +189,7 @@ public class CourseDAO {
 	}
 
 	public static List<Course> getStudentCourses(String student) throws SQLException, RecordNotFoundException {
-
+		
 		Statement stmt = null;
 		Connection conn = null;
 		List<Course> courses;

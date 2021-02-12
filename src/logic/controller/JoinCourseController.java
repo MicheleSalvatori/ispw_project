@@ -97,7 +97,7 @@ public class JoinCourseController {
 	}
 	
 	public List<ProfessorBean> getCourseProfessors(CourseBean courseBean) throws SQLException {
-		
+	
 		List<Professor> professors = null;
 		
 		try {
