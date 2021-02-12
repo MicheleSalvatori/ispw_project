@@ -316,6 +316,12 @@ public class Queries {
 				time, course, classroom, note);
 		return stmt.executeUpdate(query);
 	}
+	
+
+	public static void delteExam(Statement stmt, Date date, Time time, String abbreviation) throws SQLException {
+		String query = String.format("DELETE FROM exam WHERE date = '%s' and time = '%s' and course = '%s'", date, time, abbreviation);
+		stmt.executeUpdate(query);
+	}
 
 /******************************************************************************************************************/
 

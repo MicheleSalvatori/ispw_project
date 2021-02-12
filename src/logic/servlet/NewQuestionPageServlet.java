@@ -20,6 +20,7 @@ import logic.controller.AskAQuestionController;
 public class NewQuestionPageServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private static String alertAttribute = "alertMsg";
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,7 +38,7 @@ public class NewQuestionPageServlet extends HttpServlet {
 			req.setAttribute("listOfCourses", courses);
 			
 		} catch (SQLException e) {
-			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.setAttribute(alertAttribute, "An error as occured. Try later.");
 			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
 			return;
 		}
@@ -58,9 +59,10 @@ public class NewQuestionPageServlet extends HttpServlet {
 		
 		try {
 			controller.save(newQuestion);
+			req.getSession().setAttribute(alertAttribute, "Question correctly added.");
 			
 		} catch (SQLException e) {
-			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.setAttribute(alertAttribute, "An error as occured. Try later.");
 			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
 			return;
 		}

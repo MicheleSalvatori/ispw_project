@@ -80,7 +80,7 @@ public class ScheduledController {
 			
 			Classroom classroom = exam.getClassroom();
 			Course course = exam.getCourse();
-			
+      
 			ExamBean examBean = new ExamBean();
 			examBean.setClassroom(classroom.getName());
 			examBean.setCourse(course.getAbbreviation());
@@ -88,7 +88,7 @@ public class ScheduledController {
 			examBean.setNote(exam.getNote());
 			examBean.setTime(exam.getTime());
 
-	    	examsBean.add(examBean);
+	    examsBean.add(examBean);
 		}
 		
 		return examsBean;

@@ -73,7 +73,7 @@ public class QuestionPageServlet extends HttpServlet {
 			
 			try {
 				controller.save(answerBean);
-				req.setAttribute(alertAttribute, "Answer correctly added.");
+				session.setAttribute(alertAttribute, "Answer correctly added.");
 				
 			} catch (SQLException e) {
 				req.setAttribute(alertAttribute, alertString);
@@ -81,7 +81,7 @@ public class QuestionPageServlet extends HttpServlet {
 				return;
 			}
 			
-			req.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(req, resp);		//TODO Mettere script nel jsp e controllare se funziona
+			resp.sendRedirect("/ispw_project/ForumPageServlet");
 		}
 	}
 }
