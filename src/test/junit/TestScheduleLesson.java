@@ -12,9 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import logic.bean.ClassroomBean;
-import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.controller.BookASeatController;
 import logic.controller.ScheduleLessonController;
 
@@ -36,15 +35,12 @@ public class TestScheduleLesson {
 		ClassroomBean classroomBean = new ClassroomBean();
 		classroomBean.setName(classroom);
 		
-		CourseBean courseBean = new CourseBean();
-		courseBean.setAbbreviation(course);
-		
-		ProfessorBean professorBean = new ProfessorBean();
+		UserBean professorBean = new UserBean();
 		professorBean.setUsername(professor);
 		
 		lessonBean = new LessonBean();
 		lessonBean.setClassroom(classroomBean);
-		lessonBean.setCourse(courseBean);
+		lessonBean.setCourse(course);
 		lessonBean.setProfessor(professorBean);
 		lessonBean.setTime(time);
 		lessonBean.setDate(date);

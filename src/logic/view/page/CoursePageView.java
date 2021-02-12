@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.bean.WeeklyLessonBean;
 import logic.controller.CourseController;
 import logic.exceptions.RecordNotFoundException;
@@ -90,8 +90,8 @@ public class CoursePageView {
 	public void setPage() {
 
 		try {
-			List<ProfessorBean> professors = courseController.getCourseProfessors(course);
-			for (ProfessorBean professor : professors) {
+			List<UserBean> professors = courseController.getCourseProfessors(course);
+			for (UserBean professor : professors) {
 				listProfessor.getItems().add(professor.getName() + " " + professor.getSurname());
 			}	
 			

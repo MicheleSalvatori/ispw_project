@@ -4,16 +4,16 @@ import java.sql.Date;
 
 public class VerbalizedBean {
 	
-	private StudentBean vbStudent;
+	private String vbStudent;
 	private CourseBean vbCourse;
 	private int vbGrade;
 	private Date vbDate;
 	
-	public StudentBean getStudent() {
+	public String getStudent() {
 		return vbStudent;
 	}
 	
-	public void setStudent(StudentBean student) {
+	public void setStudent(String student) {
 		this.vbStudent = student;
 	}
 	

@@ -113,6 +113,7 @@
 										<label style="display: inline; vertical-align: middle;">10:00</label>
 									</td>
 
+									<!-- TODO -->
 									<td align="right" style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
 										<button class="button-view" type="button">View</button>
 									</td>
@@ -150,7 +151,7 @@
 
 												<tr>
 													<td style="padding-top: 0;" class="lesson-classroom">
-														${weekly.getClassroom().getName()}
+														${weekly.getClassroom()}
 													</td>
 												</tr>
 											</table>

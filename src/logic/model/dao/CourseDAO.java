@@ -189,7 +189,7 @@ public class CourseDAO {
 	}
 
 	public static List<Course> getStudentCourses(String student) throws SQLException, RecordNotFoundException {
-
+		
 		Statement stmt = null;
 		Connection conn = null;
 		List<Course> courses;
@@ -303,6 +303,17 @@ public class CourseDAO {
 		String p = rs.getString("prerequisites");
 		String g = rs.getString("goal");
 		String r = rs.getString("reception");
-		return new Course(n, a, y, s, c, p, g, r);
+		
+		List<String> info = new ArrayList<>();
+		info.add(n);
+		info.add(a);
+		info.add(y);
+		info.add(s);
+		info.add(c);
+		info.add(p);
+		info.add(g);
+		info.add(r);
+		
+		return new Course(info);
 	}
 }

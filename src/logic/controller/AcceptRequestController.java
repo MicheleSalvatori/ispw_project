@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Request;
 import logic.model.Student;
+import logic.model.User;
 import logic.model.dao.CourseDAO;
 import logic.model.dao.RequestDAO;
 
@@ -20,7 +20,7 @@ public class AcceptRequestController {
 
 		deleteRequest(requestBean);
 		
-		StudentBean studentBean = requestBean.getStudent();
+		UserBean studentBean = requestBean.getStudent();
 		Student student = new Student();
 		student.setUsername(studentBean.getUsername());
 				
@@ -39,7 +39,7 @@ public class AcceptRequestController {
 	
 	public void deleteRequest(RequestBean requestBean) throws SQLException {
 
-		StudentBean studentBean = requestBean.getStudent();
+		UserBean studentBean = requestBean.getStudent();
 		Student student = new Student();
 		student.setUsername(studentBean.getUsername());
 			
@@ -59,6 +59,7 @@ public class AcceptRequestController {
 		for (Course course : courses) {
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course.getAbbreviation());
+			courseBean.setName(course.getName());
 			
 			coursesBean.add(courseBean);
 		}
@@ -78,8 +79,8 @@ public class AcceptRequestController {
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course.getAbbreviation());
 			
-			Student student = request.getStudent();
-			StudentBean studentBean = new StudentBean();
+			User student = request.getStudent();
+			UserBean studentBean = new UserBean();
 			studentBean.setName(student.getName());
 			studentBean.setSurname(student.getSurname());
 			studentBean.setUsername(student.getUsername());

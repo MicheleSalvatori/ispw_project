@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.AskAQuestionController;
 
@@ -51,7 +50,7 @@ public class NewQuestionPageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		AskAQuestionController controller = new AskAQuestionController();
 		QuestionBean newQuestion = new QuestionBean();
-		StudentBean student = new StudentBean();
+		UserBean student = new UserBean();
 		student.setUsername(((UserBean) req.getSession().getAttribute("loggedUser")).getUsername());
 		newQuestion.setCourse(req.getParameter("courses"));
 		newQuestion.setStudent(student);

@@ -1,9 +1,8 @@
 package logic.controller;
 
 import logic.bean.ClassroomBean;
-import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Lesson;
@@ -13,16 +12,14 @@ import logic.model.dao.LessonDAO;
 public class ScheduleLessonController {
 	
 	public boolean scheduleLesson(LessonBean lessonBean) {
-		
-		CourseBean courseBean = lessonBean.getCourse();
-		Course course = new Course(courseBean.getName(), courseBean.getAbbreviation(), courseBean.getYear(),
-									courseBean.getSemester(), courseBean.getCredits(), courseBean.getPrerequisites(),
-									courseBean.getGoal(), courseBean.getReception());
+
+		Course course = new Course();
+		course.setAbbreviation(lessonBean.getCourse());
 		
 		ClassroomBean classroomBean = lessonBean.getClassroom();
 		Classroom classroom = new Classroom(classroomBean.getName());
 		
-		ProfessorBean professorBean = lessonBean.getProfessor();
+		UserBean professorBean = lessonBean.getProfessor();
 		Professor professor = new Professor(professorBean.getUsername(), professorBean.getPassword(),
 											professorBean.getName(), professorBean.getSurname(), professorBean.getEmail());
 			
@@ -32,7 +29,7 @@ public class ScheduleLessonController {
 	
 	public boolean deleteLesson(LessonBean lessonBean) {
 		Course course = new Course();
-		course.setAbbreviation(lessonBean.getCourse().getAbbreviation());
+		course.setAbbreviation(lessonBean.getCourse());
 		
 		Lesson lesson = new Lesson();
 		lesson.setDate(lessonBean.getDate());

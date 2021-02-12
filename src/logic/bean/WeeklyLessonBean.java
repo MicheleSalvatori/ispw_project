@@ -6,8 +6,8 @@ public class WeeklyLessonBean {
 
 	private String wbDay;
 	private Time wbTime;
-	private ClassroomBean wbClassroom;
-	private CourseBean wbCourse;
+	private String wbClassroom;
+	private String wbCourse;
 	
 	public String getDay() {
 		return wbDay;
@@ -25,19 +25,19 @@ public class WeeklyLessonBean {
 		this.wbTime = time;
 	}
 	
-	public ClassroomBean getClassroom() {
+	public String getClassroom() {
 		return wbClassroom;
 	}
 	
-	public void setClassroom(ClassroomBean classroom) {
+	public void setClassroom(String classroom) {
 		this.wbClassroom = classroom;
 	}
 	
-	public CourseBean getCourse() {
+	public String getCourse() {
 		return wbCourse;
 	}
 	
-	public void setCourse(CourseBean course) {
+	public void setCourse(String course) {
 		this.wbCourse = course;
 	}
 }

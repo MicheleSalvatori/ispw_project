@@ -68,7 +68,6 @@
 		} else {
 			document.getElementById("submit").disabled = true;
 		}
-
 	}
 </script>
 

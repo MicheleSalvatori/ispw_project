@@ -7,9 +7,6 @@ import java.util.logging.Logger;
 import logic.bean.UserBean;
 import logic.exceptions.DuplicatedRecordException;
 import logic.exceptions.RecordNotFoundException;
-import logic.model.Admin;
-import logic.model.Professor;
-import logic.model.Student;
 import logic.model.User;
 import logic.model.dao.AdminDAO;
 import logic.model.dao.ProfessorDAO;
@@ -60,7 +57,7 @@ public class LoginController {
 		String username = userBean.getUsername();
 		String password = userBean.getPassword();
 
-		Professor professor = ProfessorDAO.findProfessor(username, password);
+		User professor = ProfessorDAO.findProfessor(username, password);
 		userBean.setName(professor.getName());
 		userBean.setSurname(professor.getSurname());
 		userBean.setEmail(professor.getEmail());
@@ -71,7 +68,7 @@ public class LoginController {
 		String username = userBean.getUsername();
 		String password = userBean.getPassword();
 
-		Student student = StudentDAO.findStudent(username, password);
+		User student = StudentDAO.findStudent(username, password);
 		userBean.setName(student.getName());
 		userBean.setSurname(student.getSurname());
 		userBean.setEmail(student.getEmail());
@@ -81,7 +78,7 @@ public class LoginController {
 		String username = userBean.getUsername();
 		String password = userBean.getPassword();
 
-		Admin admin = AdminDAO.findAdmin(username, password);
+		User admin = AdminDAO.findAdmin(username, password);
 		userBean.setName(admin.getName());
 		userBean.setSurname(admin.getSurname());
 		userBean.setEmail(admin.getEmail());

@@ -43,8 +43,8 @@
 						<td class="text">Course:</td>
 
 						<td class="info" style="text-align: right;">
-							<a href="${pageContext.request.contextPath}/CoursePageServlet?course=<%=lesson.getCourse().getAbbreviation()%>">
-								<%=lesson.getCourse().getAbbreviation()%>
+							<a href="${pageContext.request.contextPath}/CoursePageServlet?course=<%=lesson.getCourse()%>">
+								<%=lesson.getCourse()%>
 							</a>
 						</td>
 					</tr>
@@ -131,7 +131,7 @@
 						<tr>
 							<c:forEach var="j" begin="1" end="<%=seatColumn%>">
 								<td>
-								<input type = "hidden" name="lessonCourse" value="<%=lesson.getCourse().getAbbreviation()%>">
+								<input type = "hidden" name="lessonCourse" value="<%=lesson.getCourse()%>">
 								<input type = "hidden" name="lessonDate" value="<%=lesson.getDate()%>">
 								<input type = "hidden" name="lessonTime" value="<%=lesson.getTime()%>">
 								<c:set var="seatColumn"	value="${lesson.getClassroom().getSeatColumn()}" />

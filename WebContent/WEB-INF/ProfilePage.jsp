@@ -38,7 +38,7 @@
 					<table align="center" style="width: 100%; padding: 10px; height: 100%; overflow: auto;">
 						<tr>
 							<td colspan="2" align="center">
-								<img class="img-avatar" src="res/img/Logo.png" alt="avatar">
+								<img class="img-avatar" src="res/img/avatar/profile/avatar1.png" alt="avatar">
 							</td>
 						</tr>
 
@@ -84,9 +84,9 @@
 
 						<tr>
 							<td class="info-text">
-								Password:
+								Password:&nbsp;&nbsp;
 								<input type="checkbox" id="checkbox" onclick="show()" style="display: none; text-align: right; ">
-								<label for="checkbox"></label>
+								<label for="checkbox" id="show"></label>
 							</td>
 
 							<td style="text-align: right;">
@@ -153,7 +153,9 @@
 								<table style="display: inline; vertical-align: middle;" spacing="0">
 									<tr>
 										<td class="course-text">
-											${request.getAbbreviation()}
+											<a href="/ispw_project/CoursePageServlet?course=${request.getAbbreviation()}">
+												${request.getAbbreviation()}
+											</a>
 										</td>
 									</tr>
 
@@ -178,6 +180,8 @@
 					</table>
 					</div>
 				</div>
+				
+				<% if (user.getRole() == Role.STUDENT) { %>
 				<div style="text-align: center; padding-top: 20px;">
 					<button name="btnAdd" id="btnAdd" class="button-add" style="margin-right: 5vw;">
 						<img style="vertical-align: middle;" class="plus-img" src="res/img/Plus.png" alt="add">
@@ -189,6 +193,7 @@
 						Remove Course
 					</button>
 				</div>
+				<% } %>
 			</div>
 		</div>
 		
@@ -206,7 +211,7 @@
 			  
 			  <div class="modal-body" style="text-align: center; padding: 25px 0 25px 0;">
 			  
-			  	<select name="course-select" class="select" name="courses" id="course-select" style="width: 50%;" required>	
+			  	<select name="course" class="select" name="courses" id="course-select" style="width: 50%;" required>	
 			  		<c:if test="${!empty listOfAvailable}">
 			  			<option value="" disabled selected>Select course</option>
 			  		</c:if>
@@ -245,7 +250,7 @@
 			  
 			  <div class="modal-body" style="text-align: center; padding: 25px 0 25px 0;">
 			  
-			  	<select name="course-select" class="select" name="courses" id="course-select" style="width: 50%;" required>	
+			  	<select name="course" class="select" name="courses" id="course-select" style="width: 50%;" required>	
 			  		<c:if test="${!empty listOfCourse}">
 			  			<option value="" disabled selected>Select course</option>
 			  		</c:if>

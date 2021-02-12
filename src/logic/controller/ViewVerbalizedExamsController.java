@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.bean.CourseBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.bean.VerbalizedBean;
 import logic.exceptions.RecordNotFoundException;
@@ -33,14 +32,12 @@ public class ViewVerbalizedExamsController {
 			courseBean.setName(course.getName());
 			
 			Student student = verb.getStudent();
-			StudentBean studentBean = new StudentBean();
-			studentBean.setUsername(student.getUsername());
 
 			VerbalizedBean verbBean = new VerbalizedBean();
 			verbBean.setCourse(courseBean);
 			verbBean.setDate(verb.getDate());
 			verbBean.setGrade(verb.getGrade());
-			verbBean.setStudent(studentBean);
+			verbBean.setStudent(student.getUsername());
 			
 			verbsBean.add(verbBean);
 		}
@@ -104,7 +101,7 @@ public class ViewVerbalizedExamsController {
 	
 	public boolean saveVerbalizedExam(VerbalizedBean verb) {
 		Student student = new Student();
-		student.setUsername(verb.getStudent().getUsername());
+		student.setUsername(verb.getStudent());
 		
 		Course course = new Course();
 		course.setAbbreviation(verb.getCourse().getAbbreviation());
@@ -116,7 +113,7 @@ public class ViewVerbalizedExamsController {
 
 	public boolean deleteVerbalizedExam(VerbalizedBean verb) {
 		Student student = new Student();
-		student.setUsername(verb.getStudent().getUsername());
+		student.setUsername(verb.getStudent());
 		
 		Course course = new Course();
 		course.setAbbreviation(verb.getCourse().getAbbreviation());

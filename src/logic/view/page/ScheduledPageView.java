@@ -120,7 +120,7 @@ public class ScheduledPageView implements Initializable {
 		vboxScroll.getChildren().clear();
 			
 		for (LessonBean lessonBean : lessons) {
-			if (filteredCourses.contains(lessonBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
+			if (filteredCourses.contains(lessonBean.getCourse()) || filteredCourses.isEmpty()) {
 				LessonCard lessonCard = new LessonCard(lessonBean);
 				vboxScroll.getChildren().add(lessonCard.getPane());
 			}
@@ -143,7 +143,7 @@ public class ScheduledPageView implements Initializable {
 		
 		vboxScroll.getChildren().clear();
 		for (ExamBean examBean : exams) {
-			if (filteredCourses.contains(examBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
+			if (filteredCourses.contains(examBean.getCourse()) || filteredCourses.isEmpty()) {
 				ScheduledExamCard scheduledExamCard = new ScheduledExamCard(examBean);
 				vboxScroll.getChildren().add(scheduledExamCard.getPane());
 			}

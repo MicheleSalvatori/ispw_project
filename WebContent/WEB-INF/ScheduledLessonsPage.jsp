@@ -47,7 +47,7 @@
 						<c:forEach items="${listOfLesson}" var="lesson">
 						<tr height="60px" class="request">
 						
-							<td style="padding: 1vw; white-space: nowrap; width: 50px;">
+							<td style="border-radius: 14px 0 0 14px; padding: 1vw; white-space: nowrap; width: 50px;">
 								<img class="img" src="res/img/Lesson.png" alt="lesson">
 							</td>
 							
@@ -68,8 +68,8 @@
 							</td>
 
 							<td align="right" class="course" style="width: 8vw; text-align: center;">
-								<a href="/ispw_project/CoursePageServlet?course=${lesson.getCourse().getAbbreviation()}">
-									${lesson.getCourse().getAbbreviation()}
+								<a href="/ispw_project/CoursePageServlet?course=${lesson.getCourse()}">
+									${lesson.getCourse()}
 								</a>
 							</td>
 							
@@ -77,12 +77,13 @@
 								<img class="time-img" src="res/img/Time.png" alt="time">
 							</td>
 
-							<td style="vertical-align: middle; padding-left: 0.5vw; white-space: nowrap; width: 1%;" class="lesson-time">
+							<td style="border-radius: 0 14px 14px 0; vertical-align: middle; padding-left: 0.5vw; white-space: nowrap; width: 1%;" class="lesson-time">
 								<label style="display: inline; vertical-align: middle;">
 									${SQLConverter.time(lesson.getTime())}
 								</label>
 							</td>
 				
+							<!-- TODO -->
 							<td style="border-radius: 0 14px 14px 0; white-space: nowrap; text-align: right; padding-right: 2vw;">
 								<button class="button">
 									View
@@ -152,8 +153,7 @@ function filter(val) {
 }
 </script>
 
-<% if (request.getParameter("course") != null) { 
-	System.out.println(request.getParameter("course"));%>
+<% if (request.getParameter("course") != null) { %>
 	<script>
 		filter("<%=request.getParameter("course")%>");
 	</script>

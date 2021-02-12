@@ -15,15 +15,15 @@ public class Course {
 	private String goal;
 	private String reception;
 	
-	public Course(String name, String abbrevation, String year, String semster, String credits, String prerequisites, String goal, String reception) {
-		this.name = name;
-		this.abbreviation = abbrevation;
-		this.year = year;
-		this.semester = semster;
-		this.credits = credits;
-		this.prerequisites = prerequisites;
-		this.goal = goal;
-		this.reception = reception;
+	public Course(List<String> info) {
+		this.name = info.get(0);
+		this.abbreviation = info.get(1);
+		this.year = info.get(2);
+		this.semester = info.get(3);
+		this.credits = info.get(4);
+		this.prerequisites = info.get(5);
+		this.goal = info.get(6);
+		this.reception = info.get(7);
 	}
 	
 	public Course() {

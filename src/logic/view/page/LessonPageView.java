@@ -82,7 +82,8 @@ public class LessonPageView {
 
 	@FXML
 	private void course(ActionEvent event) {
-		CourseBean courseBean = lesson.getCourse();
+		CourseBean courseBean = new CourseBean();
+		courseBean.setAbbreviation(lesson.getCourse());
 		PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 
@@ -104,7 +105,7 @@ public class LessonPageView {
 	}
 
 	public void setPage() {
-		btnCourse.setText(lesson.getCourse().getAbbreviation());
+		btnCourse.setText(lesson.getCourse());
 		labelClassroom.setText(lesson.getClassroom().getName());
 		labelTime.setText(SQLConverter.time(lesson.getTime()));
 		labelDate.setText(SQLConverter.date(lesson.getDate()));

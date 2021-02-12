@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.bean.ClassroomBean;
-import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
@@ -41,8 +40,6 @@ public class ViewNextLessonController {
 		for (Lesson lesson : lessons) {
 			
 			Course course = lesson.getCourse();
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbreviation());
 			
 			Classroom classroom = lesson.getClassroom();
 			ClassroomBean classroomBean = new ClassroomBean();
@@ -50,7 +47,7 @@ public class ViewNextLessonController {
 			
 			LessonBean lessonBean = new LessonBean();
 			lessonBean.setClassroom(classroomBean);
-			lessonBean.setCourse(courseBean);
+			lessonBean.setCourse(course.getAbbreviation());
 			lessonBean.setDate(lesson.getDate());
 			lessonBean.setTime(lesson.getTime());
 			

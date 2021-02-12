@@ -46,14 +46,13 @@
 							</td>
 						</tr>
 						</c:if>
-						
 							<c:forEach items="${listOfQuestion}" var="question">
 								<tr height="50px" class="question">
 									<td
 										style="border-radius: 14px 0 0 14px; white-space: nowrap; padding: 1vw; width: 2vw;">
 										<img class="img" src="res/img/Question.png" alt="q">
 									</td>
-									<td class="id">${question.getId() }</td>
+									<td class="id">${question.getId()}</td>
 									<td align="left" class="question-subject"
 										style="text-align: left; flex: 1">
 										<table style="display: inline; vertical-align: middle; flex: 1;">
@@ -103,17 +102,16 @@
 												<td class="author">${question.getStudent().getSurname()}</td>
 											</tr>
 										</table>
-								<td align="right" class="course"
-									style="white-space: nowrap; text-decoration: underline; text-align: left; flex: 1">
-									${question.getCourse()}</td>
+								<td align="right" class="course" style="white-space: nowrap; text-decoration: underline; text-align: left; flex: 1">
+									<a href="${pageContext.request.contextPath}/CoursePageServlet?course=${question.getCourse()}">
+										${question.getCourse()}
+									</a>
+								</td>
 								<td align="right"
 									style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%; flex: 1">
-									<form
-										action="${pageContext.request.contextPath}/QuestionPageServlet"
-										method="get">
-										<input type="hidden" name="questionID"
-											value="${question.getId()}" /> 
-										<button name="viewQuestion" class="button-view" type="submit">View</button>
+									<form action="${pageContext.request.contextPath}/QuestionPageServlet" method="get">
+										<input type="hidden" name="questionID" value="${question.getId()}" /> 
+										<button class="button-view" type="submit">View</button>
 									</form>
 								</td>
 								<td style = "border-radius: 0 14px 14px 0;">
@@ -174,11 +172,13 @@
 													<td style="padding: 0;" class="question-date">${assignment.getDate()}</td>
 												</tr>
 											</table>
-										<td align="right" class="course"
-											style="border-radius: 0 14px 14px 0; white-space: nowrap; text-decoration: underline; text-align: left;">
-											${assignment.getCourse()}</td>
+										<td align="right" class="course" style="white-space: nowrap; text-decoration: underline; text-align: left;">
+											<a href="${pageContext.request.contextPath}/CoursePageServlet?course=${assignment.getCourse()}">
+												${assignment.getCourse()}
+											</a>	
+										</td>
 		
-										<td align="right" style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
+										<td align="right" style="border-radius: 0 14px 14px 0; padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
 											<a href="${pageContext.request.contextPath}/AssignmentPageServlet?assignment=${assignment.getId()}" class="button-view">
 												<button class="button-view" type="button">
 													View

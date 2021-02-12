@@ -28,7 +28,8 @@ public class ScheduledExamCardView {
 	
 	@FXML
 	private void course(ActionEvent event) {
-    	CourseBean courseBean = exam.getCourse();
+    	CourseBean courseBean = new CourseBean();
+    	courseBean.setAbbreviation(exam.getCourse());
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
@@ -36,8 +37,8 @@ public class ScheduledExamCardView {
 		this.exam = exam;
 		
 		labelDay.setText(SQLConverter.date(exam.getDate()));
-		btnCourse.setText(exam.getCourse().getAbbreviation());
-		labelClass.setText(exam.getClassroom().getName());
+		btnCourse.setText(exam.getCourse());
+		labelClass.setText(exam.getClassroom());
 		labelTime.setText(SQLConverter.time(exam.getTime()));
 	}
 }

@@ -31,7 +31,7 @@ public class SeatDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			Queries.occupateSeat(stmt, seatID, lesson.getClassroom().getName(), lesson.getDate().toString(), lesson.getTime().toString(), lesson.getCourse().getAbbreviation(), username);
+			Queries.occupateSeat(stmt, seatID, lesson.getClassroom().getName(), lesson.getDate().toString(), lesson.getTime().toString(), lesson.getCourse(), username);
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -50,7 +50,7 @@ public class SeatDAO {
 			}
 
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			Queries.freeSeat(stmt, seatID, lessonBean.getClassroom().getName(), user, lessonBean.getCourse().getAbbreviation(), lessonBean.getDate().toString(), lessonBean.getTime().toString());
+			Queries.freeSeat(stmt, seatID, lessonBean.getClassroom().getName(), user, lessonBean.getCourse(), lessonBean.getDate().toString(), lessonBean.getTime().toString());
 		} finally {
 			if (stmt != null) {
 				stmt.close();
@@ -106,7 +106,7 @@ public class SeatDAO {
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			String dateLesson = lesson.getDate().toString();
 			String timeLesson = SQLConverter.time(lesson.getTime());
-			ResultSet rs = Queries.getOccupateSeats(stmt, lesson.getCourse().getAbbreviation(), dateLesson, timeLesson);
+			ResultSet rs = Queries.getOccupateSeats(stmt, lesson.getCourse(), dateLesson, timeLesson);
 
 			if (!rs.first()) {
 				occupiedSeats = null;
@@ -138,7 +138,7 @@ public class SeatDAO {
 			}
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.getSeat(stmt, username, lesson.getDate().toString(), lesson.getTime().toString(),
-					lesson.getCourse().getAbbreviation());
+					lesson.getCourse());
 
 			if (!rs.first()) {
 				mySeat = null;

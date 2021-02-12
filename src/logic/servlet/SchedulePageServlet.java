@@ -18,7 +18,6 @@ import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
 import logic.bean.UserBean;
 import logic.controller.ScheduleController;
 import logic.controller.ScheduleExamController;
@@ -80,25 +79,20 @@ public class SchedulePageServlet extends HttpServlet {
 			ScheduleLessonController controller = new ScheduleLessonController();
 			
 			LessonBean lessonBean = new LessonBean();
-			
-			lessonBean.setTopic(topic);
-			
 			Date d = Date.valueOf(date);
-			lessonBean.setDate(d);
-			
-			Time t = Time.valueOf(time+":00");
-			lessonBean.setTime(t);
-			
-			CourseBean c = new CourseBean();
-			c.setAbbreviation(course);
-			lessonBean.setCourse(c);
+			Time t = Time.valueOf(time + ":00");
 			
 			ClassroomBean cl = new ClassroomBean();
 			cl.setName(classroom);
-			lessonBean.setClassroom(cl);
 			
-			ProfessorBean p = new ProfessorBean();
+			UserBean p = new UserBean();
 			p.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
+			
+			lessonBean.setTopic(topic);
+			lessonBean.setDate(d);		
+			lessonBean.setTime(t);	
+			lessonBean.setCourse(course);	
+			lessonBean.setClassroom(cl);
 			lessonBean.setProfessor(p);
 			
 			controller.scheduleLesson(lessonBean);
@@ -114,25 +108,17 @@ public class SchedulePageServlet extends HttpServlet {
 			
 			ScheduleExamController controller = new ScheduleExamController();
 			
-			ExamBean examBean = new ExamBean();
-			
-			examBean.setNote(note);
-			
 			Date d = Date.valueOf(date);
-			examBean.setDate(d);
+			Time t = Time.valueOf(time + ":00");
 			
-			Time t = Time.valueOf(time+":00");
-			examBean.setTime(t);
-			
-			CourseBean c = new CourseBean();
-			c.setAbbreviation(course);
-			examBean.setCourse(c);
-			
-			ClassroomBean cl = new ClassroomBean();
-			cl.setName(classroom);
-			examBean.setClassroom(cl);
-
+			ExamBean examBean = new ExamBean();
+			examBean.setNote(note);	
+			examBean.setDate(d);	
+			examBean.setTime(t);	
+			examBean.setCourse(course);
+			examBean.setClassroom(classroom);
 			controller.scheduleExam(examBean);
+			
 			session.setAttribute("alert", "Exam added correctly.");
 		}
 		
