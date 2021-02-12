@@ -35,11 +35,11 @@ public class TestBookASeat {
 	public void test() {
 		seatPath = "/html/body/div[3]/div[2]/div/div/form/table/tbody/tr[1]/td[1]/button";
 		driver.findElement(By.xpath("/html/body/div[3]/div[2]/div[1]/div[1]/table/tbody/tr/td[5]/form/button")).click();
-		seat = driver.findElement(By.xpath("/html/body/div[3]/div[2]/div/div/form/table/tbody/tr[1]/td[1]/button"));
+		seat = driver.findElement(By.xpath(seatPath));
 		seat.click();
 		driver.switchTo().alert().accept();
 		
-		seatStatus = driver.findElement(By.xpath("/html/body/div[3]/div[2]/div/div/form/table/tbody/tr[1]/td[1]/button")).getAttribute("name");
+		seatStatus = driver.findElement(By.xpath(seatPath)).getAttribute("name");
 		assertEquals(expectedStatus, seatStatus);
 	}
 	
