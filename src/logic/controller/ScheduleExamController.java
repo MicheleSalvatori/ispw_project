@@ -21,8 +21,8 @@ public class ScheduleExamController {
 	
 	public boolean deleteExam(ExamBean examBean){
 		Course course = new Course();
-		course.setAbbreviation(examBean.getCourse().getAbbreviation());
-		Classroom classroom = new Classroom(examBean.getClassroom().getName());
+		course.setAbbreviation(examBean.getCourse());
+		Classroom classroom = new Classroom(examBean.getClassroom());
 		Exam exam = new Exam(examBean.getDate(), examBean.getTime(), course, classroom, examBean.getNote());
 		
 		return ExamDAO.deleteExam(exam);

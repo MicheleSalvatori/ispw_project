@@ -1,6 +1,6 @@
 package test.junit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -11,8 +11,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import logic.bean.ClassroomBean;
-import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.UserBean;
 import logic.controller.ScheduleExamController;
@@ -44,14 +42,9 @@ public class TestScheduleExam {
 		user = new UserBean();
 		user.setUsername("testStudent");
 		user.setRole(Role.STUDENT);
-		
-		ClassroomBean classroom = new ClassroomBean();
-		classroom.setName(classroomName);
-		CourseBean course = new CourseBean();
-		course.setAbbreviation(courseAbbr);
 
-		exam.setClassroom(classroom);
-		exam.setCourse(course);
+		exam.setClassroom(classroomName);
+		exam.setCourse(courseAbbr);
 		exam.setDate(date);
 		exam.setNote(note);
 		exam.setTime(time);

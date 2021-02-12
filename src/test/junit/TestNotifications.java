@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.AcceptRequestController;
 import logic.controller.JoinCourseController;
@@ -18,7 +17,7 @@ import logic.utilities.Role;
 
 public class TestNotifications {
 	UserBean profUserBean = new UserBean();
-	StudentBean studBean = new StudentBean();
+	UserBean studBean = new UserBean();
 	CourseBean courseBean = new CourseBean();
 	RequestBean requestBean = new RequestBean();
 	AcceptRequestController acceptRequestController = new AcceptRequestController();
