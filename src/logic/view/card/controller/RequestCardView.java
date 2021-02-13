@@ -43,7 +43,8 @@ public class RequestCardView {
 	
 	@FXML
 	private void course(ActionEvent event) {
-    	CourseBean courseBean = request.getCourse();
+    	CourseBean courseBean = new CourseBean();
+    	courseBean.setAbbreviation(request.getCourse());
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
@@ -52,6 +53,6 @@ public class RequestCardView {
 		
 		UserBean student = request.getStudent();
 		labelName.setText(String.format("%s %s", student.getName(), student.getSurname()));
-		btnCourse.setText(request.getCourse().getAbbreviation());
+		btnCourse.setText(request.getCourse());
 	}
 }

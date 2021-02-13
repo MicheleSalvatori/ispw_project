@@ -46,11 +46,6 @@ public class JoinCourseController {
 		RequestDAO.deleteRequest(request);
 	}
 	
-	public List<CourseBean> getStudentCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
-		List<Course> courses = CourseDAO.getStudentCourses(userBean.getUsername());
-		return getBeans(courses);
-	}
-	
 	public List<CourseBean> getAvailableCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
 		List<Course> courses = CourseDAO.getAvailableCourses(userBean.getUsername());
 		return getBeans(courses);
@@ -128,9 +123,8 @@ public class JoinCourseController {
 	}
 	
 	private Course getCourse(RequestBean requestBean) {
-		CourseBean courseBean = requestBean.getCourse();
 		Course course = new Course();
-		course.setAbbreviation(courseBean.getAbbreviation());
+		course.setAbbreviation(requestBean.getCourse());
 		return course;
 	}
 }

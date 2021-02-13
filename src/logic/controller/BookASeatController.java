@@ -3,55 +3,16 @@ package logic.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
-import logic.bean.ClassroomBean;
 import logic.bean.LessonBean;
 import logic.bean.SeatBean;
 import logic.bean.UserBean;
-import logic.exceptions.RecordNotFoundException;
 import logic.exceptions.SeatAlreadyBookedException;
-import logic.model.Lesson;
 import logic.model.Seat;
-import logic.model.dao.LessonDAO;
 import logic.model.dao.SeatDAO;
 
 public class BookASeatController {
-	
-	public LessonBean getLesson(LessonBean lesson) throws SQLException {
-
-		Lesson l = null;
-		
-		try {
-			l = LessonDAO.getLesson(lesson.getDate(), lesson.getTime(), lesson.getCourse());
-
-		} catch (RecordNotFoundException e) {
-			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
-			return null;
-		}
-		
-		ClassroomBean classroom = new ClassroomBean();
-		classroom.setName(l.getClassroom().getName());
-		classroom.setSeatRow(l.getClassroom().getSeatRow());
-		classroom.setSeatColumn(l.getClassroom().getSeatColumn());
-		
-		UserBean professor = new UserBean();
-		professor.setName(l.getProfessor().getName());
-		professor.setSurname(l.getProfessor().getSurname());
-		
-		LessonBean lessonBean = new LessonBean();
-		lessonBean.setClassroom(classroom);
-		lessonBean.setCourse(l.getCourse().getAbbreviation());
-		lessonBean.setDate(l.getDate());
-		lessonBean.setProfessor(professor);
-		lessonBean.setTime(l.getTime());
-		lessonBean.setTopic(l.getTopic());
-		
-		return lessonBean;
-	}
 
 	public SeatBean occupateSeat(SeatBean seat, LessonBean lesson, UserBean user) throws SQLException, SeatAlreadyBookedException {
 		SeatBean mySeat = null;
@@ -95,6 +56,7 @@ public class BookASeatController {
 
 	public SeatBean getMySeat(LessonBean lesson, UserBean user) throws SQLException {
 		String username = user.getUsername();
-		return SeatDAO.getMySeatIn(username, lesson);
+		Seat seat = SeatDAO.getMySeatIn(username, lesson);
+		return new SeatBean(seat.getIndex());
 	}
 }

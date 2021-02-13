@@ -79,14 +79,11 @@ public class RequestPageServlet extends HttpServlet {
 		String course = request.getParameter("course");
 		String student = request.getParameter("student");
 		
-		CourseBean courseBean = new CourseBean();
-		courseBean.setAbbreviation(course);
-		
 		UserBean studentBean = new UserBean();
 		studentBean.setUsername(student);
 		
 		RequestBean requestBean = new RequestBean();
-		requestBean.setCourse(courseBean);
+		requestBean.setCourse(course);
 		requestBean.setStudent(studentBean);
 		
 		if (request.getParameter("btnAccept") != null) {

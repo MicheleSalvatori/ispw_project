@@ -28,6 +28,7 @@ import logic.bean.SeatBean;
 import logic.bean.UserBean;
 import logic.controller.BookASeatController;
 import logic.controller.CheckWeatherController;
+import logic.controller.ViewNextLessonController;
 import logic.exceptions.SeatAlreadyBookedException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
@@ -89,10 +90,11 @@ public class LessonPageView {
 
 	public void setBean(Object lesson) {
 		
+		ViewNextLessonController lessonController = new ViewNextLessonController();
 		controlSeat = new BookASeatController();
 
 		try {
-			this.lesson = controlSeat.getLesson((LessonBean) lesson);
+			this.lesson = lessonController.getLesson((LessonBean) lesson);
 			this.classroom = this.lesson.getClassroom();
 			this.classroom.setSeat(controlSeat.getOccupateSeatOf(this.lesson));
 			this.mySeat = controlSeat.getMySeat(this.lesson, UserBean.getInstance());

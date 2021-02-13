@@ -14,8 +14,8 @@ import org.junit.Test;
 import logic.bean.ClassroomBean;
 import logic.bean.LessonBean;
 import logic.bean.UserBean;
-import logic.controller.BookASeatController;
 import logic.controller.ScheduleLessonController;
+import logic.controller.ViewNextLessonController;
 
 /*
  * Gabriele Quatrana 0253513
@@ -57,7 +57,7 @@ public class TestScheduleLesson {
 		LessonBean lesson = new LessonBean();
 		
 		controller = new ScheduleLessonController();
-		BookASeatController lessonController = new BookASeatController();
+		ViewNextLessonController lessonController = new ViewNextLessonController();
 		
 		dbUpdate = controller.scheduleLesson(lessonBean);
 

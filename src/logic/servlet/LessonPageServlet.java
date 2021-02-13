@@ -18,6 +18,7 @@ import logic.bean.SeatBean;
 import logic.bean.UserBean;
 import logic.controller.BookASeatController;
 import logic.controller.CheckWeatherController;
+import logic.controller.ViewNextLessonController;
 import logic.exceptions.SeatAlreadyBookedException;
 
 @WebServlet("/LessonPageServlet")
@@ -46,13 +47,14 @@ public class LessonPageServlet extends HttpServlet {
 		l.setDate(Date.valueOf(date));
 		l.setTime(Time.valueOf(time));
 		
-		BookASeatController controller = new BookASeatController();
+		ViewNextLessonController lessonController = new ViewNextLessonController();
+		BookASeatController seatController = new BookASeatController();
 		UserBean user = (UserBean) req.getSession().getAttribute(loggedAttribute);
 		
 		try {
-			LessonBean lesson = controller.getLesson(l);
-			List<SeatBean> occupiedSeats = controller.getOccupateSeatOf(lesson);
-			SeatBean mySeat = controller.getMySeat(lesson, user);
+			LessonBean lesson = lessonController.getLesson(l);
+			List<SeatBean> occupiedSeats = seatController.getOccupateSeatOf(lesson);
+			SeatBean mySeat = seatController.getMySeat(lesson, user);
 			
 			CheckWeatherController controllerWeather = new CheckWeatherController();
 			List<String> weather = controllerWeather.getWeather((int) TimeUnit.MILLISECONDS.toHours(lesson.getTime().getTime()));
@@ -83,15 +85,16 @@ public class LessonPageServlet extends HttpServlet {
 		lessonBean.setDate(Date.valueOf(datePost));
 		lessonBean.setTime(Time.valueOf(timePost));
 		
-		BookASeatController controller = new BookASeatController();
+		ViewNextLessonController lessonController = new ViewNextLessonController();
+		BookASeatController seatController = new BookASeatController();
 		UserBean user = (UserBean) req.getSession().getAttribute(loggedAttribute);
 		
 		if (req.getParameter("bookSeat")!=null) {
-			controller = new BookASeatController();
+			seatController = new BookASeatController();
 			try {
-				LessonBean lesson = controller.getLesson(lessonBean);
+				LessonBean lesson = lessonController.getLesson(lessonBean);
 				SeatBean seat = new SeatBean(Integer.valueOf(req.getParameter("bookSeat")));
-				controller.occupateSeat(seat, lesson, user);
+				seatController.occupateSeat(seat, lesson, user);
 				
 			} catch (SQLException e) {
 				req.setAttribute(alertAttribute, alertString);
@@ -107,9 +110,9 @@ public class LessonPageServlet extends HttpServlet {
 		
 		if (req.getParameter("yourSeat")!=null) {
 			try {
-				LessonBean lesson = controller.getLesson(lessonBean);
+				LessonBean lesson = lessonController.getLesson(lessonBean);
 				SeatBean seat = new SeatBean(Integer.parseInt(req.getParameter("yourSeat")));
-				controller.freeSeat(seat, lesson, user);
+				seatController.freeSeat(seat, lesson, user);
 				
 			} catch (SQLException e) {
 				req.setAttribute(alertAttribute, alertString);

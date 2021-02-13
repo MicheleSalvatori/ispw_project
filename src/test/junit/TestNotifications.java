@@ -1,13 +1,13 @@
 package test.junit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import java.sql.SQLException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.bean.UserBean;
 import logic.controller.AcceptRequestController;
@@ -18,7 +18,6 @@ import logic.utilities.Role;
 public class TestNotifications {
 	UserBean profUserBean = new UserBean();
 	UserBean studBean = new UserBean();
-	CourseBean courseBean = new CourseBean();
 	RequestBean requestBean = new RequestBean();
 	AcceptRequestController acceptRequestController = new AcceptRequestController();
 	JoinCourseController joinCourseController = new JoinCourseController();
@@ -31,13 +30,11 @@ public class TestNotifications {
 		
 		profUserBean.setUsername("lopresti");
 		profUserBean.setRole(Role.PROFESSOR);
-		
+
 		studBean.setUsername("luca");
 		
-		courseBean.setAbbreviation("CE");
-		
 		requestBean.setStudent(studBean);
-		requestBean.setCourse(courseBean);
+		requestBean.setCourse("CE");
 	}
 
 	@Test

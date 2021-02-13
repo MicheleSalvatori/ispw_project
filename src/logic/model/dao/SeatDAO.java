@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.bean.LessonBean;
-import logic.bean.SeatBean;
 import logic.model.Seat;
 import logic.utilities.Queries;
 import logic.utilities.SQLConverter;
@@ -126,10 +125,10 @@ public class SeatDAO {
 		return occupiedSeats;
 	}
 
-	public static SeatBean getMySeatIn(String username, LessonBean lesson) throws SQLException {
+	public static Seat getMySeatIn(String username, LessonBean lesson) throws SQLException {
 		Connection conn = null;
 		Statement stmt = null;
-		SeatBean mySeat;
+		Seat mySeat;
 
 		try {
 			conn = SingletonDB.getDbInstance().getConnection();
@@ -139,12 +138,13 @@ public class SeatDAO {
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = Queries.getSeat(stmt, username, lesson.getDate().toString(), lesson.getTime().toString(),
 					lesson.getCourse());
+			
 
 			if (!rs.first()) {
 				mySeat = null;
 			} else {
 				rs.first();
-				mySeat = new SeatBean(rs.getInt("seat"));
+				mySeat = new Seat(rs.getInt("seat"));
 			}
 		} finally {
 			if (stmt != null) {

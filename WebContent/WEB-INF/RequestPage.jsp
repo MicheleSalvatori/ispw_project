@@ -50,15 +50,15 @@
 							</td>
 
 							<td align="right" class="course" style="width: 8vw; text-align: center;">
-								<a href="/ispw_project/CoursePageServlet?course=${request.getCourse().getAbbreviation()}">
-									${request.getCourse().getAbbreviation()}
+								<a href="/ispw_project/CoursePageServlet?course=${request.getCourse()}">
+									${request.getCourse()}
 								</a>
 							</td>
 							
 							<td style="text-align: right;">
 								<form action="/ispw_project/RequestPageServlet" method="post">
 								<input name="student" type="hidden" value="${request.getStudent().getUsername()}" >
-								<input name="course" type="hidden" value="${request.getCourse().getAbbreviation()}" >
+								<input name="course" type="hidden" value="${request.getCourse()}" >
 								<button type="submit" name="btnDecline" class="button" onclick="return confirm('Are you sure to decline this request?')">
 									Decline
 								</button>
@@ -68,7 +68,7 @@
 							<td style="border-radius: 0 14px 14px 0; white-space: nowrap; text-align: center;	">
 								<form action="/ispw_project/RequestPageServlet" method="post">
 								<input name="student" type="hidden" value="${request.getStudent().getUsername()}" >
-								<input name="course" type="hidden" value="${request.getCourse().getAbbreviation()}" >
+								<input name="course" type="hidden" value="${request.getCourse()}" >
 								<button type="submit" name="btnAccept" class="button" onclick="return confirm('Are you sure to accept this request?')">
 									Accept
 								</button>

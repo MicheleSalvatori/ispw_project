@@ -141,12 +141,9 @@ public class ProfilePageView implements Initializable {
 	private void removeCourse(ActionEvent event) {
 		
 		joinCourseController = new JoinCourseController();
-		
-		UserBean userBean = new UserBean();
-		userBean.setUsername(UserBean.getInstance().getUsername());
 
 		try {
-			List<CourseBean> courses = joinCourseController.getStudentCourses(userBean);
+			List<CourseBean> courses = joinCourseController.getCourses(UserBean.getInstance());
 			
 			List<String> names = new ArrayList<>();
 			for (CourseBean course : courses) {
@@ -156,13 +153,10 @@ public class ProfilePageView implements Initializable {
 			int index = AlertController.courseRequest(names);
 			
 			CourseBean courseBean = courses.get(index);
-					
-			UserBean studentBean = new UserBean();
-			studentBean.setUsername(UserBean.getInstance().getUsername());
-				
+
 			RequestBean requestBean = new RequestBean();
-			requestBean.setStudent(studentBean);
-			requestBean.setCourse(courseBean);
+			requestBean.setStudent(UserBean.getInstance());
+			requestBean.setCourse(courseBean.getAbbreviation());
 				
 			joinCourseController.removeCourse(requestBean);
 					
@@ -185,13 +179,10 @@ public class ProfilePageView implements Initializable {
 	private void addCourse(ActionEvent event) {
 		
 		joinCourseController = new JoinCourseController();
-		
-		UserBean userBean = new UserBean();
-		userBean.setUsername(UserBean.getInstance().getUsername());
-		
+
 		List<CourseBean> courses = null;
 		try {
-			courses = joinCourseController.getAvailableCourses(userBean);
+			courses = joinCourseController.getAvailableCourses(UserBean.getInstance());
 			
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
@@ -217,13 +208,10 @@ public class ProfilePageView implements Initializable {
 		}
 
 		CourseBean course = courses.get(index);
-			
-		UserBean student = new UserBean();
-		student.setUsername(UserBean.getInstance().getUsername());
 		
 		RequestBean request = new RequestBean();
-		request.setStudent(student);
-		request.setCourse(course);
+		request.setStudent(UserBean.getInstance());
+		request.setCourse(course.getAbbreviation());
 
 		try {
 			joinCourseController.sendRequest(request);
@@ -261,7 +249,7 @@ public class ProfilePageView implements Initializable {
 		rect.setFill(pattern);
 	}
 	
-	public void loadCourses() {
+	private void loadCourses() {
 		vboxScroll.getChildren().clear();
 		
 		joinCourseController = new JoinCourseController();
@@ -279,7 +267,6 @@ public class ProfilePageView implements Initializable {
 				CourseCard courseCard = new CourseCard(courseBean, professors, Type.FOLLOW);
 				vboxScroll.getChildren().add(courseCard.getPane());
 			}
-
 				
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
@@ -325,7 +312,7 @@ public class ProfilePageView implements Initializable {
 				return;
 			}
 			
-			AlertController.infoAlert("Request of course '" + requestBean.getCourse().getAbbreviation() + "' deleted.");
+			AlertController.infoAlert("Request of course '" + requestBean.getCourse() + "' deleted.");
 			loadCourses();
 		}
 	}

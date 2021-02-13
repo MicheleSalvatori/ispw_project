@@ -106,7 +106,7 @@ public class ProfessorDAO {
 				
 			}else {
 				professors = new ArrayList<>();
-				resultSet.first();				// mi riposiziono alla prima riga 
+				resultSet.first();
 				do {
 					Professor prof = setupProfessor(resultSet);
 					professors.add(prof);

@@ -23,10 +23,9 @@ public class AcceptRequestController {
 		UserBean studentBean = requestBean.getStudent();
 		Student student = new Student();
 		student.setUsername(studentBean.getUsername());
-				
-		CourseBean courseBean = requestBean.getCourse();
+
 		Course course = new Course();
-		course.setAbbreviation(courseBean.getAbbreviation());
+		course.setAbbreviation(requestBean.getCourse());
 				
 		Request request = new Request(student, course);
 				
@@ -42,10 +41,9 @@ public class AcceptRequestController {
 		UserBean studentBean = requestBean.getStudent();
 		Student student = new Student();
 		student.setUsername(studentBean.getUsername());
-			
-		CourseBean courseBean = requestBean.getCourse();
+
 		Course course = new Course();
-		course.setAbbreviation(courseBean.getAbbreviation());
+		course.setAbbreviation(requestBean.getCourse());
 			
 		Request request = new Request(student, course);
 		RequestDAO.deleteRequest(request);
@@ -76,16 +74,14 @@ public class AcceptRequestController {
 			RequestBean requestBean = new RequestBean();
 			
 			Course course = request.getCourse();
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbreviation());
-			
+
 			User student = request.getStudent();
 			UserBean studentBean = new UserBean();
 			studentBean.setName(student.getName());
 			studentBean.setSurname(student.getSurname());
 			studentBean.setUsername(student.getUsername());
 			
-			requestBean.setCourse(courseBean);
+			requestBean.setCourse(course.getAbbreviation());
 			requestBean.setStudent(studentBean);
 					
 			requestsBean.add(requestBean);

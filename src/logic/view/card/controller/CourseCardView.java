@@ -54,16 +54,9 @@ public class CourseCardView {
 	private void deleteRequest(ActionEvent event) {
 		ProfilePageView profilePageView = (ProfilePageView) PageLoader.getInstance().getController();
 		
-		UserBean studentBean = new UserBean();
-		studentBean.setEmail(UserBean.getInstance().getEmail());
-		studentBean.setName(UserBean.getInstance().getName());
-		studentBean.setPassword(UserBean.getInstance().getPassword());
-		studentBean.setSurname(UserBean.getInstance().getSurname());
-		studentBean.setUsername(UserBean.getInstance().getUsername());
-		
 		RequestBean requestBean = new RequestBean();
-		requestBean.setStudent(studentBean);
-		requestBean.setCourse(courseBean);
+		requestBean.setStudent(UserBean.getInstance());
+		requestBean.setCourse(courseBean.getAbbreviation());
 		
 		profilePageView.deleteRequest(requestBean);
 	}

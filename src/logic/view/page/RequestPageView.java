@@ -91,7 +91,7 @@ public class RequestPageView implements Initializable {
 		vboxRequest.getChildren().clear();
 			
 		for (RequestBean requestBean : requests) {
-			if (filteredCourses.contains(requestBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
+			if (filteredCourses.contains(requestBean.getCourse()) || filteredCourses.isEmpty()) {
 				RequestCard requestCard = new RequestCard(requestBean);
 				vboxRequest.getChildren().add(requestCard.getPane());
 			}

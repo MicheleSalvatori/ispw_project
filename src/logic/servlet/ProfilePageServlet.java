@@ -156,13 +156,10 @@ public class ProfilePageServlet extends HttpServlet {
 		
 		UserBean studentBean = new UserBean();
 		studentBean.setUsername(userLogged.getUsername());
-
-		CourseBean courseBean = new CourseBean();
-		courseBean.setAbbreviation(course);
 		
 		RequestBean requestBean = new RequestBean();
 		requestBean.setStudent(studentBean);
-		requestBean.setCourse(courseBean);
+		requestBean.setCourse(course);
 		
 		return requestBean;
 	}

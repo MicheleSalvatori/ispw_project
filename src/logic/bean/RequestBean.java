@@ -3,7 +3,7 @@ package logic.bean;
 public class RequestBean {
 
 	private UserBean rbStudent;
-	private CourseBean rbCourse;
+	private String rbCourse;
 	
 	public UserBean getStudent() {
 		return rbStudent;
@@ -13,11 +13,11 @@ public class RequestBean {
 		this.rbStudent = student;
 	}
 	
-	public CourseBean getCourse() {
+	public String getCourse() {
 		return rbCourse;
 	}
 	
-	public void setCourse(CourseBean course) {
+	public void setCourse(String course) {
 		this.rbCourse = course;
 	}
 }
