@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,6 +29,7 @@ import logic.bean.UserBean;
 import logic.controller.ScheduleController;
 import logic.controller.ScheduleExamController;
 import logic.controller.ScheduleLessonController;
+import logic.exceptions.DatePriorTodayException;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.PageLoader;
@@ -121,15 +124,31 @@ public class SchedulePageView implements Initializable {
 	}
 	
 	@FXML
-	private void addLesson(ActionEvent event) {
+	private void addLesson(ActionEvent event) throws DatePriorTodayException {
 		LessonBean lessonBean = new LessonBean();
 		
 		String topic = textTopic.getText();
 		lessonBean.setTopic(topic);
 		
-		LocalDate localDate = dateLesson.getValue();
-		Date date = Date.valueOf(localDate);
-		lessonBean.setDate(date);
+		try {
+			LocalDate localDateNow = LocalDate.now();
+			LocalDate localDate = dateLesson.getValue();
+			Date dateEntered = Date.valueOf(localDate);
+			Date date;
+			
+			if (dateEntered.before(Date.valueOf(localDateNow))) {
+				date = null;
+			} else {
+				date = dateEntered;
+			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		    date = (Date) sdf.parse(date.toString());
+		    lessonBean.setDate(date);
+		    
+		} catch (NullPointerException | ParseException e) {
+			throw new DatePriorTodayException("Date entered must be after today");
+		}
 		
 		Time time = Time.valueOf(textTimeLesson.getText()+":00");
 		lessonBean.setTime(time);
@@ -158,15 +177,34 @@ public class SchedulePageView implements Initializable {
 	}
 	
 	@FXML
-	private void addExam(ActionEvent event) {
+	private void addExam(ActionEvent event) throws DatePriorTodayException {
 		ExamBean examBean = new ExamBean();
 		
 		String note = textNote.getText();
 		examBean.setNote(note);
 		
-		LocalDate localDate = dateExam.getValue();
-		Date date = Date.valueOf(localDate);
-		examBean.setDate(date);
+		try {
+			LocalDate localDateNow = LocalDate.now();
+			LocalDate localDate = dateExam.getValue();
+			Date dateEntered = Date.valueOf(localDate);
+			Date date;
+			
+			if (dateEntered.before(Date.valueOf(localDateNow))) {
+				date = null;
+			} else {
+				date = dateEntered;
+			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		    date = (Date) sdf.parse(date.toString());
+		    examBean.setDate(date);
+		    
+		} catch (NullPointerException | ParseException e) {
+			AlertController.infoAlert("Date entered must be after today.");
+			throw new DatePriorTodayException("Date entered must be after today");
+		}
+		
+		
 		
 		Time time = Time.valueOf(textTimeExam.getText()+":00");
 		examBean.setTime(time);
