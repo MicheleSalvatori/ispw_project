@@ -364,6 +364,11 @@ public class Queries {
 		return stmt.executeUpdate(sql);
 	}
 	
+	public static int deleteCourse(Statement stmt, Course course) throws SQLException {
+		String query = String.format("DELETE FROM course WHERE abbrevation = '%s' AND name = '%s';", course.getAbbreviation(), course.getName());
+		return stmt.executeUpdate(query);
+	}
+	
 /******************************************************************************************************************/
 
 	// Classroom queries

@@ -356,4 +356,21 @@ public class CourseDAO {
 		String r = rs.getString("reception");
 		return new Course(n, a, y, s, c, p, g, r);
 	}
+
+	public static void deleteCourse(Course course) throws SQLException {
+		Connection conn = null;
+		Statement stmt = null;
+
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				
+			Queries.deleteCourse(stmt, course);
+			
+		} finally {
+			if(stmt != null)
+				stmt.close();
+		}
+		
+	}
 }

@@ -69,17 +69,11 @@ public class TestNewAssignment {
 		} catch (RecordNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-
 	}
 	
 	
 	@After
 	public void cleanDB() throws SQLException {
-		System.out.println("AFTER");
 		addAssignmentController.deleteAssignmentById(insertedAssigmentId);
 	}
 
