@@ -42,7 +42,7 @@
 						<c:if test="${empty listOfQuestion}">
 						<tr>
 							<td colspan="7" class="exam-text">
-								No exam found.
+								No one seems to have any questions to ask in your courses. Be the first!
 							</td>
 						</tr>
 						</c:if>

@@ -142,8 +142,12 @@
 											onclick="return confirm('Are you sure you want to free this seat?')">${j}</button>
 										</c:when>
 										<c:when test="${occupiedSeats[idSeat].isFree()}">
+										<%if (user.getRole() == Role.STUDENT) { %>
 											<button name="bookSeat" class="button-seat seat-free" type="submit" value="${idSeat+1}"
 											onclick="return confirm('Are you sure you want to book this seat?')" >${j}</button>
+											<%} else { %>
+											<button name="bookSeat" class="button-seat seat-free" type="submit" disabled="disabled">${j}</button>
+											<%} %>
 										</c:when>
 										<c:otherwise>
 											<button class="button-seat seat-booked" disabled="disabled">${j}</button>

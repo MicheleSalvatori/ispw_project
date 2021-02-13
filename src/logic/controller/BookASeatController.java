@@ -57,6 +57,10 @@ public class BookASeatController {
 	public SeatBean getMySeat(LessonBean lesson, UserBean user) throws SQLException {
 		String username = user.getUsername();
 		Seat seat = SeatDAO.getMySeatIn(username, lesson);
-		return new SeatBean(seat.getIndex());
+		SeatBean seatBean = null;
+		if (seat!=null) {
+			seatBean = new SeatBean(seat.getIndex());
+		}
+		return seatBean;
 	}
 }

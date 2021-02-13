@@ -33,6 +33,7 @@ import logic.exceptions.SeatAlreadyBookedException;
 import logic.utilities.AlertController;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
+import logic.utilities.Role;
 import logic.utilities.SQLConverter;
 import logic.view.card.element.WeatherCard;
 
@@ -43,13 +44,13 @@ public class LessonPageView {
 
 	@FXML
 	private Label labelProfessor;
-	
+
 	@FXML
 	private Label labelClassroom;
-	
+
 	@FXML
 	private Label labelTime;
-	
+
 	@FXML
 	private Label labelDate;
 
@@ -72,7 +73,7 @@ public class LessonPageView {
 	private GridPane gridSeat;
 	private SeatBean mySeat;
 	private ObservableList<Node> buttonList;
-	
+
 	private static final String FREE_SEAT = "free-seat";
 	private static final String YOUR_SEAT = "your-seat";
 	private static final String BOOKED_SEAT = "booked-seat";
@@ -89,7 +90,7 @@ public class LessonPageView {
 	}
 
 	public void setBean(Object lesson) {
-		
+
 		ViewNextLessonController lessonController = new ViewNextLessonController();
 		controlSeat = new BookASeatController();
 
@@ -97,9 +98,13 @@ public class LessonPageView {
 			this.lesson = lessonController.getLesson((LessonBean) lesson);
 			this.classroom = this.lesson.getClassroom();
 			this.classroom.setSeat(controlSeat.getOccupateSeatOf(this.lesson));
-			this.mySeat = controlSeat.getMySeat(this.lesson, UserBean.getInstance());
+			if (UserBean.getInstance().getRole() == Role.STUDENT) {
+				this.mySeat = controlSeat.getMySeat(this.lesson, UserBean.getInstance());
+			}else {
+				mySeat = null;
+			}
 			setPage();
-			
+
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
 			PageLoader.getInstance().goBack();
@@ -123,19 +128,19 @@ public class LessonPageView {
 		seatEvent = event -> {
 			Button btnSeat = (Button) event.getSource();
 			switch (btnSeat.getId()) {
-			
+
 			case YOUR_SEAT:
 				if (AlertController.confirmationAlert("Are you sure you want to free your seat?")) {
 					freeSeat(btnSeat);
 				}
 				break;
-				
+
 			case FREE_SEAT:
 				if (AlertController.confirmationAlert("Are you sure you want to book this seat?")) {
 					bookSeat(btnSeat);
 				}
 				break;
-				
+
 			default:
 				break;
 			}
@@ -147,7 +152,7 @@ public class LessonPageView {
 			controlSeat.freeSeat(mySeat, this.lesson, UserBean.getInstance());
 			changeState(getSeat(buttonSeat), SeatState.FREE);
 			mySeat = null;
-			
+
 		} catch (SQLException e) {
 			AlertController.infoAlert("The system was unable to accommodate your request, please try again!");
 		}
@@ -163,7 +168,7 @@ public class LessonPageView {
 			}
 			mySeat = newSeat;
 			changeState(mySeat, SeatState.YOUR);
-			
+
 		} catch (SQLException e) {
 			AlertController.infoAlert("Something bad happened, booking failed, please try again!");
 
@@ -222,6 +227,15 @@ public class LessonPageView {
 				}
 			}
 		}
+		if (UserBean.getInstance().getRole() == Role.PROFESSOR) {
+			for (Node n : buttonList) {
+				try {
+					((Button) n).setDisable(true);
+				} catch (ClassCastException e) {
+					break; // Cast label of the rows to Button.
+				}
+			}
+		}
 	}
 
 	private SeatBean getSeat(Button button) {
@@ -232,19 +246,19 @@ public class LessonPageView {
 
 	private void changeState(SeatBean seat, SeatState state) {
 		Button button = (Button) buttonList.get(seat.getId() - 1);
-		
+
 		switch (state) {
-		
+
 		case FREE:
 			button.setId(FREE_SEAT);
 			button.setDisable(false);
 			break;
-			
+
 		case BOOKED:
 			button.setId(BOOKED_SEAT);
 			button.setDisable(true);
 			break;
-			
+
 		case YOUR:
 			button.setId(YOUR_SEAT);
 			button.setDisable(false);
