@@ -62,8 +62,10 @@ public class TestScheduleExam {
 			dbUpdated = controller.scheduleExam(exam);
 			examBean = scheduledController.getExams(user).get(0);
 			result = examBean.getDate().toString();
+			
 		} catch (SQLException | RecordNotFoundException e) {
 			message = "Connection failed";
+			
 		} catch (DatePriorTodayException e) {
 			message = "Date before today error";
 		}
@@ -78,5 +80,4 @@ public class TestScheduleExam {
 			controller.deleteExam(exam);
 		}
 	}
-
 }

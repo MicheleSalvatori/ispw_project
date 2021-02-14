@@ -34,7 +34,7 @@ public class TestScheduleLesson {
 		String professor = "testProfessor";
 		String classroom = "test";
 		Date date = Date.valueOf(LocalDateTime.now().toLocalDate());
-		Time time = Time.valueOf("23:59:00");
+		Time time = Time.valueOf("23:58:00");
 		String topic = "The lesson topic is test";
 		
 		ClassroomBean classroomBean = new ClassroomBean();

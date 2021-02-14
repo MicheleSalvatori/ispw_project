@@ -23,7 +23,7 @@ public class TestAddCourse {
 	CourseController courseController;
 	String abbr = "_TE";
 	String courseName = "TEST course";
-	boolean created;
+	boolean created = false;
 
 	@Before
 	public void prepare() {
@@ -63,7 +63,6 @@ public class TestAddCourse {
 			
 		} catch (SQLException e) {
 			message = "Connection failed";
-			created = false;	
 		}
 		
 		// assert
@@ -76,5 +75,4 @@ public class TestAddCourse {
 			addCourseController.deleteCourse(courseBean);
 		}
 	}
-
 }

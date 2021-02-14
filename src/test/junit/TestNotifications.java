@@ -87,10 +87,8 @@ public class TestNotifications {
 		assertEquals(message, reqCountBefore, reqCountAfter - 1l);
 	}
 	
-	
 	@After
 	public void cleanDB() throws SQLException {
 		joinCourseController.deleteRequest(requestBean);
 	}
-
 }

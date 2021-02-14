@@ -26,7 +26,7 @@ public class TestBookASeat {
 	SeatBean seat;
 	UserBean user;
 	BookASeatController controller;
-	boolean dbUpdated;
+	boolean dbUpdated = false;
 	
 	LessonBean lesson;
 	int idSeat = 1;
@@ -49,17 +49,25 @@ public class TestBookASeat {
 	
 	@Test
 	public void test() {
+		
+		String message = "";
+		
 		int idBooked = 0;
 		controller = new BookASeatController();
-			try {
-				controller.occupateSeat(seat, lesson, user);
-				idBooked = controller.getMySeat(lesson, user).getId();
-				dbUpdated = true;
-			} catch (SQLException | SeatAlreadyBookedException e) {
-				e.printStackTrace();
-			}
+		
+		try {
+			controller.occupateSeat(seat, lesson, user);
+			idBooked = controller.getMySeat(lesson, user).getId();
+			dbUpdated = true;
+				
+		} catch (SQLException e) {
+			message = "Connection failed";
 			
-			assertEquals(idSeat, idBooked);
+		} catch(SeatAlreadyBookedException e) {
+			message = e.getMessage();
+		}
+			
+		assertEquals(message, idSeat, idBooked);
 	}
 	
 	@After
@@ -67,10 +75,10 @@ public class TestBookASeat {
 		if (dbUpdated) {
 			try {
 				controller.freeSeat(seat, lesson, user);
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-
 }

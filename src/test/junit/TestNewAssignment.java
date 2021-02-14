@@ -73,12 +73,10 @@ public class TestNewAssignment {
 		assertEquals(message, true, found);
 	}
 	
-	
 	@After
 	public void cleanDB() throws SQLException {
 		if(found) {
 			addAssignmentController.deleteAssignmentById(insertedAssigmentId);
 		}
 	}
-
 }
