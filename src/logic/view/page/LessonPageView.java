@@ -2,9 +2,7 @@ package logic.view.page;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -120,7 +118,7 @@ public class LessonPageView {
 		textTopic.setText(lesson.getTopic());
 
 		setupEvent();
-		setWeatherCard(lesson.getTime());
+		setWeatherCard(lesson.getTime().toString());
 		setupRoom();
 	}
 
@@ -267,8 +265,8 @@ public class LessonPageView {
 		}
 	}
 
-	private void setWeatherCard(Time time) {
-		int hour = (int) TimeUnit.MILLISECONDS.toHours(time.getTime());
+	private void setWeatherCard(String time) {
+		int hour = Integer.parseInt(time.substring(0, 2));
 		CheckWeatherController controller = new CheckWeatherController();
 
 		List<String> info = controller.getWeather(hour);

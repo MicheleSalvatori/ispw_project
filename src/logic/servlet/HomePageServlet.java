@@ -16,8 +16,11 @@ import logic.bean.LessonBean;
 import logic.bean.UserBean;
 import logic.controller.CheckClassPositionController;
 import logic.controller.CheckWeatherController;
+import logic.controller.QuestionController;
 import logic.controller.ViewNextLessonController;
+import logic.controller.ViewVerbalizedExamsController;
 import logic.exceptions.RecordNotFoundException;
+import logic.utilities.Role;
 
 @WebServlet("/HomePageServlet")
 public class HomePageServlet extends HttpServlet {
@@ -67,6 +70,31 @@ public class HomePageServlet extends HttpServlet {
 		}
 		
 		CheckClassPositionController posController = new CheckClassPositionController();
+		
+		try {
+			// User is a Student
+			if (loggedUser.getRole() == Role.STUDENT) {		
+				ViewVerbalizedExamsController examController = new ViewVerbalizedExamsController();
+				request.setAttribute("verbs", examController.countVerbalizedExams(loggedUser));
+				request.setAttribute("wpa", examController.wpa(examController.getVerbalizedExams(loggedUser)));
+			}
+							
+			// User is a Professor
+			else if (loggedUser.getRole() == Role.PROFESSOR) {
+				QuestionController questionController = new QuestionController();
+				request.setAttribute("questions", questionController.countQuestions(loggedUser));
+			}
+		
+		} catch (SQLException e) {
+			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			return;
+			
+		} catch (RecordNotFoundException e) {
+			request.setAttribute("verbs", 0);
+			request.setAttribute("wpa", 0);
+			request.setAttribute("questions", 0);
+		}
 		
 		request.setAttribute("map", posController.getMap().substring(1));
 		request.setAttribute("lesson", lesson);

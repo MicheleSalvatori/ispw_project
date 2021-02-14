@@ -72,6 +72,7 @@ public class ForumPageServlet extends HttpServlet {
 			QuestionController controller = new QuestionController();
 			try {
 				controller.setSolved(questionID);
+				
 			} catch (SQLException e) {
 				req.setAttribute(alertAttribute, alertString);
 				req.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(req, resp);

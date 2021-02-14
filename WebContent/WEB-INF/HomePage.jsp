@@ -55,15 +55,35 @@
 				<!-- Stats -->
 				<div class="stat col">
 					<table style="border-collapse: collapse;" align="center">
+						<% if (user.getRole() == Role.STUDENT) { %>
 						<tr>
 							<td class="stat-num">
-								25
+								${verbs}
+							</td>
+
+							<td class="stat-text" style="padding-right: 5vw;">
+								Verbalized<br>Exams
+							</td>
+
+							<td class="stat-num">
+								${wpa}
+							</td>
+
+							<td class="stat-text">
+								Average<br>Grade
+							</td>
+						</tr>
+						<% } else { %>
+						<tr>
+							<td class="stat-num">
+								${questions}
 							</td>
 
 							<td class="stat-text">
 								New<br>Questions
 							</td>
 						</tr>
+						<% } %>
 					</table>
 				</div>
 			
@@ -164,7 +184,7 @@
 										<table style="display: inline; vertical-align: middle;" spacing="0">
 											<tr>
 												<td class="lesson-text">
-												  ${lesson.getCourse().getAbbreviation()}
+												  ${lesson.getCourse()}
 												</td>
 											</tr>
 
@@ -190,7 +210,12 @@
 									</td>
 
 									<td align="right" style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%; border-radius: 0 14px 14px 0;">
-										<a href="/ispw_project/LessonPageServlet" class="button-view" type="button" onclick="<c:set var="lesson" value="${lesson}" scope="session"/>">View</a>
+										<form action="/ispw_project/LessonPageServlet" method="get" >
+											<button class="button-view" type="submit">View</button>
+											<input type="hidden" name="lessonCourse" value="${lesson.getCourse()}">
+											<input type="hidden" name="lessonDate" value="${lesson.getDate()}">
+											<input type="hidden" name="lessonTime" value="${lesson.getTime()}">
+										</form>
 									</td>
 								</tr>
 								</c:forEach>

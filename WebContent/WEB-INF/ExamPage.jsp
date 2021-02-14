@@ -40,7 +40,7 @@
 				<table style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
 					<c:if test="${empty listOfExam}">
 						<tr>
-							<td colspan="7" class="exam-text">
+							<td colspan="7" class="exam-text" style="text-align: center;">
 								No exam found.
 							</td>
 						</tr>

@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -57,7 +56,7 @@ public class LessonPageServlet extends HttpServlet {
 			SeatBean mySeat = seatController.getMySeat(lesson, user);
 			
 			CheckWeatherController controllerWeather = new CheckWeatherController();
-			List<String> weather = controllerWeather.getWeather((int) TimeUnit.MILLISECONDS.toHours(lesson.getTime().getTime()));
+			List<String> weather = controllerWeather.getWeather(Integer.parseInt(lesson.getTime().toString().substring(0, 2)));
 			
 			req.setAttribute("lesson", lesson);
 			req.setAttribute("occupiedSeats", occupiedSeats);

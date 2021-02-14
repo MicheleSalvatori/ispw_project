@@ -21,8 +21,7 @@ public class QuestionDAO {
 
 	}
 
-	public static List<Question> getStudentCoursesQuestions(String username)
-			throws SQLException, RecordNotFoundException {
+	public static List<Question> getStudentCoursesQuestions(String username) throws SQLException, RecordNotFoundException {
 		Connection conn;
 		Statement stmt;
 		List<Question> questions;
@@ -39,8 +38,7 @@ public class QuestionDAO {
 		return questions;
 	}
 
-	public static List<Question> getProfessorCoursesQuestions(String username)
-			throws SQLException, RecordNotFoundException {
+	public static List<Question> getProfessorCoursesQuestions(String username) throws SQLException, RecordNotFoundException {
 		Connection conn;
 		Statement stmt;
 		List<Question> questions;

@@ -41,7 +41,7 @@
 						<tbody style="display: block; border-spacing: 0 10px;">
 						<c:if test="${empty listOfQuestion}">
 						<tr>
-							<td colspan="7" class="exam-text">
+							<td colspan="7" class="exam-text" style="text-align: center;">
 								No one seems to have any questions to ask in your courses. Be the first!
 							</td>
 						</tr>
@@ -155,6 +155,13 @@
 					<div class="border-table">
 						<div class="overflow">
 						<table class="table-question;" style="border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
+								<c:if test="${empty listOfAssignment}">
+								<tr>
+									<td colspan="5" class="exam-text" style="text-align: center;">
+										No assignment found.
+									</td>
+								</tr>
+								</c:if>
 								<c:forEach items="${listOfAssignment}" var="assignment">
 									<tr height="30px" class="question">
 										<td

@@ -111,7 +111,6 @@ public class ForumPageView implements Initializable {
 			PageLoader.getInstance().goBack();
 			
 		} catch (RecordNotFoundException e) {
-			AlertController.infoAlert(e.getMessage());
 			btnMyQuestions.setDisable(true);
 			btnAllQuestions.setDisable(true);
 		}

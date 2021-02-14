@@ -82,6 +82,7 @@ public class QuestionCardView {
 			graphicController.setSolved(question.getId());
 			question.setSolved(true);
 			setCard(question);
+			
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
 			PageLoader.getInstance().goBack();
