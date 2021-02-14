@@ -15,11 +15,13 @@ import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
 public class AssignmentDAO {
+	
 	private static String noAssigment = "No assignment found";
 	private static String rsCourse = "course";
 	private static String rsTitle = "title";
 	
 	private AssignmentDAO() {
+		
 	}
 
 	public static List<Assignment> getAssignmentsByStudent(String student) throws SQLException, RecordNotFoundException {
@@ -41,17 +43,7 @@ public class AssignmentDAO {
 				throw new RecordNotFoundException(noAssigment);
 				
 			} else {
-				assignments = new ArrayList<>();
-				rs.first();
-				do {
-					int id = rs.getInt("id");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString(rsCourse));
-					String t = rs.getString(rsTitle);
-					Date d = rs.getDate("date");
-					String te = rs.getString("text");
-					Assignment assignment = new Assignment(id, c, t, d, te);
-					assignments.add(assignment);
-				} while (rs.next());
+				assignments = getAssignments(rs);
 			}
 			rs.close();
 		} finally {
@@ -81,18 +73,9 @@ public class AssignmentDAO {
 				throw new RecordNotFoundException(noAssigment);
 				
 			} else {
-				assignments = new ArrayList<>();
-				rs.first();
-				do {
-					int id = rs.getInt("id");
-					Course c = CourseDAO.getCourseByAbbrevation(rs.getString(rsCourse));
-					String t = rs.getString(rsTitle);
-					Date d = rs.getDate("date");
-					String te = rs.getString("text");
-					Assignment assignment = new Assignment(id, c, t, d, te);
-					assignments.add(assignment);
-				} while (rs.next());
+				assignments = getAssignments(rs);
 			}
+			
 			rs.close();
 		} finally {
 			if (stmt != null) {
@@ -175,5 +158,21 @@ public class AssignmentDAO {
 		}
 		
 		return true;
+  }
+	
+	private static List<Assignment> getAssignments(ResultSet rs) throws SQLException, RecordNotFoundException {
+		List<Assignment> assignments = new ArrayList<>();
+		rs.first();
+		do {
+			int id = rs.getInt("id");
+			Course c = CourseDAO.getCourseByAbbrevation(rs.getString(rsCourse));
+			String t = rs.getString(rsTitle);
+			Date d = rs.getDate("date");
+			String te = rs.getString("text");
+			Assignment assignment = new Assignment(id, c, t, d, te);
+			assignments.add(assignment);
+		} while (rs.next());
+		
+		return assignments;
 	}
 }

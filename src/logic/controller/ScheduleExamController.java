@@ -1,7 +1,5 @@
 package logic.controller;
 
-import logic.bean.ClassroomBean;
-import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.exceptions.DatePriorTodayException;
 import logic.model.Classroom;
@@ -13,18 +11,22 @@ import logic.utilities.DateUtils;
 public class ScheduleExamController {
 
 	public boolean scheduleExam(ExamBean examBean) throws DatePriorTodayException {
-		
-		DateUtils.checkPriorDate(examBean.getDate());
-		
-		CourseBean courseBean = examBean.getCourse();
-		Course course = new Course(courseBean.getName(), courseBean.getAbbreviation(), courseBean.getYear(),
-									courseBean.getSemester(), courseBean.getCredits(), courseBean.getPrerequisites(),
-									courseBean.getGoal(), courseBean.getReception());
-		
-		ClassroomBean classroomBean = examBean.getClassroom();
-		Classroom classroom = new Classroom(classroomBean.getName());
+    DateUtils.checkPriorDate(examBean.getDate());
+		Course course = new Course();
+		course.setAbbreviation(examBean.getCourse());
+
+		Classroom classroom = new Classroom(examBean.getClassroom());
 		
 		Exam exam = new Exam(examBean.getDate(), examBean.getTime(), course, classroom, examBean.getNote());
 		return ExamDAO.insertExam(exam);
+	}
+	
+	public boolean deleteExam(ExamBean examBean){
+		Course course = new Course();
+		course.setAbbreviation(examBean.getCourse());
+		Classroom classroom = new Classroom(examBean.getClassroom());
+		Exam exam = new Exam(examBean.getDate(), examBean.getTime(), course, classroom, examBean.getNote());
+		
+		return ExamDAO.deleteExam(exam);
 	}
 }

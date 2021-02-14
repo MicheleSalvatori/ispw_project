@@ -43,9 +43,9 @@
 			  <tbody>
 				<tr>
 				  	<td style="padding-right: 10px;">
-						<label class="status-label" id="statusName">
+						<a class="status-label" id="statusName">
 							<%=user.getName()%>
-						</label>
+						</a>
 					</td>
 					
 				  	<td style="padding-right: 10px;">
@@ -77,7 +77,9 @@
 					</td>
 					
 				  	<td style="padding-right: 10px;">
-						<input class="status-avatar" type="image" src="res/img/Logo.png" alt="avatar"/>
+				  		<a href="/ispw_project/ProfilePageServlet">
+				  			<img class="status-avatar" src="res/img/avatar/status/avatar1.png" alt="avatar">
+				  		</a>
 					</td>
 					
 				  	<td style="padding-right: 10px;">

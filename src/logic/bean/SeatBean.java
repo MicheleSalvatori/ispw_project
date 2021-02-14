@@ -1,9 +1,10 @@
 package logic.bean;
 
 public class SeatBean {
-	private boolean free;
-	private int id;
-	private String classroomName;
+	
+	private boolean sebFree;
+	private int sebID;
+	private String sebClassroomName;
 	
 	public SeatBean(int id) {
 		setId(id);
@@ -15,27 +16,27 @@ public class SeatBean {
 	}
 	
 	public String getClassroomName() {
-		return classroomName;
+		return sebClassroomName;
 	}
 
 	public void setClassroomName(String classroomName) {
-		this.classroomName = classroomName;
+		this.sebClassroomName = classroomName;
 	}
 
 	public int getId() {
-		return id;
+		return sebID;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.sebID = id;
 	}
 
 	public void setFree(boolean free) {
-		this.free = free;
+		this.sebFree = free;
 	}
 
 	public boolean isFree() {
-		return this.free;
+		return this.sebFree;
 	}
 
 }

@@ -15,7 +15,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.AskAQuestionController;
 import logic.utilities.AlertController;
@@ -45,7 +44,7 @@ public class NewQuestionPageView implements Initializable {
 				.or(Bindings.isEmpty(textSubject.textProperty())).or((courseComboBox.valueProperty().isNull())));
 		
 		try {
-			List<CourseBean> courses = controller.getCoursesOfStudent(UserBean.getInstance());
+			List<CourseBean> courses = controller.getStudentCourses(UserBean.getInstance());
 			for (CourseBean c : courses) {
 				courseComboBox.getItems().add(c.getAbbreviation());
 			}
@@ -62,12 +61,7 @@ public class NewQuestionPageView implements Initializable {
 		String questionSubject = textSubject.getText();
 		String questionText = textQuestion.getText();
 		
-		StudentBean studentBean = new StudentBean();
-		studentBean.setEmail(UserBean.getInstance().getEmail());
-		studentBean.setName(UserBean.getInstance().getName());
-		studentBean.setPassword(UserBean.getInstance().getPassword());
-		studentBean.setSurname(UserBean.getInstance().getSurname());
-		studentBean.setUsername(UserBean.getInstance().getUsername());
+		UserBean studentBean = UserBean.getInstance();
 
 		questionBean.setStudent(studentBean);
 		questionBean.setText(questionText);

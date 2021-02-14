@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.bean.WeeklyLessonBean;
 import logic.controller.CourseController;
 import logic.exceptions.RecordNotFoundException;
@@ -61,6 +61,7 @@ public class CoursePageView {
     private VBox vboxScroll;
     
     private CourseBean course;
+    private CourseController courseController;
 
     @FXML
     void viewScheduledExams(ActionEvent event) {
@@ -73,16 +74,24 @@ public class CoursePageView {
     }
 	
 	public void setBean(Object course) {
-		this.course = (CourseBean) course;
+		courseController = new CourseController();
+		
+		try {
+			this.course = courseController.getCourse((CourseBean) course);
+			
+		} catch (SQLException e) {
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().goBack();
+		}
+		
 		setPage();
 	}
 	
 	public void setPage() {
-		
-		CourseController courseController = new CourseController();
+
 		try {
-			List<ProfessorBean> professors = courseController.getCourseProfessors(course);
-			for (ProfessorBean professor : professors) {
+			List<UserBean> professors = courseController.getCourseProfessors(course);
+			for (UserBean professor : professors) {
 				listProfessor.getItems().add(professor.getName() + " " + professor.getSurname());
 			}	
 			
@@ -95,7 +104,7 @@ public class CoursePageView {
 			PageLoader.getInstance().goBack();
 			
 		} catch (RecordNotFoundException e) {
-			anchorNextLesson.getChildren().add(new Label("There is no future lesson."));
+			// nothing
 		}
 		
 		try {

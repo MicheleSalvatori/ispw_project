@@ -14,21 +14,21 @@ import javax.servlet.http.HttpSession;
 
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.bean.WeeklyLessonBean;
 import logic.controller.CourseController;
 import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/CoursePageServlet")
 public class CoursePageServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
 		HttpSession session = request.getSession();
 		
 		if (session.getAttribute("loggedUser") == null) {
@@ -44,27 +44,22 @@ public class CoursePageServlet extends HttpServlet {
 		
 		CourseBean course = null;
 		LessonBean lesson = null;
-		List<ProfessorBean> professors = null;
+		List<UserBean> professors = null;
 		List<WeeklyLessonBean> weeklyLessons = null;
 		
 		try {
 			course = controller.getCourse(courseBean);
 			
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			error(request, response);
 			return;
-			
-		} catch (RecordNotFoundException e) {
-			course = null;
 		}
 		
 		try {
 			lesson = controller.getNextLesson(courseBean);
 				
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			error(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -75,8 +70,7 @@ public class CoursePageServlet extends HttpServlet {
 			professors = controller.getCourseProfessors(courseBean);
 			
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			error(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -87,8 +81,7 @@ public class CoursePageServlet extends HttpServlet {
 			weeklyLessons = controller.getWeeklyLessons(courseBean);
 			
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			error(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -101,4 +94,10 @@ public class CoursePageServlet extends HttpServlet {
 		request.setAttribute("listOfWeekly", weeklyLessons);
 		request.getRequestDispatcher("/WEB-INF/CoursePage.jsp").forward(request, response);
 	}
+	
+	private void error(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("alertMsg", "An error as occured. Try later.");
+		request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+	}
 }
+

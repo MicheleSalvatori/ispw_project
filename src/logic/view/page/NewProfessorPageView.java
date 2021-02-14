@@ -30,40 +30,40 @@ public class NewProfessorPageView implements Initializable {
 	private Button btnAddProfessor;
 	
 	@FXML
-	private TextField textUsername;
+	private TextField textUsernameProfessor;
 
 	@FXML
-	private TextField textName;
+	private TextField textNameProfessor;
 
 	@FXML
-	private TextField textSurname;
+	private TextField textSurnameProfessor;
 
 	@FXML
-	private TextField textEmail;
+	private TextField textEmailProfessor;
 
 	@FXML
-	private PasswordField textPassword;
+	private PasswordField textPasswordProfessor;
 
 	@FXML
-	private PasswordField textConfirmPassword;
+	private PasswordField textConfirmPasswordProfessor;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		btnAddProfessor.disableProperty().bind(Bindings.isEmpty(textName.textProperty())
-				.or(Bindings.isEmpty(textSurname.textProperty())).or(Bindings.isEmpty(textUsername.textProperty()))
-				.or(Bindings.isEmpty(textEmail.textProperty())).or(Bindings.isEmpty(textPassword.textProperty()))
-				.or(Bindings.isEmpty(textConfirmPassword.textProperty())));
+		btnAddProfessor.disableProperty().bind(Bindings.isEmpty(textNameProfessor.textProperty())
+				.or(Bindings.isEmpty(textSurnameProfessor.textProperty())).or(Bindings.isEmpty(textUsernameProfessor.textProperty()))
+				.or(Bindings.isEmpty(textEmailProfessor.textProperty())).or(Bindings.isEmpty(textPasswordProfessor.textProperty()))
+				.or(Bindings.isEmpty(textConfirmPasswordProfessor.textProperty())));
 	}
 	
 	@FXML
 	public void addProfessor(ActionEvent event) {
 		
-		String username = (textUsername.getText().replaceAll("\\s", "")).toLowerCase();
-		String password = textPassword.getText();
-		String email = textEmail.getText();
-		String name = textName.getText();
-		String surname = textSurname.getText();
+		String username = (textUsernameProfessor.getText().replaceAll("\\s", "")).toLowerCase();
+		String password = textPasswordProfessor.getText();
+		String email = textEmailProfessor.getText();
+		String name = textNameProfessor.getText();
+		String surname = textSurnameProfessor.getText();
 		
 		try {
 			checkInput();
@@ -95,21 +95,21 @@ public class NewProfessorPageView implements Initializable {
 	}
 	
 	private void checkInput() throws InvalidInputException {
-		String name = textName.getText();
-		String surname = textSurname.getText();
-		String email = textEmail.getText();
-		String password = textPassword.getText();
-		String confirmPassword = textConfirmPassword.getText();
+		String nameProfessor = textNameProfessor.getText();
+		String surnameProfessor = textSurnameProfessor.getText();
+		String emailProfessor = textEmailProfessor.getText();
+		String passwordProfessor = textPasswordProfessor.getText();
+		String confirmPasswordProfessor = textConfirmPasswordProfessor.getText();
 		Pattern p = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
-		Matcher m = p.matcher(name + surname);
+		Matcher m = p.matcher(nameProfessor + surnameProfessor);
 
 		// Check if email is valid and if passwords are the same
-		if (!password.equals(confirmPassword)) {
+		if (!passwordProfessor.equals(confirmPasswordProfessor)) {
 			throw new InvalidInputException("Please make sure your passwords match.");
 		}
 		
 		try {
-			InternetAddress emailAddr = new InternetAddress(email);
+			InternetAddress emailAddr = new InternetAddress(emailProfessor);
 			emailAddr.validate();
 		} catch (AddressException e) {
 			throw new InvalidInputException(e.getMessage());

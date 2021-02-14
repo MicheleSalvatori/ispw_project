@@ -19,7 +19,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>App - LessonPage</title>
+	<title>.myUniversity - LessonPage</title>
 	<link rel="stylesheet" href="res/style/LessonPage.css">
 	<link rel="icon" href="res/img/Logo.png">
 </head>
@@ -43,8 +43,8 @@
 						<td class="text">Course:</td>
 
 						<td class="info" style="text-align: right;">
-							<a href="${pageContext.request.contextPath}/CoursePageServlet?course=<%=lesson.getCourse().getAbbreviation()%>">
-								<%=lesson.getCourse().getAbbreviation()%>
+							<a href="${pageContext.request.contextPath}/CoursePageServlet?course=<%=lesson.getCourse()%>">
+								<%=lesson.getCourse()%>
 							</a>
 						</td>
 					</tr>
@@ -131,7 +131,7 @@
 						<tr>
 							<c:forEach var="j" begin="1" end="<%=seatColumn%>">
 								<td>
-								<input type = "hidden" name="lessonCourse" value="<%=lesson.getCourse().getAbbreviation()%>">
+								<input type = "hidden" name="lessonCourse" value="<%=lesson.getCourse()%>">
 								<input type = "hidden" name="lessonDate" value="<%=lesson.getDate()%>">
 								<input type = "hidden" name="lessonTime" value="<%=lesson.getTime()%>">
 								<c:set var="seatColumn"	value="${lesson.getClassroom().getSeatColumn()}" />
@@ -142,8 +142,12 @@
 											onclick="return confirm('Are you sure you want to free this seat?')">${j}</button>
 										</c:when>
 										<c:when test="${occupiedSeats[idSeat].isFree()}">
+										<%if (user.getRole() == Role.STUDENT) { %>
 											<button name="bookSeat" class="button-seat seat-free" type="submit" value="${idSeat+1}"
 											onclick="return confirm('Are you sure you want to book this seat?')" >${j}</button>
+											<%} else { %>
+											<button name="bookSeat" class="button-seat seat-free" type="submit" disabled="disabled">${j}</button>
+											<%} %>
 										</c:when>
 										<c:otherwise>
 											<button class="button-seat seat-booked" disabled="disabled">${j}</button>

@@ -16,5 +16,12 @@
 	<classpathentry kind="lib" path="lib/jfxrt.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.13.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/libs/byte-buddy-1.8.15.jar"/>
+	<classpathentry kind="lib" path="lib/libs/commons-exec-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/libs/guava-25.0-jre.jar"/>
+	<classpathentry kind="lib" path="lib/libs/okhttp-3.11.0.jar"/>
+	<classpathentry kind="lib" path="lib/libs/okio-1.14.0.jar"/>
+	<classpathentry kind="lib" path="lib/client-combined-3.141.59.jar"/>
+	<classpathentry kind="lib" path="lib/client-combined-3.141.59-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

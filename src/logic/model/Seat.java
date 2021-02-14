@@ -9,6 +9,10 @@ public class Seat {
 		this.free = status;
 	}
 	
+	public Seat(int id) {
+		this.id = id;
+	}
+
 	public int getIndex() {
 		return this.id;
 	}

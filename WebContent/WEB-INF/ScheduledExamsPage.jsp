@@ -15,7 +15,7 @@
 	
 	<head>
 		<meta charset="utf-8">
-		<title>App - ScheduledExamsPage</title>
+		<title>.myUniversity - ScheduledExamsPage</title>
 		<link rel="stylesheet" href="res/style/ScheduledPage.css">
 		<link rel="icon" href="res/img/Logo.png">
 	</head>
@@ -33,7 +33,7 @@
 			
 			<!-- Requests info -->
 			<div style="width: 60%; margin-right: 5vw; float: left; height: 80vh;">
-				<div class="info-text">Lessons</div>
+				<div class="info-text">Exams</div>
 				<div style="border: 2px solid #0C0B0B; border-radius: 14px; width: 100%; height: 100%;">
 					<div class="overflow">
 					<table id="tableLesson" style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
@@ -47,7 +47,7 @@
 						<c:forEach items="${listOfExam}" var="exam">
 						<tr height="60px" class="request">
 						
-							<td style="padding: 1vw; white-space: nowrap; width: 50px;">
+							<td style="border-radius: 14px 0 0 14px; padding: 1vw; white-space: nowrap; width: 50px;">
 								<img class="exam-img" src="res/img/Exam.png" alt="lesson">
 							</td>
 							
@@ -61,15 +61,15 @@
 
 									<tr>
 										<td style="padding-top: 0;" class="lesson-classroom">
-											${exam.getClassroom().getName()}
+											${exam.getClassroom()}
 										</td>
 									</tr>
 								</table>
 							</td>
 
 							<td align="right" class="course" style="width: 8vw; text-align: center;">
-								<a href="/ispw_project/CoursePageServlet?course=${request.getCourse().getAbbreviation()}">
-									${exam.getCourse().getAbbreviation()}
+								<a href="/ispw_project/CoursePageServlet?course=${exam.getCourse()}">
+									${exam.getCourse()}
 								</a>
 							</td>
 							
@@ -77,16 +77,10 @@
 								<img class="time-img" src="res/img/Time.png" alt="time">
 							</td>
 
-							<td style="vertical-align: middle; padding-left: 0.5vw; white-space: nowrap; width: 1%;" class="lesson-time">
+							<td style="border-radius: 0 14px 14px 0; vertical-align: middle; padding-left: 0.5vw; padding-right: 0.5vw; white-space: nowrap; width: 1%;" class="lesson-time">
 								<label style="display: inline; vertical-align: middle;">
 									${SQLConverter.time(exam.getTime())}
 								</label>
-							</td>
-				
-							<td style="border-radius: 0 14px 14px 0; white-space: nowrap; text-align: right; padding-right: 2vw;">
-								<button class="button">
-									View
-								</button>
 							</td>
 						</tr>
 						</c:forEach>
@@ -152,8 +146,7 @@ function filter(val) {
 }
 </script>
 
-<% if (request.getParameter("course") != null) { 
-	System.out.println(request.getParameter("course"));%>
+<% if (request.getParameter("course") != null) { %>
 	<script>
 		filter("<%=request.getParameter("course")%>");
 	</script>

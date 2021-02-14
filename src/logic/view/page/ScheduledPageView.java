@@ -64,6 +64,8 @@ public class ScheduledPageView implements Initializable {
 
 		} catch (RecordNotFoundException e) {
 			vboxScroll.getChildren().add(new Label(e.getMessage()));
+			lessons = new ArrayList<>();
+			exams = new ArrayList<>();
 			
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
@@ -84,10 +86,16 @@ public class ScheduledPageView implements Initializable {
 		}
 	}
 	
-	public void setBean(Object obj) {
+	public void setBeanLesson(Object obj) {
 		CourseBean course = (CourseBean) obj;
 		setFilters(course);
 		filterLessons(course);
+	}
+	
+	public void setBeanExam(Object obj) {
+		CourseBean course = (CourseBean) obj;
+		setFilters(course);
+		filterExams(course);
 	}
 	
 	public void setFilters(CourseBean course) {
@@ -109,22 +117,17 @@ public class ScheduledPageView implements Initializable {
 			filteredCourses.add(course.getAbbreviation());
 		}
 		
-		try {
-			vboxScroll.getChildren().clear();
+		vboxScroll.getChildren().clear();
 			
-			for (LessonBean lessonBean : lessons) {
-				if (filteredCourses.contains(lessonBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
-					LessonCard lessonCard = new LessonCard(lessonBean);
-					vboxScroll.getChildren().add(lessonCard.getPane());
-				}
+		for (LessonBean lessonBean : lessons) {
+			if (filteredCourses.contains(lessonBean.getCourse()) || filteredCourses.isEmpty()) {
+				LessonCard lessonCard = new LessonCard(lessonBean);
+				vboxScroll.getChildren().add(lessonCard.getPane());
 			}
+		}
 			
-			if (vboxScroll.getChildren().isEmpty()) {
-				vboxScroll.getChildren().add(new Label("No lesson found."));
-			}
-			
-		} catch (NullPointerException e) {	//TODO UNCHECKED
-			vboxScroll.getChildren().add(new Label("No lesson found"));
+		if (vboxScroll.getChildren().isEmpty()) {
+			vboxScroll.getChildren().add(new Label("No lesson found."));
 		}
 	}
 	
@@ -138,21 +141,16 @@ public class ScheduledPageView implements Initializable {
 			filteredCourses.add(course.getAbbreviation());
 		}
 		
-		try {
-			vboxScroll.getChildren().clear();
-			for (ExamBean examBean : exams) {
-				if (filteredCourses.contains(examBean.getCourse().getAbbreviation()) || filteredCourses.isEmpty()) {
-					ScheduledExamCard scheduledExamCard = new ScheduledExamCard(examBean);
-					vboxScroll.getChildren().add(scheduledExamCard.getPane());
-				}
+		vboxScroll.getChildren().clear();
+		for (ExamBean examBean : exams) {
+			if (filteredCourses.contains(examBean.getCourse()) || filteredCourses.isEmpty()) {
+				ScheduledExamCard scheduledExamCard = new ScheduledExamCard(examBean);
+				vboxScroll.getChildren().add(scheduledExamCard.getPane());
 			}
+		}
 			
-			if (vboxScroll.getChildren().isEmpty()) {
-				vboxScroll.getChildren().add(new Label("No exam found."));
-			}
-			
-		} catch (NullPointerException e) {	//TODO UNCHECKED
-			vboxScroll.getChildren().add(new Label("No exam found"));
+		if (vboxScroll.getChildren().isEmpty()) {
+			vboxScroll.getChildren().add(new Label("No exam found."));
 		}
 	}
 }

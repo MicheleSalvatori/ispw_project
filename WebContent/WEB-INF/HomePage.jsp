@@ -16,7 +16,7 @@
 	
 	<head>
 		<meta charset="utf-8">
-		<title>App - HomePage</title>
+		<title>.myUniversity - HomePage</title>
 		<link rel="stylesheet" href="res/style/HomePage.css">
 		<link rel="icon" href="res/img/Logo.png">
 	</head>
@@ -97,7 +97,7 @@
 									<table style="display: inline; vertical-align: middle;" spacing="0">
 										<tr>
 											<td class="lesson-text">
-												<%=lesson.getCourse().getAbbreviation()%>
+												<%=lesson.getCourse()%>
 											</td>
 										</tr>
 
@@ -123,10 +123,10 @@
 								</td>
 								<td align="right" style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
 								<form action="/ispw_project/LessonPageServlet" method="get" >
-									<button name = "viewLesson" class="button-view" type="submit" onclick="f(<%=lesson%>)">View</button>
-									<input type = "hidden" name = "lessonCourse" value = "<%=lesson.getCourse().getAbbreviation()%>">
-									<input type = "hidden" name = "lessonDate" value = "<%=lesson.getDate()%>">
-									<input type = "hidden" name = "lessonTime" value = "<%=lesson.getTime()%>">
+									<button class="button-view" type="submit">View</button>
+									<input type="hidden" name="lessonCourse" value="<%=lesson.getCourse()%>">
+									<input type="hidden" name="lessonDate" value="<%=lesson.getDate()%>">
+									<input type="hidden" name="lessonTime" value="<%=lesson.getTime()%>">
 								</form>
 								</td>
 							</tr>
@@ -244,7 +244,7 @@
 					
 					<!-- Map -->
 					<a class="next-lessons-label">Map</a>
-					<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11886.930780547153!2d12.622736!3d41.85558!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x556bbd1ff2a33c63!2sMacroarea%20di%20Ingegneria%20-%20Universit%C3%A0%20di%20Roma%20Tor%20Vergata!5e0!3m2!1sit!2sit!4v1612894377315!5m2!1sit!2sit" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+					<iframe src="${map}" width="100%" height="400" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 				</div>
 			
 			</div>

@@ -16,9 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import logic.bean.CourseBean;
-import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.JoinCourseController;
 import logic.controller.LoginController;
@@ -143,12 +141,9 @@ public class ProfilePageView implements Initializable {
 	private void removeCourse(ActionEvent event) {
 		
 		joinCourseController = new JoinCourseController();
-		
-		UserBean userBean = new UserBean();
-		userBean.setUsername(UserBean.getInstance().getUsername());
 
 		try {
-			List<CourseBean> courses = joinCourseController.getStudentCourses(userBean);
+			List<CourseBean> courses = joinCourseController.getCourses(UserBean.getInstance());
 			
 			List<String> names = new ArrayList<>();
 			for (CourseBean course : courses) {
@@ -156,26 +151,17 @@ public class ProfilePageView implements Initializable {
 			}
 			
 			int index = AlertController.courseRequest(names);
-			if (index != -1) {
+			
+			CourseBean courseBean = courses.get(index);
+
+			RequestBean requestBean = new RequestBean();
+			requestBean.setStudent(UserBean.getInstance());
+			requestBean.setCourse(courseBean.getAbbreviation());
 				
-				CourseBean courseBean = courses.get(index);
-				
-				StudentBean studentBean = new StudentBean();
-				studentBean.setEmail(UserBean.getInstance().getEmail());
-				studentBean.setName(UserBean.getInstance().getName());
-				studentBean.setPassword(UserBean.getInstance().getPassword());
-				studentBean.setSurname(UserBean.getInstance().getSurname());
-				studentBean.setUsername(UserBean.getInstance().getUsername());
-				
-				RequestBean requestBean = new RequestBean();
-				requestBean.setStudent(studentBean);
-				requestBean.setCourse(courseBean);
-				
-				joinCourseController.removeCourse(requestBean);
-				
-				AlertController.infoAlert("Course " + courseBean.getAbbreviation() + " removed.");
-				loadCourses();
-			}
+			joinCourseController.removeCourse(requestBean);
+					
+			AlertController.infoAlert("Course " + courseBean.getAbbreviation() + " removed.");
+			loadCourses();
 			
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
@@ -183,6 +169,9 @@ public class ProfilePageView implements Initializable {
 			
 		} catch (RecordNotFoundException e) {
 			AlertController.infoAlert("You don't have any courses available.");
+			
+		} catch (CancelException e) {
+			// return
 		}
 	}
 	
@@ -190,13 +179,10 @@ public class ProfilePageView implements Initializable {
 	private void addCourse(ActionEvent event) {
 		
 		joinCourseController = new JoinCourseController();
-		
-		UserBean userBean = new UserBean();
-		userBean.setUsername(UserBean.getInstance().getUsername());
-		
+
 		List<CourseBean> courses = null;
 		try {
-			courses = joinCourseController.getAvailableCourses(userBean);
+			courses = joinCourseController.getAvailableCourses(UserBean.getInstance());
 			
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
@@ -208,39 +194,36 @@ public class ProfilePageView implements Initializable {
 			return;
 		}
 		
-		List<String> names = new ArrayList<>();
+		List<String> courseNames = new ArrayList<>();
 		for (CourseBean course : courses) {
-			names.add(course.getName());
+			courseNames.add(course.getName());
 		}
 		
-		int index = AlertController.courseRequest(names);
-		if (index != -1) {
+		int index;
+		try {
+			index = AlertController.courseRequest(courseNames);
 			
-			CourseBean courseBean = courses.get(index);
-			
-			StudentBean studentBean = new StudentBean();
-			studentBean.setEmail(UserBean.getInstance().getEmail());
-			studentBean.setName(UserBean.getInstance().getName());
-			studentBean.setPassword(UserBean.getInstance().getPassword());
-			studentBean.setSurname(UserBean.getInstance().getSurname());
-			studentBean.setUsername(UserBean.getInstance().getUsername());
-			
-			RequestBean requestBean = new RequestBean();
-			requestBean.setStudent(studentBean);
-			requestBean.setCourse(courseBean);
+		} catch (CancelException e) {
+			return;
+		}
 
-			try {
-				joinCourseController.sendRequest(requestBean);
-				
-			} catch (SQLException e) {
-				AlertController.infoAlert(AlertController.getError());
-				PageLoader.getInstance().buildPage(Page.HOMEPAGE);
-				return;
-			}
+		CourseBean course = courses.get(index);
+		
+		RequestBean request = new RequestBean();
+		request.setStudent(UserBean.getInstance());
+		request.setCourse(course.getAbbreviation());
+
+		try {
+			joinCourseController.sendRequest(request);
 			
-			AlertController.infoAlert("Request sended to course's professor.");
-			loadCourses();
-		}	
+		} catch (SQLException e) {
+			AlertController.infoAlert(AlertController.getError());
+			PageLoader.getInstance().buildPage(Page.HOMEPAGE);
+			return;
+		}
+			
+		AlertController.infoAlert("Request sended to course's professor.");
+		loadCourses();	
 	}
 	
 	@FXML
@@ -266,14 +249,14 @@ public class ProfilePageView implements Initializable {
 		rect.setFill(pattern);
 	}
 	
-	public void loadCourses() {
+	private void loadCourses() {
 		vboxScroll.getChildren().clear();
 		
 		joinCourseController = new JoinCourseController();
 
 		List<CourseBean> courses;
 		List<CourseBean> requests;
-		List<ProfessorBean> professors;
+		List<UserBean> professors;
 		
 		boolean course = true;
 	
@@ -284,7 +267,6 @@ public class ProfilePageView implements Initializable {
 				CourseCard courseCard = new CourseCard(courseBean, professors, Type.FOLLOW);
 				vboxScroll.getChildren().add(courseCard.getPane());
 			}
-
 				
 		} catch (SQLException e) {
 			AlertController.infoAlert(AlertController.getError());
@@ -330,7 +312,7 @@ public class ProfilePageView implements Initializable {
 				return;
 			}
 			
-			AlertController.infoAlert("Request of course '" + requestBean.getCourse().getAbbreviation() + "' deleted.");
+			AlertController.infoAlert("Request of course '" + requestBean.getCourse() + "' deleted.");
 			loadCourses();
 		}
 	}

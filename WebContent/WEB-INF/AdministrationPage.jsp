@@ -17,7 +17,7 @@ LessonBean lesson = (LessonBean) request.getAttribute("lesson");
 
 <head>
 <meta charset="utf-8">
-<title>App - Administration Control Panel</title>
+<title>.myUniversity - Administration Control Panel</title>
 <link rel="stylesheet" href="res/style/AdministrationPage.css">
 <link rel="stylesheet" href="res/style/NavigationBar.css">
 <link rel="stylesheet" href="res/style/StatusBar.css">
@@ -129,7 +129,7 @@ LessonBean lesson = (LessonBean) request.getAttribute("lesson");
 			</div>
 		</div>
 
-		<a href="/ispw_project/PostCommunicationServlet"
+		<a style="padding-bottom: 2vw;" href="/ispw_project/PostCommunicationServlet"
 						type="button">
 				<button type="button" class="button" id="postCommunication"
 					name="postCommunication" style = "margin-top:15px;">

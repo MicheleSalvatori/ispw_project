@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import logic.bean.CourseBean;
 import logic.bean.QuestionBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.AskAQuestionController;
 
@@ -21,23 +20,25 @@ import logic.controller.AskAQuestionController;
 public class NewQuestionPageServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private static String alertAttribute = "alertMsg";
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
+		UserBean userLogged = (UserBean) session.getAttribute("loggedUser");
 		
-		if (session.getAttribute("loggedUser") == null) {
+		if (userLogged == null) {
 	        resp.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
 		
 		AskAQuestionController controller = new AskAQuestionController();
 		try {
-			List<CourseBean> courses = controller.getCoursesOfStudent((UserBean) session.getAttribute("loggedUser"));
+			List<CourseBean> courses = controller.getStudentCourses(userLogged);
 			req.setAttribute("listOfCourses", courses);
 			
 		} catch (SQLException e) {
-			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.setAttribute(alertAttribute, "An error as occured. Try later.");
 			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
 			return;
 		}
@@ -49,7 +50,7 @@ public class NewQuestionPageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		AskAQuestionController controller = new AskAQuestionController();
 		QuestionBean newQuestion = new QuestionBean();
-		StudentBean student = new StudentBean();
+		UserBean student = new UserBean();
 		student.setUsername(((UserBean) req.getSession().getAttribute("loggedUser")).getUsername());
 		newQuestion.setCourse(req.getParameter("courses"));
 		newQuestion.setStudent(student);
@@ -58,9 +59,10 @@ public class NewQuestionPageServlet extends HttpServlet {
 		
 		try {
 			controller.save(newQuestion);
+			req.getSession().setAttribute(alertAttribute, "Question correctly added.");
 			
 		} catch (SQLException e) {
-			req.setAttribute("alertMsg", "An error as occured. Try later.");
+			req.setAttribute(alertAttribute, "An error as occured. Try later.");
 			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
 			return;
 		}

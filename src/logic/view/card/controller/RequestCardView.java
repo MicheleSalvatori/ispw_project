@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
+import logic.bean.UserBean;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
 import logic.view.page.RequestPageView;
@@ -43,15 +43,16 @@ public class RequestCardView {
 	
 	@FXML
 	private void course(ActionEvent event) {
-    	CourseBean courseBean = request.getCourse();
+    	CourseBean courseBean = new CourseBean();
+    	courseBean.setAbbreviation(request.getCourse());
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	
 	public void setCard(RequestBean request) {
 		this.request = request;
 		
-		StudentBean student = request.getStudent();
-		labelName.setText(String.format("%s %s (%s)", student.getName(), student.getSurname(), student.getUsername()));
-		btnCourse.setText(request.getCourse().getAbbreviation());
+		UserBean student = request.getStudent();
+		labelName.setText(String.format("%s %s", student.getName(), student.getSurname()));
+		btnCourse.setText(request.getCourse());
 	}
 }

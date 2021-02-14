@@ -5,17 +5,20 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
+import logic.bean.UserBean;
 import logic.bean.WeeklyLessonBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Lesson;
 import logic.model.Professor;
+import logic.model.User;
 import logic.model.WeeklyLesson;
 import logic.model.dao.CourseDAO;
 import logic.model.dao.LessonDAO;
@@ -36,20 +39,20 @@ public class CourseController {
 		
 		LessonBean lessonBean = new LessonBean();
 		lessonBean.setClassroom(classroomBean);
-		lessonBean.setCourse(courseBean);
+		lessonBean.setCourse(courseBean.getAbbreviation());
 		lessonBean.setDate(lesson.getDate());
 		lessonBean.setTime(lesson.getTime());
 		
 		return lessonBean;
 	}
 	
-	public List<ProfessorBean> getCourseProfessors(CourseBean courseBean) throws SQLException, RecordNotFoundException {
+	public List<UserBean> getCourseProfessors(CourseBean courseBean) throws SQLException, RecordNotFoundException {
 		
 		List<Professor> professors = ProfessorDAO.getCourseProfessors(courseBean.getAbbreviation());
-		List<ProfessorBean> professorsBean = new ArrayList<>();
+		List<UserBean> professorsBean = new ArrayList<>();
 		
-		for (Professor professor : professors) {
-			ProfessorBean professorBean = new ProfessorBean();
+		for (User professor : professors) {
+			UserBean professorBean = new UserBean();
 			professorBean.setName(professor.getName());
 			professorBean.setSurname(professor.getSurname());
 			
@@ -65,15 +68,12 @@ public class CourseController {
 		List<WeeklyLessonBean> lessonsBean = new ArrayList<>();
 		
 		for (WeeklyLesson lesson : lessons) {
-			
-			ClassroomBean classroomBean = new ClassroomBean();
-			classroomBean.setName(lesson.getClassroom().getName());
-			
+
 			WeeklyLessonBean lessonBean = new WeeklyLessonBean();
 			lessonBean.setDay(lesson.getDay());
 			lessonBean.setTime(lesson.getTime());
-			lessonBean.setClassroom(classroomBean);
-			lessonBean.setCourse(courseBean);
+			lessonBean.setClassroom(lesson.getClassroom().getName());
+			lessonBean.setCourse(courseBean.getAbbreviation());
 			
 			lessonsBean.add(lessonBean);
 		}
@@ -81,9 +81,17 @@ public class CourseController {
 		return lessonsBean;
 	}
 	
-	public CourseBean getCourse(CourseBean courseBean) throws SQLException, RecordNotFoundException {
+	public CourseBean getCourse(CourseBean courseBean) throws SQLException {
 		
-		Course course = CourseDAO.getCourseByAbbrevation(courseBean.getAbbreviation());
+		Course course;
+		
+		try {
+			course = CourseDAO.getCourseByAbbrevation(courseBean.getAbbreviation());
+			
+		} catch (RecordNotFoundException e) {
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
+			return null;
+		}
 		
 		CourseBean c = new CourseBean();
 		c.setAbbreviation(course.getAbbreviation());

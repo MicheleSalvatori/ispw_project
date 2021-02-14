@@ -5,7 +5,7 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="ispw_project">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../../../eclipse/java-2020-09/eclipse/"/>
+    <property name="ECLIPSE_HOME" value="../../../../Software/Eclipse/Eclipse/eclipse/"/>
     <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
@@ -19,38 +19,42 @@
     </path>
     <path id="EAR Libraries.libraryclasspath"/>
     <path id="Apache Tomcat v9.0 [Apache Tomcat v9.0].libraryclasspath">
-        <pathelement location="../../../../tomcat/lib/annotations-api.jar"/>
-        <pathelement location="../../../../tomcat/lib/catalina-ant.jar"/>
-        <pathelement location="../../../../tomcat/lib/catalina-ha.jar"/>
-        <pathelement location="../../../../tomcat/lib/catalina-ssi.jar"/>
-        <pathelement location="../../../../tomcat/lib/catalina-storeconfig.jar"/>
-        <pathelement location="../../../../tomcat/lib/catalina-tribes.jar"/>
-        <pathelement location="../../../../tomcat/lib/catalina.jar"/>
-        <pathelement location="../../../../tomcat/lib/ecj-4.17.jar"/>
-        <pathelement location="../../../../tomcat/lib/el-api.jar"/>
-        <pathelement location="../../../../tomcat/lib/jasper-el.jar"/>
-        <pathelement location="../../../../tomcat/lib/jasper.jar"/>
-        <pathelement location="../../../../tomcat/lib/jaspic-api.jar"/>
-        <pathelement location="../../../../tomcat/lib/jsp-api.jar"/>
-        <pathelement location="../../../../tomcat/lib/servlet-api.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-api.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-coyote.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-dbcp.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-i18n-cs.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-i18n-de.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-i18n-es.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-i18n-fr.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-i18n-ja.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-i18n-ko.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-i18n-pt-BR.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-i18n-ru.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-i18n-zh-CN.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-jdbc.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-jni.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-util-scan.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-util.jar"/>
-        <pathelement location="../../../../tomcat/lib/tomcat-websocket.jar"/>
-        <pathelement location="../../../../tomcat/lib/websocket-api.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/annotations-api.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/catalina-ant.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/catalina-ha.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/catalina-ssi.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/catalina-storeconfig.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/catalina-tribes.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/catalina.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/ecj-4.17.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/el-api.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/jasper-el.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/jasper.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/jaspic-api.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/jsp-api.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/servlet-api.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-api.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-coyote.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-dbcp.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-i18n-cs.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-i18n-de.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-i18n-es.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-i18n-fr.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-i18n-ja.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-i18n-ko.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-i18n-pt-BR.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-i18n-ru.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-i18n-zh-CN.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-jdbc.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-jni.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-util-scan.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-util.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/tomcat-websocket.jar"/>
+        <pathelement location="../../../../Software/Eclipse/Tomcat/apache-tomcat-9.0.40/lib/websocket-api.jar"/>
+    </path>
+    <path id="JUnit 4.libraryclasspath">
+        <pathelement location="C:/Users/xpuni/.p2/pool/plugins/org.junit_4.13.0.v20200204-1500.jar"/>
+        <pathelement location="C:/Users/xpuni/.p2/pool/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
     </path>
     <path id="ispw_project.classpath">
         <pathelement location="bin"/>
@@ -63,6 +67,14 @@
         <pathelement location="lib/javax.servlet-api-4.0.1.jar"/>
         <pathelement location="lib/jfxrt.jar"/>
         <pathelement location="lib/junit-4.13.1.jar"/>
+        <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/libs/byte-buddy-1.8.15.jar"/>
+        <pathelement location="lib/libs/commons-exec-1.3.jar"/>
+        <pathelement location="lib/libs/guava-25.0-jre.jar"/>
+        <pathelement location="lib/libs/okhttp-3.11.0.jar"/>
+        <pathelement location="lib/libs/okio-1.14.0.jar"/>
+        <pathelement location="lib/client-combined-3.141.59.jar"/>
+        <pathelement location="lib/client-combined-3.141.59-sources.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -99,25 +111,48 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
+    <target name="DocsConnectionPropsHelper">
+        <java classname="com.mysql.jdbc.DocsConnectionPropsHelper" failonerror="true" fork="yes">
+            <classpath refid="ispw_project.classpath"/>
+        </java>
+    </target>
     <target name="MainStandalone">
         <java classname="logic.MainStandalone" failonerror="true" fork="yes">
             <classpath refid="ispw_project.classpath"/>
         </java>
     </target>
-    <target name="TestQuestion">
+    <target name="TestLogin">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
-            <test name="test.TestQuestion" todir="${junit.output.dir}"/>
+            <test name="test.junit.TestLogin" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="ispw_project.classpath"/>
         </junit>
     </target>
-    <target name="TestAskQuestion">
+    <target name="TestLoginSelenium">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
-            <test name="test.TestAskQuestion" todir="${junit.output.dir}"/>
+            <test name="test.selenium.TestLoginSelenium" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="ispw_project.classpath"/>
+        </junit>
+    </target>
+    <target name="TestScheduleLesson">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.junit.TestScheduleLesson" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="ispw_project.classpath"/>
+        </junit>
+    </target>
+    <target name="TestSignup">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.junit.TestSignup" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="ispw_project.classpath"/>
         </junit>

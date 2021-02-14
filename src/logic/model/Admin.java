@@ -1,7 +1,12 @@
 package logic.model;
 
-public class Admin extends User{
+public class Admin extends User {
 
-	// Metodi unici per student
+	public Admin(String username, String password, String name, String surname, String email) {
+		super(username, password, name, surname, email);
+	}
 	
+	public Admin() {
+		
+	}
 }

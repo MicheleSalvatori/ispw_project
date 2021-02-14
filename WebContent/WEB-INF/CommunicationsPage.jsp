@@ -17,8 +17,9 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>App - Communications</title>
+		<title>.myUniversity - Communications</title>
 		<link rel="stylesheet" href="res/style/CommunicationsPage.css">
+		<link rel="icon" href="res/img/Logo.png">
 	</head>
 	
 	<body>

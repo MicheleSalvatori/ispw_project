@@ -42,13 +42,12 @@ public class AdministrationPageView implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		PostCommunicationController controller = new PostCommunicationController();
-		List<CommunicationBean> communications = null;
+		List<CommunicationBean> comms = null;
 		try {
-			communications = controller.getCommunications();
-			for (CommunicationBean c : communications) {
-				CommunicationCard communicationCard = new CommunicationCard(c.getText(), c.getTitle(),
-						SQLConverter.date(c.getDate()), c.getId() + "");
-				vboxComm.getChildren().add(communicationCard.getPane());
+			comms = controller.getCommunications();
+			for (CommunicationBean c : comms) {
+				CommunicationCard commCard = new CommunicationCard(c.getText(), c.getTitle(), SQLConverter.date(c.getDate()), c.getId() + "");
+				vboxComm.getChildren().add(commCard.getPane());
 			}
 
 		} catch (SQLException e1) {

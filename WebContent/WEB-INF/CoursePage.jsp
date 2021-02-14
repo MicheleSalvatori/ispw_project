@@ -19,7 +19,7 @@
 	
 	<head>
 		<meta charset="utf-8">
-		<title>App - CoursePage</title>
+		<title>.myUniversity - CoursePage</title>
 		<link rel="stylesheet" href="res/style/CoursePage.css">
 		<link rel="icon" href="res/img/Logo.png">
 	</head>
@@ -114,7 +114,12 @@
 									</td>
 
 									<td align="right" style="padding: 0 1vw 0 1vw; white-space: nowrap; width: 1%;">
-										<button class="button-view" type="button">View</button>
+										<form action="/ispw_project/LessonPageServlet" method="get" >
+											<button class="button-view" type="submit" onclick="f(<%=lesson%>)">View</button>
+											<input type="hidden" name="lessonCourse" value="<%=lesson.getCourse()%>">
+											<input type="hidden" name="lessonDate" value="<%=lesson.getDate()%>">
+											<input type="hidden" name="lessonTime" value="<%=lesson.getTime()%>">
+										</form>
 									</td>
 								</tr>
 							<%} %>
@@ -150,7 +155,7 @@
 
 												<tr>
 													<td style="padding-top: 0;" class="lesson-classroom">
-														${weekly.getClassroom().getName()}
+														${weekly.getClassroom()}
 													</td>
 												</tr>
 											</table>

@@ -46,7 +46,7 @@ public class LessonCardView {
 			line2.setVisible(false);
 			btnCourse.setVisible(false);
 			
-			labelLesson.setText(lesson.getCourse().getAbbreviation());
+			labelLesson.setText(lesson.getCourse());
 			labelClass.setText(lesson.getClassroom().getName());
 			labelTime.setText(SQLConverter.time(lesson.getTime()));
 		}
@@ -71,13 +71,14 @@ public class LessonCardView {
 			labelLesson.setText(SQLConverter.date(lesson.getDate()));
 			labelClass.setText(lesson.getClassroom().getName());
 			labelTime.setText(SQLConverter.time(lesson.getTime()));
-			btnCourse.setText(lesson.getCourse().getAbbreviation());
+			btnCourse.setText(lesson.getCourse());
 		}
 	}
 	
 	@FXML
 	public void course(ActionEvent event) {
-    	CourseBean courseBean = lesson.getCourse();
+    	CourseBean courseBean = new CourseBean();
+    	courseBean.setAbbreviation(lesson.getCourse());
     	PageLoader.getInstance().buildPage(Page.COURSE, courseBean);
 	}
 	

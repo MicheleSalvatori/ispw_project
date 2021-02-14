@@ -163,6 +163,6 @@ public class HomepageView implements Initializable {
 	// Add map
 	private void addWebMap() {
 		CheckClassPositionController controller = new CheckClassPositionController();
-		webMap.getEngine().load(controller.getMap());
+		webMap.getEngine().load(getClass().getResource(controller.getMap()).toString());
 	}
 }

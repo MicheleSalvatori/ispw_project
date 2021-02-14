@@ -14,7 +14,7 @@
 	
 	<head>
 		<meta charset="utf-8">
-		<title>App - NewAssignmentPage</title>
+		<title>.myUniversity - NewAssignmentPage</title>
 		<link rel="stylesheet" href="res/style/NewAssignmentPage.css">
 		<link rel="icon" href="res/img/Logo.png">
 	</head>

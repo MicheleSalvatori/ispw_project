@@ -13,6 +13,7 @@ import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
 public class StudentDAO {
+	private static String noUsername = "No Username Found matching with name: ";
 	
 	private StudentDAO() {}
 	
@@ -31,7 +32,7 @@ public class StudentDAO {
 			resultSet = Queries.selectStudent(stmt, username, password);
 			
 			if (!resultSet.first()) {
-				throw new RecordNotFoundException("No Username Found matching with name: " + username);
+				throw new RecordNotFoundException("Wrong username or password.");
 				
 			}else {
 				resultSet.first();
@@ -100,7 +101,7 @@ public class StudentDAO {
 	}
 	
 	
-	public static void changePassword(User user) throws SQLException, RecordNotFoundException {
+	public static void changePasswordStudent(User user) throws SQLException, RecordNotFoundException {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -112,7 +113,7 @@ public class StudentDAO {
 			
 			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No Username Found matching with name: " + user.getUsername());	
+				throw new RecordNotFoundException(noUsername + user.getUsername());	
 			} 
 			
 			Queries.updateStudentPassword(stmt, user.getUsername(), user.getPassword());
@@ -156,6 +157,32 @@ public class StudentDAO {
 		}
 		
 		return student;
+	}
+
+	public static void deleteStudent(User user) throws SQLException, RecordNotFoundException {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
+			if (!rs.first()) {
+				throw new RecordNotFoundException(noUsername + user.getUsername());	
+			} 
+			
+			Queries.deleteStudent(stmt, user.getUsername());
+			
+			RoleDAO.deleteRole(user);
+			
+			rs.close();
+			
+		} finally {
+			if(stmt != null) stmt.close();
+		}
 	}
 
 }

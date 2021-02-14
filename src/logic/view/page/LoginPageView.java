@@ -46,12 +46,7 @@ public class LoginPageView implements Initializable {
 		btnLogin.disableProperty()
 				.bind(Bindings.isEmpty(textUsername.textProperty()).or(Bindings.isEmpty(textPassword.textProperty())));
 
-		EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				loginUser(event);
-			}
-		};
+		EventHandler<ActionEvent> eventHandler = event -> loginUser(event);
 
 		textUsername.setOnAction(eventHandler);
 		textPassword.setOnAction(eventHandler);

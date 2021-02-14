@@ -18,7 +18,6 @@ import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
 import logic.bean.UserBean;
 import logic.controller.ScheduleController;
 import logic.controller.ScheduleExamController;
@@ -37,8 +36,9 @@ public class SchedulePageServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		UserBean userLogged = (UserBean) session.getAttribute("loggedUser");
 	
-		if (session.getAttribute("loggedUser") == null) {
+		if (userLogged == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
@@ -50,7 +50,7 @@ public class SchedulePageServlet extends HttpServlet {
 		
 		try {
 			classrooms = controller.getClassrooms();
-			courses = controller.getCourses((UserBean) session.getAttribute("loggedUser"));
+			courses = controller.getCourses(userLogged);
 			
 		} catch (SQLException e) {
 			request.setAttribute("alertMsg", "An error as occured. Try later.");
@@ -80,25 +80,20 @@ public class SchedulePageServlet extends HttpServlet {
 			ScheduleLessonController controller = new ScheduleLessonController();
 			
 			LessonBean lessonBean = new LessonBean();
-			
-			lessonBean.setTopic(topic);
-			
 			Date d = Date.valueOf(date);
-			lessonBean.setDate(d);
-			
-			Time t = Time.valueOf(time+":00");
-			lessonBean.setTime(t);
-			
-			CourseBean c = new CourseBean();
-			c.setAbbreviation(course);
-			lessonBean.setCourse(c);
+			Time t = Time.valueOf(time + ":00");
 			
 			ClassroomBean cl = new ClassroomBean();
 			cl.setName(classroom);
-			lessonBean.setClassroom(cl);
 			
-			ProfessorBean p = new ProfessorBean();
+			UserBean p = new UserBean();
 			p.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
+			
+			lessonBean.setTopic(topic);
+			lessonBean.setDate(d);		
+			lessonBean.setTime(t);	
+			lessonBean.setCourse(course);	
+			lessonBean.setClassroom(cl);
 			lessonBean.setProfessor(p);
 			
 			try {

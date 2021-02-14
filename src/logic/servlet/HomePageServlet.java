@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.bean.LessonBean;
 import logic.bean.UserBean;
+import logic.controller.CheckClassPositionController;
 import logic.controller.CheckWeatherController;
 import logic.controller.ViewNextLessonController;
 import logic.exceptions.RecordNotFoundException;
@@ -62,10 +63,12 @@ public class HomePageServlet extends HttpServlet {
 		List<List<String>> weather = new ArrayList<>();
 		for (int i=0; i<5; i++) {
 			List<String> info = controller.getWeather(hour+i);
-			System.out.println(info.get(1));
 			weather.add(info);
 		}
 		
+		CheckClassPositionController posController = new CheckClassPositionController();
+		
+		request.setAttribute("map", posController.getMap().substring(1));
 		request.setAttribute("lesson", lesson);
 		request.setAttribute("listOfLesson", lessons);
 		request.setAttribute("listOfWeather", weather);

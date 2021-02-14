@@ -13,23 +13,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.SeatBean;
 import logic.bean.UserBean;
 import logic.controller.BookASeatController;
 import logic.controller.CheckWeatherController;
+import logic.controller.ViewNextLessonController;
 import logic.exceptions.SeatAlreadyBookedException;
 
 @WebServlet("/LessonPageServlet")
 public class LessonPageServlet extends HttpServlet {
 
+	private static String alertString = "An error as occured. Try later.";
+	private static String alertAttribute = "alertMsg";
+	private static String loggedAttribute = "loggedUser";
+	private static String loginPageUrl = "/WEB-INF/LoginPage.jsp";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		if (req.getSession().getAttribute("loggedUser") == null) {
+		if (req.getSession().getAttribute(loggedAttribute) == null) {
 	        resp.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
@@ -38,21 +42,19 @@ public class LessonPageServlet extends HttpServlet {
 		String date = req.getParameter("lessonDate");
 		String time = req.getParameter("lessonTime");
 		
-		CourseBean c = new CourseBean();
-		c.setAbbreviation(course);
-		
 		LessonBean l = new LessonBean();
-		l.setCourse(c);
+		l.setCourse(course);
 		l.setDate(Date.valueOf(date));
 		l.setTime(Time.valueOf(time));
 		
-		BookASeatController controller = new BookASeatController();
-		UserBean user = (UserBean) req.getSession().getAttribute("loggedUser");
+		ViewNextLessonController lessonController = new ViewNextLessonController();
+		BookASeatController seatController = new BookASeatController();
+		UserBean user = (UserBean) req.getSession().getAttribute(loggedAttribute);
 		
 		try {
-			LessonBean lesson = controller.getLesson(l);
-			List<SeatBean> occupiedSeats = controller.getOccupateSeatOf(lesson);
-			SeatBean mySeat = controller.getMySeat(lesson, user);
+			LessonBean lesson = lessonController.getLesson(l);
+			List<SeatBean> occupiedSeats = seatController.getOccupateSeatOf(lesson);
+			SeatBean mySeat = seatController.getMySeat(lesson, user);
 			
 			CheckWeatherController controllerWeather = new CheckWeatherController();
 			List<String> weather = controllerWeather.getWeather((int) TimeUnit.MILLISECONDS.toHours(lesson.getTime().getTime()));
@@ -63,8 +65,8 @@ public class LessonPageServlet extends HttpServlet {
 			req.setAttribute("weather", weather);
 			
 		} catch (SQLException e) {
-			req.setAttribute("alertMsg", "An error as occured. Try later.");
-			req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+			req.setAttribute(alertAttribute, alertString);
+			req.getRequestDispatcher(loginPageUrl).forward(req, resp);
 			return;	
 		}
 		
@@ -74,35 +76,33 @@ public class LessonPageServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String course = req.getParameter("lessonCourse");
-		String date = req.getParameter("lessonDate");
-		String time = req.getParameter("lessonTime");
+		String coursePost = req.getParameter("lessonCourse");
+		String datePost = req.getParameter("lessonDate");
+		String timePost = req.getParameter("lessonTime");
 		
-		CourseBean c = new CourseBean();
-		c.setAbbreviation(course);
+		LessonBean lessonBean = new LessonBean();
+		lessonBean.setCourse(coursePost);
+		lessonBean.setDate(Date.valueOf(datePost));
+		lessonBean.setTime(Time.valueOf(timePost));
 		
-		LessonBean l = new LessonBean();
-		l.setCourse(c);
-		l.setDate(Date.valueOf(date));
-		l.setTime(Time.valueOf(time));
-		
-		BookASeatController controller = new BookASeatController();
-		UserBean user = (UserBean) req.getSession().getAttribute("loggedUser");
+		ViewNextLessonController lessonController = new ViewNextLessonController();
+		BookASeatController seatController = new BookASeatController();
+		UserBean user = (UserBean) req.getSession().getAttribute(loggedAttribute);
 		
 		if (req.getParameter("bookSeat")!=null) {
-			controller = new BookASeatController();
+			seatController = new BookASeatController();
 			try {
-				LessonBean lesson = controller.getLesson(l);
+				LessonBean lesson = lessonController.getLesson(lessonBean);
 				SeatBean seat = new SeatBean(Integer.valueOf(req.getParameter("bookSeat")));
-				controller.occupateSeat(seat, lesson, user);
+				seatController.occupateSeat(seat, lesson, user);
 				
 			} catch (SQLException e) {
-				req.setAttribute("alertMsg", "An error as occured. Try later.");
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+				req.setAttribute(alertAttribute, alertString);
+				req.getRequestDispatcher(loginPageUrl).forward(req, resp);
 				return;
 				
 			} catch (SeatAlreadyBookedException e) {
-				req.setAttribute("alertMsg", "An error as occured. Try later.");
+				req.setAttribute(alertAttribute, alertString);
 				req.getRequestDispatcher("/WEB-INF/LessonPage.jsp").include(req, resp);
 				return;
 			}
@@ -110,17 +110,17 @@ public class LessonPageServlet extends HttpServlet {
 		
 		if (req.getParameter("yourSeat")!=null) {
 			try {
-				LessonBean lesson = controller.getLesson(l);
+				LessonBean lesson = lessonController.getLesson(lessonBean);
 				SeatBean seat = new SeatBean(Integer.parseInt(req.getParameter("yourSeat")));
-				controller.freeSeat(seat, lesson, user);
+				seatController.freeSeat(seat, lesson, user);
 				
 			} catch (SQLException e) {
-				req.setAttribute("alertMsg", "An error as occured. Try later.");
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(req, resp);
+				req.setAttribute(alertAttribute, alertString);
+				req.getRequestDispatcher(loginPageUrl).forward(req, resp);
 				return;
 			}
 		}
 		
-		resp.sendRedirect("/ispw_project/LessonPageServlet?viewLesson=&lessonCourse=" + course + "&lessonDate=" + date + "&lessonTime=" + time);
+		resp.sendRedirect("/ispw_project/LessonPageServlet?viewLesson=&lessonCourse=" + coursePost + "&lessonDate=" + datePost + "&lessonTime=" + timePost);
 	}
 }

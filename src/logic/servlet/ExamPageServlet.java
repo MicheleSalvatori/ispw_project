@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import logic.bean.CourseBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.bean.VerbalizedBean;
 import logic.controller.ViewVerbalizedExamsController;
@@ -21,17 +20,15 @@ import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/ExamPageServlet")
 public class ExamPageServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
+	
+	private static String loggedAttribute = "loggedUser";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		if (session.getAttribute("loggedUser") == null) {
+		if (session.getAttribute(loggedAttribute) == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
@@ -44,7 +41,7 @@ public class ExamPageServlet extends HttpServlet {
 		double wpa = 0;
 		
 		try {
-			exams = controller.getVerbalizedExams((UserBean) session.getAttribute("loggedUser"));
+			exams = controller.getVerbalizedExams((UserBean) session.getAttribute(loggedAttribute));
 			gpa = controller.gpa(exams);
 			wpa = controller.wpa(exams);
 			
@@ -58,7 +55,7 @@ public class ExamPageServlet extends HttpServlet {
 		}
 		
 		try {
-			courses = controller.getCourses((UserBean) session.getAttribute("loggedUser"));
+			courses = controller.getCourses((UserBean) session.getAttribute(loggedAttribute));
 			
 		} catch (SQLException e) {
 			request.setAttribute("alertMsg", "An error as occured. Try later.");
@@ -87,12 +84,7 @@ public class ExamPageServlet extends HttpServlet {
 			String date = request.getParameter("date");
 			String grade = request.getParameter("grade-select");
 			
-			StudentBean studentBean = new StudentBean();
-			studentBean.setEmail(((UserBean) session.getAttribute("loggedUser")).getEmail());
-			studentBean.setName(((UserBean) session.getAttribute("loggedUser")).getName());
-			studentBean.setPassword(((UserBean) session.getAttribute("loggedUser")).getPassword());
-			studentBean.setSurname(((UserBean) session.getAttribute("loggedUser")).getSurname());
-			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
+			UserBean loggedUser = (UserBean) session.getAttribute(loggedAttribute);
 		
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course);
@@ -101,7 +93,7 @@ public class ExamPageServlet extends HttpServlet {
 			verb.setCourse(courseBean);
 			verb.setDate(Date.valueOf(date));
 			verb.setGrade(Integer.valueOf(grade));
-			verb.setStudent(studentBean);
+			verb.setStudent(loggedUser.getUsername());
 			
 			controller.saveVerbalizedExam(verb);
 		}
@@ -112,12 +104,11 @@ public class ExamPageServlet extends HttpServlet {
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course);
 			
-			StudentBean studentBean = new StudentBean();
-			studentBean.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
+			UserBean studentBean = ((UserBean) session.getAttribute(loggedAttribute));
 			
 			VerbalizedBean verb = new VerbalizedBean();
 			verb.setCourse(courseBean);
-			verb.setStudent(studentBean);
+			verb.setStudent(studentBean.getUsername());
 			
 			controller.deleteVerbalizedExam(verb);
 		}

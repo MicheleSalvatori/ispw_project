@@ -48,6 +48,11 @@ public class Queries {
 		return stmt.executeUpdate(query);
 	}
 	
+	public static int deleteRole(Statement stmt, String username) throws SQLException {
+		String query = String.format("DELETE FROM role WHERE username = '%s';", username);
+		return stmt.executeUpdate(query);
+	}
+	
 /******************************************************************************************************************/
 	
 	// Admin queries
@@ -57,7 +62,6 @@ public class Queries {
         return stmt.executeQuery(sql);
 
     }
-
     
 /******************************************************************************************************************/
 	
@@ -86,6 +90,11 @@ public class Queries {
 
 	public static int updateProfessorPassword(Statement stmt, String username, String password) throws SQLException {
 		String query = "UPDATE professor SET password = '" + password + "' WHERE username = '" + username + "';";
+		return stmt.executeUpdate(query);
+	}
+	
+	public static int deleteProfessor(Statement stmt, String username) throws SQLException {
+		String query = String.format("DELETE FROM professor WHERE username = %s;", username);
 		return stmt.executeUpdate(query);
 	}
 	
@@ -140,9 +149,9 @@ public class Queries {
 		String query = "UPDATE student SET password = '" + password + "' WHERE username = '" + username + "';";
 		return stmt.executeUpdate(query);
 	}
-	
-	public static int deleteQuestion(Statement stmt, int id) throws SQLException {
-		String query = String.format("DELETE FROM question WHERE id = %d;", id);
+
+	public static int deleteStudent(Statement stmt, String username) throws SQLException {
+		String query = String.format("DELETE FROM student WHERE username = '%s';", username);
 		return stmt.executeUpdate(query);
 	}
 
@@ -191,6 +200,11 @@ public class Queries {
 		String query = String.format("SELECT * FROM question WHERE id = '%d';", id);
 		return stmt.executeQuery(query);
 	}
+	
+	public static int deleteQuestion(Statement stmt, int id) throws SQLException {
+		String query = String.format("DELETE FROM question WHERE id = %d;", id);
+		return stmt.executeUpdate(query);
+	}
 
 /******************************************************************************************************************/
 
@@ -205,8 +219,7 @@ public class Queries {
 		return stmt.executeUpdate(sql);
 	}
 
-/**
- * @throws SQLException ****************************************************************************************************************/
+/******************************************************************************************************************/
 
 	// Lesson queries
 	public static ResultSet selectLesson(Statement stmt, Date date, Time time, String course) throws SQLException {
@@ -242,23 +255,25 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 
-	public static ResultSet selectNextLessonByCourse(Statement stmt, Date date, Time time, String course)
-			throws SQLException {
+	public static ResultSet selectNextLessonByCourse(Statement stmt, Date date, Time time, String course) throws SQLException {
 		String query = "SELECT * FROM lesson WHERE date >= '" + date + AND_TIME_GREATER + time + AND_COURSE + course + "' LIMIT 1;";
 		return stmt.executeQuery(query);
 	}
 
-	public static ResultSet selectLessonsByCourse(Statement stmt, Date date, Time time, String course)
-			throws SQLException {
+	public static ResultSet selectLessonsByCourse(Statement stmt, Date date, Time time, String course) throws SQLException {
 		String query = "SELECT * FROM lesson WHERE date >= '" + date + AND_TIME_GREATER + time + AND_COURSE + course + "';";
 		return stmt.executeQuery(query);
 	}
 
-	public static int insertLesson(Statement stmt, Date date, Time time, String course, String classroom, String topic,
-			String professor) throws SQLException {
+	public static int insertLesson(Statement stmt, Date date, Time time, String course, String classroom, String topic, String professor) throws SQLException {
 		String query = String.format(
 				"INSERT INTO lesson (date, time, course, classroom, topic, professor) VALUES('%s', '%s', '%s', '%s', '%s', '%s')",
 				date, time, course, classroom, topic, professor);
+		return stmt.executeUpdate(query);
+	}
+	
+	public static int deleteLesson(Statement stmt, Date date, Time time, String course) throws SQLException {
+		String query = String.format("DELETE FROM lesson WHERE date = '%s' AND time = '%s' AND course = '%s'", date, time, course);
 		return stmt.executeUpdate(query);
 	}
 	
@@ -300,6 +315,12 @@ public class Queries {
 				"INSERT INTO exam (date, time, course, classroom, note) VALUES('%s', '%s', '%s', '%s', '%s')", date,
 				time, course, classroom, note);
 		return stmt.executeUpdate(query);
+	}
+	
+
+	public static void delteExam(Statement stmt, Date date, Time time, String abbreviation) throws SQLException {
+		String query = String.format("DELETE FROM exam WHERE date = '%s' and time = '%s' and course = '%s'", date, time, abbreviation);
+		stmt.executeUpdate(query);
 	}
 
 /******************************************************************************************************************/

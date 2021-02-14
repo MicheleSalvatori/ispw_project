@@ -47,12 +47,10 @@ public class ScheduledController {
 			classroomBean.setName(classroom.getName());
 			
 			Course course = lesson.getCourse();
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbreviation());
 			
 			LessonBean lessonBean = new LessonBean();
 			lessonBean.setClassroom(classroomBean);
-			lessonBean.setCourse(courseBean);
+			lessonBean.setCourse(course.getAbbreviation());
 			lessonBean.setDate(lesson.getDate());
 			lessonBean.setTime(lesson.getTime());
 			
@@ -81,28 +79,16 @@ public class ScheduledController {
 		for (Exam exam : exams) {
 			
 			Classroom classroom = exam.getClassroom();
-			ClassroomBean classroomBean = new ClassroomBean();
-			classroomBean.setName(classroom.getName());
-			
 			Course course = exam.getCourse();
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbreviation());
-			courseBean.setCredits(course.getCredits());
-			courseBean.setGoal(course.getGoal());
-			courseBean.setName(course.getName());
-			courseBean.setPrerequisites(course.getPrerequisites());
-			courseBean.setReception(course.getReception());
-			courseBean.setSemester(course.getSemester());
-			courseBean.setYear(course.getYear());
-			
+      
 			ExamBean examBean = new ExamBean();
-			examBean.setClassroom(classroomBean);
-			examBean.setCourse(courseBean);
+			examBean.setClassroom(classroom.getName());
+			examBean.setCourse(course.getAbbreviation());
 			examBean.setDate(exam.getDate());
 			examBean.setNote(exam.getNote());
 			examBean.setTime(exam.getTime());
 
-	    	examsBean.add(examBean);
+	    examsBean.add(examBean);
 		}
 		
 		return examsBean;

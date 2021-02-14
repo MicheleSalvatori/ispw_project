@@ -33,33 +33,9 @@ public class QuestionDAO {
 		}
 
 		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		ResultSet rs = null;
-
-		rs = Queries.getQuestionsCourse(stmt, username);
-
-		if (!rs.first()) {
-			throw new RecordNotFoundException("Question not found");
-
-		} else {
-			questions = new ArrayList<>();
-			rs.first();
-			do {
-				int id = rs.getInt("id");
-				String t = rs.getString("title");
-				String te = rs.getString("text");
-				Student s = StudentDAO.findStudentByUsername(rs.getString("username"));
-				Date d = rs.getDate("date");
-				boolean so = rs.getBoolean("solved");
-
-				Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-				Question q = new Question(t, te, c, s, so, d);
-
-				q.setId(id);
-				questions.add(q);
-			} while (rs.next());
-		}
-
-		rs.close();
+		ResultSet rs = Queries.getQuestionsCourse(stmt, username);
+		questions = getQuestions(rs);
+		
 		return questions;
 	}
 
@@ -75,33 +51,30 @@ public class QuestionDAO {
 		}
 
 		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		ResultSet rs = null;
-
-		rs = Queries.getQuestionsProfessorCourse(stmt, username);
-
+		ResultSet rs  = Queries.getQuestionsProfessorCourse(stmt, username);
+		questions = getQuestions(rs);
+		
+		return questions;
+	}
+	
+	private static List<Question> getQuestions(ResultSet rs) throws SQLException, RecordNotFoundException {
+		List<Question> questions;
+		
 		if (!rs.first()) {
-			throw new RecordNotFoundException("No question found");
+			throw new RecordNotFoundException("Question not found");
 
 		} else {
 			questions = new ArrayList<>();
 			rs.first();
 			do {
-				int id = rs.getInt("id");
-				String t = rs.getString("title");
-				String te = rs.getString("text");
-				Student s = StudentDAO.findStudentByUsername(rs.getString("username"));
-				Date d = rs.getDate("date");
-				boolean so = rs.getBoolean("solved");
-				Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-
-				Question q = new Question(t, te, c, s, so, d);
-				q.setId(id);
-
+				Question q = setupQuestion(rs);
 				questions.add(q);
+				
 			} while (rs.next());
 		}
 
 		rs.close();
+		
 		return questions;
 	}
 
@@ -169,16 +142,7 @@ public class QuestionDAO {
 
 		} else {
 			rs.first();
-			int i = rs.getInt("id");
-			String t = rs.getString("title");
-			String te = rs.getString("text");
-			Student s = StudentDAO.findStudentByUsername(rs.getString("username"));
-			Date d = rs.getDate("date");
-			boolean so = rs.getBoolean("solved");
-			Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
-
-			question = new Question(t, te, c, s, so, d);
-			question.setId(i);
+			question = setupQuestion(rs);
 		}
 
 		rs.close();
@@ -229,6 +193,19 @@ public class QuestionDAO {
 		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		Queries.deleteQuestion(stmt, id);
 
+	}
+	
+	private static Question setupQuestion(ResultSet rs) throws SQLException, RecordNotFoundException{
+		int i = rs.getInt("id");
+		String t = rs.getString("title");
+		String te = rs.getString("text");
+		Student s = StudentDAO.findStudentByUsername(rs.getString("username"));
+		Date d = rs.getDate("date");
+		boolean so = rs.getBoolean("solved");
+		Course c = CourseDAO.getCourseByAbbrevation(rs.getString("course"));
+		Question question = new Question(t, te, c, s, so, d);
+		question.setId(i);
+		return question;
 	}
 
 }

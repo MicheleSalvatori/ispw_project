@@ -21,16 +21,14 @@ import logic.exceptions.RecordNotFoundException;
 @WebServlet("/ScheduledExamsPageServlet")
 public class ScheduledExamsPageServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		UserBean userLogged = (UserBean) session.getAttribute("loggedUser");
 		
-		if (request.getSession().getAttribute("loggedUser") == null) {
+		if (userLogged== null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
@@ -41,7 +39,7 @@ public class ScheduledExamsPageServlet extends HttpServlet {
 		ScheduledController controller = new ScheduledController();
 		
 		try {
-			exams = controller.getExams((UserBean) session.getAttribute("loggedUser"));
+			exams = controller.getExams(userLogged);
 		
 		} catch (SQLException e) {
 			request.setAttribute("alertMsg", "An error as occured. Try later.");
@@ -54,7 +52,7 @@ public class ScheduledExamsPageServlet extends HttpServlet {
 		
 		try {
 			// Get user courses
-			courses = controller.getCourses((UserBean) session.getAttribute("loggedUser"));
+			courses = controller.getCourses(userLogged);
 			
 		} catch (RecordNotFoundException e) {
 			courses = new ArrayList<>();

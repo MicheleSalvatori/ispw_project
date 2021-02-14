@@ -24,7 +24,6 @@ import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.ExamBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
 import logic.bean.UserBean;
 import logic.controller.ScheduleController;
 import logic.controller.ScheduleExamController;
@@ -138,15 +137,14 @@ public class SchedulePageView implements Initializable {
 		lessonBean.setTime(time);
 		
 		CourseBean course = courses.get(comboCourseLesson.getSelectionModel().getSelectedIndex());
-		lessonBean.setCourse(course);
+		lessonBean.setCourse(course.getAbbreviation());
 		
 		ClassroomBean classroom = classrooms.get(comboClassLesson.getSelectionModel().getSelectedIndex());
 		lessonBean.setClassroom(classroom);
 		
-		ProfessorBean professor = new ProfessorBean();
+		UserBean professor = new UserBean();
 		professor.setEmail(UserBean.getInstance().getEmail());
 		professor.setName(UserBean.getInstance().getName());
-		professor.setPassword(UserBean.getInstance().getPassword());
 		professor.setSurname(UserBean.getInstance().getSurname());
 		professor.setUsername(UserBean.getInstance().getUsername());
 		lessonBean.setProfessor(professor);
@@ -182,10 +180,10 @@ public class SchedulePageView implements Initializable {
 		examBean.setTime(time);
 		
 		CourseBean course = courses.get(comboCourseExam.getSelectionModel().getSelectedIndex());
-		examBean.setCourse(course);
+		examBean.setCourse(course.getAbbreviation());
 		
 		ClassroomBean classroom = classrooms.get(comboClassExam.getSelectionModel().getSelectedIndex());
-		examBean.setClassroom(classroom);
+		examBean.setClassroom(classroom.getName());
 		
 		ScheduleExamController scheduleExamController = new ScheduleExamController();
 		try {

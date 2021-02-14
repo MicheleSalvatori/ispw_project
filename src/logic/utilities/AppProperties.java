@@ -3,6 +3,8 @@ package logic.utilities;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AppProperties {
 	private static final String PREFIX = "system.";
@@ -15,13 +17,14 @@ public class AppProperties {
 			prop.load(input);
 			
 		} catch (IOException e) {
-			// TODO
+			Logger.getGlobal().log(Level.SEVERE, "An unexpected error occured");
 		}
 	}
 
 	public static AppProperties getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new AppProperties();
+		}
 
 		return instance;
 	}

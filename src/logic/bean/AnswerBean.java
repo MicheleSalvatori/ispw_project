@@ -4,40 +4,40 @@ import java.sql.Date;
 
 public class AnswerBean {
 	
-	private int id;
-	private String text;
-	private UserBean user;
-	private Date date;
+	private int abID;
+	private String abText;
+	private UserBean abUser;
+	private Date abDate;
 
 	public int getId() {
-		return id;
+		return abID;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.abID = id;
 	}
 
 	public String getText() {
-		return text;
+		return abText;
 	}
 
 	public void setText(String text) {
-		this.text = text;
+		this.abText = text;
 	}
 
 	public UserBean getUser() {
-		return user;
+		return abUser;
 	}
 
 	public void setUser(UserBean user) {
-		this.user = user;
+		this.abUser = user;
 	}
 
 	public Date getDate() {
-		return date;
+		return abDate;
 	}
 
 	public void setDate(Date date) {
-		this.date = date;
+		this.abDate = date;
 	}
 }

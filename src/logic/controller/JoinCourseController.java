@@ -7,15 +7,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import logic.bean.CourseBean;
-import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Professor;
 import logic.model.Request;
 import logic.model.Student;
+import logic.model.User;
 import logic.model.dao.CourseDAO;
 import logic.model.dao.ProfessorDAO;
 import logic.model.dao.RequestDAO;
@@ -45,11 +44,6 @@ public class JoinCourseController {
 		
 		Request request = new Request(student, course);
 		RequestDAO.deleteRequest(request);
-	}
-	
-	public List<CourseBean> getStudentCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
-		List<Course> courses = CourseDAO.getStudentCourses(userBean.getUsername());
-		return getBeans(courses);
 	}
 	
 	public List<CourseBean> getAvailableCourses(UserBean userBean) throws SQLException, RecordNotFoundException {
@@ -86,13 +80,9 @@ public class JoinCourseController {
 		for (Course course : courses) {
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course.getAbbreviation());
-			courseBean.setCredits(course.getCredits());
-			courseBean.setGoal(course.getGoal());
-			courseBean.setName(course.getName());
-			courseBean.setPrerequisites(course.getPrerequisites());
-			courseBean.setReception(course.getReception());
 			courseBean.setSemester(course.getSemester());
 			courseBean.setYear(course.getYear());
+			courseBean.setName(course.getName());
 			
 			coursesBean.add(courseBean);
 		}
@@ -100,8 +90,8 @@ public class JoinCourseController {
 		return coursesBean;
 	}
 	
-	public List<ProfessorBean> getCourseProfessors(CourseBean courseBean) throws SQLException {
-		
+	public List<UserBean> getCourseProfessors(CourseBean courseBean) throws SQLException {
+	
 		List<Professor> professors = null;
 		
 		try {
@@ -112,15 +102,12 @@ public class JoinCourseController {
 			return new ArrayList<>();
 		}
 		
-		List<ProfessorBean> professorsBean = new ArrayList<>();
+		List<UserBean> professorsBean = new ArrayList<>();
 		
-		for (Professor professor : professors) {
-			ProfessorBean professorBean = new ProfessorBean();
-			professorBean.setEmail(professor.getEmail());
+		for (User professor : professors) {
+			UserBean professorBean = new UserBean();
 			professorBean.setName(professor.getName());
-			professorBean.setPassword(professor.getPassword());
 			professorBean.setSurname(professor.getSurname());
-			professorBean.setUsername(professor.getUsername());
 			
 			professorsBean.add(professorBean);
 		}
@@ -129,16 +116,15 @@ public class JoinCourseController {
 	}
 	
 	private Student getStudent(RequestBean requestBean) {
-		StudentBean studentBean = requestBean.getStudent();
+		UserBean studentBean = requestBean.getStudent();
 		Student student = new Student();
 		student.setUsername(studentBean.getUsername());
 		return student;
 	}
 	
 	private Course getCourse(RequestBean requestBean) {
-		CourseBean courseBean = requestBean.getCourse();
 		Course course = new Course();
-		course.setAbbreviation(courseBean.getAbbreviation());
+		course.setAbbreviation(requestBean.getCourse());
 		return course;
 	}
 }

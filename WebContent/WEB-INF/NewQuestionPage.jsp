@@ -16,7 +16,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>App - Ask a Question</title>
+		<title>.myUniversity - Ask a Question</title>
 		<link rel="stylesheet" href="res/style/NewQuestionPage.css">
 		<link rel="stylesheet" href="res/style/ModalBox.css">
 	</head>
@@ -39,7 +39,7 @@
 					onkeyup="fun()" form="question-form">
 					<option disabled selected value="0">Select course</option>
 					<c:forEach items="${listOfCourses}" var="course">
-						<option value="${course.getAbbrevation()}">${course.getAbbrevation()}</option>
+						<option value="${course.getAbbreviation()}">${course.getAbbreviation()}</option>
 					</c:forEach>
 				</select>
 			</div>
@@ -68,7 +68,6 @@
 		} else {
 			document.getElementById("submit").disabled = true;
 		}
-
 	}
 </script>
 

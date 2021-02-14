@@ -22,75 +22,75 @@ import logic.utilities.Role;
 @WebServlet("/LoginServlet")
 public class LoginPageServlet extends HttpServlet {
 
+	private static String alertString = "An error as occured. Try later.";
+	private static String alertAttribute = "alertMsg";
+	private static String loginPageUrl = "/WEB-INF/LoginPage.jsp";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+		request.getRequestDispatcher(loginPageUrl).forward(request, response);
 	}
 	
 	@Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		if (req.getParameter("login") != null) {
-			
-			UserBean userBean = new UserBean();
-	    	userBean.setUsername(req.getParameter("username"));
-	        userBean.setPassword(req.getParameter("password"));
-	        LoginController controller = new LoginController();
-	        
-			try {
-				userBean = controller.login(userBean);
-				
-			} catch (SQLException e) {
-				req.setAttribute("alertMsg", "An error as occured. Try later.");
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(req, resp);
-				return;
-				
-			} catch (RecordNotFoundException e) {
-	            req.setAttribute("alertMsg", "Not valid login credentials.");
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(req, resp);
-				return;
-			}
-
-	        HttpSession session = req.getSession();
-	        session.setAttribute("loggedUser", userBean);
-	        
-	        if (userBean.getRole() == Role.ADMIN) {
-				resp.sendRedirect(req.getContextPath() + "/AdministrationPageServlet");
-			}
-	        else {
-				resp.sendRedirect(req.getContextPath() + "/HomePageServlet");
-			}
-		}
+		try {
 		
-		else if (req.getParameter("forgotPassword") != null) {
-			
-			LoginController controller = new LoginController();
-			
-			String email = req.getParameter("email");
-			
-			try {
-				checkInput(email);
+			if (req.getParameter("login") != null) {
 				
+				String username = req.getParameter("username");
+				String password = req.getParameter("password");
+				
+				if (username.isEmpty() || password.isEmpty()) {
+					req.setAttribute(alertAttribute, "One or more fields are empty.");
+					req.getRequestDispatcher(loginPageUrl).include(req, resp);
+					return;
+				}
+				
+				UserBean userBean = new UserBean();
+		    	userBean.setUsername(username);
+		        userBean.setPassword(password);
+		        LoginController controller = new LoginController();
+	
+				userBean = controller.login(userBean);
+	
+		        HttpSession session = req.getSession();
+		        session.setAttribute("loggedUser", userBean);
+		        
+		        if (userBean.getRole() == Role.ADMIN) {
+					resp.sendRedirect(req.getContextPath() + "/AdministrationPageServlet");
+				}
+		        else {
+					resp.sendRedirect(req.getContextPath() + "/HomePageServlet");
+		        }
+			}
+		
+			else if (req.getParameter("forgotPassword") != null) {
+			
+				LoginController controller = new LoginController();
+				
+				String email = req.getParameter("email");
+	
+				checkInput(email);
+					
 				UserBean userBean = new UserBean();
 				userBean.setEmail(email);
 				
 				String password = controller.getUserByEmail(userBean).getPassword();
 				Email.password(email, password);
-
-			} catch (SQLException e) {
-				req.setAttribute("alertMsg", "Connection failed!");
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(req, resp);
-				return;
-
-			} catch (RecordNotFoundException | InvalidInputException e) {
-				req.setAttribute("alertMsg", e.getMessage());
-				req.getRequestDispatcher("/WEB-INF/LoginPage.jsp").include(req, resp);
-				return;
+	
+				req.setAttribute(alertAttribute, "Password send by email.");
+				req.getRequestDispatcher(loginPageUrl).include(req, resp);
 			}
+			
+		} catch (SQLException e) {
+			req.setAttribute(alertAttribute, alertString);
+			req.getRequestDispatcher(loginPageUrl).include(req, resp);
 
-			resp.sendRedirect(req.getContextPath() + "/LoginServlet");
+		} catch (RecordNotFoundException | InvalidInputException e) {
+			req.setAttribute("alertMsg", e.getMessage());
+			req.getRequestDispatcher(loginPageUrl).include(req, resp);
 		}
     }
 	

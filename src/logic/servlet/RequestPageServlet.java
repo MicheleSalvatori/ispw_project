@@ -14,39 +14,39 @@ import javax.servlet.http.HttpSession;
 
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.controller.AcceptRequestController;
 import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/RequestPageServlet")
 public class RequestPageServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
+	
+	private static String alertStringRequest = "An error as occured. Try later.";
+	private static String alertAttributeRequest = "alertMsg";
+	private static String loggedAttributeRequest = "loggedUser";
+	private static String loginPageUrlRequest = "/WEB-INF/LoginPage.jsp";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
-		if (request.getSession().getAttribute("loggedUser") == null) {
+		if (request.getSession().getAttribute(loggedAttributeRequest) == null) {
 	        response.sendRedirect("/ispw_project/LoginServlet"); // Not logged in, redirect to login page.
 	        return;
 		}
 	
+		UserBean userLogged = (UserBean) request.getSession().getAttribute(loggedAttributeRequest);
 		AcceptRequestController controller = new AcceptRequestController();
 		
 		List<RequestBean> requests = null;
 		List<CourseBean> courses = null;
 		
 		try {
-			requests = controller.getRequests((UserBean) request.getSession().getAttribute("loggedUser"));
+			requests = controller.getRequests(userLogged);
 
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			request.setAttribute(alertAttributeRequest, alertStringRequest);
+			request.getRequestDispatcher(loginPageUrlRequest).forward(request, response);
 			return;
 			
 		} catch (RecordNotFoundException e) {
@@ -55,11 +55,11 @@ public class RequestPageServlet extends HttpServlet {
 		
 		
 		try {
-			courses = controller.getCourses((UserBean) request.getSession().getAttribute("loggedUser"));
+			courses = controller.getCourses(userLogged);
 		
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
-			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+			request.setAttribute(alertAttributeRequest, alertStringRequest);
+			request.getRequestDispatcher(loginPageUrlRequest).forward(request, response);
 			return;
 		
 		} catch (RecordNotFoundException e) {
@@ -76,55 +76,39 @@ public class RequestPageServlet extends HttpServlet {
 		
 		AcceptRequestController controller = new AcceptRequestController();
 		
+		String course = request.getParameter("course");
+		String student = request.getParameter("student");
+		
+		UserBean studentBean = new UserBean();
+		studentBean.setUsername(student);
+		
+		RequestBean requestBean = new RequestBean();
+		requestBean.setCourse(course);
+		requestBean.setStudent(studentBean);
+		
 		if (request.getParameter("btnAccept") != null) {
-			
-			String course = request.getParameter("course");
-			String student = request.getParameter("student");
-			
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course);
-			
-			StudentBean studentBean = new StudentBean();
-			studentBean.setUsername(student);
-			
-			RequestBean requestBean = new RequestBean();
-			requestBean.setCourse(courseBean);
-			requestBean.setStudent(studentBean);
-			
 			try {
 				controller.acceptRequest(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute("alertMsg", "An error as occured. Try later.");
-				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				request.setAttribute(alertAttributeRequest, alertStringRequest);
+				request.getRequestDispatcher(loginPageUrlRequest).forward(request, response);
 				return;
 			}
 		}
 		
-		else if (request.getParameter("btnDecline") != null) {
-			String course = request.getParameter("course");
-			String student = request.getParameter("student");
-			
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course);
-			
-			StudentBean studentBean = new StudentBean();
-			studentBean.setUsername(student);
-			
-			RequestBean requestBean = new RequestBean();
-			requestBean.setCourse(courseBean);
-			requestBean.setStudent(studentBean);
-			
+		else if (request.getParameter("btnDecline") != null) {	
 			try {
 				controller.declineRequest(requestBean);
 				
 			} catch (SQLException e) {
-				request.setAttribute("alertMsg", "An error as occured. Try later.");
-				request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
+				request.setAttribute(alertAttributeRequest, alertStringRequest);
+				request.getRequestDispatcher(loginPageUrlRequest).forward(request, response);
 				return;
 			}
 		}
 		
 		response.sendRedirect("/ispw_project/RequestPageServlet");
 	}
+	
 }

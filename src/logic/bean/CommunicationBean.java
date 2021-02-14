@@ -3,40 +3,41 @@ package logic.bean;
 import java.sql.Date;
 
 public class CommunicationBean {
-	private int id;
-	private String text;
-	private String title;
-	private Date date;
+	
+	private int cobID;
+	private String cobText;
+	private String cobTitle;
+	private Date cobDate;
 
 	public int getId() {
-		return id;
+		return cobID;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.cobID = id;
 	}
 
 	public String getText() {
-		return text;
+		return cobText;
 	}
 
 	public void setText(String text) {
-		this.text = text;
+		this.cobText = text;
 	}
 
 	public String getTitle() {
-		return title;
+		return cobTitle;
 	}
 
 	public void setTitle(String title) {
-		this.title = title;
+		this.cobTitle = title;
 	}
 
 	public Date getDate() {
-		return date;
+		return cobDate;
 	}
 
 	public void setDate(Date date) {
-		this.date = date;
+		this.cobDate = date;
 	}
 }

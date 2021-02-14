@@ -8,9 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Line;
 import logic.bean.CourseBean;
-import logic.bean.ProfessorBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.utilities.Page;
 import logic.utilities.PageLoader;
@@ -56,21 +54,14 @@ public class CourseCardView {
 	private void deleteRequest(ActionEvent event) {
 		ProfilePageView profilePageView = (ProfilePageView) PageLoader.getInstance().getController();
 		
-		StudentBean studentBean = new StudentBean();
-		studentBean.setEmail(UserBean.getInstance().getEmail());
-		studentBean.setName(UserBean.getInstance().getName());
-		studentBean.setPassword(UserBean.getInstance().getPassword());
-		studentBean.setSurname(UserBean.getInstance().getSurname());
-		studentBean.setUsername(UserBean.getInstance().getUsername());
-		
 		RequestBean requestBean = new RequestBean();
-		requestBean.setStudent(studentBean);
-		requestBean.setCourse(courseBean);
+		requestBean.setStudent(UserBean.getInstance());
+		requestBean.setCourse(courseBean.getAbbreviation());
 		
 		profilePageView.deleteRequest(requestBean);
 	}
 	
-	public void setCourse(CourseBean courseBean, List<ProfessorBean> professors, Type type) {
+	public void setCourse(CourseBean courseBean, List<UserBean> professors, Type type) {
 		this.courseBean = courseBean;
 		
 		btnCourse.setText(courseBean.getAbbreviation());

@@ -15,6 +15,7 @@ import logic.utilities.Queries;
 import logic.utilities.SingletonDB;
 
 public class ProfessorDAO {
+	private static String noUsername = "No Username Found matching with name: ";
 	
 	private ProfessorDAO() {}
 	
@@ -33,16 +34,11 @@ public class ProfessorDAO {
 			resultSet = Queries.selectProfessor(stmt, username, password);
 			
 			if (!resultSet.first()) {
-				throw new RecordNotFoundException("No Username Found matching with name: " + username);
+				throw new RecordNotFoundException(noUsername + username);
 				
 			}else {
 				resultSet.first();				// mi riposiziono alla prima riga 
-				professorLogged = new Professor();
-				professorLogged.setUsername(resultSet.getString("username"));
-				professorLogged.setName(resultSet.getString("name"));
-				professorLogged.setSurname(resultSet.getString("surname"));
-				professorLogged.setEmail(resultSet.getString("email"));
-				professorLogged.setPassword(resultSet.getString("password"));
+				professorLogged = setupProfessor(resultSet);
 			}
 			
 			resultSet.close();
@@ -72,16 +68,11 @@ public class ProfessorDAO {
 			resultSet = Queries.selectProfessorByUsername(stmt, username);
 			
 			if (!resultSet.first()) {
-				throw new RecordNotFoundException("No Username Found matching with name: " + username);
+				throw new RecordNotFoundException(noUsername+ username);
 				
 			}else {
 				resultSet.first();				// mi riposiziono alla prima riga 
-				professor = new Professor();
-				professor.setUsername(resultSet.getString("username"));
-				professor.setName(resultSet.getString("name"));
-				professor.setSurname(resultSet.getString("surname"));
-				professor.setEmail(resultSet.getString("email"));
-				professor.setPassword(resultSet.getString("password"));
+				professor = setupProfessor(resultSet);
 			}
 			
 			resultSet.close();
@@ -115,14 +106,9 @@ public class ProfessorDAO {
 				
 			}else {
 				professors = new ArrayList<>();
-				resultSet.first();				// mi riposiziono alla prima riga 
+				resultSet.first();
 				do {
-					String u = resultSet.getString("username");
-					String p = resultSet.getString("password");
-					String n = resultSet.getString("name");
-					String s = resultSet.getString("surname");
-					String e = resultSet.getString("email");
-					Professor prof = new Professor(u, p, n, s, e);
+					Professor prof = setupProfessor(resultSet);
 					professors.add(prof);
 				} while(resultSet.next());
 			}
@@ -147,7 +133,7 @@ public class ProfessorDAO {
 			conn = (SingletonDB.getDbInstance()).getConnection();
 			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			rs = Queries.selectStudentByUsername(stmt, user.getUsername());
+			rs = Queries.selectProfessorByUsername(stmt, user.getUsername());
 			if (rs.first()) {
 				// Raise duplicate entry exception
 				throw new DuplicatedRecordException("Username '" + user.getUsername() + "' already in use.");   
@@ -178,7 +164,7 @@ public class ProfessorDAO {
 		}	
 	}
 	
-	public static void changePassword(User user) throws SQLException, RecordNotFoundException {
+	public static void changePasswordProfessor(User user) throws SQLException, RecordNotFoundException {
 		
 		Connection conn = null;
 		Statement stmt = null;
@@ -193,10 +179,47 @@ public class ProfessorDAO {
 			
 			rs = Queries.selectProfessorByUsername(stmt, user.getUsername());
 			if (!rs.first()) {
-				throw new RecordNotFoundException("No Username Found matching with name: " + user.getUsername());
+				throw new RecordNotFoundException(noUsername + user.getUsername());
 			}
 			
 			Queries.updateProfessorPassword(stmt, user.getUsername(), user.getPassword());
+			
+			rs.close();
+			
+		} finally {
+			if(stmt != null) stmt.close();
+		}
+	}
+
+	
+	private static Professor setupProfessor(ResultSet resultSet) throws SQLException {
+		String u = resultSet.getString("username");
+		String p = resultSet.getString("password");
+		String n = resultSet.getString("name");
+		String s = resultSet.getString("surname");
+		String e = resultSet.getString("email");
+		return new Professor(u, p, n, s, e);
+  }
+
+
+	public static void deleteProfessor(User user) throws SQLException, RecordNotFoundException {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = (SingletonDB.getDbInstance()).getConnection();
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			rs = Queries.selectProfessorByUsername(stmt, user.getUsername());
+			if (!rs.first()) {
+				throw new RecordNotFoundException("No Username Found matching with name: " + user.getUsername());	
+			} 
+			
+			Queries.deleteProfessor(stmt, user.getUsername());
+			
+			RoleDAO.deleteRole(user);
 			
 			rs.close();
 			

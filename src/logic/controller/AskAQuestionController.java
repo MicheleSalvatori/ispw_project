@@ -19,7 +19,7 @@ import logic.model.dao.QuestionDAO;
 
 public class AskAQuestionController {
 
-	public List<CourseBean> getCoursesOfStudent(UserBean user) throws SQLException {
+	public List<CourseBean> getStudentCourses(UserBean user) throws SQLException {
 		List<Course> courses = new ArrayList<>();
 		List<CourseBean> courseBeans = null;
 		String username = user.getUsername();

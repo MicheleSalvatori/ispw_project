@@ -5,58 +5,58 @@ import java.sql.Time;
 
 public class LessonBean {
 
-	private Date date;
-	private Time time;
-	private CourseBean course;
-	private ClassroomBean classroom;
-	private ProfessorBean professor;
-	private String topic;
+	private Date lbDate;
+	private Time lbTime;
+	private String lbCourse;
+	private ClassroomBean lbClassroom;
+	private UserBean lbProfessor;
+	private String lbTopic;
 	
 	public Date getDate() {
-		return date;
+		return lbDate;
 	}
 	
 	public void setDate(Date date) {
-		this.date = date;
+		this.lbDate = date;
 	}
 	
 	public Time getTime() {
-		return time;
+		return lbTime;
 	}
 	
 	public void setTime(Time time) {
-		this.time = time;
+		this.lbTime = time;
 	}
 	
-	public CourseBean getCourse() {
-		return course;
+	public String getCourse() {
+		return lbCourse;
 	}
 	
-	public void setCourse(CourseBean course) {
-		this.course = course;
+	public void setCourse(String course) {
+		this.lbCourse = course;
 	}
 	
 	public ClassroomBean getClassroom() {
-		return classroom;
+		return lbClassroom;
 	}
 	
 	public void setClassroom(ClassroomBean classroom) {
-		this.classroom = classroom;
+		this.lbClassroom = classroom;
 	}
 
 	public String getTopic() {
-		return topic;
+		return lbTopic;
 	}
 
 	public void setTopic(String topic) {
-		this.topic = topic;
+		this.lbTopic = topic;
 	}
 
-	public ProfessorBean getProfessor() {
-		return professor;
+	public UserBean getProfessor() {
+		return lbProfessor;
 	}
 
-	public void setProfessor(ProfessorBean professor) {
-		this.professor = professor;
+	public void setProfessor(UserBean professor) {
+		this.lbProfessor = professor;
 	}
 }

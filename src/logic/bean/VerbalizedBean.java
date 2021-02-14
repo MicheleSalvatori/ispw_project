@@ -4,40 +4,40 @@ import java.sql.Date;
 
 public class VerbalizedBean {
 	
-	private StudentBean student;
-	private CourseBean course;
-	private int grade;
-	private Date date;
+	private String vbStudent;
+	private CourseBean vbCourse;
+	private int vbGrade;
+	private Date vbDate;
 	
-	public StudentBean getStudent() {
-		return student;
+	public String getStudent() {
+		return vbStudent;
 	}
 	
-	public void setStudent(StudentBean student) {
-		this.student = student;
+	public void setStudent(String student) {
+		this.vbStudent = student;
 	}
 	
 	public CourseBean getCourse() {
-		return course;
+		return vbCourse;
 	}
 	
 	public void setCourse(CourseBean course) {
-		this.course = course;
+		this.vbCourse = course;
 	}
 	
 	public int getGrade() {
-		return grade;
+		return vbGrade;
 	}
 	
 	public void setGrade(int grade) {
-		this.grade = grade;
+		this.vbGrade = grade;
 	}
 
 	public Date getDate() {
-		return date;
+		return vbDate;
 	}
 
 	public void setDate(Date date) {
-		this.date = date;
+		this.vbDate = date;
 	}
 }

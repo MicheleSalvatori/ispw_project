@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="res/style/LoginPage.css">
 	<link rel="stylesheet" href="res/style/ModalBox.css">
 	<meta charset="utf-8">
-	<title>App - LoginPage</title>
+	<title>.myUniversity - LoginPage</title>
 </head>
 
 <body>
@@ -37,7 +37,7 @@
 			  
 			<tr>
 				<td colspan="2" style="text-align: center; padding-bottom: 18px; padding-left: 7px;">
-					<button class="login" type="submit" name="login">
+					<button class="login" type="submit" name="login" id="login">
 						LOG IN
 					</button>
 					

@@ -21,7 +21,7 @@ public class WeeklyLessonCardView {
 		String day = d.substring(0, 1).toUpperCase() + d.substring(1);
 		
 		labelDay.setText(day);
-		labelClass.setText(lesson.getClassroom().getName());
+		labelClass.setText(lesson.getClassroom());
 		labelTime.setText(SQLConverter.time(lesson.getTime()));
 	}
 }

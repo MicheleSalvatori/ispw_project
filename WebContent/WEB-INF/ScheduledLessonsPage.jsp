@@ -15,7 +15,7 @@
 	
 	<head>
 		<meta charset="utf-8">
-		<title>App - ScheduledLessonPage</title>
+		<title>.myUniversity - ScheduledLessonPage</title>
 		<link rel="stylesheet" href="res/style/ScheduledPage.css">
 		<link rel="icon" href="res/img/Logo.png">
 	</head>
@@ -47,7 +47,7 @@
 						<c:forEach items="${listOfLesson}" var="lesson">
 						<tr height="60px" class="request">
 						
-							<td style="padding: 1vw; white-space: nowrap; width: 50px;">
+							<td style="border-radius: 14px 0 0 14px; padding: 1vw; white-space: nowrap; width: 50px;">
 								<img class="img" src="res/img/Lesson.png" alt="lesson">
 							</td>
 							
@@ -68,8 +68,8 @@
 							</td>
 
 							<td align="right" class="course" style="width: 8vw; text-align: center;">
-								<a href="/ispw_project/CoursePageServlet?course=${lesson.getCourse().getAbbreviation()}">
-									${lesson.getCourse().getAbbreviation()}
+								<a href="/ispw_project/CoursePageServlet?course=${lesson.getCourse()}">
+									${lesson.getCourse()}
 								</a>
 							</td>
 							
@@ -84,9 +84,12 @@
 							</td>
 				
 							<td style="border-radius: 0 14px 14px 0; white-space: nowrap; text-align: right; padding-right: 2vw;">
-								<button class="button">
-									View
-								</button>
+								<form action="/ispw_project/LessonPageServlet" method="get" >
+									<button class="button" type="submit">View</button>
+									<input type="hidden" name="lessonCourse" value="${lesson.getCourse()}">
+									<input type="hidden" name="lessonDate" value="${lesson.getDate()}">
+									<input type="hidden" name="lessonTime" value="${lesson.getTime()}">
+								</form>
 							</td>
 						</tr>
 						</c:forEach>
@@ -152,8 +155,7 @@ function filter(val) {
 }
 </script>
 
-<% if (request.getParameter("course") != null) { 
-	System.out.println(request.getParameter("course"));%>
+<% if (request.getParameter("course") != null) { %>
 	<script>
 		filter("<%=request.getParameter("course")%>");
 	</script>

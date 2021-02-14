@@ -1,0 +1,268 @@
+{
+  "id": "5d3fc27c-a165-4d9c-ba89-7e65f5dee051",
+  "version": "2.0",
+  "name": "ispw",
+  "url": "http://localhost:8080/ispw_project/LoginServlet",
+  "tests": [{
+    "id": "74c287ca-fa53-4d3d-8276-70643501c46f",
+    "name": "TestAskAQuestion",
+    "commands": [{
+      "id": "eeab5773-e350-4873-a887-7c20d2fd3a71",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ispw_project/LoginServlet",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e856f430-2cc2-42cf-a1cc-f82fe33e9bc8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1054x808",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7ec16680-3bab-4f6e-9df6-a7505d9ef73c",
+      "comment": "",
+      "command": "click",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a0784604-0b7a-4bca-b53c-59cea0ec0ac7",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "testStudent"
+    }, {
+      "id": "1b4d6cef-6679-4a59-864d-3eca8fd9a360",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": "testPassword"
+    }, {
+      "id": "6f0f2096-5b61-4930-b1ab-6033a6a12727",
+      "comment": "",
+      "command": "click",
+      "target": "id=login",
+      "targets": [
+        ["id=login", "id"],
+        ["name=login", "name"],
+        ["css=#login", "css:finder"],
+        ["xpath=//button[@id='login']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'LOG IN')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8df18d07-08af-4548-a330-1771094db120",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(5) path",
+      "targets": [
+        ["css=tr:nth-child(5) path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "3f47a836-cabd-4987-9118-82f8f06b98ac",
+      "comment": "",
+      "command": "click",
+      "target": "id=newQuestion",
+      "targets": [
+        ["id=newQuestion", "id"],
+        ["css=#newQuestion", "css:finder"],
+        ["xpath=//button[@id='newQuestion']", "xpath:attributes"],
+        ["xpath=//div[2]/a/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Insert New Question')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f2d6faf9-9ea9-408b-85de-a5cef64f2fb8",
+      "comment": "",
+      "command": "click",
+      "target": "id=question-subject",
+      "targets": [
+        ["id=question-subject", "id"],
+        ["name=question-subject", "name"],
+        ["css=#question-subject", "css:finder"],
+        ["xpath=//input[@id='question-subject']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e21bae49-3a6a-43da-af58-969e69051fbf",
+      "comment": "",
+      "command": "type",
+      "target": "id=question-subject",
+      "targets": [
+        ["id=question-subject", "id"],
+        ["name=question-subject", "name"],
+        ["css=#question-subject", "css:finder"],
+        ["xpath=//input[@id='question-subject']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "TestSelenium"
+    }, {
+      "id": "09076ded-16fc-4899-bd05-d9eb139f9ca3",
+      "comment": "",
+      "command": "click",
+      "target": "id=questionText",
+      "targets": [
+        ["id=questionText", "id"],
+        ["name=question-text", "name"],
+        ["css=#questionText", "css:finder"],
+        ["xpath=//textarea[@id='questionText']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d786216-76b1-4d9f-8458-2616d880dbef",
+      "comment": "",
+      "command": "type",
+      "target": "id=questionText",
+      "targets": [
+        ["id=questionText", "id"],
+        ["name=question-text", "name"],
+        ["css=#questionText", "css:finder"],
+        ["xpath=//textarea[@id='questionText']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "This is a test"
+    }, {
+      "id": "647c0db9-7654-4f52-a659-159ff2503982",
+      "comment": "",
+      "command": "click",
+      "target": "css=.content",
+      "targets": [
+        ["css=.content", "css:finder"],
+        ["xpath=//div[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6e3aaf23-1cd5-4879-b298-889726a5a761",
+      "comment": "",
+      "command": "click",
+      "target": "id=courses",
+      "targets": [
+        ["id=courses", "id"],
+        ["name=courses", "name"],
+        ["css=#courses", "css:finder"],
+        ["xpath=//select[@id='courses']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1009247e-5fe5-43f3-b58d-573618d00b2a",
+      "comment": "",
+      "command": "select",
+      "target": "id=courses",
+      "targets": [],
+      "value": "label=testCourse"
+    }, {
+      "id": "a62d4c4e-6d6f-43b9-8a5c-3808cd621644",
+      "comment": "",
+      "command": "click",
+      "target": "id=courses",
+      "targets": [
+        ["id=courses", "id"],
+        ["name=courses", "name"],
+        ["css=#courses", "css:finder"],
+        ["xpath=//select[@id='courses']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "da2846f8-6ceb-49ee-a54f-cc3d0742d40d",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9229a4c8-48f8-46b4-a544-b27b41ca4c9a",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit",
+      "targets": [
+        ["id=submit", "id"],
+        ["name=submit", "name"],
+        ["css=#submit", "css:finder"],
+        ["xpath=//button[@id='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='question-form']/button", "xpath:idRelative"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8e1d6188-2d38-4db1-b3c3-1444a1dc13fc",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "Are you sure you want to ask this question?",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d4f2c952-b826-4e63-8e06-b3dc430517c7",
+      "comment": "",
+      "command": "webdriverChooseOkOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e407ce75-0714-4ec4-a217-276dd1854639",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.question:nth-child(1) > .question-subject .question-subject",
+      "targets": [
+        ["css=.question:nth-child(1) > .question-subject .question-subject", "css:finder"],
+        ["xpath=//table[@id='tableQuestions']/tbody/tr/td[3]/table/tbody/tr/td", "xpath:idRelative"],
+        ["xpath=//td[3]/table/tbody/tr/td", "xpath:position"]
+      ],
+      "value": "TestSelenium"
+    }, {
+      "id": "26c4c147-426d-4dad-8440-1da261d3e108",
+      "comment": "",
+      "command": "click",
+      "target": "name=logout",
+      "targets": [
+        ["css=.status-button > svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "dc9c4114-205c-4c33-a75f-afd1e140be9b",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "82a1ec11-d1ab-47d4-8a09-01d2df263c1b",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8080/ispw_project/LoginServlet"],
+  "plugins": []
+}

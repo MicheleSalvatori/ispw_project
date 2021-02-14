@@ -15,7 +15,7 @@
 	
 	<head>
 		<meta charset="utf-8">
-		<title>App - HomePage</title>
+		<title>.myUniversity - ExamPage</title>
 		<link rel="stylesheet" href="res/style/ExamPage.css">
 		<link rel="stylesheet" href="res/style/ModalBox.css">
 		<link rel="icon" href="res/img/Logo.png">
@@ -37,7 +37,7 @@
 			<!-- Exam table	-->
 			<div width="100%" style="height: 100%; border: 2px solid #0C0B0B; border-radius: 14px;">
 				<div class="overflow">
-				<table style="border-collapse: separate; height: 100%; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
+				<table style="border-collapse: separate; border-spacing: 0 10px; width: 100%; border: 15px solid transparent;">
 					<c:if test="${empty listOfExam}">
 						<tr>
 							<td colspan="7" class="exam-text">

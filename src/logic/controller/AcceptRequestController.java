@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import logic.bean.CourseBean;
 import logic.bean.RequestBean;
-import logic.bean.StudentBean;
 import logic.bean.UserBean;
 import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.model.Request;
 import logic.model.Student;
+import logic.model.User;
 import logic.model.dao.CourseDAO;
 import logic.model.dao.RequestDAO;
 
@@ -20,13 +20,12 @@ public class AcceptRequestController {
 
 		deleteRequest(requestBean);
 		
-		StudentBean studentBean = requestBean.getStudent();
+		UserBean studentBean = requestBean.getStudent();
 		Student student = new Student();
 		student.setUsername(studentBean.getUsername());
-				
-		CourseBean courseBean = requestBean.getCourse();
+
 		Course course = new Course();
-		course.setAbbreviation(courseBean.getAbbreviation());
+		course.setAbbreviation(requestBean.getCourse());
 				
 		Request request = new Request(student, course);
 				
@@ -39,13 +38,12 @@ public class AcceptRequestController {
 	
 	public void deleteRequest(RequestBean requestBean) throws SQLException {
 
-		StudentBean studentBean = requestBean.getStudent();
+		UserBean studentBean = requestBean.getStudent();
 		Student student = new Student();
 		student.setUsername(studentBean.getUsername());
-			
-		CourseBean courseBean = requestBean.getCourse();
+
 		Course course = new Course();
-		course.setAbbreviation(courseBean.getAbbreviation());
+		course.setAbbreviation(requestBean.getCourse());
 			
 		Request request = new Request(student, course);
 		RequestDAO.deleteRequest(request);
@@ -59,13 +57,7 @@ public class AcceptRequestController {
 		for (Course course : courses) {
 			CourseBean courseBean = new CourseBean();
 			courseBean.setAbbreviation(course.getAbbreviation());
-			courseBean.setCredits(course.getCredits());
-			courseBean.setGoal(course.getGoal());
 			courseBean.setName(course.getName());
-			courseBean.setPrerequisites(course.getPrerequisites());
-			courseBean.setReception(course.getReception());
-			courseBean.setSemester(course.getSemester());
-			courseBean.setYear(course.getYear());
 			
 			coursesBean.add(courseBean);
 		}
@@ -82,25 +74,14 @@ public class AcceptRequestController {
 			RequestBean requestBean = new RequestBean();
 			
 			Course course = request.getCourse();
-			CourseBean courseBean = new CourseBean();
-			courseBean.setAbbreviation(course.getAbbreviation());
-			courseBean.setCredits(course.getAbbreviation());
-			courseBean.setGoal(course.getGoal());
-			courseBean.setName(course.getName());
-			courseBean.setPrerequisites(course.getPrerequisites());
-			courseBean.setReception(course.getReception());
-			courseBean.setSemester(course.getSemester());
-			courseBean.setYear(course.getYear());
-			
-			Student student = request.getStudent();
-			StudentBean studentBean = new StudentBean();
-			studentBean.setEmail(student.getEmail());
+
+			User student = request.getStudent();
+			UserBean studentBean = new UserBean();
 			studentBean.setName(student.getName());
-			studentBean.setPassword(student.getPassword());
 			studentBean.setSurname(student.getSurname());
 			studentBean.setUsername(student.getUsername());
 			
-			requestBean.setCourse(courseBean);
+			requestBean.setCourse(course.getAbbreviation());
 			requestBean.setStudent(studentBean);
 					
 			requestsBean.add(requestBean);

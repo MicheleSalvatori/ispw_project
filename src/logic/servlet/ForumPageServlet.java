@@ -21,19 +21,22 @@ import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/ForumPageServlet")
 public class ForumPageServlet extends HttpServlet {
+	
+	private static String alertString = "An error as occured. Try later.";
+	private static String alertAttribute = "alertMsg";
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-
+		
 		QuestionController controller = new QuestionController();
 		List<QuestionBean> questions = null;
 		try {
 			questions = controller.getAllQuestions((UserBean) session.getAttribute("loggedUser"));
 			
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.setAttribute(alertAttribute, alertString);
 			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
 			return;
 			
@@ -49,7 +52,7 @@ public class ForumPageServlet extends HttpServlet {
 			assignments = assignmentController.getAssignments((UserBean) session.getAttribute("loggedUser"));
 			
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.setAttribute(alertAttribute, alertString);
 			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
 			return;
 			
@@ -70,7 +73,7 @@ public class ForumPageServlet extends HttpServlet {
 			try {
 				controller.setSolved(questionID);
 			} catch (SQLException e) {
-				req.setAttribute("alertMsg", "An error as occured. Try later.");
+				req.setAttribute(alertAttribute, alertString);
 				req.getRequestDispatcher("/WEB-INF/ForumPage.jsp").forward(req, resp);
 				return;
 			}

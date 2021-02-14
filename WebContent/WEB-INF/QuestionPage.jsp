@@ -20,13 +20,15 @@
 %>
 	<head>
 		<meta charset="utf-8">
-		<title>App - QuestionPage</title>
+		<title>.myUniversity - QuestionPage</title>
 		<link rel="stylesheet" href="res/style/ModalBox.css">
 		<link rel="stylesheet" href="res/style/StatusBar.css">
+		<link rel="stylesheet" href="res/style/QuestionPage.css">
+		
 	</head>
 
 	<body>
-	
+		
 		<!-- Navigation bar -->
 		<jsp:include page="NavigationBar.jsp"/>
 
