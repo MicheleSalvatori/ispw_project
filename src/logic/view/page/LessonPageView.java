@@ -217,7 +217,9 @@ public class LessonPageView {
 	}
 
 	private void setupSeatStatus() {
+		
 		buttonList = gridSeat.getChildren();
+		
 		if (classroom.getSeat() != null) {
 			for (SeatBean s : classroom.getSeat()) {
 				if (mySeat != null && s.getId() == mySeat.getId()) {
@@ -227,12 +229,11 @@ public class LessonPageView {
 				}
 			}
 		}
+		
 		if (UserBean.getInstance().getRole() == Role.PROFESSOR) {
 			for (Node n : buttonList) {
-				try {
+				if (n instanceof Button) {
 					((Button) n).setDisable(true);
-				} catch (ClassCastException e) {
-					break; // Cast label of the rows to Button.
 				}
 			}
 		}
