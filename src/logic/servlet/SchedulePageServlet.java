@@ -33,7 +33,7 @@ public class SchedulePageServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static String alertAttribute = "alertMsg";
-	private static String schedulePageServlet  = "/ispw_project/SchedulePageServlet";
+	private static String redirectPageServlet  = "/ispw_project/SchedulePageServlet";
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -103,7 +103,7 @@ public class SchedulePageServlet extends HttpServlet {
 			} catch (DatePriorTodayException e) {
 				e.printStackTrace();
 				session.setAttribute(alertAttribute, "Date entered must be after today.");
-				response.sendRedirect(schedulePageServlet);
+				response.sendRedirect(redirectPageServlet);
 				return;
 			}
 			session.setAttribute(alertAttribute, "Lesson added correctly.");
@@ -133,12 +133,12 @@ public class SchedulePageServlet extends HttpServlet {
 			} catch (DatePriorTodayException e) {
 				e.printStackTrace();
 				session.setAttribute(alertAttribute, "Date entered must be after today.");
-				response.sendRedirect(schedulePageServlet);
+				response.sendRedirect(redirectPageServlet);
 				return;
 			}
 			session.setAttribute(alertAttribute, "Exam added correctly.");
 		}
 		
-		response.sendRedirect(schedulePageServlet);
+		response.sendRedirect(redirectPageServlet);
 	}
 }

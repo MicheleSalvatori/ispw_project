@@ -31,6 +31,7 @@ public class TestNotifications {
 	JoinCourseController joinCourseController = new JoinCourseController();
 	int reqCountBefore = -1;
 	int reqCountAfter = -1;
+	private static String connFail = "Connection failed";
 
 	
 	@Before
@@ -57,7 +58,7 @@ public class TestNotifications {
 			reqCountBefore=0;
 			message = "Record not found";
 		} catch (SQLException e) {
-			message = "Connection failed";
+			message = connFail;
 		}
 		
 		// eseguo richiesta con studente per il prof
@@ -65,7 +66,7 @@ public class TestNotifications {
 		try {
 			joinCourseController.sendRequest(requestBean);
 		} catch (SQLException e) {
-			message = "Connection failed";
+			message = connFail;
 		}
 		
 		// prendo numero notifiche del prof dopo
@@ -75,7 +76,7 @@ public class TestNotifications {
 			reqCountAfter=0;
 			message = "Record not found";
 		} catch (SQLException e) {
-			message = "Connection failed";
+			message = connFail;
 		}
 		
 		// assert prima==dopo-1
