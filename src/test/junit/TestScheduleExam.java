@@ -58,8 +58,6 @@ public class TestScheduleExam {
 		ExamBean examBean = null;
 		ScheduledController scheduledController = new ScheduledController();
 
-		
-		
 		try {
 			dbUpdated = controller.scheduleExam(exam);
 			examBean = scheduledController.getExams(user).get(0);

@@ -19,14 +19,15 @@ import logic.utilities.Role;
 /*
  * Luca Santopadre 0257118
  */
+
 public class TestNewAssignment {
+	
 	AssignmentBean assignmentBean;
 	AddAssignmentController addAssignmentController;
 	Course course;
 	int insertedAssigmentId = -1;
-	boolean finded = false;
+	boolean found = false;
 	
-
 	@Before
 	public void prepare() {
 		assignmentBean = new AssignmentBean();
@@ -38,11 +39,11 @@ public class TestNewAssignment {
 		
 		course = new Course();
 		course.setAbbreviation(assignmentBean.getCourse());
-		
 	}
 
 	@Test
-	public void test() {		
+	public void test() {	
+		String message = "";
 		
 		// save assignment
 		try {
@@ -59,21 +60,23 @@ public class TestNewAssignment {
 			List<AssignmentBean> assignmentsList = addAssignmentController.getAssignments(userStudentBean);
 			insertedAssigmentId = assignmentsList.get(assignmentsList.size()-1).getId();
 			for (AssignmentBean a : assignmentsList) {
-				finded = a.getId() == insertedAssigmentId;
+				found = (a.getId() == insertedAssigmentId);
 			}
-			assertEquals(true, finded);
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			message = "Connection failed";
+			
 		} catch (RecordNotFoundException e) {
-			e.printStackTrace();
+			message = e.getMessage();
 		}
+		
+		assertEquals(message, true, found);
 	}
 	
 	
 	@After
 	public void cleanDB() throws SQLException {
-		if(finded) {
+		if(found) {
 			addAssignmentController.deleteAssignmentById(insertedAssigmentId);
 		}
 	}

@@ -22,7 +22,6 @@ import logic.utilities.Role;
 
 public class TestNotifications {
 	
-
 	UserBean profUserBean = new UserBean();
 	UserBean studentUserBean = new UserBean();
 	CourseBean courseBean = new CourseBean();
@@ -32,7 +31,6 @@ public class TestNotifications {
 	int reqCountBefore = -1;
 	int reqCountAfter = -1;
 
-	
 	@Before
 	public void prepare() {
 		
@@ -51,12 +49,15 @@ public class TestNotifications {
 	public void test() {	
 		String connFail = "Connection failed";
 		String message = "";
+		
 		// prendo numero notifiche del prof prima
 		try {
 			reqCountBefore = acceptRequestController.getRequests(profUserBean).size();
+			
 		} catch (RecordNotFoundException e) {
 			reqCountBefore=0;
 			message = "Record not found";
+			
 		} catch (SQLException e) {
 			message = connFail;
 		}
@@ -65,6 +66,7 @@ public class TestNotifications {
 		
 		try {
 			joinCourseController.sendRequest(requestBean);
+			
 		} catch (SQLException e) {
 			message = connFail;
 		}
@@ -72,15 +74,17 @@ public class TestNotifications {
 		// prendo numero notifiche del prof dopo
 		try {
 			reqCountAfter = acceptRequestController.getRequests(profUserBean).size();
+			
 		} catch (RecordNotFoundException e) {
 			reqCountAfter=0;
 			message = "Record not found";
+			
 		} catch (SQLException e) {
 			message = connFail;
 		}
 		
 		// assert prima==dopo-1
-		assertEquals(message, reqCountBefore, reqCountAfter - 1);
+		assertEquals(message, reqCountBefore, reqCountAfter - 1l);
 	}
 	
 	

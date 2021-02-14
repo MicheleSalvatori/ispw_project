@@ -60,15 +60,15 @@ public class TestScheduleLesson {
 		controller = new ScheduleLessonController();
 		ViewNextLessonController lessonController = new ViewNextLessonController();
 		
-
 		try {
 			dbUpdate = controller.scheduleLesson(lessonBean);
 			lesson = lessonController.getLesson(lessonBean);
 			
 		} catch (SQLException e) {
 			message = "Connection failed";
+			
 		} catch (DatePriorTodayException e) {
-			message = "Date before today error";
+			message = e.getMessage();
 		}
 		
 		String expected = lessonBean.getTopic();

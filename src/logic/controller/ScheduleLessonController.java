@@ -14,7 +14,9 @@ import logic.utilities.DateUtils;
 public class ScheduleLessonController {
 	
 	public boolean scheduleLesson(LessonBean lessonBean) throws DatePriorTodayException {
-    DateUtils.checkPriorDate(lessonBean.getDate());
+		
+		DateUtils.checkPriorDate(lessonBean.getDate());
+		
 		Course course = new Course();
 		course.setAbbreviation(lessonBean.getCourse());
 		
@@ -22,8 +24,8 @@ public class ScheduleLessonController {
 		Classroom classroom = new Classroom(classroomBean.getName());
 		
 		UserBean professorBean = lessonBean.getProfessor();
-		Professor professor = new Professor(professorBean.getUsername(), professorBean.getPassword(),
-											professorBean.getName(), professorBean.getSurname(), professorBean.getEmail());
+		Professor professor = new Professor();
+		professor.setUsername(professorBean.getUsername());
 			
 		Lesson lesson = new Lesson(lessonBean.getDate(), lessonBean.getTime(), course, classroom, lessonBean.getTopic(), professor);
 		return LessonDAO.insertLesson(lesson);

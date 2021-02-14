@@ -15,14 +15,15 @@ import logic.controller.CourseController;
 /*
  * Luca Santopadre 0257118
  */
+
 public class TestAddCourse {
+	
 	CourseBean courseBean;
 	AddCourseController addCourseController;
 	CourseController courseController;
 	String abbr = "_TE";
 	String courseName = "TEST course";
-	boolean created = false;
-	
+	boolean created;
 
 	@Before
 	public void prepare() {
@@ -38,16 +39,18 @@ public class TestAddCourse {
 		courseBean.setReception("test");
 		courseBean.setGoal("test");
 		courseBean.setSemester("I");
-		
 	}
 
 	@Test
-	public void test() {		
+	public void test() {	
+		String message="";
+		
 		// add couurse
 		try {
 			addCourseController.addCourse(courseBean);
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			created = false;
 		}
 		
 		// check if created
@@ -57,18 +60,15 @@ public class TestAddCourse {
 		try {
 			courseController.getCourse(courseBean);
 			created=true;
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}  catch (NullPointerException e) {
-			e.printStackTrace();
-			created=false;
+			message = "Connection failed";
+			created = false;	
 		}
 		
 		// assert
-		assertEquals(true, created);
-		
+		assertEquals(message, true, created);
 	}
-	
 	
 	@After
 	public void cleanDB() throws SQLException {

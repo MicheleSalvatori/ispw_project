@@ -11,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 /*
- * Gabriele Quatrana
+ * Gabriele Quatrana 0253513
  * Test login with blank fields
  */
 

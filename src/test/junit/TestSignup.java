@@ -29,7 +29,7 @@ public class TestSignup {
 		String password = "newTest";
 		String name = "name";
 		String surname = "surname";
-		String email = "test@test.com";
+		String email = "test@t.com";
 		
 		userBean = new UserBean();
 		userBean.setUsername(username);
