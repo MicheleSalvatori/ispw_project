@@ -1,15 +1,17 @@
 package logic.controller;
 
 import logic.bean.ExamBean;
+import logic.exceptions.DatePriorTodayException;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Exam;
 import logic.model.dao.ExamDAO;
+import logic.utilities.DateUtils;
 
 public class ScheduleExamController {
 
-	public boolean scheduleExam(ExamBean examBean) {
-    
+	public boolean scheduleExam(ExamBean examBean) throws DatePriorTodayException {
+    DateUtils.checkPriorDate(examBean.getDate());
 		Course course = new Course();
 		course.setAbbreviation(examBean.getCourse());
 

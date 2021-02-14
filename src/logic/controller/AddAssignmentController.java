@@ -98,4 +98,17 @@ public class AddAssignmentController {
 
 		return assignmentBean;
 	}
+	
+	
+	public boolean deleteAssignmentById(int id) throws SQLException {
+
+		AssignmentBean assignmentBean = getAssignmentByID(id);
+		Course course = new Course();
+		course.setAbbreviation(assignmentBean.getCourse());
+		
+		Assignment assignment = new Assignment(course, assignmentBean.getTitle(), assignmentBean.getDate(), assignmentBean.getText());
+		assignment.setId(id);
+		
+		return AssignmentDAO.deleteAssignment(assignment);
+	}
 }

@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,6 +28,7 @@ import logic.bean.UserBean;
 import logic.controller.ScheduleController;
 import logic.controller.ScheduleExamController;
 import logic.controller.ScheduleLessonController;
+import logic.exceptions.DatePriorTodayException;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.AlertController;
 import logic.utilities.PageLoader;
@@ -147,8 +150,15 @@ public class SchedulePageView implements Initializable {
 		lessonBean.setProfessor(professor);
 		
 		ScheduleLessonController scheduleLessonController = new ScheduleLessonController();
-		if (!scheduleLessonController.scheduleLesson(lessonBean)) {
-			AlertController.infoAlert("Lesson was not added.\nTry later.");
+		try {
+			if (!scheduleLessonController.scheduleLesson(lessonBean)) {
+				AlertController.infoAlert("Lesson was not added.\nTry later.");
+			}
+		} catch (DatePriorTodayException e) {
+			e.printStackTrace();
+			AlertController.infoAlert("Date entered must be after today");
+			resetLessonView();
+			return;
 		}
 		
 		AlertController.infoAlert("Lesson succesfully added");
@@ -156,13 +166,13 @@ public class SchedulePageView implements Initializable {
 	}
 	
 	@FXML
-	private void addExam(ActionEvent event) {
+	private void addExam(ActionEvent event)  {
 		ExamBean examBean = new ExamBean();
 		
 		String note = textNote.getText();
 		examBean.setNote(note);
 		
-		LocalDate localDate = dateExam.getValue();
+		LocalDate localDate = dateLesson.getValue();
 		Date date = Date.valueOf(localDate);
 		examBean.setDate(date);
 		
@@ -176,8 +186,15 @@ public class SchedulePageView implements Initializable {
 		examBean.setClassroom(classroom.getName());
 		
 		ScheduleExamController scheduleExamController = new ScheduleExamController();
-		if (!scheduleExamController.scheduleExam(examBean)) {
-			AlertController.infoAlert("Exam doesn't added.\nTry later.");
+		try {
+			if (!scheduleExamController.scheduleExam(examBean)) {
+				AlertController.infoAlert("Exam doesn't added.\nTry later.");
+			}
+		} catch (DatePriorTodayException e) {
+			e.printStackTrace();
+			AlertController.infoAlert("Date entered must be after today");
+			resetLessonView();
+			return;
 		}
 		
 		AlertController.infoAlert("Exam succesfully added");

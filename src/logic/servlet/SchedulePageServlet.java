@@ -22,6 +22,7 @@ import logic.bean.UserBean;
 import logic.controller.ScheduleController;
 import logic.controller.ScheduleExamController;
 import logic.controller.ScheduleLessonController;
+import logic.exceptions.DatePriorTodayException;
 import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/SchedulePageServlet")
@@ -95,7 +96,14 @@ public class SchedulePageServlet extends HttpServlet {
 			lessonBean.setClassroom(cl);
 			lessonBean.setProfessor(p);
 			
-			controller.scheduleLesson(lessonBean);
+			try {
+				controller.scheduleLesson(lessonBean);
+			} catch (DatePriorTodayException e) {
+				e.printStackTrace();
+				session.setAttribute("alert", "Date entered must be after today.");
+				response.sendRedirect("/ispw_project/SchedulePageServlet");
+				return;
+			}
 			session.setAttribute("alert", "Lesson added correctly.");
 		}
 		
@@ -108,17 +116,32 @@ public class SchedulePageServlet extends HttpServlet {
 			
 			ScheduleExamController controller = new ScheduleExamController();
 			
-			Date d = Date.valueOf(date);
-			Time t = Time.valueOf(time + ":00");
-			
 			ExamBean examBean = new ExamBean();
-			examBean.setNote(note);	
-			examBean.setDate(d);	
-			examBean.setTime(t);	
-			examBean.setCourse(course);
-			examBean.setClassroom(classroom);
-			controller.scheduleExam(examBean);
 			
+			examBean.setNote(note);
+			
+			Date d = Date.valueOf(date);
+			examBean.setDate(d);
+			
+			Time t = Time.valueOf(time+":00");
+			examBean.setTime(t);
+			
+			CourseBean c = new CourseBean();
+			c.setAbbreviation(course);
+			examBean.setCourse(c);
+			
+			ClassroomBean cl = new ClassroomBean();
+			cl.setName(classroom);
+			examBean.setClassroom(cl);
+
+			try {
+				controller.scheduleExam(examBean);
+			} catch (DatePriorTodayException e) {
+				e.printStackTrace();
+				session.setAttribute("alert", "Date entered must be after today.");
+				response.sendRedirect("/ispw_project/SchedulePageServlet");
+				return;
+			}
 			session.setAttribute("alert", "Exam added correctly.");
 		}
 		

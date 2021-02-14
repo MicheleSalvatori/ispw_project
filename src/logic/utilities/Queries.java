@@ -385,6 +385,11 @@ public class Queries {
 		return stmt.executeUpdate(sql);
 	}
 	
+	public static int deleteCourse(Statement stmt, Course course) throws SQLException {
+		String query = String.format("DELETE FROM course WHERE abbrevation = '%s' AND name = '%s';", course.getAbbreviation(), course.getName());
+		return stmt.executeUpdate(query);
+	}
+	
 /******************************************************************************************************************/
 
 	// Classroom queries
@@ -484,6 +489,11 @@ public class Queries {
 		return stmt.executeQuery(query);
 	}
 	
+	public static int deleteAssignment(Statement stmt, int id) throws SQLException {
+		String query = String.format("DELETE FROM assignment WHERE id = '%d';", id);
+		return stmt.executeUpdate(query);
+	}
+	
 /******************************************************************************************************************/
 
 	// Seat Queries
@@ -537,5 +547,7 @@ public class Queries {
         String sql = String.format("INSERT INTO communications (text, title, date) VALUES('%s', '%s', '%s');", text, title, date.toString());
         stmt.executeUpdate(sql);
     }
+
+
 
 }
