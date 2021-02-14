@@ -21,8 +21,8 @@ public class TestLogin {
 	
 	@Before
 	public void setupTest() {	
-		String username = "user";
-		String pass = "user";
+		String username = "testStudent";
+		String pass = "testPassword";
 		userBean = new UserBean();
 		userBean.setUsername(username);
 		userBean.setPassword(pass);
