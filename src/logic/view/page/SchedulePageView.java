@@ -124,31 +124,15 @@ public class SchedulePageView implements Initializable {
 	}
 	
 	@FXML
-	private void addLesson(ActionEvent event) throws DatePriorTodayException {
+	private void addLesson(ActionEvent event) {
 		LessonBean lessonBean = new LessonBean();
 		
 		String topic = textTopic.getText();
 		lessonBean.setTopic(topic);
 		
-		try {
-			LocalDate localDateNow = LocalDate.now();
-			LocalDate localDate = dateLesson.getValue();
-			Date dateEntered = Date.valueOf(localDate);
-			Date date;
-			
-			if (dateEntered.before(Date.valueOf(localDateNow))) {
-				date = null;
-			} else {
-				date = dateEntered;
-			}
-			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		    date = (Date) sdf.parse(date.toString());
-		    lessonBean.setDate(date);
-		    
-		} catch (NullPointerException | ParseException e) {
-			throw new DatePriorTodayException("Date entered must be after today");
-		}
+		LocalDate localDate = dateLesson.getValue();
+		Date date = Date.valueOf(localDate);
+		lessonBean.setDate(date);
 		
 		Time time = Time.valueOf(textTimeLesson.getText()+":00");
 		lessonBean.setTime(time);
@@ -168,8 +152,15 @@ public class SchedulePageView implements Initializable {
 		lessonBean.setProfessor(professor);
 		
 		ScheduleLessonController scheduleLessonController = new ScheduleLessonController();
-		if (!scheduleLessonController.scheduleLesson(lessonBean)) {
-			AlertController.infoAlert("Lesson was not added.\nTry later.");
+		try {
+			if (!scheduleLessonController.scheduleLesson(lessonBean)) {
+				AlertController.infoAlert("Lesson was not added.\nTry later.");
+			}
+		} catch (DatePriorTodayException e) {
+			e.printStackTrace();
+			AlertController.infoAlert("Date entered must be after today");
+			resetLessonView();
+			return;
 		}
 		
 		AlertController.infoAlert("Lesson succesfully added");
@@ -177,34 +168,15 @@ public class SchedulePageView implements Initializable {
 	}
 	
 	@FXML
-	private void addExam(ActionEvent event) throws DatePriorTodayException {
+	private void addExam(ActionEvent event)  {
 		ExamBean examBean = new ExamBean();
 		
 		String note = textNote.getText();
 		examBean.setNote(note);
 		
-		try {
-			LocalDate localDateNow = LocalDate.now();
-			LocalDate localDate = dateExam.getValue();
-			Date dateEntered = Date.valueOf(localDate);
-			Date date;
-			
-			if (dateEntered.before(Date.valueOf(localDateNow))) {
-				date = null;
-			} else {
-				date = dateEntered;
-			}
-			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		    date = (Date) sdf.parse(date.toString());
-		    examBean.setDate(date);
-		    
-		} catch (NullPointerException | ParseException e) {
-			AlertController.infoAlert("Date entered must be after today.");
-			throw new DatePriorTodayException("Date entered must be after today");
-		}
-		
-		
+		LocalDate localDate = dateLesson.getValue();
+		Date date = Date.valueOf(localDate);
+		examBean.setDate(date);
 		
 		Time time = Time.valueOf(textTimeExam.getText()+":00");
 		examBean.setTime(time);
@@ -216,8 +188,15 @@ public class SchedulePageView implements Initializable {
 		examBean.setClassroom(classroom);
 		
 		ScheduleExamController scheduleExamController = new ScheduleExamController();
-		if (!scheduleExamController.scheduleExam(examBean)) {
-			AlertController.infoAlert("Exam doesn't added.\nTry later.");
+		try {
+			if (!scheduleExamController.scheduleExam(examBean)) {
+				AlertController.infoAlert("Exam doesn't added.\nTry later.");
+			}
+		} catch (DatePriorTodayException e) {
+			e.printStackTrace();
+			AlertController.infoAlert("Date entered must be after today");
+			resetLessonView();
+			return;
 		}
 		
 		AlertController.infoAlert("Exam succesfully added");

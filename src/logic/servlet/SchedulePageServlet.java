@@ -23,6 +23,7 @@ import logic.bean.UserBean;
 import logic.controller.ScheduleController;
 import logic.controller.ScheduleExamController;
 import logic.controller.ScheduleLessonController;
+import logic.exceptions.DatePriorTodayException;
 import logic.exceptions.RecordNotFoundException;
 
 @WebServlet("/SchedulePageServlet")
@@ -100,7 +101,14 @@ public class SchedulePageServlet extends HttpServlet {
 			p.setUsername(((UserBean) session.getAttribute("loggedUser")).getUsername());
 			lessonBean.setProfessor(p);
 			
-			controller.scheduleLesson(lessonBean);
+			try {
+				controller.scheduleLesson(lessonBean);
+			} catch (DatePriorTodayException e) {
+				e.printStackTrace();
+				session.setAttribute("alert", "Date entered must be after today.");
+				response.sendRedirect("/ispw_project/SchedulePageServlet");
+				return;
+			}
 			session.setAttribute("alert", "Lesson added correctly.");
 		}
 		
@@ -131,7 +139,14 @@ public class SchedulePageServlet extends HttpServlet {
 			cl.setName(classroom);
 			examBean.setClassroom(cl);
 
-			controller.scheduleExam(examBean);
+			try {
+				controller.scheduleExam(examBean);
+			} catch (DatePriorTodayException e) {
+				e.printStackTrace();
+				session.setAttribute("alert", "Date entered must be after today.");
+				response.sendRedirect("/ispw_project/SchedulePageServlet");
+				return;
+			}
 			session.setAttribute("alert", "Exam added correctly.");
 		}
 		

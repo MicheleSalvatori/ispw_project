@@ -4,15 +4,19 @@ import logic.bean.ClassroomBean;
 import logic.bean.CourseBean;
 import logic.bean.LessonBean;
 import logic.bean.ProfessorBean;
+import logic.exceptions.DatePriorTodayException;
 import logic.model.Classroom;
 import logic.model.Course;
 import logic.model.Lesson;
 import logic.model.Professor;
 import logic.model.dao.LessonDAO;
+import logic.utilities.DateUtils;
 
 public class ScheduleLessonController {
 	
-	public boolean scheduleLesson(LessonBean lessonBean) {
+	public boolean scheduleLesson(LessonBean lessonBean) throws DatePriorTodayException {
+		
+		DateUtils.checkPriorDate(lessonBean.getDate());
 		
 		CourseBean courseBean = lessonBean.getCourse();
 		Course course = new Course(courseBean.getName(), courseBean.getAbbreviation(), courseBean.getYear(),
@@ -29,4 +33,6 @@ public class ScheduleLessonController {
 		Lesson lesson = new Lesson(lessonBean.getDate(), lessonBean.getTime(), course, classroom, lessonBean.getTopic(), professor);
 		return LessonDAO.insertLesson(lesson);
 	}
+	
+
 }
