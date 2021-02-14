@@ -31,7 +31,6 @@ public class TestNotifications {
 	JoinCourseController joinCourseController = new JoinCourseController();
 	int reqCountBefore = -1;
 	int reqCountAfter = -1;
-	private static String connFail = "Connection failed";
 
 	
 	@Before
@@ -49,7 +48,8 @@ public class TestNotifications {
 	}
 
 	@Test
-	public void test() {		
+	public void test() {	
+		String connFail = "Connection failed";
 		String message = "";
 		// prendo numero notifiche del prof prima
 		try {
