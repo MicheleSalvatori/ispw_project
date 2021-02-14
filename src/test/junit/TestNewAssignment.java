@@ -32,7 +32,7 @@ public class TestNewAssignment {
 	public void prepare() {
 		assignmentBean = new AssignmentBean();
 		addAssignmentController = new AddAssignmentController();
-		assignmentBean.setCourse("CE");
+		assignmentBean.setCourse("testCourse");
 		assignmentBean.setDate(Date.valueOf("2021-04-30"));
 		assignmentBean.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
 		assignmentBean.setTitle("TEST");
@@ -54,7 +54,7 @@ public class TestNewAssignment {
 		
 		// check if user see the assignment
 		UserBean userStudentBean = new UserBean();
-		userStudentBean.setUsername("luca");
+		userStudentBean.setUsername("testStudent");
 		userStudentBean.setRole(Role.STUDENT);
 		try {
 			List<AssignmentBean> assignmentsList = addAssignmentController.getAssignments(userStudentBean);

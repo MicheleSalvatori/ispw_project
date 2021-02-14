@@ -34,12 +34,12 @@ public class TestNotifications {
 	@Before
 	public void prepare() {
 		
-		profUserBean.setUsername("lopresti");
+		profUserBean.setUsername("testProfessor");
 		profUserBean.setRole(Role.PROFESSOR);
 		
-		studentUserBean.setUsername("luca");
+		studentUserBean.setUsername("testStudent");
 		
-		courseBean.setAbbreviation("CE");
+		courseBean.setAbbreviation("testCourse");
 		
 		requestBean.setStudent(studentUserBean);
 		requestBean.setCourse(courseBean.getAbbreviation());

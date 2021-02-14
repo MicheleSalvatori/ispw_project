@@ -1,0 +1,207 @@
+{
+  "id": "d448ca0b-e65a-405c-8f5e-79f674e52e71",
+  "version": "2.0",
+  "name": "TestAddExamStudent",
+  "url": "http://localhost:8080",
+  "tests": [{
+    "id": "cd297b1f-8dfc-48b3-8c9b-5233cf6e42b1",
+    "name": "Untitled",
+    "commands": [{
+      "id": "fe5515ed-08c3-4aaa-95a6-d9b8ab9c8a8a",
+      "comment": "",
+      "command": "open",
+      "target": "/ispw_project/LoginServlet",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "455f0c98-88a6-4f66-85f4-68eaff6ecd65",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1074x584",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4c2b8ea0-91ed-4d05-b982-6eb9d40276d9",
+      "comment": "",
+      "command": "type",
+      "target": "id=username",
+      "targets": [
+        ["id=username", "id"],
+        ["name=username", "name"],
+        ["css=#username", "css:finder"],
+        ["xpath=//input[@id='username']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "studente"
+    }, {
+      "id": "35073c40-7372-4e96-a0f7-7f9ff68bba24",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": "pass"
+    }, {
+      "id": "37fcc33b-77b0-4a15-9b03-e16280660e98",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "bb3311b1-9f62-45ae-a402-4552c768593f",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(3) path",
+      "targets": [
+        ["css=tr:nth-child(3) path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "f90c743d-c243-4bfe-a16c-082f7bbf1594",
+      "comment": "",
+      "command": "click",
+      "target": "id=addExam",
+      "targets": [
+        ["id=addExam", "id"],
+        ["name=addExam", "name"],
+        ["css=#addExam", "css:finder"],
+        ["xpath=//button[@id='addExam']", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f075167a-cc67-4aa1-b1f4-f83badeecae7",
+      "comment": "",
+      "command": "select",
+      "target": "id=course-select",
+      "targets": [],
+      "value": "label=testCourse"
+    }, {
+      "id": "a2fc697f-a896-4d36-a13d-fcea488f42e6",
+      "comment": "",
+      "command": "click",
+      "target": "name=date",
+      "targets": [
+        ["name=date", "name"],
+        ["css=.datepicker-input", "css:finder"],
+        ["xpath=//input[@name='date']", "xpath:attributes"],
+        ["xpath=//div[@id='myModal']/form/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6c8ad75c-c3c6-47dc-89c4-7a60dbe89263",
+      "comment": "",
+      "command": "type",
+      "target": "name=date",
+      "targets": [
+        ["name=date", "name"],
+        ["css=.datepicker-input", "css:finder"],
+        ["xpath=//input[@name='date']", "xpath:attributes"],
+        ["xpath=//div[@id='myModal']/form/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2021-02-01"
+    }, {
+      "id": "9153006f-dbd1-4fc5-9c79-023a784e2145",
+      "comment": "",
+      "command": "click",
+      "target": "id=grade-select",
+      "targets": [
+        ["id=grade-select", "id"],
+        ["name=grade-select", "name"],
+        ["css=#grade-select", "css:finder"],
+        ["xpath=//select[@id='grade-select']", "xpath:attributes"],
+        ["xpath=//div[@id='myModal']/form/div/div[2]/select[2]", "xpath:idRelative"],
+        ["xpath=//select[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "39deb128-00ed-437d-9e77-903a643b5143",
+      "comment": "",
+      "command": "select",
+      "target": "id=grade-select",
+      "targets": [],
+      "value": "label=25"
+    }, {
+      "id": "5be2e09e-ee11-4573-b317-1eb6f3a5ea34",
+      "comment": "",
+      "command": "click",
+      "target": "name=submitAdd",
+      "targets": [
+        ["name=submitAdd", "name"],
+        ["css=.modal-button", "css:finder"],
+        ["xpath=//button[@name='submitAdd']", "xpath:attributes"],
+        ["xpath=//div[@id='myModal']/form/div/div[3]/button", "xpath:idRelative"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "de9865be-31b7-4798-9962-228f8000f9f0",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bb55a0d6-a1e9-48ad-a972-d80c07f675da",
+      "comment": "",
+      "command": "click",
+      "target": "name=deleteExam",
+      "targets": [
+        ["name=deleteExam", "name"],
+        ["css=.exam-button", "css:finder"],
+        ["xpath=//button[@name='deleteExam']", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Delete')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bd9196a1-e974-4003-bb66-e2a41f7f4521",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "Are you sure you want to delete?",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0cc44f4e-1bdd-460b-a0a6-cc5ee97b217f",
+      "comment": "",
+      "command": "webdriverChooseOkOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d09e8eda-d6a2-491d-ac4c-04982046d771",
+      "comment": "",
+      "command": "click",
+      "target": "css=.status-button path",
+      "targets": [
+        ["css=.status-button path", "css:finder"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "0e95820b-46dc-4eb7-a7c4-33bb1a3e933a",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["cd297b1f-8dfc-48b3-8c9b-5233cf6e42b1"]
+  }],
+  "urls": ["http://localhost:8080/"],
+  "plugins": []
+}
