@@ -16,7 +16,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class TestAddCourseSelenium {
 	
-	private WebDriver driver;
+	private WebDriver driverWeb;
 	WebElement submit;
 	String expectedStatus = "http://localhost:8080/ispw_project/CoursePageServlet?course=_testSelenium";
 	String status = "";
@@ -24,12 +24,12 @@ public class TestAddCourseSelenium {
 	@Before
 	public void setupTest() {
 		System.setProperty("webdriver.chrome.driver", "driver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("http://localhost:8080/ispw_project/LoginServlet");
-		driver.findElement(By.xpath("//*[@id=\"username\"]")).sendKeys("testStudent");
-		driver.findElement(By.xpath("//*[@id=\"password\"]")).sendKeys("testPassword");
-		driver.findElement(By.xpath("//*[@id=\"login\"]")).click();	
+		driverWeb = new ChromeDriver();
+		driverWeb.manage().window().maximize();
+		driverWeb.get("http://localhost:8080/ispw_project/LoginServlet");
+		driverWeb.findElement(By.xpath("//*[@id=\"username\"]")).sendKeys("testStudent");
+		driverWeb.findElement(By.xpath("//*[@id=\"password\"]")).sendKeys("testPassword");
+		driverWeb.findElement(By.xpath("//*[@id=\"login\"]")).click();	
 	}
 	
 	@Test
@@ -41,17 +41,16 @@ public class TestAddCourseSelenium {
 		String buttonSubmitPath = "html/body/div[4]/form/div/div[3]/button";
 		String courseStatusPath = "html/body/div[3]/div[2]/div[2]/div/table/tbody/tr[2]/td[1]/table/tbody/tr[1]/td/a";
 		
-		driver.findElement(By.xpath("/"+profilePath)).click();
+		driverWeb.findElement(By.xpath("/"+profilePath)).click();
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("/"+addCourseButtontPath)).click();
+		driverWeb.findElement(By.xpath("/"+addCourseButtontPath)).click();
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("/"+selectOptionTestCoursePath)).click();
+		driverWeb.findElement(By.xpath("/"+selectOptionTestCoursePath)).click();
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("/"+buttonSubmitPath)).click();
+		driverWeb.findElement(By.xpath("/"+buttonSubmitPath)).click();
 		
 		Thread.sleep(2000);
-		status = driver.findElement(By.xpath("/"+courseStatusPath)).getAttribute("href");
-		System.out.println(status);
+		status = driverWeb.findElement(By.xpath("/"+courseStatusPath)).getAttribute("href");
 		assertEquals(expectedStatus, status);
 	}
 	
@@ -60,15 +59,15 @@ public class TestAddCourseSelenium {
 		if(expectedStatus.equals(status)) {
 			String buttonDeleteRequestPath = "html/body/div[3]/div[2]/div[2]/div/table/tbody/tr[2]/td[2]/form/button";
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("/"+buttonDeleteRequestPath)).click();
+			driverWeb.findElement(By.xpath("/"+buttonDeleteRequestPath)).click();
 			Thread.sleep(1000);
-			driver.switchTo().alert().accept();
+			driverWeb.switchTo().alert().accept();
 		}
 		String logoutButtonPath = "html/body/div[2]/table/tbody/tr/td[4]/a/button";
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("/"+logoutButtonPath)).click();
-		driver.close();
-		driver.quit();
+		driverWeb.findElement(By.xpath("/"+logoutButtonPath)).click();
+		driverWeb.close();
+		driverWeb.quit();
 
 	}
 }
