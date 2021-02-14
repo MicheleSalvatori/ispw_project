@@ -1,6 +1,6 @@
 package test.junit;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 
@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import logic.bean.CourseBean;
 import logic.bean.RequestBean;
 import logic.bean.UserBean;
 import logic.controller.AcceptRequestController;
@@ -15,9 +16,16 @@ import logic.controller.JoinCourseController;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Role;
 
+/*
+ * Luca Santopadre 0257118
+ */
+
 public class TestNotifications {
+	
+
 	UserBean profUserBean = new UserBean();
-	UserBean studBean = new UserBean();
+	UserBean studentUserBean = new UserBean();
+	CourseBean courseBean = new CourseBean();
 	RequestBean requestBean = new RequestBean();
 	AcceptRequestController acceptRequestController = new AcceptRequestController();
 	JoinCourseController joinCourseController = new JoinCourseController();
@@ -30,23 +38,26 @@ public class TestNotifications {
 		
 		profUserBean.setUsername("lopresti");
 		profUserBean.setRole(Role.PROFESSOR);
-
-		studBean.setUsername("luca");
 		
-		requestBean.setStudent(studBean);
-		requestBean.setCourse("CE");
+		studentUserBean.setUsername("luca");
+		
+		courseBean.setAbbreviation("CE");
+		
+		requestBean.setStudent(studentUserBean);
+		requestBean.setCourse(courseBean.getAbbreviation());
 	}
 
 	@Test
 	public void test() {		
-		
+		String message = "";
 		// prendo numero notifiche del prof prima
 		try {
 			reqCountBefore = acceptRequestController.getRequests(profUserBean).size();
 		} catch (RecordNotFoundException e) {
-			reqCountBefore = 0;
+			reqCountBefore=0;
+			message = "Record not found";
 		} catch (SQLException e) {
-			e.printStackTrace();
+			message = "Connection failed";
 		}
 		
 		// eseguo richiesta con studente per il prof
@@ -54,18 +65,21 @@ public class TestNotifications {
 		try {
 			joinCourseController.sendRequest(requestBean);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			message = "Connection failed";
 		}
 		
 		// prendo numero notifiche del prof dopo
 		try {
 			reqCountAfter = acceptRequestController.getRequests(profUserBean).size();
-		} catch (RecordNotFoundException  | SQLException e) {
-			e.printStackTrace();
+		} catch (RecordNotFoundException e) {
+			reqCountAfter=0;
+			message = "Record not found";
+		} catch (SQLException e) {
+			message = "Connection failed";
 		}
 		
 		// assert prima==dopo-1
-		assertEquals(reqCountBefore, reqCountAfter - 1);
+		assertEquals(message, reqCountBefore, reqCountAfter - 1);
 	}
 	
 	

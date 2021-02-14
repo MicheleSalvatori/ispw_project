@@ -9,6 +9,10 @@ import logic.exceptions.DatePriorTodayException;
 
 public class DateUtils {
 	
+	private DateUtils() {
+		
+	}
+	
 	public static void checkPriorDate(java.util.Date dateEntered) throws DatePriorTodayException {
 		try {
 			LocalDate localDateNow = LocalDate.now();
@@ -21,7 +25,7 @@ public class DateUtils {
 			}
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		    d = (java.util.Date) sdf.parse(d.toString());
+		    sdf.parse(d.toString());
 		    
 		} catch (NullPointerException | ParseException  e) {
 			throw new DatePriorTodayException("Date entered must be after today");

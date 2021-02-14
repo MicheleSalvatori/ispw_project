@@ -16,6 +16,7 @@ import logic.bean.LessonBean;
 import logic.bean.UserBean;
 import logic.controller.ScheduleLessonController;
 import logic.controller.ViewNextLessonController;
+import logic.exceptions.DatePriorTodayException;
 
 /*
  * Gabriele Quatrana 0253513
@@ -59,13 +60,15 @@ public class TestScheduleLesson {
 		controller = new ScheduleLessonController();
 		ViewNextLessonController lessonController = new ViewNextLessonController();
 		
-		dbUpdate = controller.scheduleLesson(lessonBean);
 
 		try {
+			dbUpdate = controller.scheduleLesson(lessonBean);
 			lesson = lessonController.getLesson(lessonBean);
 			
 		} catch (SQLException e) {
 			message = "Connection failed";
+		} catch (DatePriorTodayException e) {
+			message = "Date before today error";
 		}
 		
 		String expected = lessonBean.getTopic();

@@ -32,6 +32,8 @@ public class SchedulePageServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static String alertAttribute = "alertMsg";
+	private static String schedulePageServlet  = "/ispw_project/SchedulePageServlet";
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,7 +55,7 @@ public class SchedulePageServlet extends HttpServlet {
 			courses = controller.getCourses(userLogged);
 			
 		} catch (SQLException e) {
-			request.setAttribute("alertMsg", "An error as occured. Try later.");
+			request.setAttribute(alertAttribute, "An error as occured. Try later.");
 			request.getRequestDispatcher("/WEB-INF/LoginPage.jsp").forward(request, response);
 			return;
 			
@@ -100,11 +102,11 @@ public class SchedulePageServlet extends HttpServlet {
 				controller.scheduleLesson(lessonBean);
 			} catch (DatePriorTodayException e) {
 				e.printStackTrace();
-				session.setAttribute("alert", "Date entered must be after today.");
-				response.sendRedirect("/ispw_project/SchedulePageServlet");
+				session.setAttribute(alertAttribute, "Date entered must be after today.");
+				response.sendRedirect(schedulePageServlet);
 				return;
 			}
-			session.setAttribute("alert", "Lesson added correctly.");
+			session.setAttribute(alertAttribute, "Lesson added correctly.");
 		}
 		
 		else if (request.getParameter("btnAddExam") != null) {
@@ -116,35 +118,27 @@ public class SchedulePageServlet extends HttpServlet {
 			
 			ScheduleExamController controller = new ScheduleExamController();
 			
-			ExamBean examBean = new ExamBean();
-			
-			examBean.setNote(note);
-			
 			Date d = Date.valueOf(date);
-			examBean.setDate(d);
+			Time t = Time.valueOf(time + ":00");
 			
-			Time t = Time.valueOf(time+":00");
-			examBean.setTime(t);
-			
-			CourseBean c = new CourseBean();
-			c.setAbbreviation(course);
-			examBean.setCourse(c);
-			
-			ClassroomBean cl = new ClassroomBean();
-			cl.setName(classroom);
-			examBean.setClassroom(cl);
+			ExamBean examBean = new ExamBean();
+			examBean.setNote(note);	
+			examBean.setDate(d);	
+			examBean.setTime(t);	
+			examBean.setCourse(course);
+			examBean.setClassroom(classroom);
 
 			try {
 				controller.scheduleExam(examBean);
 			} catch (DatePriorTodayException e) {
 				e.printStackTrace();
-				session.setAttribute("alert", "Date entered must be after today.");
-				response.sendRedirect("/ispw_project/SchedulePageServlet");
+				session.setAttribute(alertAttribute, "Date entered must be after today.");
+				response.sendRedirect(schedulePageServlet);
 				return;
 			}
-			session.setAttribute("alert", "Exam added correctly.");
+			session.setAttribute(alertAttribute, "Exam added correctly.");
 		}
 		
-		response.sendRedirect("/ispw_project/SchedulePageServlet");
+		response.sendRedirect(schedulePageServlet);
 	}
 }

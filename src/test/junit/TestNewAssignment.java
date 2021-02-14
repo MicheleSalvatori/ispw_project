@@ -1,4 +1,4 @@
-package test;
+package test.junit;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -16,16 +16,16 @@ import logic.exceptions.RecordNotFoundException;
 import logic.model.Course;
 import logic.utilities.Role;
 
-
+/*
+ * Luca Santopadre 0257118
+ */
 public class TestNewAssignment {
 	AssignmentBean assignmentBean;
 	AddAssignmentController addAssignmentController;
 	Course course;
 	int insertedAssigmentId = -1;
+	boolean finded = false;
 	
-	public TestNewAssignment() {
-		
-	}
 
 	@Before
 	public void prepare() {
@@ -58,7 +58,6 @@ public class TestNewAssignment {
 		try {
 			List<AssignmentBean> assignmentsList = addAssignmentController.getAssignments(userStudentBean);
 			insertedAssigmentId = assignmentsList.get(assignmentsList.size()-1).getId();
-			boolean finded = false;
 			for (AssignmentBean a : assignmentsList) {
 				finded = a.getId() == insertedAssigmentId;
 			}
@@ -74,7 +73,9 @@ public class TestNewAssignment {
 	
 	@After
 	public void cleanDB() throws SQLException {
-		addAssignmentController.deleteAssignmentById(insertedAssigmentId);
+		if(finded) {
+			addAssignmentController.deleteAssignmentById(insertedAssigmentId);
+		}
 	}
 
 }

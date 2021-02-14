@@ -1,4 +1,4 @@
-package test;
+package test.junit;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,9 +11,10 @@ import org.junit.Test;
 import logic.bean.CourseBean;
 import logic.controller.AddCourseController;
 import logic.controller.CourseController;
-import logic.exceptions.RecordNotFoundException;
 
-
+/*
+ * Luca Santopadre 0257118
+ */
 public class TestAddCourse {
 	CourseBean courseBean;
 	AddCourseController addCourseController;
@@ -22,9 +23,6 @@ public class TestAddCourse {
 	String courseName = "TEST course";
 	boolean created = false;
 	
-	public TestAddCourse() {
-		
-	}
 
 	@Before
 	public void prepare() {
@@ -61,7 +59,8 @@ public class TestAddCourse {
 			created=true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (RecordNotFoundException e) {
+		}  catch (NullPointerException e) {
+			e.printStackTrace();
 			created=false;
 		}
 		
@@ -73,8 +72,9 @@ public class TestAddCourse {
 	
 	@After
 	public void cleanDB() throws SQLException {
-		addCourseController.deleteCourse(courseBean);
-		
+		if(created) {
+			addCourseController.deleteCourse(courseBean);
+		}
 	}
 
 }

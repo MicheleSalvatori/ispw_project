@@ -15,6 +15,7 @@ import logic.bean.ExamBean;
 import logic.bean.UserBean;
 import logic.controller.ScheduleExamController;
 import logic.controller.ScheduledController;
+import logic.exceptions.DatePriorTodayException;
 import logic.exceptions.RecordNotFoundException;
 import logic.utilities.Role;
 
@@ -57,13 +58,16 @@ public class TestScheduleExam {
 		ExamBean examBean = null;
 		ScheduledController scheduledController = new ScheduledController();
 
-		dbUpdated = controller.scheduleExam(exam);
+		
 		
 		try {
+			dbUpdated = controller.scheduleExam(exam);
 			examBean = scheduledController.getExams(user).get(0);
 			result = examBean.getDate().toString();
 		} catch (SQLException | RecordNotFoundException e) {
 			message = "Connection failed";
+		} catch (DatePriorTodayException e) {
+			message = "Date before today error";
 		}
 		
 		String expected = exam.getDate().toString();

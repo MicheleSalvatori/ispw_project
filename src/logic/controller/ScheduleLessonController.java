@@ -2,7 +2,6 @@ package logic.controller;
 
 import logic.bean.ClassroomBean;
 import logic.bean.LessonBean;
-import logic.bean.ProfessorBean;
 import logic.exceptions.DatePriorTodayException;
 import logic.bean.UserBean;
 import logic.model.Classroom;
