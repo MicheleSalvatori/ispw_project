@@ -213,20 +213,6 @@
       ],
       "value": ""
     }, {
-      "id": "8e1d6188-2d38-4db1-b3c3-1444a1dc13fc",
-      "comment": "",
-      "command": "chooseOkOnNextConfirmation",
-      "target": "Are you sure you want to ask this question?",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "d4f2c952-b826-4e63-8e06-b3dc430517c7",
-      "comment": "",
-      "command": "webdriverChooseOkOnVisibleConfirmation",
-      "target": "",
-      "targets": [],
-      "value": ""
-    }, {
       "id": "e407ce75-0714-4ec4-a217-276dd1854639",
       "comment": "",
       "command": "verifyText",
