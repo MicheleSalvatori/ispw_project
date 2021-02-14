@@ -32,7 +32,7 @@
         ["xpath=//input[@id='username']", "xpath:attributes"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "studente"
+      "value": "testStudent"
     }, {
       "id": "35073c40-7372-4e96-a0f7-7f9ff68bba24",
       "comment": "",
@@ -45,7 +45,7 @@
         ["xpath=//input[@id='password']", "xpath:attributes"],
         ["xpath=//td[2]/input", "xpath:position"]
       ],
-      "value": "pass"
+      "value": "testPassword"
     }, {
       "id": "37fcc33b-77b0-4a15-9b03-e16280660e98",
       "comment": "",
